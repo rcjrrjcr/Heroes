@@ -1,41 +1,68 @@
 package com.herocraftonline.dev.Heroes;
 
+import java.util.ArrayList;
+
 public class Properties {
 
-	public enum mainClasses { 
+	public enum Class { 
 		Warrior,
 		Rogue,
 		Mage,
 		Healer,
-		Diplomat
+		Diplomat,
+		Crafter
 	}
-	
-	public enum subClasses {
-		// Warrior
-		Knight,
+	public enum Warrior{
+		Paladin,
+		Dreadknight,
 		Gladiator,
-		DreadKnight,
-		// Rogue
-		Treasure_Hunter,
+		Proxy
+	}
+	public enum Rogue{
+		Ninja,
 		Ranger,
-		Monk,
-		// Mage
+		Thief,
+		Treasure_Hunter
+	}
+	public enum Mage{
 		Pyro,
 		Icemage,
 		Necromancer,
-		// Healer
+		Enchanter
+	}
+	public enum Healer{
 		Cleric,
 		Priest,
-		Bloodmage,
-		// Diplomat
+		Monk,
+		Proxy,
+	}
+	public enum Diplomat{
 		Ambassador,
-		King,
+		Noble,
 		Lord,
 		Duke,
-		Noble
+		King
 	}
-	
-	
-	
-	
+	public enum Crafter{
+		Architect,
+		Smith,
+		Farmer,
+		Carpenter
+	}
+
+	public static double inflation = 1.03;
+	public static double baseExp = 100;
+	public static ArrayList<Integer> levelexp = new ArrayList<Integer>();
+
+	public Properties(Heroes heroes) {
+	}
+
+	public static void expCalc(){
+		levelexp.clear();
+		double last = baseExp;
+		for (int n = 1; n <= 99; n++) {
+			levelexp.add((int) ((int) (last * n) * inflation) - 3);
+			last = (baseExp * n) * inflation;
+		}
+	}
 }
