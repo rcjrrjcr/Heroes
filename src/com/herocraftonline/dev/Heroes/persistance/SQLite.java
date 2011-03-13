@@ -3,6 +3,7 @@ package com.herocraftonline.dev.Heroes.persistance;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 import java.sql.*;
@@ -63,5 +64,18 @@ public class SQLite {
     
     public void createTable(String SQLStat) throws Exception{
     	tryUpdate(SQLStat);
+    }
+    
+    public int tableSize(String table){
+    	int size = 0;
+		try {
+	    	ResultSet pRS = trySelect("SELECT * FROM " + table);
+			while(pRS.next()){
+				size++;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return size;
     }
 }
