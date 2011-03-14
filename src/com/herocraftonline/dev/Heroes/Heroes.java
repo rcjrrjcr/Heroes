@@ -8,9 +8,13 @@ import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.util.config.Configuration;
+import org.bukkit.util.config.ConfigurationNode;
 
 import com.herocraftonline.dev.Heroes.persistance.SQLite;
 import com.herocraftonline.dev.Heroes.persistance.player;
+import com.herocraftonline.dev.Heroes.util.Properties;
+import com.herocraftonline.dev.Heroes.util.ConfigManager;
 
 /**
  * Heroes Plugin for Herocraft
@@ -22,7 +26,10 @@ public class Heroes extends JavaPlugin {
 	private final Listener Listener = new Listener(this);
 	private final HashMap<Player, Boolean> debugees = new HashMap<Player, Boolean>();
 	public static final Logger Log = Logger.getLogger("Minecraft");
+	private ConfigManager configManager;
 	public static SQLite sql = new SQLite(null);
+	
+	
 	public void onDisable() {
 		System.out.println("Goodbye world!");
 	}
@@ -30,8 +37,13 @@ public class Heroes extends JavaPlugin {
 	public void onEnable() {
 		getServer().getPluginManager().registerEvent(Event.Type.PLAYER_LOGIN, Listener, Priority.Normal,this);
 		PluginDescriptionFile pdfFile = this.getDescription();
-
-		System.out.println( pdfFile.getName() + " version " + pdfFile.getVersion() + " is enabled!" );
+		Log.info(pdfFile.getName() + " version " + pdfFile.getVersion() + " is enabled!" );
+		configManager = new ConfigManager(this);
+		try {
+			configManager.load();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		Properties.expCalc();
 		sql.tryUpdate("CREATE TABLE IF NOT EXISTS `players` (`id` INT auto_increment, `name` VARCHAR, `class` VARCHAR, `exp` INT, `mana` INT)");
 	}

@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import org.bukkit.entity.Player;
 
 import com.herocraftonline.dev.Heroes.Heroes;
+import com.herocraftonline.dev.Heroes.util.Properties;
 
 /**
  * Player management
@@ -68,6 +69,17 @@ public class player {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	
+	public static int getLevel(Integer exp){
+		int n = 0;
+		for(Integer i : Properties.level){
+			if(!(exp >= i)){
+				return n;
+			}
+			n++;
+		}
+		return -1;
 	}
 
 }
