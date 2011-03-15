@@ -1,11 +1,11 @@
-package com.herocraftonline.dev.tmp.persistance;
+package com.herocraftonline.dev.heroes.persistance;
 
 import java.sql.ResultSet;
 
 import org.bukkit.entity.Player;
 
-import com.herocraftonline.dev.tmp.Heroes;
-import com.herocraftonline.dev.tmp.util.Properties;
+import com.herocraftonline.dev.heroes.Heroes;
+import com.herocraftonline.dev.heroes.util.Properties;
 
 /**
  * Player management

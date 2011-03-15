@@ -1,4 +1,4 @@
-package com.herocraftonline.dev.tmp.util;
+package com.herocraftonline.dev.heroes.util;
 
 import java.io.File;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.herocraftonline.dev.tmp.util;
+package com.herocraftonline.dev.heroes.util;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -7,7 +7,7 @@ import java.io.OutputStream;
 
 import org.bukkit.util.config.Configuration;
 
-import com.herocraftonline.dev.tmp.Heroes;
+import com.herocraftonline.dev.heroes.Heroes;
 
 public class ConfigManager {
     protected Heroes plugin;

@@ -1,9 +1,9 @@
-package com.herocraftonline.dev.tmp;
+package com.herocraftonline.dev.heroes;
 
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerLoginEvent;
 
-import com.herocraftonline.dev.tmp.persistance.player;
+import com.herocraftonline.dev.heroes.persistance.player;
 
 @SuppressWarnings("unused")
 public class Listener extends PlayerListener {
