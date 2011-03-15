@@ -1,19 +1,17 @@
-package com.herocraftonline.dev.Heroes.persistance;
+package com.herocraftonline.dev.heroes.persistance;
 
 import java.sql.Connection;
+import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 
-import java.sql.*;
-
-import com.herocraftonline.dev.Heroes.Heroes;
+import com.herocraftonline.dev.heroes.Heroes;
 
 @SuppressWarnings("unused")
 public class SQLite {
     private final Heroes pluginMain;
-    
+
     // Change this //
     String dbname = "heroes.db";
 
@@ -23,14 +21,14 @@ public class SQLite {
 
     public SQLite(Heroes instance) {
         pluginMain = instance;
-        Heroes.Log.info("Running database connection...");
+        Heroes.log.info("Running database connection...");
         try {
             Class.forName("org.sqlite.JDBC");
             SQLiteConnection = DriverManager.getConnection("jdbc:sqlite:" + dbname);
             SQLiteStatement = SQLiteConnection.createStatement();
             SQLiteConnection.setAutoCommit(true);
         } catch (Exception e) {
-            Heroes.Log.warning(("SQLite connection failed: " + e.toString()));
+            Heroes.log.warning(("SQLite connection failed: " + e.toString()));
         }
     }
 
@@ -46,9 +44,8 @@ public class SQLite {
         try {
             getStatement().executeUpdate(sqlString);
         } catch (Exception e) {
-            Heroes.Log.warning("The following statement failed: "
-                    + sqlString);
-            Heroes.Log.warning("Statement failed: " + e.toString());
+            Heroes.log.warning("The following statement failed: " + sqlString);
+            Heroes.log.warning("Statement failed: " + e.toString());
         }
     }
 
@@ -57,25 +54,25 @@ public class SQLite {
             System.out.println(getStatement().toString());
             return getStatement().executeQuery(sqlString);
         } catch (Exception e) {
-            Heroes.Log.warning("Statement failed: " + e.toString());
+            Heroes.log.warning("Statement failed: " + e.toString());
         }
         return null;
     }
-    
-    public void createTable(String SQLStat) throws Exception{
-    	tryUpdate(SQLStat);
+
+    public void createTable(String SQLStat) throws Exception {
+        tryUpdate(SQLStat);
     }
-    
-    public int tableSize(String table){
-    	int size = 0;
-		try {
-	    	ResultSet pRS = trySelect("SELECT * FROM " + table);
-			while(pRS.next()){
-				size++;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return size;
+
+    public int tableSize(String table) {
+        int size = 0;
+        try {
+            ResultSet pRS = trySelect("SELECT * FROM " + table);
+            while (pRS.next()) {
+                size++;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return size;
     }
 }

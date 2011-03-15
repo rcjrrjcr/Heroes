@@ -1,4 +1,4 @@
-package com.herocraftonline.dev.Heroes.util;
+package com.herocraftonline.dev.heroes.util;
 
 public class Updater {
 
