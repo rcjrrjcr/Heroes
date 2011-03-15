@@ -1,4 +1,4 @@
-package com.herocraftonline.dev.heroes.persistance;
+package com.herocraftonline.dev.tmp.persistance;
 
 import java.sql.Connection;
 import java.sql.Driver;
@@ -6,7 +6,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import com.herocraftonline.dev.heroes.Heroes;
+import com.herocraftonline.dev.tmp.Heroes;
 
 @SuppressWarnings("unused")
 public class SQLite {

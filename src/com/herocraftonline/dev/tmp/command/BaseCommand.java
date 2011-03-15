@@ -6,14 +6,14 @@
  * Creative Commons, 171 Second Street, Suite 300, San Francisco, California, 94105, USA.
  **/
 
-package com.herocraftonline.dev.heroes.command;
+package com.herocraftonline.dev.tmp.command;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.command.CommandSender;
 
-import com.herocraftonline.dev.heroes.Heroes;
+import com.herocraftonline.dev.tmp.Heroes;
 
 public abstract class BaseCommand {
 

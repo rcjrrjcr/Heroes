@@ -1,4 +1,4 @@
-package com.herocraftonline.dev.heroes;
+package com.herocraftonline.dev.tmp;
 
 import java.util.HashMap;
 import java.util.logging.Logger;
@@ -11,10 +11,10 @@ import org.bukkit.event.Event.Priority;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.herocraftonline.dev.heroes.command.CommandManager;
-import com.herocraftonline.dev.heroes.persistance.SQLite;
-import com.herocraftonline.dev.heroes.util.ConfigManager;
-import com.herocraftonline.dev.heroes.util.Properties;
+import com.herocraftonline.dev.tmp.command.CommandManager;
+import com.herocraftonline.dev.tmp.persistance.SQLite;
+import com.herocraftonline.dev.tmp.util.ConfigManager;
+import com.herocraftonline.dev.tmp.util.Properties;
 
 /**
  * Heroes Plugin for Herocraft
