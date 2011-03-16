@@ -65,7 +65,6 @@ public class Properties {
     public static int maxLevel;
     public static ArrayList<Integer> level = new ArrayList<Integer>();
     public static final File dataFolder = new File("plugins" + File.separator + "Heroes");
-    public static final Configuration ConfigFile = new Configuration(dataFolder);
 
     public static void calcExp() {
         level.clear();

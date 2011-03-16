@@ -15,6 +15,7 @@ import com.herocraftonline.dev.heroes.command.CommandManager;
 import com.herocraftonline.dev.heroes.persistance.SQLite;
 import com.herocraftonline.dev.heroes.util.ConfigManager;
 import com.herocraftonline.dev.heroes.util.Properties;
+import com.herocraftonline.dev.heroes.util.Updater;
 
 /**
  * Heroes Plugin for Herocraft
@@ -50,6 +51,7 @@ public class Heroes extends JavaPlugin {
         sql.tryUpdate("CREATE TABLE IF NOT EXISTS `players` (`id` INT auto_increment, `name` VARCHAR, `class` VARCHAR, `exp` INT, `mana` INT)");
         registerEvents();
         registerCommands();
+
     }
 
     public boolean isDebugging(final Player player) {
