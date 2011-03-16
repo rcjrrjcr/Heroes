@@ -1,3 +1,8 @@
 name: Heroes
 main: com.herocraftonline.dev.heroes.Heroes
 version: 0.0.1
+description: Experience, leveling and class system for Minecraft. By the Herocraft coding team.
+commands:
+  heroes:
+    description: Updates Heroes - heroes.admin.update
+    usage: /heroes update

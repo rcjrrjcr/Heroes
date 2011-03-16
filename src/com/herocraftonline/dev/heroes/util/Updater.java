@@ -8,33 +8,45 @@ import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 
+import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.PluginManager;
+
+import com.herocraftonline.dev.heroes.Heroes;
+
 
 
 
 public class Updater {
-
+	public static Heroes plugin;
+	
 	public static void updateLatest(){
 		URL url;
 		try {
-			url = new URL("http://109.153.159.46:8081/artifactory/plugins-release-local/Heroes/Heroes/latest/Heroes-latest.jar");
+			url = new URL("LINK TO BE DECIDED");
 			ReadableByteChannel rbc = Channels.newChannel(url.openStream());
 			FileOutputStream fos = new FileOutputStream("plugins" + File.pathSeparator + "Heroes.jar");
 			fos.getChannel().transferFrom(rbc, 0, 1 << 24);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
-	public static void updateVersion(String v){
-		URL url;
-		try {
-			url = new URL("http://109.153.159.46:8081/artifactory/plugins-release-local/Heroes/Heroes/" + v + "/Heroes-0.0.1.jar");
-			ReadableByteChannel rbc = Channels.newChannel(url.openStream());
-			FileOutputStream fos = new FileOutputStream("plugins" + File.pathSeparator + "Heroes.jar");
-			fos.getChannel().transferFrom(rbc, 0, 1 << 24);
+			PluginManager pm = plugin.getServer().getPluginManager();
+			Plugin plugin = pm.getPlugin("Heroes");
+			pm.disablePlugin(plugin);
+			reload(new File("plugins" + File.pathSeparator + "Heroes.jar"));
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+	
+    public static void reload(File file){
+        try
+        {
+            PluginManager pm = plugin.getServer().getPluginManager();
+            pm.loadPlugin(file);
+        }
+        catch (Throwable ex)
+        {
+            Heroes.log.info("Could not load plugin");
+        }
+    }
 
 }

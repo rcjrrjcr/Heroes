@@ -71,7 +71,6 @@ public class Properties {
         double A = 2 * (maxExp - baseExp) * Math.pow(maxLevel, (power * -1));
         for (int n = 1; n <= maxLevel; n++) {
             level.add((int) (A / 2 * Math.pow(n - 1, power) + baseExp));
-            System.out.println((int) (A / 2 * Math.pow(n - 1, power) + baseExp));
         }
     }
 }

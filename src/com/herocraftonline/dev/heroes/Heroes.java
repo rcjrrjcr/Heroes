@@ -8,14 +8,17 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.herocraftonline.dev.heroes.command.CommandManager;
+import com.herocraftonline.dev.heroes.command.commands.updateCommand;
 import com.herocraftonline.dev.heroes.persistance.SQLite;
 import com.herocraftonline.dev.heroes.util.ConfigManager;
 import com.herocraftonline.dev.heroes.util.Properties;
-import com.herocraftonline.dev.heroes.util.Updater;
+import com.nijiko.permissions.PermissionHandler;
+import com.nijikokun.bukkit.Permissions.Permissions;
 
 /**
  * Heroes Plugin for Herocraft
@@ -27,6 +30,7 @@ public class Heroes extends JavaPlugin {
     private final HashMap<Player, Boolean> debugees = new HashMap<Player, Boolean>();
     public static final Logger log = Logger.getLogger("Minecraft");
     private ConfigManager configManager;
+    public static PermissionHandler Permissions;
     private CommandManager commandManager;
     public static SQLite sql = new SQLite(null);
 
@@ -38,6 +42,7 @@ public class Heroes extends JavaPlugin {
 
     @Override
     public void onEnable() {
+    	  setupPermissions();
         getServer().getPluginManager().registerEvent(Event.Type.PLAYER_LOGIN, Listener, Priority.Normal, this);
         PluginDescriptionFile pdfFile = this.getDescription();
         log.info(pdfFile.getName() + " version " + pdfFile.getVersion() + " is enabled!");
@@ -52,6 +57,17 @@ public class Heroes extends JavaPlugin {
         registerEvents();
         registerCommands();
 
+    }
+    
+    private void setupPermissions() {
+        Plugin test = this.getServer().getPluginManager().getPlugin("Permissions");
+        if (this.Permissions == null) {
+            if (test != null) {
+                this.Permissions = ((Permissions)test).getHandler();
+            } else {
+                log.info("Permission system not detected, defaulting to OP");
+            }
+        }
     }
 
     public boolean isDebugging(final Player player) {
@@ -77,6 +93,8 @@ public class Heroes extends JavaPlugin {
 
     private void registerCommands() {
         commandManager = new CommandManager();
+        // Page 1
+        commandManager.addCommand(new updateCommand(this));
     }
 
 }
