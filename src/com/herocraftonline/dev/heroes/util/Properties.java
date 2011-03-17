@@ -56,7 +56,7 @@ public class Properties {
         Architect,
         Smith,
         Farmer,
-        Carpenter
+        Carpenter;
     }
 
     public static double power;
@@ -72,5 +72,49 @@ public class Properties {
         for (int n = 1; n <= maxLevel; n++) {
             level.add((int) (A / 2 * Math.pow(n - 1, power) + baseExp));
         }
+    }
+    
+    public static String validateClass(String c){
+    	for(Crafter n : Crafter.values()){
+    		if(c.equalsIgnoreCase(n.toString())){
+    			return n.toString();
+    		}
+    	}
+    	for(Diplomat n : Diplomat.values()){
+    		if(c.equalsIgnoreCase(n.toString())){
+    			return n.toString();
+    		}
+    	}
+    	for(Diplomat n : Diplomat.values()){
+    		if(c.equalsIgnoreCase(n.toString())){
+    			return n.toString();
+    		}
+    	}
+    	for(Healer n : Healer.values()){
+    		if(c.equalsIgnoreCase(n.toString())){
+    			return n.toString();
+    		}
+    	}
+    	for(Mage n : Mage.values()){
+    		if(c.equalsIgnoreCase(n.toString())){
+    			return n.toString();
+    		}
+    	}
+    	for(Rogue n : Rogue.values()){
+    		if(c.equalsIgnoreCase(n.toString())){
+    			return n.toString();
+    		}
+    	}
+    	for(Warrior n : Warrior.values()){
+    		if(c.equalsIgnoreCase(n.toString())){
+    			return n.toString();
+    		}
+    	}
+    	for(Class n : Class.values()){
+    		if(c.equalsIgnoreCase(n.toString())){
+    			return n.toString();
+    		}
+    	}
+		return "";
     }
 }

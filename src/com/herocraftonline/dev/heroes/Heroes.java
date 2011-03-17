@@ -13,7 +13,7 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.herocraftonline.dev.heroes.command.CommandManager;
-import com.herocraftonline.dev.heroes.command.commands.updateCommand;
+import com.herocraftonline.dev.heroes.command.commands.UpdateCommand;
 import com.herocraftonline.dev.heroes.persistance.SQLite;
 import com.herocraftonline.dev.heroes.util.ConfigManager;
 import com.herocraftonline.dev.heroes.util.Properties;
@@ -94,7 +94,7 @@ public class Heroes extends JavaPlugin {
     private void registerCommands() {
         commandManager = new CommandManager();
         // Page 1
-        commandManager.addCommand(new updateCommand(this));
+        commandManager.addCommand(new UpdateCommand(this));
     }
 
 }
