@@ -6,31 +6,35 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import org.bukkit.util.config.Configuration;
+import org.bukkit.ChatColor;
 
 import com.herocraftonline.dev.heroes.Heroes;
 
 public class ConfigManager {
     protected Heroes plugin;
-    protected File primaryConfigFile;
+    protected static File primaryConfigFile;
 
     public ConfigManager(Heroes plugin) {
         this.plugin = plugin;
-        this.primaryConfigFile = new File(plugin.getDataFolder(), "config.yml");
+        ConfigManager.primaryConfigFile = new File(plugin.getDataFolder(), "config.yml");
     }
 
-    public void reload() throws Exception {
+    public static void reload() throws Exception {
         load();
+        Heroes.log.info("Reloaded Configuration");
     }
 
-    public void load() throws Exception {
+    public static void load() throws Exception {
         checkForConfig();
 
         Configuration config = new Configuration(primaryConfigFile);
         config.load();
         loadLevelConfig(config);
+        loadDefaultConfig(config);
+        loadProperties(config);
     }
 
-    private void checkForConfig() {
+    private static void checkForConfig() {
         if (!primaryConfigFile.exists()) {
             try {
                 primaryConfigFile.getParentFile().mkdir();
@@ -53,12 +57,27 @@ public class ConfigManager {
         }
     }
 
-    public void loadLevelConfig(Configuration config) {
+    public static void loadLevelConfig(Configuration config) {
         String globals = "leveling.";
         Properties.power = config.getDouble(globals + "power", 1.03);
         Properties.baseExp = config.getInt(globals + "baseExperience", 100);
         Properties.maxExp = config.getInt(globals + "maxExperience", 90000);
         Properties.maxLevel = config.getInt(globals + "maxLevel", 99);
     }
+    
+    public static void loadDefaultConfig(Configuration config){
+    	String globals = "default.";
+    	Properties.defClass = config.getString(globals + "class");
+    	Properties.defLevel = config.getInt(globals + "level", 1);
+    }
+    
+    public static void loadProperties(Configuration config){
+    	String globals = "properties.";
+    	Properties.iConomy = config.getBoolean(globals + "iConomy", false);
+    	Properties.cColor = ChatColor.valueOf(config.getString(globals + "color", "WHITE"));
+    	Properties.swapcost = config.getInt(globals + "swapcost", 0);
+    }
+    
+    
 
 }

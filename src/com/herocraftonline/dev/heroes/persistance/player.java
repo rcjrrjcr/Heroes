@@ -1,11 +1,13 @@
 package com.herocraftonline.dev.heroes.persistance;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import org.bukkit.entity.Player;
 
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.util.Properties;
+import com.nijiko.coelho.iConomy.iConomy;
 
 /**
  * Player management
@@ -14,12 +16,16 @@ import com.herocraftonline.dev.heroes.util.Properties;
  */
 public class player {
 
-	public int getExp(Player p) throws Exception {
+	public static int getExp(Player p){
 		ResultSet pRS = Heroes.sql.trySelect("SELECT * FROM players");
-		while (pRS.next()) {
-			if (pRS.getString("name").equalsIgnoreCase(p.getName())) {
-				return pRS.getInt("exp");
+		try {
+			while (pRS.next()) {
+				if (pRS.getString("name").equalsIgnoreCase(p.getName())) {
+					return pRS.getInt("exp");
+				}
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return -1;
 	}
@@ -29,7 +35,7 @@ public class player {
 		ResultSet pRS = Heroes.sql.trySelect("SELECT * FROM players");
 		while (pRS.next()) {
 			if (pRS.getString("name").equalsIgnoreCase(p.getName())) {
-				Heroes.sql.tryUpdate("UPDATE players SET exp=" + e + " WHERE name=" + n);
+				Heroes.sql.tryUpdate("UPDATE players SET `exp`=" + e + " WHERE `name`=" + n);
 			}
 		}
 	}
@@ -48,11 +54,15 @@ public class player {
 		return null;
 	}
 
-	public static void setClass(Player p, String c) throws Exception {
+	public static void setClass(Player p, String c) {
 		String n = p.getName();
 		ResultSet pRS = Heroes.sql.trySelect("SELECT * FROM players");
-		while (pRS.next()) {
-			Heroes.sql.tryUpdate("UPDATE players SET class=" + c + " WHERE name=" + n);
+		try {
+			while (pRS.next()) {
+				Heroes.sql.tryUpdate("UPDATE players SET class='" + c + "' WHERE name='" + n + "'");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -86,5 +96,8 @@ public class player {
 		}
 		return -1;
 	}
+	
+	
+
 
 }

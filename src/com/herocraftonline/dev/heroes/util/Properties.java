@@ -3,7 +3,7 @@ package com.herocraftonline.dev.heroes.util;
 import java.io.File;
 import java.util.ArrayList;
 
-import org.bukkit.util.config.Configuration;
+import org.bukkit.ChatColor;
 
 public class Properties {
 
@@ -20,7 +20,7 @@ public class Properties {
         Paladin,
         Dreadknight,
         Gladiator,
-        Proxy
+        Samurai
     }
 
     public enum Rogue {
@@ -41,7 +41,7 @@ public class Properties {
         Cleric,
         Priest,
         Monk,
-        Proxy,
+        Bloodmage
     }
 
     public enum Diplomat {
@@ -56,14 +56,59 @@ public class Properties {
         Architect,
         Smith,
         Farmer,
-        Carpenter;
+        Carpenter,
+        Engineer
     }
-
+    
+    public static enum allClasses {
+        Warrior,
+        Rogue,
+        Mage,
+        Healer,
+        Diplomat,
+        Crafter,
+        Paladin,
+        Dreadknight,
+        Gladiator,
+        Samurai,
+        Ninja,
+        Ranger,
+        Thief,
+        Treasure_Hunter,
+        Pyro,
+        Icemage,
+        Necromancer,
+        Enchanter,
+        Cleric,
+        Priest,
+        Monk,
+        Bloodmage,
+        Ambassador,
+        Noble,
+        Lord,
+        Duke,
+        King,
+        Architect,
+        Smith,
+        Farmer,
+        Carpenter,
+        Engineer
+    }
+    //Leveling//
     public static double power;
     public static int baseExp;
     public static int maxExp;
     public static int maxLevel;
     public static ArrayList<Integer> level = new ArrayList<Integer>();
+    //Default//
+    public static String defClass;
+    public static int defLevel;
+    //Properties//
+    public static boolean iConomy;
+    public static ChatColor cColor;
+    public static String prefix;
+    public static int swapcost;
+    
     public static final File dataFolder = new File("plugins" + File.separator + "Heroes");
 
     public static void calcExp() {
@@ -75,46 +120,21 @@ public class Properties {
     }
     
     public static String validateClass(String c){
-    	for(Crafter n : Crafter.values()){
-    		if(c.equalsIgnoreCase(n.toString())){
-    			return n.toString();
-    		}
-    	}
-    	for(Diplomat n : Diplomat.values()){
-    		if(c.equalsIgnoreCase(n.toString())){
-    			return n.toString();
-    		}
-    	}
-    	for(Diplomat n : Diplomat.values()){
-    		if(c.equalsIgnoreCase(n.toString())){
-    			return n.toString();
-    		}
-    	}
-    	for(Healer n : Healer.values()){
-    		if(c.equalsIgnoreCase(n.toString())){
-    			return n.toString();
-    		}
-    	}
-    	for(Mage n : Mage.values()){
-    		if(c.equalsIgnoreCase(n.toString())){
-    			return n.toString();
-    		}
-    	}
-    	for(Rogue n : Rogue.values()){
-    		if(c.equalsIgnoreCase(n.toString())){
-    			return n.toString();
-    		}
-    	}
-    	for(Warrior n : Warrior.values()){
-    		if(c.equalsIgnoreCase(n.toString())){
-    			return n.toString();
-    		}
-    	}
-    	for(Class n : Class.values()){
+    	for(allClasses n : allClasses.values()){
     		if(c.equalsIgnoreCase(n.toString())){
     			return n.toString();
     		}
     	}
 		return "";
     }
+   
+    public static Boolean primaryClass(String c){
+    	for(Class n : Class.values()){
+    		if(c.equalsIgnoreCase(n.toString())){
+    			return true;
+    		}
+    	}
+		return false;
+    }
+    
 }
