@@ -10,6 +10,7 @@ import org.bukkit.event.Event.Priority;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.herocraftonline.dev.heroes.classes.ClassManager;
 import com.herocraftonline.dev.heroes.command.CommandManager;
 import com.herocraftonline.dev.heroes.command.commands.CClassCommand;
 import com.herocraftonline.dev.heroes.command.commands.ConfigReloadCommand;
@@ -45,6 +46,9 @@ public class Heroes extends JavaPlugin {
 
     // Variable to contain the Command Manager
     private CommandManager commandManager;
+    
+    // Variable to contain the Class Manager
+    private ClassManager classManager;
 
     // Variable for the Permissions plugin handler.
     public static PermissionHandler Permissions;
@@ -178,5 +182,13 @@ public class Heroes extends JavaPlugin {
         Heroes.iConomy = null; // When it Enables again it performs the checks anyways.
         Heroes.Permissions = null; // When it Enables again it performs the checks anyways.
         log.info(getDescription().getName() + " version " + getDescription().getVersion() + " is disabled!");
+    }
+
+    public ClassManager getClassManager() {
+        return classManager;
+    }
+
+    public void setClassManager(ClassManager classManager) {
+        this.classManager = classManager;
     }
 }

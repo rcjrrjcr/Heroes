@@ -29,15 +29,16 @@ public class HeroClass {
 
     // place holder
     public static enum ExperienceType {
-        KILLING_THINGS,
-        MINING_THINGS,
-        SELLING_THINGS
+        KILLING,
+        MINING,
+        CRAFTING,
+        LOGGING,
     }
 
     protected String name;
     protected ArmorType armorType;
     protected WeaponType weaponType;
-    protected ExperienceType experienceType;
+    protected Set<ExperienceType> experienceSources;
     protected Set<Spells> spells;
     protected HeroClass parent;
     protected Set<HeroClass> specializations;
@@ -86,17 +87,25 @@ public class HeroClass {
     public Set<HeroClass> getSpecializations() {
         return specializations;
     }
+    
+    public void setSpecializations(Set<HeroClass> specializations) {
+        this.specializations = specializations;
+    }
 
     public Set<Spells> getSpells() {
         return spells;
     }
     
-    public ExperienceType getExperienceType() {
-        return experienceType;
+    public void setSpells(Set<Spells> spells) {
+        this.spells = spells;
+    }
+    
+    public Set<ExperienceType> getExperienceSources() {
+        return experienceSources;
     }
 
-    public void setExperienceType(ExperienceType experienceType) {
-        this.experienceType = experienceType;
+    public void setExperienceSources(Set<ExperienceType> experienceSources) {
+        this.experienceSources = experienceSources;
     }
 
 }

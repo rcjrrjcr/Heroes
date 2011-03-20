@@ -8,8 +8,8 @@ import java.io.OutputStream;
 import org.bukkit.ChatColor;
 import org.bukkit.util.config.Configuration;
 
-import com.herocraftonline.dev.heroes.HPluginListener;
 import com.herocraftonline.dev.heroes.Heroes;
+import com.herocraftonline.dev.heroes.classes.ClassManager;
 
 public class ConfigManager {
 	protected Heroes plugin;
@@ -35,6 +35,9 @@ public class ConfigManager {
 			loadLevelConfig(config);
 			loadDefaultConfig(config);
 			loadProperties(config);
+			
+			plugin.setClassManager(new ClassManager());
+			// TODO: load classes
 		}catch(Exception e){
 			e.printStackTrace();
 		}
