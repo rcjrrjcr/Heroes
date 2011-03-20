@@ -4,55 +4,53 @@ import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 import com.herocraftonline.dev.heroes.Heroes;
 
 @SuppressWarnings("unused")
 public class SQLite {
-    private final Heroes pluginMain;
 
     // Change this //
-    String dbname = "heroes.db";
+    private final String dbname = "./plugins/Heroes/heroes.db";
 
-    private Connection SQLiteConnection;
-    private Statement SQLiteStatement;
-    private Driver SQLiteDriver;
-
-    public SQLite(Heroes instance) {
-        pluginMain = instance;
-        Heroes.log.info("Running database connection...");
+    public Connection getConnection() {
+        Connection connection = null;
         try {
             Class.forName("org.sqlite.JDBC");
-            SQLiteConnection = DriverManager.getConnection("jdbc:sqlite:" + dbname);
-            SQLiteStatement = SQLiteConnection.createStatement();
-            SQLiteConnection.setAutoCommit(true);
+            connection = DriverManager.getConnection("jdbc:sqlite:" + dbname);
+            connection.setAutoCommit(true);
         } catch (Exception e) {
             Heroes.log.warning(("SQLite connection failed: " + e.toString()));
         }
-    }
-
-    public Connection getConnection() {
-        return SQLiteConnection;
-    }
-
-    public Statement getStatement() {
-        return SQLiteStatement;
+        return connection;
     }
 
     public void tryUpdate(String sqlString) {
         try {
-            getStatement().executeUpdate(sqlString);
+            System.out.println(sqlString);
+            Connection conn = getConnection();
+            Statement st = conn.createStatement();
+            st.executeUpdate(sqlString);
+            st.close();
+            conn.close();
         } catch (Exception e) {
             Heroes.log.warning("The following statement failed: " + sqlString);
             Heroes.log.warning("Statement failed: " + e.toString());
         }
+
     }
 
     public ResultSet trySelect(String sqlString) {
         try {
-            System.out.println(getStatement().toString());
-            return getStatement().executeQuery(sqlString);
+            System.out.println(sqlString);
+            Connection conn = getConnection();
+            Statement st = conn.createStatement();
+            ResultSet result = st.executeQuery(sqlString);
+            st.close();
+            conn.close();
+            return result;
         } catch (Exception e) {
             Heroes.log.warning("Statement failed: " + e.toString());
         }

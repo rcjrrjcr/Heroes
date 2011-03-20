@@ -5,7 +5,6 @@ import org.bukkit.entity.Player;
 
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.BaseCommand;
-import com.herocraftonline.dev.heroes.util.ConfigManager;
 
 public class ConfigReloadCommand extends BaseCommand {
 
@@ -26,12 +25,11 @@ public class ConfigReloadCommand extends BaseCommand {
 				return;
 			}		
 			try {
-				ConfigManager.reload();
+			    plugin.configManager.reload();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-
 	}
 
 }

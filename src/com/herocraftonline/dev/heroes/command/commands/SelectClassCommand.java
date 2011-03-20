@@ -30,7 +30,7 @@ public class SelectClassCommand extends BaseCommand {
 			return;
 		}
 		if(sender instanceof Player){
-			if(Properties.primaryClass(player.getClass(p)) && player.getLevel(player.getExp(p)) > 20){
+			if(Properties.primaryClass(player.getClass(p))){ // && player.getLevel(player.getExp(p)) > 20
 				Class eClass = Properties.Class.valueOf(player.getClass(p));
 				switch(eClass){
 				case Warrior:

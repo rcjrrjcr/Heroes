@@ -19,12 +19,12 @@ public class ConfigManager {
         ConfigManager.primaryConfigFile = new File(plugin.getDataFolder(), "config.yml");
     }
 
-    public static void reload() throws Exception {
+    public void reload() throws Exception {
         load();
         Heroes.log.info("Reloaded Configuration");
     }
 
-    public static void load() throws Exception {
+    public void load() throws Exception {
         checkForConfig();
 
         Configuration config = new Configuration(primaryConfigFile);

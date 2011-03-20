@@ -1,15 +1,11 @@
 package com.herocraftonline.dev.heroes.command.commands;
 
-
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.BaseCommand;
 import com.herocraftonline.dev.heroes.util.Updater;
-
-
-
 
 public class UpdateCommand extends BaseCommand {
 

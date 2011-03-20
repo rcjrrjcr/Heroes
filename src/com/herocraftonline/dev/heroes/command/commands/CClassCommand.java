@@ -1,6 +1,5 @@
 package com.herocraftonline.dev.heroes.command.commands;
 
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -10,6 +9,7 @@ import com.herocraftonline.dev.heroes.persistance.player;
 import com.herocraftonline.dev.heroes.util.Misc;
 import com.herocraftonline.dev.heroes.util.Properties;
 import com.nijiko.coelho.iConomy.iConomy;
+
 public class CClassCommand extends BaseCommand {
 	public CClassCommand(Heroes plugin) {
 		super(plugin);
@@ -45,10 +45,11 @@ public class CClassCommand extends BaseCommand {
 	
 	public static void changeClass(Player p, String c){
 		if(Properties.iConomy == true){
-			Heroes.log.info("iConomy setting found!");
+			//Heroes.log.info("iConomy setting found!");
 			if(iConomy.getBank().getAccount(p.getName()).hasOver(Properties.swapcost)){
 				iConomy.getBank().getAccount(p.getName()).add(Properties.swapcost * -1);
 			}
+			player.setClass(p, c);
 		}else{
 			player.setClass(p, c);
 		}
