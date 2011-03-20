@@ -30,6 +30,7 @@ public class SQLite {
     public void tryUpdate(String sqlString) {
         try {
             System.out.println(sqlString);
+            
             Connection conn = getConnection();
             Statement st = conn.createStatement();
             st.executeUpdate(sqlString);
@@ -45,6 +46,7 @@ public class SQLite {
     public ResultSet trySelect(String sqlString) {
         try {
             System.out.println(sqlString);
+            
             Connection conn = getConnection();
             Statement st = conn.createStatement();
             ResultSet result = st.executeQuery(sqlString);

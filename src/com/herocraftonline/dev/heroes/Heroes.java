@@ -62,7 +62,7 @@ public class Heroes extends JavaPlugin {
 		
 		Properties.calcExp();
 		
-		sql.tryUpdate("CREATE TABLE IF NOT EXISTS `players` (`id` INT PRIMARY KEY, `name` VARCHAR, `class` VARCHAR, `exp` INT, `mana` INT)");
+		sql.tryUpdate("CREATE TABLE IF NOT EXISTS `players` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` VARCHAR, `class` VARCHAR, `exp` INT, `mana` INT)");
 		
 		setupPermissions();
 		

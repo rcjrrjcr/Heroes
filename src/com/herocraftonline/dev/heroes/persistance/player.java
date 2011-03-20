@@ -1,7 +1,9 @@
 package com.herocraftonline.dev.heroes.persistance;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import org.bukkit.entity.Player;
 
@@ -35,19 +37,20 @@ public class player {
 	}
 
 	public static String getClass(Player p) {
-	    String test = null;
-	    try{
-            ResultSet pRS = Heroes.sql.trySelect("SELECT * FROM players");
-            while (pRS.next()) {
-                if (pRS.getString("name").equalsIgnoreCase(p.getName())) {
-                    test = pRS.getString("class");
-                    System.out.print(test);
-                }
-            }
-        }catch(Exception e){
+        String pClass = null;
+	        
+        try {
+            Connection conn = Heroes.sql.getConnection();
+            Statement s = conn.createStatement();
+            ResultSet r = s.executeQuery("SELECT * FROM players");
+            r.next();
+            pClass = r.getString("class");
+            r.close() ;
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-        return test;
+	    
+        return pClass;
 	}
 
 	public static void setClass(Player p, String c) {
@@ -61,18 +64,20 @@ public class player {
 	}
 
 	public static boolean checkPlayer(String n) {
-		ResultSet pRS = Heroes.sql.trySelect("SELECT * FROM players WHERE name='" + n + "'");
-		
-		int i = 0;
-		try {
-	        while(pRS.next()){
-	            i++;
-	        }
-        } catch (SQLException e) { e.printStackTrace(); }
-		
-        System.out.print(pRS.toString());
-        
-	    if(i>0){
+	    int count = 0;
+	    
+        try {
+            Connection conn = Heroes.sql.getConnection();
+            Statement s = conn.createStatement();
+            ResultSet r = s.executeQuery("SELECT COUNT(*) AS rowcount FROM players WHERE name='" + n + "'");
+            r.next();
+            count = r.getInt("rowcount") ;
+            r.close() ;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+	    
+	    if(count>0){
             return true;
         } else {
             return false;
