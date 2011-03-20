@@ -17,7 +17,7 @@ public class UpdateCommand extends BaseCommand {
         minArgs = 0;
         maxArgs = 0;
         identifiers.add("heroes admin update");
-    }
+    } 
 
     @Override
     public void execute(CommandSender sender, String[] args) {

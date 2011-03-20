@@ -4,11 +4,11 @@ import org.bukkit.event.server.PluginEvent;
 import org.bukkit.event.server.ServerListener;
 import org.bukkit.plugin.Plugin;
 
+
 /**
  * Checks for plugins whenever one is enabled
  */
 public class HPluginListener extends ServerListener {
-
     private Heroes plugin;
 
     public HPluginListener(Heroes instance) {
@@ -18,8 +18,8 @@ public class HPluginListener extends ServerListener {
     @Override
     public void onPluginEnabled(PluginEvent event) {
         // First grab the Plugin.
-        Plugin plugin = event.getPlugin(); // We'll check against the Plugins name, it's not fool proof but will do.
-
+        Plugin plugin = event.getPlugin(); // We'll check against the Plugins name, it's not fool proof but will do
+		
         // Check if the name is iConomy.
         if (plugin.getDescription().getName().equals("iConomy")) {
             // Check if we haven't already setup iConomy.
@@ -37,5 +37,6 @@ public class HPluginListener extends ServerListener {
                 this.plugin.setupPermissions();
             }
         }
+        
     }
 }
