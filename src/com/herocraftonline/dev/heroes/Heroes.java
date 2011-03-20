@@ -38,10 +38,10 @@ public class Heroes extends JavaPlugin {
     private final HPluginListener pluginListener = new HPluginListener(this);
 
     // Create a new instance of the ConfigManager
-    public ConfigManager configManager = new ConfigManager(this);
+    public ConfigManager configManager;
 
     // Create a new instance of our SQLite manager.
-    public static SQLite sql = new SQLite();
+    public static SQLite sql;
 
     // Variable to contain the Command Manager
     private CommandManager commandManager;
@@ -54,9 +54,22 @@ public class Heroes extends JavaPlugin {
     // Variable for the iConomy plugin handler.
     private static iConomy iConomy = null;
 
+    public void onLoad() {
+        getDataFolder().mkdirs(); // Create the Heroes Plugin Directory.
+        sql = new SQLite();
+        configManager = new ConfigManager(this);
+    }
+
     @Override
     public void onEnable() {
         log.info(getDescription().getName() + " version " + getDescription().getVersion() + " is enabled!"); // Simple Name and Version output.
+
+        // Attempt to load the Configuration file.
+        try {
+            configManager.load();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         // Setup the Property for Levels * Exp
         Properties.calcExp();
@@ -71,9 +84,6 @@ public class Heroes extends JavaPlugin {
 
         // Perform the Permissions check.
         setupPermissions();
-    }
-    
-    public void onLoad() {
     }
 
     /**

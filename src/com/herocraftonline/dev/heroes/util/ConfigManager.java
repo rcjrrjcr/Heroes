@@ -18,7 +18,6 @@ public class ConfigManager {
 	public ConfigManager(Heroes plugin) {
 		this.plugin = plugin;
 		this.primaryConfigFile = new File(plugin.getDataFolder(), "config.yml");
-		load();
 	}
 
 
