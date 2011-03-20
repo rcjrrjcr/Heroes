@@ -1,10 +1,8 @@
 package com.herocraftonline.dev.heroes.persistance;
 
 import java.sql.Connection;
-import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 
 import com.herocraftonline.dev.heroes.Heroes;
@@ -30,7 +28,7 @@ public class SQLite {
     public void tryUpdate(String sqlString) {
         try {
             System.out.println(sqlString);
-            
+
             Connection conn = getConnection();
             Statement st = conn.createStatement();
             st.executeUpdate(sqlString);
@@ -46,7 +44,7 @@ public class SQLite {
     public ResultSet trySelect(String sqlString) {
         try {
             System.out.println(sqlString);
-            
+
             Connection conn = getConnection();
             Statement st = conn.createStatement();
             ResultSet result = st.executeQuery(sqlString);

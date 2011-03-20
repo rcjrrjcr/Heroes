@@ -130,8 +130,7 @@ public class Properties {
    
     public static Boolean primaryClass(String c){
         if(c==null) return false;
-        
-    	for(Class n : Class.values()){
+
     		if(c.equalsIgnoreCase(n.toString())){
     			return true;
     		}
