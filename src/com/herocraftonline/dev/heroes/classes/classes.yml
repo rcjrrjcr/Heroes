@@ -1,0 +1,10 @@
+#Mock up of a class. More would be added and obviously more customization will be implemented.
+
+Warrior:
+    parent: null
+    permitted-armour: [DIAMOND, IRON]
+    permitted-weapons: [WOOD, STONE, IRON]
+    permitted-spells: [SPELL_A]
+    experience-type: 'KILLING_THINGS'
+    
+    

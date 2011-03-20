@@ -11,6 +11,14 @@ public class HeroClass {
         GOLD,
         DIAMOND
     }
+    
+    public static enum WeaponType {
+    	WOOD,
+    	STONE,
+    	IRON,
+    	GOLD,
+    	DIAMOND
+    }
 
     // place holder
     public static enum Spells {
@@ -28,6 +36,7 @@ public class HeroClass {
 
     protected String name;
     protected ArmorType armorType;
+    protected WeaponType weaponType;
     protected ExperienceType experienceType;
     protected Set<Spells> spells;
     protected HeroClass parent;
@@ -57,6 +66,14 @@ public class HeroClass {
     public void setArmorType(ArmorType armor) {
         this.armorType = armor;
     }
+    
+    public WeaponType getWeaponType() {
+    	return weaponType;
+    }
+    
+    public void setWeaponType(WeaponType weapon){
+    	this.weaponType = weapon;
+    }
 
     public HeroClass getParent() {
         return parent == null ? null : parent;
@@ -73,7 +90,7 @@ public class HeroClass {
     public Set<Spells> getSpells() {
         return spells;
     }
-
+    
     public ExperienceType getExperienceType() {
         return experienceType;
     }
