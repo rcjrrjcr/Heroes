@@ -59,7 +59,7 @@ public class Properties {
         Carpenter,
         Engineer
     }
-    
+
     public static enum allClasses {
         Warrior,
         Rogue,
@@ -94,21 +94,22 @@ public class Properties {
         Carpenter,
         Engineer
     }
-    //Leveling//
+
+    // Leveling//
     public static double power;
     public static int baseExp;
     public static int maxExp;
     public static int maxLevel;
     public static ArrayList<Integer> level = new ArrayList<Integer>();
-    //Default//
+    // Default//
     public static String defClass;
     public static int defLevel;
-    //Properties//
+    // Properties//
     public static boolean iConomy;
     public static ChatColor cColor;
     public static String prefix;
     public static int swapcost;
-    
+
     public static final File dataFolder = new File("plugins" + File.separator + "Heroes");
 
     public static void calcExp() {
@@ -118,24 +119,28 @@ public class Properties {
             level.add((int) (A / 2 * Math.pow(n - 1, power) + baseExp));
         }
     }
-    
-    public static String validateClass(String c){
-    	for(allClasses n : allClasses.values()){
-    		if(c.equalsIgnoreCase(n.toString())){
-    			return n.toString();
-    		}
-    	}
-		return "";
-    }
-   
-    public static Boolean primaryClass(String c){
-        if(c==null) return false;
 
-    		if(c.equalsIgnoreCase(n.toString())){
-    			return true;
-    		}
-    	}
-		return false;
+    public static String validateClass(String c) {
+        for (allClasses n : allClasses.values()) {
+            if (c.equalsIgnoreCase(n.toString())) {
+                return n.toString();
+            }
+        }
+        return "";
     }
-    
+
+    public static Boolean primaryClass(String c) {
+        return true;
+        /*
+        if (c == null) {
+            return false;
+        }
+
+        if (c.equalsIgnoreCase(n.toString())) {
+            return true;
+        }
+        return false;
+        */
+    }
+
 }

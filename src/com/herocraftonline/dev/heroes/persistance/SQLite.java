@@ -7,7 +7,6 @@ import java.sql.Statement;
 
 import com.herocraftonline.dev.heroes.Heroes;
 
-@SuppressWarnings("unused")
 public class SQLite {
 
     // Change this //
