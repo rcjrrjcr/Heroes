@@ -1,5 +1,6 @@
 package com.herocraftonline.dev.heroes;
 
+import java.io.File;
 import java.util.logging.Logger;
 
 import org.bukkit.command.Command;
@@ -38,6 +39,9 @@ public class Heroes extends JavaPlugin {
     private final HPlayerListener playerListener = new HPlayerListener(this);
     private final HPluginListener pluginListener = new HPluginListener(this);
 
+    // Using this instead of getDataFolder(), getDataFolder() uses the File Name. We wan't a constant folder name.
+    public static final File dataFolder = new File("plugins" + File.separator + "Heroes");
+    
     // Create a new instance of the ConfigManager
     public ConfigManager configManager;
 
@@ -59,7 +63,7 @@ public class Heroes extends JavaPlugin {
     private static iConomy iConomy = null;
 
     public void onLoad() {
-        getDataFolder().mkdirs(); // Create the Heroes Plugin Directory.
+        dataFolder.mkdirs(); // Create the Heroes Plugin Directory.
         sql = new SQLite();
         configManager = new ConfigManager(this);
     }
