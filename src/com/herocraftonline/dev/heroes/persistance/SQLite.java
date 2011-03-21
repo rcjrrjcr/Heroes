@@ -3,15 +3,20 @@ package com.herocraftonline.dev.heroes.persistance;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 import com.herocraftonline.dev.heroes.Heroes;
 
 public class SQLite {
 
-    // Change this //
-    private final String dbname = "./plugins/Heroes/heroes.db";
+    // Create a String to hold the Database location.
+    private final String dbname = Heroes.dataFolder + "/heroes.db";
 
+    /**
+     * Grab a new Database Connection
+     * @return
+     */
     public Connection getConnection() {
         Connection connection = null;
         try {
@@ -24,6 +29,10 @@ public class SQLite {
         return connection;
     }
 
+    /**
+     * This function performs Inserts & Updates.
+     * @param sqlString
+     */
     public void tryUpdate(String sqlString) {
         try {
             System.out.println(sqlString);
@@ -40,6 +49,11 @@ public class SQLite {
 
     }
 
+    /**
+     * This function performs Selects and returns a ResultSet.
+     * @param sqlString
+     * @return
+     */
     public ResultSet trySelect(String sqlString) {
         try {
             System.out.println(sqlString);
@@ -55,21 +69,24 @@ public class SQLite {
         }
         return null;
     }
-
-    public void createTable(String SQLStat) throws Exception {
-        tryUpdate(SQLStat);
-    }
-
-    public int tableSize(String table) {
-        int size = 0;
+    
+    /**
+     * Return the Row Count of the Query.
+     * @param query
+     * @return
+     */
+    public int rowCount(String query){
+        int count = 0;
         try {
-            ResultSet pRS = trySelect("SELECT * FROM " + table);
-            while (pRS.next()) {
-                size++;
-            }
-        } catch (Exception e) {
+            Connection conn = Heroes.sql.getConnection();
+            Statement s = conn.createStatement();
+            ResultSet r = s.executeQuery(query);
+            r.next();
+            count = r.getInt("rowcount");
+            r.close();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-        return size;
+        return count;
     }
 }
