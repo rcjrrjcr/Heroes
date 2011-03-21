@@ -81,12 +81,14 @@ public class SQLite {
             Connection conn = Heroes.sql.getConnection();
             Statement s = conn.createStatement();
             ResultSet r = s.executeQuery(query);
-            r.last();
-            count = r.getRow();
+            while(r.next()) {
+                count++;
+            }
             r.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        System.out.print(count);
         return count;
     }
 }
