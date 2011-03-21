@@ -1,9 +1,7 @@
 package com.herocraftonline.dev.heroes.persistance;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import org.bukkit.entity.Player;
 
@@ -26,9 +24,7 @@ public class PlayerManager {
         String name = p.getName(); // Grab the players name.
         int value = -1;
         try {
-            Connection conn = Heroes.sql.getConnection();
-            Statement s = conn.createStatement();
-            ResultSet r = s.executeQuery("SELECT * FROM players WHERE name='" + name + "'");
+            ResultSet r = Heroes.sql.trySelect("SELECT * FROM players WHERE name='" + name + "'");
             r.next();
             value = r.getInt("exp");
             r.close();
@@ -58,9 +54,7 @@ public class PlayerManager {
         String pClass = null;
         String name = p.getName();
         try {
-            Connection conn = Heroes.sql.getConnection();
-            Statement s = conn.createStatement();
-            ResultSet r = s.executeQuery("SELECT * FROM players WHERE name='" + name + "'");
+            ResultSet r = Heroes.sql.trySelect("SELECT * FROM players WHERE name='" + name + "'");
             r.next();
             pClass = r.getString("class");
             r.close();
