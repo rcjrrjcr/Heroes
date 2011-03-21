@@ -60,10 +60,7 @@ public class SQLite {
 
             Connection conn = getConnection();
             Statement st = conn.createStatement();
-            ResultSet result = st.executeQuery(sqlString);
-            st.close();
-            conn.close();
-            return result;
+            return st.executeQuery(sqlString);
         } catch (Exception e) {
             Heroes.log.warning("Statement failed: " + e.toString());
         }
@@ -85,6 +82,8 @@ public class SQLite {
                 count++;
             }
             r.close();
+            s.close();
+            conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
