@@ -75,15 +75,11 @@ public class SQLite {
     public int rowCount(String query){
         int count = 0;
         try {
-            Connection conn = Heroes.sql.getConnection();
-            Statement s = conn.createStatement();
-            ResultSet r = s.executeQuery(query);
+            ResultSet r = Heroes.sql.trySelect(query);
             while(r.next()) {
                 count++;
             }
             r.close();
-            s.close();
-            conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
