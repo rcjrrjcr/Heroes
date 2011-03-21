@@ -88,7 +88,6 @@ public class SQLite {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.print(count);
         return count;
     }
 }
