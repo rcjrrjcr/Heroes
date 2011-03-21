@@ -96,7 +96,7 @@ public class PlayerManager {
      * @return
      */
     public static boolean checkPlayer(String n) {
-        String query = "SELECT COUNT(*) AS rowcount FROM players WHERE name='" + n + "'";
+        String query = "SELECT * FROM players WHERE name='" + n + "'";
         if (Heroes.sql.rowCount(query) > 0) {
             return true;
         } else {

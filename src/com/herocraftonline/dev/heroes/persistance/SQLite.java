@@ -81,8 +81,8 @@ public class SQLite {
             Connection conn = Heroes.sql.getConnection();
             Statement s = conn.createStatement();
             ResultSet r = s.executeQuery(query);
-            r.next();
-            count = r.getInt("rowcount");
+            r.last();
+            count = r.getRow();
             r.close();
         } catch (SQLException e) {
             e.printStackTrace();
