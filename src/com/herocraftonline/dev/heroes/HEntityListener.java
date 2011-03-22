@@ -2,7 +2,6 @@ package com.herocraftonline.dev.heroes;
 
 import java.util.HashMap;
 import java.util.Set;
-import java.util.logging.Level;
 
 import org.bukkit.entity.CreatureType;
 import org.bukkit.entity.Entity;
@@ -53,7 +52,6 @@ public class HEntityListener extends EntityListener {
 
     public void onEntityDamage(EntityDamageEvent event) {
         Entity defender = event.getEntity();
-        plugin.log(Level.SEVERE, defender.toString() + "  " + defender.getClass());
         if (defender instanceof LivingEntity) {
             if (((LivingEntity) defender).getHealth() - event.getDamage() <= 0) {
                 Entity attacker = null;
