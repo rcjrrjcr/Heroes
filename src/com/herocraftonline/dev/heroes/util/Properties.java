@@ -5,8 +5,11 @@ import java.util.ArrayList;
 
 import org.bukkit.ChatColor;
 
-public class Properties {
+import com.herocraftonline.dev.heroes.Heroes;
+import com.herocraftonline.dev.heroes.classes.HeroClass;
 
+public class Properties {
+	private static Heroes plugin;
     public enum Class {
         Warrior,
         Rogue,
@@ -121,26 +124,21 @@ public class Properties {
     }
 
     public static String validateClass(String c) {
-        for (allClasses n : allClasses.values()) {
-            if (c.equalsIgnoreCase(n.toString())) {
-                return n.toString();
-            }
-        }
+    	for (HeroClass classType : plugin.getClassManager().getClasses()){
+    		if(classType.getName().equalsIgnoreCase(c)){
+    			return classType.getName();
+    		}
+    	}
         return "";
     }
 
     public static Boolean primaryClass(String c) {
-        return true;
-        /*
-        if (c == null) {
-            return false;
-        }
-
-        if (c.equalsIgnoreCase(n.toString())) {
-            return true;
-        }
-        return false;
-        */
+    	for (HeroClass classType : plugin.getClassManager().getClasses()){
+    		if(classType.getParent() == null){
+    			return true;
+    		}
+    	}
+		return false;
     }
 
 }
