@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.BaseCommand;
 import com.herocraftonline.dev.heroes.persistance.PlayerManager;
+import com.herocraftonline.dev.heroes.util.Messaging;
 import com.herocraftonline.dev.heroes.util.Properties;
 import com.nijiko.coelho.iConomy.iConomy;
 
@@ -24,20 +25,19 @@ public class CClassCommand extends BaseCommand {
     public void execute(CommandSender sender, String[] args) {
         if (sender instanceof Player) {
             if (Properties.validateClass(args[0]) == "") {
-                Heroes.sendMessage((Player) sender, "Sorry, that isn't a class!");
+                Messaging.send(sender, "Sorry, that isn't a class!");
                 return;
             }
             String cClass = Properties.validateClass(args[0]);
             if (Properties.primaryClass(cClass)) {
                 if (PlayerManager.getClass((Player) sender) == "Vagrant") {
                     PlayerManager.setClass((Player) sender, cClass);
-                    Heroes.sendMessage((Player) sender, "Welcome to the path of the " + cClass);
                 } else {
                     changeClass((Player) sender, cClass);
-                    Heroes.sendMessage((Player) sender, "Welcome to the path of the " + cClass);
                 }
+                Messaging.send(sender, "Welcome to the path of the $1!", cClass);
             } else {
-                Heroes.sendMessage((Player) sender, "Sorry " + cClass + " isn't a primary class!");
+                Messaging.send(sender, "Sorry, $1 isn't a primary class!", cClass);
             }
         }
     }

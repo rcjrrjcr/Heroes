@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.BaseCommand;
 import com.herocraftonline.dev.heroes.persistance.PlayerManager;
+import com.herocraftonline.dev.heroes.util.Messaging;
 import com.herocraftonline.dev.heroes.util.Properties;
 import com.herocraftonline.dev.heroes.util.Properties.Class;
 
@@ -37,55 +38,55 @@ public class SelectClassCommand extends BaseCommand {
                     case Warrior:
                         if (Properties.Warrior.valueOf(s) != null) {
                             PlayerManager.setClass(p, s);
-                            Heroes.sendMessage(p, "Well Done! " + s);
+                            Messaging.send(p, "Well done $1!", s);
                         } else {
-                            Heroes.sendMessage(p, "Sorry, that class doens't belong to " + eClass.toString());
+                            Messaging.send(p, "Sorry, that class doesn't belong to $1", eClass.toString());
                         }
                         break;
                     case Rogue:
                         if (Properties.Rogue.valueOf(s) != null) {
                             PlayerManager.setClass(p, s);
-                            Heroes.sendMessage(p, "Well Done! " + s);
+                            Messaging.send(p, "Well done $1!", s);
                         } else {
-                            Heroes.sendMessage(p, "Sorry, that class doens't belong to " + eClass.toString());
+                            Messaging.send(p, "Sorry, that class doesn't belong to $1", eClass.toString());
                         }
                         break;
 
                     case Mage:
                         if (Properties.Mage.valueOf(s) != null) {
                             PlayerManager.setClass(p, s);
-                            Heroes.sendMessage(p, "Well Done! " + s);
+                            Messaging.send(p, "Well done $1!", s);
                         } else {
-                            Heroes.sendMessage(p, "Sorry, that class doens't belong to " + eClass.toString());
+                            Messaging.send(p, "Sorry, that class doesn't belong to $1", eClass.toString());
                         }
                         break;
                     case Healer:
                         if (Properties.Healer.valueOf(s) != null) {
                             PlayerManager.setClass(p, s);
-                            Heroes.sendMessage(p, "Well Done! " + s);
+                            Messaging.send(p, "Well done $1!", s);
                         } else {
-                            Heroes.sendMessage(p, "Sorry, that class doens't belong to " + eClass.toString());
+                            Messaging.send(p, "Sorry, that class doesn't belong to $1", eClass.toString());
                         }
                         break;
                     case Diplomat:
                         if (Properties.Diplomat.valueOf(s) != null) {
                             PlayerManager.setClass(p, s);
-                            Heroes.sendMessage(p, "Well Done! " + s);
+                            Messaging.send(p, "Well done $1!", s);
                         } else {
-                            Heroes.sendMessage(p, "Sorry, that class doens't belong to " + eClass.toString());
+                            Messaging.send(p, "Sorry, that class doesn't belong to $1", eClass.toString());
                         }
                         break;
                     case Crafter:
                         if (Properties.Crafter.valueOf(s) != null) {
                             PlayerManager.setClass(p, s);
-                            Heroes.sendMessage(p, "Well Done! " + s);
+                            Messaging.send(p, "Well done $1!", s);
                         } else {
-                            Heroes.sendMessage(p, "Sorry, that class doens't belong to " + eClass.toString());
+                            Messaging.send(p, "Sorry, that class doesn't belong to $1", eClass.toString());
                         }
                         break;
                 }
             } else {
-                Heroes.sendMessage(p, "Sorry, you don't meet the requirements to advance");
+                Messaging.send(p, "Sorry, you don't meet the requirement to advance");
             }
         }
 

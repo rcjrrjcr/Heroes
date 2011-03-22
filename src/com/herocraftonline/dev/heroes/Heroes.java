@@ -5,7 +5,6 @@ import java.util.logging.Logger;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.plugin.Plugin;
@@ -166,16 +165,6 @@ public class Heroes extends JavaPlugin {
      */
     public static iConomy getiConomy() {
         return iConomy;
-    }
-
-    /**
-     * Send a message to the Player with the Prefix Colored.
-     * 
-     * @param p Player to send message to.
-     * @param m Message contents.
-     */
-    public static void sendMessage(Player p, String m) {
-        p.sendMessage(Properties.cColor + "Heroes: " + m);
     }
 
     /**
