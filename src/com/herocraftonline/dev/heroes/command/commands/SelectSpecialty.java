@@ -36,13 +36,13 @@ public class SelectSpecialty extends BaseCommand {
                         playerManager.setClass(player, subClass);
                         Messaging.send(player, "Well done $1!", subClass.getName());
                     } else {
-                        Messaging.send(player, "Sorry, that class doesn't belong to $1.", playerClass.getName());
+                        Messaging.send(player, "Sorry, that specialty doesn't belong to $1.", playerClass.getName());
                     }
                 } else {
-                    Messaging.send(player, "Sorry, that isn't a class!");
+                    Messaging.send(player, "Sorry, that isn't a specialty!");
                 }
             } else {
-                Messaging.send(player, "You have already selected a secondary class!");
+                Messaging.send(player, "You have already selected a specialty!");
             }
         }
     }
