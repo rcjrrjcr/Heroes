@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
+import java.util.logging.Level;
 
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
@@ -37,7 +38,7 @@ public class Updater {
             PluginManager pm = plugin.getServer().getPluginManager();
             pm.loadPlugin(file);
         } catch (Throwable ex) {
-            Heroes.log.info("Could not load plugin");
+            plugin.log(Level.WARNING, "Could not load plugin");
         }
     }
 

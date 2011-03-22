@@ -5,14 +5,20 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
 
 import com.herocraftonline.dev.heroes.Heroes;
 
 public class SQLite {
-
+    
     // Create a String to hold the Database location.
     private final String dbname = Heroes.dataFolder + "/heroes.db";
+    private final Heroes plugin;
 
+    public SQLite(Heroes plugin) {
+        this.plugin = plugin;
+    }
+    
     /**
      * Grab a new Database Connection
      * @return
@@ -24,7 +30,7 @@ public class SQLite {
             connection = DriverManager.getConnection("jdbc:sqlite:" + dbname);
             connection.setAutoCommit(true);
         } catch (Exception e) {
-            Heroes.log.warning(("SQLite connection failed: " + e.toString()));
+            plugin.log(Level.WARNING, "SQLite connection failed: " + e.toString());
         }
         return connection;
     }
@@ -35,7 +41,7 @@ public class SQLite {
      */
     public void tryUpdate(String sqlString) {
         try {
-            System.out.println(sqlString);
+            plugin.log(Level.INFO, sqlString);
 
             Connection conn = getConnection();
             Statement st = conn.createStatement();
@@ -43,8 +49,8 @@ public class SQLite {
             st.close();
             conn.close();
         } catch (Exception e) {
-            Heroes.log.warning("The following statement failed: " + sqlString);
-            Heroes.log.warning("Statement failed: " + e.toString());
+            plugin.log(Level.WARNING, "The following statement failed: " + sqlString);
+            plugin.log(Level.WARNING, "Statement failed: " + e.toString());
         }
 
     }
@@ -62,7 +68,7 @@ public class SQLite {
             Statement st = conn.createStatement();
             return st.executeQuery(sqlString);
         } catch (Exception e) {
-            Heroes.log.warning("Statement failed: " + e.toString());
+            plugin.log(Level.WARNING, "Statement failed: " + e.toString());
         }
         return null;
     }

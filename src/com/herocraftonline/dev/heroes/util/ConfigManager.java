@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.logging.Level;
 
 import org.bukkit.ChatColor;
 import org.bukkit.util.config.Configuration;
@@ -14,21 +15,24 @@ import com.herocraftonline.dev.heroes.classes.ClassManager;
 public class ConfigManager {
 	protected Heroes plugin;
 	protected File primaryConfigFile;
+	protected File classConfigFile;
 
 	public ConfigManager(Heroes plugin) {
 		this.plugin = plugin;
 		this.primaryConfigFile = new File(plugin.getDataFolder(), "config.yml");
+		this.classConfigFile = new File(plugin.getDataFolder(), "classes.yml");
 	}
 
 
 	public void reload() throws Exception {
 		load();
-		Heroes.log.info("Reloaded Configuration");
+	    plugin.log(Level.INFO, "Reloaded Configuration");
 	}
 
 	public void load() {
 		try{
-			checkForConfig();
+		    checkForConfig(primaryConfigFile);
+		    checkForConfig(classConfigFile);
 
 			Configuration config = new Configuration(primaryConfigFile);
 			config.load();
@@ -36,20 +40,22 @@ public class ConfigManager {
 			loadDefaultConfig(config);
 			loadProperties(config);
 			
-			plugin.setClassManager(new ClassManager());
-			// TODO: load classes
+			ClassManager classManager = new ClassManager(plugin);
+			classManager.loadClasses(classConfigFile);
+			plugin.setClassManager(new ClassManager(plugin));
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 	}
 
-	private void checkForConfig() {
-		if (!primaryConfigFile.exists()) {
+	private void checkForConfig(File config) {
+		if (!config.exists()) {
 			try {
-				primaryConfigFile.getParentFile().mkdir();
-				primaryConfigFile.createNewFile();
-				OutputStream output = new FileOutputStream(primaryConfigFile, false);
-				InputStream input = ConfigManager.class.getResourceAsStream("config.yml");
+			    plugin.log(Level.WARNING, "File " + config.getName() + " not found - generating defaults.");
+			    config.getParentFile().mkdir();
+			    config.createNewFile();
+				OutputStream output = new FileOutputStream(config, false);
+				InputStream input = ConfigManager.class.getResourceAsStream(config.getName());
 				byte[] buf = new byte[8192];
 				while (true) {
 					int length = input.read(buf);

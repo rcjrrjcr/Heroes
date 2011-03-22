@@ -1,6 +1,7 @@
 package com.herocraftonline.dev.heroes;
 
 import java.io.File;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.bukkit.command.Command;
@@ -32,7 +33,7 @@ import com.nijiko.coelho.iConomy.iConomy;
  */
 public class Heroes extends JavaPlugin {
     // Simple hook to Minecrafts logger so we can output to the console.
-    public static final Logger log = Logger.getLogger("Minecraft");
+    private static final Logger log = Logger.getLogger("Minecraft");
 
     // Setup the Player and Plugin listener for Heroes.
     private final HPlayerListener playerListener = new HPlayerListener(this);
@@ -63,13 +64,13 @@ public class Heroes extends JavaPlugin {
 
     public void onLoad() {
         dataFolder.mkdirs(); // Create the Heroes Plugin Directory.
-        sql = new SQLite();
+        sql = new SQLite(this);
         configManager = new ConfigManager(this);
     }
 
     @Override
     public void onEnable() {
-        log.info(getDescription().getName() + " version " + getDescription().getVersion() + " is enabled!"); // Simple Name and Version output.
+        log(Level.INFO, "version " + getDescription().getVersion() + " is enabled!"); // Simple Name and Version output.
 
         // Attempt to load the Configuration file.
         try {
@@ -183,5 +184,9 @@ public class Heroes extends JavaPlugin {
 
     public void setClassManager(ClassManager classManager) {
         this.classManager = classManager;
+    }
+    
+    public void log(Level level, String msg) {
+        log.log(level, "[Heroes] " + msg);
     }
 }

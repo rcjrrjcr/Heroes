@@ -36,16 +36,25 @@ public class HeroClass {
     }
 
     protected String name;
+    protected HeroClass parent;
     protected ArmorType armorType;
     protected WeaponType weaponType;
     protected Set<ExperienceType> experienceSources;
     protected Set<Spells> spells;
-    protected HeroClass parent;
     protected Set<HeroClass> specializations;
 
     public HeroClass() {
+        name = new String();
+        armorType = ArmorType.LEATHER;
+        weaponType = WeaponType.WOOD;
+        experienceSources = new HashSet<ExperienceType>();
         specializations = new HashSet<HeroClass>();
         spells = new HashSet<Spells>();
+    }
+    
+    public HeroClass(String name) {
+        this();
+        this.name = name;
     }
 
     public boolean isPrimary() {

@@ -1,0 +1,6 @@
+classes:
+    Warrior:
+        permitted-armor: IRON
+        permitted-weapon: WOOD
+        permitted-spells: [SPELL_A, SPELL_B]
+        experience-sources: [KILLING]

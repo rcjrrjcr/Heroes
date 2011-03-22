@@ -1,5 +1,7 @@
 package com.herocraftonline.dev.heroes;
 
+import java.util.logging.Level;
+
 import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerLoginEvent;
@@ -18,9 +20,9 @@ public class HPlayerListener extends PlayerListener {
     public void onPlayerLogin(PlayerLoginEvent e) {
         if (PlayerManager.checkPlayer(e.getPlayer().getName()) == false) {
             PlayerManager.newPlayer(e.getPlayer());
-            Heroes.log.info("Created");
+            plugin.log(Level.INFO, "Created");
         } else {
-            Heroes.log.info("Player Found");
+            plugin.log(Level.INFO, "Player Found");
         }
     }
 
