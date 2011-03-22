@@ -1,6 +1,5 @@
 package com.herocraftonline.dev.heroes.util;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import org.bukkit.ChatColor;
@@ -21,8 +20,6 @@ public class Properties {
     public static ChatColor cColor;
     public static String prefix;
     public static int swapcost;
-
-    public static final File dataFolder = new File("plugins" + File.separator + "Heroes");
 
     public static void calcExp() {
         level.clear();

@@ -27,7 +27,6 @@ public class HeroClass {
         SPELL_C
     }
 
-    // place holder
     public static enum ExperienceType {
         KILLING,
         MINING,
@@ -42,7 +41,7 @@ public class HeroClass {
     protected Set<ExperienceType> experienceSources;
     protected Set<Spells> spells;
     protected Set<HeroClass> specializations;
-    protected boolean starterClass;
+    protected boolean starterProfession;
 
     public HeroClass() {
         name = new String();
@@ -51,7 +50,7 @@ public class HeroClass {
         experienceSources = new HashSet<ExperienceType>();
         specializations = new HashSet<HeroClass>();
         spells = new HashSet<Spells>();
-        starterClass = false;
+        starterProfession = false;
     }
     
     public HeroClass(String name) {
@@ -119,12 +118,12 @@ public class HeroClass {
         this.experienceSources = experienceSources;
     }
 
-    public boolean isStarterClass() {
-        return starterClass;
+    public boolean isStarterProfession() {
+        return starterProfession;
     }
 
-    public void setStarterClass(boolean starterClass) {
-        this.starterClass = starterClass;
+    public void setStarterProfession(boolean starterProfession) {
+        this.starterProfession = starterProfession;
     }
 
 }

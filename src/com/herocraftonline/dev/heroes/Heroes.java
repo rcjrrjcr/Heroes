@@ -13,9 +13,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.herocraftonline.dev.heroes.classes.ClassManager;
 import com.herocraftonline.dev.heroes.command.CommandManager;
-import com.herocraftonline.dev.heroes.command.commands.ChangeClassCommand;
+import com.herocraftonline.dev.heroes.command.commands.SelectProfession;
 import com.herocraftonline.dev.heroes.command.commands.ConfigReloadCommand;
-import com.herocraftonline.dev.heroes.command.commands.SelectClassCommand;
+import com.herocraftonline.dev.heroes.command.commands.SelectSpecialty;
 import com.herocraftonline.dev.heroes.command.commands.UpdateCommand;
 import com.herocraftonline.dev.heroes.persistance.PlayerManager;
 import com.herocraftonline.dev.heroes.persistance.SQLiteManager;
@@ -33,7 +33,7 @@ import com.nijiko.coelho.iConomy.iConomy;
  * @author Herocraft's Plugin Team
  */
 public class Heroes extends JavaPlugin {
-    // Simple hook to Minecrafts logger so we can output to the console.
+    // Simple hook to Minecraft's logger so we can output to the console.
     private static final Logger log = Logger.getLogger("Minecraft");
 
     // Setup the Player and Plugin listener for Heroes.
@@ -126,9 +126,9 @@ public class Heroes extends JavaPlugin {
         commandManager = new CommandManager();
         // Page 1
         commandManager.addCommand(new UpdateCommand(this));
-        commandManager.addCommand(new ChangeClassCommand(this));
+        commandManager.addCommand(new SelectProfession(this));
         commandManager.addCommand(new ConfigReloadCommand(this));
-        commandManager.addCommand(new SelectClassCommand(this));
+        commandManager.addCommand(new SelectSpecialty(this));
     }
 
     /**

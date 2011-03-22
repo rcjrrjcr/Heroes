@@ -1,6 +1,7 @@
 package com.herocraftonline.dev.heroes;
 
 import java.util.HashMap;
+import java.util.Set;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -11,9 +12,11 @@ import org.bukkit.event.entity.EntityDamageByProjectileEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityListener;
 
+import com.herocraftonline.dev.heroes.classes.HeroClass;
+import com.herocraftonline.dev.heroes.classes.HeroClass.ExperienceType;
+
 public class HEntityListener extends EntityListener {
 
-    @SuppressWarnings("unused")
     private final Heroes plugin;
     private HashMap<Entity, Player> kills = new HashMap<Entity, Player>();
 
@@ -25,7 +28,13 @@ public class HEntityListener extends EntityListener {
         Entity defender = event.getEntity();
         Player attacker = kills.get(defender);
         if (attacker != null) {
-            // TODO: handle killing experience
+            // Get the player's class definition
+            HeroClass playerClass = plugin.getPlayerManager().getClass(attacker);
+            // Get the sources of experience for the player's class
+            Set<ExperienceType> expSources = playerClass.getExperienceSources();
+            if (expSources.contains(ExperienceType.KILLING)) {
+                // TODO: handle killing experience
+            }
         }
         kills.remove(defender);
     }
