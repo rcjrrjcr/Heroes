@@ -6,9 +6,10 @@ import java.util.logging.Logger;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
+import org.bukkit.event.Event.Type;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.herocraftonline.dev.heroes.classes.ClassManager;
@@ -39,6 +40,7 @@ public class Heroes extends JavaPlugin {
     // Setup the Player and Plugin listener for Heroes.
     private final HPlayerListener playerListener = new HPlayerListener(this);
     private final HPluginListener pluginListener = new HPluginListener(this);
+    private final HEntityListener entityListener = new HEntityListener(this);
 
     // Using this instead of getDataFolder(), getDataFolder() uses the File Name. We wan't a constant folder name.
     public static final File dataFolder = new File("plugins" + File.separator + "Heroes");
@@ -115,8 +117,10 @@ public class Heroes extends JavaPlugin {
      * Register the Events which Heroes requires.
      */
     private void registerEvents() {
-        getServer().getPluginManager().registerEvent(Event.Type.PLAYER_LOGIN, playerListener, Priority.Normal, this); // To setup the Players Initial Class.
-        getServer().getPluginManager().registerEvent(Event.Type.PLUGIN_ENABLE, pluginListener, Priority.Monitor, this); // To keep an eye out for Permissions and iConomy.
+        PluginManager pluginManager = getServer().getPluginManager();
+        pluginManager.registerEvent(Type.PLAYER_LOGIN, playerListener, Priority.Normal, this); // To setup the Players Initial Class.
+        pluginManager.registerEvent(Type.PLUGIN_ENABLE, pluginListener, Priority.Monitor, this); // To keep an eye out for Permissions and iConomy.
+        pluginManager.registerEvent(Type.ENTITY_DAMAGED, entityListener, Priority.Normal, this);
     }
 
     /**

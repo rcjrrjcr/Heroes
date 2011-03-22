@@ -2,7 +2,9 @@ package com.herocraftonline.dev.heroes;
 
 import java.util.HashMap;
 import java.util.Set;
+import java.util.logging.Level;
 
+import org.bukkit.entity.CreatureType;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -33,7 +35,17 @@ public class HEntityListener extends EntityListener {
             // Get the sources of experience for the player's class
             Set<ExperienceType> expSources = playerClass.getExperienceSources();
             if (expSources.contains(ExperienceType.KILLING)) {
-                // TODO: handle killing experience
+                if (defender instanceof LivingEntity) {
+                    if (defender instanceof Player) {
+                        // TODO: handle killing experience
+                    } else {
+                        try {
+                            @SuppressWarnings("unused")
+                            CreatureType type = CreatureType.valueOf(defender.toString().replace("Craft", ""));
+                            // TODO: handle killing experience
+                        } catch (IllegalArgumentException e) {}
+                    }
+                }
             }
         }
         kills.remove(defender);
@@ -41,6 +53,7 @@ public class HEntityListener extends EntityListener {
 
     public void onEntityDamage(EntityDamageEvent event) {
         Entity defender = event.getEntity();
+        plugin.log(Level.SEVERE, defender.toString() + "  " + defender.getClass());
         if (defender instanceof LivingEntity) {
             if (((LivingEntity) defender).getHealth() - event.getDamage() <= 0) {
                 Entity attacker = null;
