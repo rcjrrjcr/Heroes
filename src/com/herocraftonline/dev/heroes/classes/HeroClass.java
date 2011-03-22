@@ -42,6 +42,7 @@ public class HeroClass {
     protected Set<ExperienceType> experienceSources;
     protected Set<Spells> spells;
     protected Set<HeroClass> specializations;
+    protected boolean starterClass;
 
     public HeroClass() {
         name = new String();
@@ -50,6 +51,7 @@ public class HeroClass {
         experienceSources = new HashSet<ExperienceType>();
         specializations = new HashSet<HeroClass>();
         spells = new HashSet<Spells>();
+        starterClass = false;
     }
     
     public HeroClass(String name) {
@@ -115,6 +117,14 @@ public class HeroClass {
 
     public void setExperienceSources(Set<ExperienceType> experienceSources) {
         this.experienceSources = experienceSources;
+    }
+
+    public boolean isStarterClass() {
+        return starterClass;
+    }
+
+    public void setStarterClass(boolean starterClass) {
+        this.starterClass = starterClass;
     }
 
 }

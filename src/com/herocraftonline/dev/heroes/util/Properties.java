@@ -5,99 +5,8 @@ import java.util.ArrayList;
 
 import org.bukkit.ChatColor;
 
-import com.herocraftonline.dev.heroes.Heroes;
-import com.herocraftonline.dev.heroes.classes.HeroClass;
-
 public class Properties {
-	private static Heroes plugin;
-    public enum Class {
-        Warrior,
-        Rogue,
-        Mage,
-        Healer,
-        Diplomat,
-        Crafter
-    }
-
-    public enum Warrior {
-        Paladin,
-        Dreadknight,
-        Gladiator,
-        Samurai
-    }
-
-    public enum Rogue {
-        Ninja,
-        Ranger,
-        Thief,
-        Treasure_Hunter
-    }
-
-    public enum Mage {
-        Pyro,
-        Icemage,
-        Necromancer,
-        Enchanter
-    }
-
-    public enum Healer {
-        Cleric,
-        Priest,
-        Monk,
-        Bloodmage
-    }
-
-    public enum Diplomat {
-        Ambassador,
-        Noble,
-        Lord,
-        Duke,
-        King
-    }
-
-    public enum Crafter {
-        Architect,
-        Smith,
-        Farmer,
-        Carpenter,
-        Engineer
-    }
-
-    public static enum allClasses {
-        Warrior,
-        Rogue,
-        Mage,
-        Healer,
-        Diplomat,
-        Crafter,
-        Paladin,
-        Dreadknight,
-        Gladiator,
-        Samurai,
-        Ninja,
-        Ranger,
-        Thief,
-        Treasure_Hunter,
-        Pyro,
-        Icemage,
-        Necromancer,
-        Enchanter,
-        Cleric,
-        Priest,
-        Monk,
-        Bloodmage,
-        Ambassador,
-        Noble,
-        Lord,
-        Duke,
-        King,
-        Architect,
-        Smith,
-        Farmer,
-        Carpenter,
-        Engineer
-    }
-
+    
     // Leveling//
     public static double power;
     public static int baseExp;
@@ -122,23 +31,5 @@ public class Properties {
             level.add((int) (A / 2 * Math.pow(n - 1, power) + baseExp));
         }
     }
-
-    public static String validateClass(String c) {
-    	for (HeroClass classType : plugin.getClassManager().getClasses()){
-    		if(classType.getName().equalsIgnoreCase(c)){
-    			return classType.getName();
-    		}
-    	}
-        return "";
-    }
-
-    public static Boolean primaryClass(String c) {
-    	for (HeroClass classType : plugin.getClassManager().getClasses()){
-    		if(classType.getParent() == null){
-    			return true;
-    		}
-    	}
-		return false;
-    }
-
+    
 }

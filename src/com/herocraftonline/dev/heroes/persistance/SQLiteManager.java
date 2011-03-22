@@ -9,13 +9,13 @@ import java.util.logging.Level;
 
 import com.herocraftonline.dev.heroes.Heroes;
 
-public class SQLite {
+public class SQLiteManager {
     
     // Create a String to hold the Database location.
     private final String dbname = Heroes.dataFolder + "/heroes.db";
     private final Heroes plugin;
 
-    public SQLite(Heroes plugin) {
+    public SQLiteManager(Heroes plugin) {
         this.plugin = plugin;
     }
     
@@ -62,7 +62,7 @@ public class SQLite {
      */
     public ResultSet trySelect(String sqlString) {
         try {
-            System.out.println(sqlString);
+            plugin.log(Level.INFO, sqlString);
 
             Connection conn = getConnection();
             Statement st = conn.createStatement();
@@ -81,7 +81,7 @@ public class SQLite {
     public int rowCount(String query){
         int count = 0;
         try {
-            ResultSet r = Heroes.sql.trySelect(query);
+            ResultSet r = trySelect(query);
             while(r.next()) {
                 count++;
             }

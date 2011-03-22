@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import org.bukkit.entity.Player;
 
 import com.herocraftonline.dev.heroes.Heroes;
+import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.util.Properties;
 
 /**
@@ -15,19 +16,25 @@ import com.herocraftonline.dev.heroes.util.Properties;
  */
 public class PlayerManager {
 
+    private Heroes plugin;
+    
+    public PlayerManager(Heroes plugin) {
+        this.plugin = plugin;
+    }
+    
     /**
      * Grab the given Players current Experience.
-     * @param p
+     * @param player
      * @return
      */
-    public static int getExp(Player p) {
-        String name = p.getName(); // Grab the players name.
+    public int getExp(Player player) {
+        String name = player.getName(); // Grab the players name.
         int value = -1;
         try {
-            ResultSet r = Heroes.sql.trySelect("SELECT * FROM players WHERE name='" + name + "'");
-            r.next();
-            value = r.getInt("exp");
-            r.close();
+            ResultSet rs = plugin.getSqlManager().trySelect("SELECT * FROM players WHERE name='" + name + "'");
+            rs.next();
+            value = rs.getInt("exp");
+            rs.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -36,62 +43,62 @@ public class PlayerManager {
     
     /**
      * Set the given Players Exp to the value given.
-     * @param p
-     * @param e
+     * @param player
+     * @param exp
      * @throws Exception
      */
-    public static void setExp(Player p, Integer e) throws Exception {
-        String n = p.getName();
-        Heroes.sql.tryUpdate("UPDATE players SET `exp`=" + e + " WHERE `name`=" + n);
+    public void setExp(Player player, Integer exp) throws Exception {
+        String name = player.getName();
+        plugin.getSqlManager().tryUpdate("UPDATE players SET `exp`=" + exp + " WHERE `name`=" + name);
     }
 
     /**
      * Grab the given Players Class.
-     * @param p
+     * @param player
      * @return
      */
-    public static String getClass(Player p) {
+    public HeroClass getClass(Player player) {
         String pClass = null;
-        String name = p.getName();
+        String name = player.getName();
         try {
-            ResultSet r = Heroes.sql.trySelect("SELECT * FROM players WHERE name='" + name + "'");
-            r.next();
-            pClass = r.getString("class");
-            r.close();
+            ResultSet rs = plugin.getSqlManager().trySelect("SELECT * FROM players WHERE name='" + name + "'");
+            rs.next();
+            pClass = rs.getString("class");
+            rs.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return pClass;
+        return pClass == null ? null : plugin.getClassManager().getClass(pClass);
     }
 
     /**
      * Change the Players Class to the specified Class.
-     * @param p
-     * @param c
+     * @param player
+     * @param playerClass
      */
-    public static void setClass(Player p, String c) {
-        String n = p.getName();
-        Heroes.sql.tryUpdate("UPDATE players SET class='" + c + "' WHERE name='" + n + "'");
+    public void setClass(Player player, HeroClass playerClass) {
+        String name = player.getName();
+        plugin.getSqlManager().tryUpdate("UPDATE players SET class='" + playerClass.getName() + "' WHERE name='" + name + "'");
     }
 
     /**
      * Insert the Player into the Database with the default class.
-     * @param p
+     * @param player
      */
-    public static void newPlayer(Player p) {
-        String n = p.getName();
-        Heroes.sql.tryUpdate("INSERT INTO 'players' (name, class, exp, mana) VALUES ('" + n + "','Vagrant', '0', '0') "); // Vargrant needs to change, *customizeable*
+    public void newPlayer(Player player) {
+        String name = player.getName();
+        plugin.getSqlManager().tryUpdate("INSERT INTO 'players' (name, class, exp, mana) VALUES ('" + name + "','Vagrant', '0', '0') "); // Vargrant needs to change, *customizeable*
     }
 
     /**
      * Check if the Player already exists within the Database.
-     * @param n
+     * @param name
      * @return
      */
-    public static boolean checkPlayer(String n) {
-        String query = "SELECT * FROM players WHERE name='" + n + "'";
-        if (Heroes.sql.rowCount(query) > 0) {
+    public boolean checkPlayer(String name) {
+        String query = "SELECT * FROM players WHERE name='" + name + "'";
+        if (plugin.getSqlManager().rowCount(query) > 0) {
             return true;
         } else {
             return false;
@@ -103,7 +110,7 @@ public class PlayerManager {
      * @param exp
      * @return
      */
-    public static int getLevel(Integer exp) {
+    public int getLevel(Integer exp) {
         int n = 0;
         for (Integer i : Properties.level) {
             if (!(exp >= i)) {

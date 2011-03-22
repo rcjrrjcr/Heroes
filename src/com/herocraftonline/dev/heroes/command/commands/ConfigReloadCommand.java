@@ -25,7 +25,7 @@ public class ConfigReloadCommand extends BaseCommand {
                 return;
             }
             try {
-                plugin.configManager.reload();
+                plugin.getConfigManager().reload();
             } catch (Exception e) {
                 e.printStackTrace();
             }

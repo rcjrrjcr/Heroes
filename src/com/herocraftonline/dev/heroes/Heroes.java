@@ -13,11 +13,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.herocraftonline.dev.heroes.classes.ClassManager;
 import com.herocraftonline.dev.heroes.command.CommandManager;
-import com.herocraftonline.dev.heroes.command.commands.CClassCommand;
+import com.herocraftonline.dev.heroes.command.commands.ChangeClassCommand;
 import com.herocraftonline.dev.heroes.command.commands.ConfigReloadCommand;
 import com.herocraftonline.dev.heroes.command.commands.SelectClassCommand;
 import com.herocraftonline.dev.heroes.command.commands.UpdateCommand;
-import com.herocraftonline.dev.heroes.persistance.SQLite;
+import com.herocraftonline.dev.heroes.persistance.PlayerManager;
+import com.herocraftonline.dev.heroes.persistance.SQLiteManager;
 import com.herocraftonline.dev.heroes.util.ConfigManager;
 import com.herocraftonline.dev.heroes.util.Properties;
 
@@ -42,17 +43,12 @@ public class Heroes extends JavaPlugin {
     // Using this instead of getDataFolder(), getDataFolder() uses the File Name. We wan't a constant folder name.
     public static final File dataFolder = new File("plugins" + File.separator + "Heroes");
     
-    // Create a new instance of the ConfigManager
-    public ConfigManager configManager;
-
-    // Create a new instance of our SQLite manager.
-    public static SQLite sql;
-
-    // Variable to contain the Command Manager
+    // Various data managers
+    private SQLiteManager sqlManager;
+    private ConfigManager configManager;
     private CommandManager commandManager;
-    
-    // Variable to contain the Class Manager
     private ClassManager classManager;
+    private PlayerManager playerManager;
 
     // Variable for the Permissions plugin handler.
     public static PermissionHandler Permissions;
@@ -64,8 +60,9 @@ public class Heroes extends JavaPlugin {
 
     public void onLoad() {
         dataFolder.mkdirs(); // Create the Heroes Plugin Directory.
-        sql = new SQLite(this);
+        sqlManager = new SQLiteManager(this);
         configManager = new ConfigManager(this);
+        playerManager = new PlayerManager(this);
     }
 
     @Override
@@ -83,7 +80,7 @@ public class Heroes extends JavaPlugin {
         Properties.calcExp();
 
         // Create the Player table if it doesn't already exist.
-        sql.tryUpdate("CREATE TABLE IF NOT EXISTS `players` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` VARCHAR, `class` VARCHAR, `exp` INT, `mana` INT)");
+        sqlManager.tryUpdate("CREATE TABLE IF NOT EXISTS `players` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` VARCHAR, `class` VARCHAR, `exp` INT, `mana` INT)");
 
         // Call our function to register the events Heroes needs.
         registerEvents();
@@ -129,7 +126,7 @@ public class Heroes extends JavaPlugin {
         commandManager = new CommandManager();
         // Page 1
         commandManager.addCommand(new UpdateCommand(this));
-        commandManager.addCommand(new CClassCommand(this));
+        commandManager.addCommand(new ChangeClassCommand(this));
         commandManager.addCommand(new ConfigReloadCommand(this));
         commandManager.addCommand(new SelectClassCommand(this));
     }
@@ -188,5 +185,17 @@ public class Heroes extends JavaPlugin {
     
     public void log(Level level, String msg) {
         log.log(level, "[Heroes] " + msg);
+    }
+
+    public SQLiteManager getSqlManager() {
+        return sqlManager;
+    }
+
+    public PlayerManager getPlayerManager() {
+        return playerManager;
+    }
+
+    public ConfigManager getConfigManager() {
+        return configManager;
     }
 }
