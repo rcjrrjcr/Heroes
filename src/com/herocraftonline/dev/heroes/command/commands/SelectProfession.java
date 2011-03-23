@@ -11,36 +11,37 @@ import com.herocraftonline.dev.heroes.util.Messaging;
 import com.herocraftonline.dev.heroes.util.Properties;
 import com.nijiko.coelho.iConomy.iConomy;
 
-public class ChangeClassCommand extends BaseCommand {
-    public ChangeClassCommand(Heroes plugin) {
+public class SelectProfession extends BaseCommand {
+    
+    public SelectProfession(Heroes plugin) {
         super(plugin);
-        name = "Class Change";
-        description = "Changes a persons professions";
-        usage = "/class change §9<class>";
+        name = "Select Profession";
+        description = "Selects a new profession";
+        usage = "/heroes profession §9<type>";
         minArgs = 1;
         maxArgs = 1;
-        identifiers.add("class change");
+        identifiers.add("heroes profession");
     }
 
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            HeroClass newClass = plugin.getClassManager().getClass(args[0]);
-            if (newClass != null) {
-                if (newClass.isPrimary()) {
+            HeroClass profession = plugin.getClassManager().getClass(args[0]);
+            if (profession != null) {
+                if (profession.isPrimary()) {
                     PlayerManager playerManager = plugin.getPlayerManager();
-                    if (playerManager.getClass(player).isStarterClass()) {
-                        playerManager.setClass(player, newClass);
+                    if (playerManager.getClass(player).isStarterProfession()) {
+                        playerManager.setClass(player, profession);
                     } else {
-                        changeClass(player, newClass);
+                        changeClass(player, profession);
                     }
-                    Messaging.send(player, "Welcome to the path of the $1!", newClass.getName());
+                    Messaging.send(player, "Welcome to the path of the $1!", profession.getName());
                 } else {
-                    Messaging.send(player, "Sorry, $1 isn't a primary class!", newClass.getName());
+                    Messaging.send(player, "Sorry, $1 isn't a profession!", profession.getName());
                 }
             } else {
-                Messaging.send(player, "Sorry, that isn't a class!");
+                Messaging.send(player, "Sorry, that isn't a profession!");
             }
         }
     }

@@ -10,16 +10,16 @@ import com.herocraftonline.dev.heroes.command.BaseCommand;
 import com.herocraftonline.dev.heroes.persistance.PlayerManager;
 import com.herocraftonline.dev.heroes.util.Messaging;
 
-public class SelectClassCommand extends BaseCommand {
+public class SelectSpecialty extends BaseCommand {
 
-    public SelectClassCommand(Heroes plugin) {
+    public SelectSpecialty(Heroes plugin) {
         super(plugin);
-        name = "Select Class";
-        description = "Allows you to advance from a primary class to it's secondary";
-        usage = "/class select §9<class>";
+        name = "Select Specialty";
+        description = "Allows you to advance from a primary class to it's specialty";
+        usage = "/heroes specialty §9<type>";
         minArgs = 1;
         maxArgs = 1;
-        identifiers.add("class select");
+        identifiers.add("heroes specialty");
     }
 
     @Override
@@ -36,15 +36,14 @@ public class SelectClassCommand extends BaseCommand {
                         playerManager.setClass(player, subClass);
                         Messaging.send(player, "Well done $1!", subClass.getName());
                     } else {
-                        Messaging.send(player, "Sorry, that class doesn't belong to $1.", playerClass.getName());
+                        Messaging.send(player, "Sorry, that specialty doesn't belong to $1.", playerClass.getName());
                     }
                 } else {
-                    Messaging.send(player, "Sorry, that isn't a class!");
+                    Messaging.send(player, "Sorry, that isn't a specialty!");
                 }
             } else {
-                Messaging.send(player, "You have already selected a class!");
+                Messaging.send(player, "You have already selected a specialty!");
             }
         }
-
     }
 }

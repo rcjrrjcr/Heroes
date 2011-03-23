@@ -6,16 +6,17 @@ import java.util.logging.Logger;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
+import org.bukkit.event.Event.Type;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.herocraftonline.dev.heroes.classes.ClassManager;
 import com.herocraftonline.dev.heroes.command.CommandManager;
-import com.herocraftonline.dev.heroes.command.commands.ChangeClassCommand;
+import com.herocraftonline.dev.heroes.command.commands.SelectProfession;
 import com.herocraftonline.dev.heroes.command.commands.ConfigReloadCommand;
-import com.herocraftonline.dev.heroes.command.commands.SelectClassCommand;
+import com.herocraftonline.dev.heroes.command.commands.SelectSpecialty;
 import com.herocraftonline.dev.heroes.command.commands.UpdateCommand;
 import com.herocraftonline.dev.heroes.persistance.PlayerManager;
 import com.herocraftonline.dev.heroes.persistance.SQLiteManager;
@@ -33,12 +34,13 @@ import com.nijiko.coelho.iConomy.iConomy;
  * @author Herocraft's Plugin Team
  */
 public class Heroes extends JavaPlugin {
-    // Simple hook to Minecrafts logger so we can output to the console.
+    // Simple hook to Minecraft's logger so we can output to the console.
     private static final Logger log = Logger.getLogger("Minecraft");
 
     // Setup the Player and Plugin listener for Heroes.
     private final HPlayerListener playerListener = new HPlayerListener(this);
     private final HPluginListener pluginListener = new HPluginListener(this);
+    private final HEntityListener entityListener = new HEntityListener(this);
 
     // Using this instead of getDataFolder(), getDataFolder() uses the File Name. We wan't a constant folder name.
     public static final File dataFolder = new File("plugins" + File.separator + "Heroes");
@@ -115,8 +117,10 @@ public class Heroes extends JavaPlugin {
      * Register the Events which Heroes requires.
      */
     private void registerEvents() {
-        getServer().getPluginManager().registerEvent(Event.Type.PLAYER_LOGIN, playerListener, Priority.Normal, this); // To setup the Players Initial Class.
-        getServer().getPluginManager().registerEvent(Event.Type.PLUGIN_ENABLE, pluginListener, Priority.Monitor, this); // To keep an eye out for Permissions and iConomy.
+        PluginManager pluginManager = getServer().getPluginManager();
+        pluginManager.registerEvent(Type.PLAYER_LOGIN, playerListener, Priority.Normal, this); // To setup the Players Initial Class.
+        pluginManager.registerEvent(Type.PLUGIN_ENABLE, pluginListener, Priority.Monitor, this); // To keep an eye out for Permissions and iConomy.
+        pluginManager.registerEvent(Type.ENTITY_DAMAGED, entityListener, Priority.Normal, this);
     }
 
     /**
@@ -126,9 +130,9 @@ public class Heroes extends JavaPlugin {
         commandManager = new CommandManager();
         // Page 1
         commandManager.addCommand(new UpdateCommand(this));
-        commandManager.addCommand(new ChangeClassCommand(this));
+        commandManager.addCommand(new SelectProfession(this));
         commandManager.addCommand(new ConfigReloadCommand(this));
-        commandManager.addCommand(new SelectClassCommand(this));
+        commandManager.addCommand(new SelectSpecialty(this));
     }
 
     /**
