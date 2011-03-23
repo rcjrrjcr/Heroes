@@ -63,7 +63,7 @@ public class ConfigManager {
                 config.getParentFile().mkdir();
                 config.createNewFile();
                 OutputStream output = new FileOutputStream(config, false);
-                InputStream input = ConfigManager.class.getResourceAsStream(config.getName());
+                InputStream input = ConfigManager.class.getResourceAsStream("/defaults/" + config.getName());
                 byte[] buf = new byte[8192];
                 while (true) {
                     int length = input.read(buf);

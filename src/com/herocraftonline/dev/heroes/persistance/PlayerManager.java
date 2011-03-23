@@ -23,8 +23,9 @@ public class PlayerManager {
     public PlayerManager(Heroes plugin) {
         this.plugin = plugin;
     }
-    
-    /**
+
+
+	/**
      * Grab the given Players current Experience.
      * @param player
      * @return
@@ -49,7 +50,7 @@ public class PlayerManager {
      * @param exp
      * @throws Exception
      */
-    public void setExp(Player player, Integer exp) throws Exception {
+    public void setExp(Player player, Integer exp){
         String name = player.getName();
         plugin.getSqlManager().tryUpdate("UPDATE players SET `exp`=" + exp + " WHERE `name`=" + name);
     }
