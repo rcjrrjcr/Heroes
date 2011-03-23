@@ -17,7 +17,7 @@ public class Messaging {
     private static String parameterizeMessage(String msg, String ... params) {
         msg = "§cHeroes: " + msg;
         for (int i = 0; i < params.length; i++) {
-            msg.replace("$" + i, "§f" + params[i] + "§c");
+            msg = msg.replace("$" + i, "§f" + params[i] + "§c");
         }
         return msg;
     }
