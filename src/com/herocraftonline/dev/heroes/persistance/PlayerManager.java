@@ -7,7 +7,6 @@ import java.util.logging.Level;
 import org.bukkit.entity.Player;
 
 import com.herocraftonline.dev.heroes.Heroes;
-import com.herocraftonline.dev.heroes.classes.ClassManager;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.util.Properties;
 
@@ -52,7 +51,7 @@ public class PlayerManager {
      */
     public void setExp(Player player, Integer exp){
         String name = player.getName();
-        plugin.getSqlManager().tryUpdate("UPDATE players SET `exp`=" + exp + " WHERE `name`=" + name);
+        plugin.getSqlManager().tryUpdate("UPDATE players SET exp=" + exp + " WHERE name='" + name + "'");
     }
 
     /**
@@ -71,7 +70,6 @@ public class PlayerManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        plugin.log(Level.SEVERE, pClass);
         return pClass == null ? null : plugin.getClassManager().getClass(pClass);
     }
 
