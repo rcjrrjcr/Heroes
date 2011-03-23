@@ -26,7 +26,6 @@ public class HBlockListener extends BlockListener {
         HeroClass playerClass = plugin.getPlayerManager().getClass(player);
         // Get the sources of experience for the player's class
         Set<ExperienceType> expSources = playerClass.getExperienceSources();
-        
         switch(block.getType()) {
         case COAL:
         case COBBLESTONE:

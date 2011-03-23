@@ -1,6 +1,37 @@
-monsters:
-    Zombie: 10
-    Creeper: 10
-    Skeleton: 10
-    Ghast: 10
-    PigZombie: 10
+killing:
+    chicken: 0
+    cow: 0
+    creeper: 50
+    ghast: 200
+    pig: 0
+    pig_zombie: 50
+    sheep: 0
+    skeleton: 25
+    spider: 35
+    zombie: 15
+    squid: 0
+    slime: 35
+    player: 500
+mining:
+    coal: 5
+    cobblestone: 0
+    clay: 5
+    diamond_ore: 50
+    dirt: 0
+    glowstone: 20
+    gold_ore: 50
+    grass: 0
+    gravel: 0
+    iron_ore: 10
+    lapis_ore: 30
+    mossy_cobblestone: 0
+    netherrack: 0
+    obsidian: 10
+    redstone_ore: 10
+    sand: 0
+    sandstone: 0
+    snow_block: 0
+    soul_sand: 0
+    stone: 1
+logging:
+    log: 5

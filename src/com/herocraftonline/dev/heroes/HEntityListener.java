@@ -38,11 +38,19 @@ public class HEntityListener extends EntityListener {
                     if (defender instanceof Player) {
                         // TODO: handle killing experience
                     } else {
+                        CreatureType type = null;
                         try {
-                            @SuppressWarnings("unused")
-                            CreatureType type = CreatureType.valueOf(defender.toString().replace("Craft", ""));
-                            // TODO: handle killing experience
+                            Class<?>[] interfaces = defender.getClass().getInterfaces();
+                            for (Class<?> c : interfaces) {
+                                if (LivingEntity.class.isAssignableFrom(c)) {
+                                    type = CreatureType.fromName(c.getSimpleName());
+                                    break;
+                                }
+                            }
                         } catch (IllegalArgumentException e) {}
+                        if (type != null) {
+                            // TODO: handle killing experience
+                        }
                     }
                 }
             }
