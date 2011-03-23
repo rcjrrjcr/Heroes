@@ -53,7 +53,7 @@ public class HEntityListener extends EntityListener {
 							}
 						} catch (IllegalArgumentException e) {}
 						if (type != null) {
-							playerManager.setExp(attacker, playerManager.getExp(attacker) + Properties.creatureKillingExp.get("creeper"));
+							playerManager.setExp(attacker, playerManager.getExp(attacker) + Properties.creatureKillingExp.get(type.toString()));
 						}
 					}
 				}
