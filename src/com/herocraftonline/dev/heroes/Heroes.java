@@ -41,6 +41,7 @@ public class Heroes extends JavaPlugin {
     private final HPlayerListener playerListener = new HPlayerListener(this);
     private final HPluginListener pluginListener = new HPluginListener(this);
     private final HEntityListener entityListener = new HEntityListener(this);
+    private final HBlockListener blockListener = new HBlockListener(this);
 
     // Using this instead of getDataFolder(), getDataFolder() uses the File Name. We wan't a constant folder name.
     public static final File dataFolder = new File("plugins" + File.separator + "Heroes");
@@ -122,6 +123,7 @@ public class Heroes extends JavaPlugin {
         pluginManager.registerEvent(Type.PLUGIN_ENABLE, pluginListener, Priority.Monitor, this); // To keep an eye out for Permissions and iConomy.
         pluginManager.registerEvent(Type.ENTITY_DAMAGED, entityListener, Priority.Normal, this);
         pluginManager.registerEvent(Type.ENTITY_DEATH, entityListener, Priority.Normal, this);
+        pluginManager.registerEvent(Type.BLOCK_BREAK, blockListener, Priority.Normal, this);
     }
 
     /**
