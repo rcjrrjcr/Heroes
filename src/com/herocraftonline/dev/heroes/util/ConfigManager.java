@@ -50,7 +50,7 @@ public class ConfigManager {
 
             ClassManager classManager = new ClassManager(plugin);
             classManager.loadClasses(classConfigFile);
-            plugin.setClassManager(new ClassManager(plugin));
+            plugin.setClassManager(classManager);
         } catch (Exception e) {
             e.printStackTrace();
         }

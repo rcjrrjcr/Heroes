@@ -2,10 +2,12 @@ package com.herocraftonline.dev.heroes.persistance;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
 
 import org.bukkit.entity.Player;
 
 import com.herocraftonline.dev.heroes.Heroes;
+import com.herocraftonline.dev.heroes.classes.ClassManager;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.util.Properties;
 
@@ -68,7 +70,7 @@ public class PlayerManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
+        plugin.log(Level.SEVERE, pClass);
         return pClass == null ? null : plugin.getClassManager().getClass(pClass);
     }
 
@@ -88,7 +90,9 @@ public class PlayerManager {
      */
     public void newPlayer(Player player) {
         String name = player.getName();
-        plugin.getSqlManager().tryUpdate("INSERT INTO 'players' (name, class, exp, mana) VALUES ('" + name + "','Vagrant', '0', '0') "); // Vargrant needs to change, *customizeable*
+        String className = plugin.getClassManager().getDefaultClass().getName();
+        plugin.getSqlManager().tryUpdate("INSERT INTO 'players' (name, class, exp, mana) VALUES ('" + name + "','" + className + "', '0', '0') ");
+        plugin.log(Level.INFO, "New player stored in db: " + name);
     }
 
     /**

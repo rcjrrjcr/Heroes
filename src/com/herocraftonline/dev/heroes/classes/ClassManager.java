@@ -18,6 +18,7 @@ public class ClassManager {
 
     private final Heroes plugin;
     private Set<HeroClass> classes;
+    private HeroClass defaultClass;
 
     public ClassManager(Heroes plugin) {
         this.plugin = plugin;
@@ -95,10 +96,16 @@ public class ClassManager {
                 }
             }
             newClass.setExperienceSources(experienceSources);
-            
+
             boolean added = addClass(newClass);
             if (!added) {
                 plugin.log(Level.WARNING, "Duplicate class (" + className + ") found. Skipping this class.");
+            } else {
+                plugin.log(Level.INFO, "Loaded class: " + className);
+                if (config.getBoolean("classes." + className + ".default", false)) {
+                    plugin.log(Level.INFO, "Default class found: " + className);
+                    defaultClass = newClass;
+                }
             }
         }
         
@@ -111,6 +118,14 @@ public class ClassManager {
                 unlinkedClass.setParent(parent);
             }
         }
+    }
+
+    public void setDefaultClass(HeroClass defaultClass) {
+        this.defaultClass = defaultClass;
+    }
+
+    public HeroClass getDefaultClass() {
+        return defaultClass;
     }
 
 }
