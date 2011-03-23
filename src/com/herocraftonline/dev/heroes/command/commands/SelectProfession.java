@@ -31,7 +31,7 @@ public class SelectProfession extends BaseCommand {
             if (profession != null) {
                 if (profession.isPrimary()) {
                     PlayerManager playerManager = plugin.getPlayerManager();
-                    if (playerManager.getClass(player).isStarterProfession()) {
+                    if (playerManager.getClass(player).equals(plugin.getClassManager().getDefaultClass())) {
                         playerManager.setClass(player, profession);
                     } else {
                         changeClass(player, profession);

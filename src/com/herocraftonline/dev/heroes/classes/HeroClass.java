@@ -11,13 +11,13 @@ public class HeroClass {
         GOLD,
         DIAMOND
     }
-    
+
     public static enum WeaponType {
-    	WOOD,
-    	STONE,
-    	IRON,
-    	GOLD,
-    	DIAMOND
+        WOOD,
+        STONE,
+        IRON,
+        GOLD,
+        DIAMOND
     }
 
     // place holder
@@ -41,7 +41,6 @@ public class HeroClass {
     protected Set<ExperienceType> experienceSources;
     protected Set<Spells> spells;
     protected Set<HeroClass> specializations;
-    protected boolean starterProfession;
 
     public HeroClass() {
         name = new String();
@@ -50,9 +49,16 @@ public class HeroClass {
         experienceSources = new HashSet<ExperienceType>();
         specializations = new HashSet<HeroClass>();
         spells = new HashSet<Spells>();
-        starterProfession = false;
     }
-    
+
+    public boolean equals(Object o) {
+        if (o instanceof HeroClass) {
+            return name.equalsIgnoreCase(((HeroClass) o).getName());
+        } else {
+            return false;
+        }
+    }
+
     public HeroClass(String name) {
         this();
         this.name = name;
@@ -77,13 +83,13 @@ public class HeroClass {
     public void setArmorType(ArmorType armor) {
         this.armorType = armor;
     }
-    
+
     public WeaponType getWeaponType() {
-    	return weaponType;
+        return weaponType;
     }
-    
-    public void setWeaponType(WeaponType weapon){
-    	this.weaponType = weapon;
+
+    public void setWeaponType(WeaponType weapon) {
+        this.weaponType = weapon;
     }
 
     public HeroClass getParent() {
@@ -97,7 +103,7 @@ public class HeroClass {
     public Set<HeroClass> getSpecializations() {
         return specializations;
     }
-    
+
     public void setSpecializations(Set<HeroClass> specializations) {
         this.specializations = specializations;
     }
@@ -105,25 +111,17 @@ public class HeroClass {
     public Set<Spells> getSpells() {
         return spells;
     }
-    
+
     public void setSpells(Set<Spells> spells) {
         this.spells = spells;
     }
-    
+
     public Set<ExperienceType> getExperienceSources() {
         return experienceSources;
     }
 
     public void setExperienceSources(Set<ExperienceType> experienceSources) {
         this.experienceSources = experienceSources;
-    }
-
-    public boolean isStarterProfession() {
-        return starterProfession;
-    }
-
-    public void setStarterProfession(boolean starterProfession) {
-        this.starterProfession = starterProfession;
     }
 
 }
