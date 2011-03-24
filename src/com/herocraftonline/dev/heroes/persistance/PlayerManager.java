@@ -94,6 +94,7 @@ public class PlayerManager {
     		return;
     	}
         String name = event.getPlayer().getName();
+        setExp(player, 0);
         plugin.getSqlManager().tryUpdate("UPDATE players SET class='" + event.getPlayerClass().getName() + "' WHERE name='" + name + "'");
     }
 
