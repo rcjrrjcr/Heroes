@@ -9,13 +9,13 @@ import java.util.logging.Level;
 
 import com.herocraftonline.dev.heroes.Heroes;
 
-public class SQLiteManager {
+public class SQLManager {
     
     // Create a String to hold the Database location.
     private final String dbname = Heroes.dataFolder + "/heroes.db";
     private final Heroes plugin;
 
-    public SQLiteManager(Heroes plugin) {
+    public SQLManager(Heroes plugin) {
         this.plugin = plugin;
     }
     

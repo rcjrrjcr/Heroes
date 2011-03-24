@@ -19,7 +19,7 @@ import com.herocraftonline.dev.heroes.command.commands.ConfigReloadCommand;
 import com.herocraftonline.dev.heroes.command.commands.SelectSpecialty;
 import com.herocraftonline.dev.heroes.command.commands.UpdateCommand;
 import com.herocraftonline.dev.heroes.persistance.PlayerManager;
-import com.herocraftonline.dev.heroes.persistance.SQLiteManager;
+import com.herocraftonline.dev.heroes.persistance.SQLManager;
 import com.herocraftonline.dev.heroes.util.ConfigManager;
 import com.herocraftonline.dev.heroes.util.Properties;
 
@@ -47,7 +47,7 @@ public class Heroes extends JavaPlugin {
     public static final File dataFolder = new File("plugins" + File.separator + "Heroes");
     
     // Various data managers
-    private SQLiteManager sqlManager;
+    private SQLManager sqlManager;
     private ConfigManager configManager;
     private CommandManager commandManager;
     private ClassManager classManager;
@@ -63,7 +63,7 @@ public class Heroes extends JavaPlugin {
 
     public void onLoad() {
         dataFolder.mkdirs(); // Create the Heroes Plugin Directory.
-        sqlManager = new SQLiteManager(this);
+        sqlManager = new SQLManager(this);
         configManager = new ConfigManager(this);
         playerManager = new PlayerManager(this);
     }
@@ -194,7 +194,7 @@ public class Heroes extends JavaPlugin {
         log.log(level, "[Heroes] " + msg);
     }
 
-    public SQLiteManager getSqlManager() {
+    public SQLManager getSqlManager() {
         return sqlManager;
     }
 

@@ -6,5 +6,6 @@
 	<classpathentry kind="var" path="LIBRARY/sqlitejdbc-v056.jar"/>
 	<classpathentry kind="var" path="LIBRARY/Permissions.jar"/>
 	<classpathentry kind="var" path="LIBRARY/iConomy.jar"/>
+	<classpathentry kind="var" path="LIBRARY/mysql-connector-java-bin.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
