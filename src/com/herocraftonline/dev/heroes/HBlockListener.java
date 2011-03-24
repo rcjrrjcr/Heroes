@@ -1,6 +1,7 @@
 package com.herocraftonline.dev.heroes;
 
 import java.util.Set;
+import java.util.logging.Level;
 
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -22,6 +23,7 @@ public class HBlockListener extends BlockListener {
     }
 
     public void onBlockBreak(BlockBreakEvent event) {
+    	long start = System.currentTimeMillis();
         Block block = event.getBlock();
         Player player = event.getPlayer();
 
@@ -69,6 +71,7 @@ public class HBlockListener extends BlockListener {
             playerManager.setExp(player, exp + addedExp);
             Messaging.send(player, "$1: $2 Exp (+$3)", playerClass.getName(), String.valueOf(exp), String.valueOf(addedExp));
         }
+        plugin.log(Level.INFO, "Time: " + (System.currentTimeMillis() - start));
     }
 
 }
