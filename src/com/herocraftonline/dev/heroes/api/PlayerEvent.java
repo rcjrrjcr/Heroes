@@ -6,15 +6,23 @@ import org.bukkit.event.Event;
 public class PlayerEvent extends Event{
 	protected boolean cancelled;
 	
-	protected PlayerEvent(final String type) {
+	protected PlayerEvent(final Type type) {
 		super(type);
 		this.cancelled = false;
 	}
-
-	public boolean isCancelled(){
+	
+	/**
+	 * Returns if the event is canceled or not
+	 * @return
+	 */
+	public boolean isCanceled(){
 		return cancelled;
 	}
 
+	/**
+	 * Sets if the event is canceled or not.
+	 * @param cancelled
+	 */
 	public void setCancelled(Boolean cancelled){
 		this.cancelled = cancelled;
 	}

@@ -5,8 +5,12 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event.Type;
 
 import com.herocraftonline.dev.heroes.Heroes;
+import com.herocraftonline.dev.heroes.api.PlayerClassEvent;
+import com.herocraftonline.dev.heroes.api.PlayerExpEvent;
+import com.herocraftonline.dev.heroes.api.PlayerNewEvent;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.util.Properties;
 
@@ -50,8 +54,13 @@ public class PlayerManager {
      * @throws Exception
      */
     public void setExp(Player player, Integer exp){
-        String name = player.getName();
-        plugin.getSqlManager().tryUpdate("UPDATE players SET exp=" + exp + " WHERE name='" + name + "'");
+    	PlayerExpEvent event = new PlayerExpEvent(Type.CUSTOM_EVENT, player, getLevel(exp), exp);   
+    	plugin.getServer().getPluginManager().callEvent(event);
+    	if(event.isCanceled() == true){
+    		return;
+    	}
+        String name = event.getPlayer().getName();
+        plugin.getSqlManager().tryUpdate("UPDATE players SET exp=" + event.getExp() + " WHERE name='" + name + "'");
     }
 
     /**
@@ -79,8 +88,13 @@ public class PlayerManager {
      * @param playerClass
      */
     public void setClass(Player player, HeroClass playerClass) {
-        String name = player.getName();
-        plugin.getSqlManager().tryUpdate("UPDATE players SET class='" + playerClass.getName() + "' WHERE name='" + name + "'");
+    	PlayerClassEvent event = new PlayerClassEvent(Type.CUSTOM_EVENT, player, playerClass);
+    	plugin.getServer().getPluginManager().callEvent(event);
+    	if(event.isCanceled() == true){
+    		return;
+    	}
+        String name = event.getPlayer().getName();
+        plugin.getSqlManager().tryUpdate("UPDATE players SET class='" + event.getPlayerClass().getName() + "' WHERE name='" + name + "'");
     }
 
     /**
@@ -88,6 +102,11 @@ public class PlayerManager {
      * @param player
      */
     public void newPlayer(Player player) {
+    	PlayerNewEvent event = new PlayerNewEvent(Type.CUSTOM_EVENT, player);
+    	plugin.getServer().getPluginManager().callEvent(event);
+    	if(event.isCanceled() == true){
+    		return;
+    	}
         String name = player.getName();
         String className = plugin.getClassManager().getDefaultClass().getName();
         plugin.getSqlManager().tryUpdate("INSERT INTO 'players' (name, class, exp, mana) VALUES ('" + name + "','" + className + "', '0', '0') ");
