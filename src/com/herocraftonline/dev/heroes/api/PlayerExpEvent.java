@@ -34,14 +34,6 @@ public class PlayerExpEvent extends PlayerEvent{
 	}
 	
 	/**
-	 * Sets the players level
-	 * @param level
-	 */
-	public void setLevel(int level){
-		this.level = level;	
-	}
-	
-	/**
 	 * Returns the players experience
 	 * @return
 	 */
