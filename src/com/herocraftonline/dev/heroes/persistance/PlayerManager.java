@@ -56,7 +56,7 @@ public class PlayerManager {
     public void setExp(Player player, Integer exp){
     	PlayerExpEvent event = new PlayerExpEvent(Type.CUSTOM_EVENT, player, getLevel(exp), exp);   
     	plugin.getServer().getPluginManager().callEvent(event);
-    	if(event.isCanceled() == true){
+    	if(event.isCancelled() == true){
     		return;
     	}
         String name = event.getPlayer().getName();
@@ -90,7 +90,7 @@ public class PlayerManager {
     public void setClass(Player player, HeroClass playerClass) {
     	PlayerClassEvent event = new PlayerClassEvent(Type.CUSTOM_EVENT, player, playerClass);
     	plugin.getServer().getPluginManager().callEvent(event);
-    	if(event.isCanceled() == true){
+    	if(event.isCancelled() == true){
     		return;
     	}
         String name = event.getPlayer().getName();
@@ -104,7 +104,7 @@ public class PlayerManager {
     public void newPlayer(Player player) {
     	PlayerNewEvent event = new PlayerNewEvent(Type.CUSTOM_EVENT, player);
     	plugin.getServer().getPluginManager().callEvent(event);
-    	if(event.isCanceled() == true){
+    	if(event.isCancelled() == true){
     		return;
     	}
         String name = player.getName();

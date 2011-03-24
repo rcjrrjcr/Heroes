@@ -15,7 +15,7 @@ public class PlayerEvent extends Event{
 	 * Returns if the event is canceled or not
 	 * @return
 	 */
-	public boolean isCanceled(){
+	public boolean isCancelled(){
 		return cancelled;
 	}
 
