@@ -2,7 +2,6 @@ package com.herocraftonline.dev.heroes;
 
 import java.util.HashMap;
 import java.util.Set;
-import java.util.logging.Level;
 
 import org.bukkit.entity.CreatureType;
 import org.bukkit.entity.Entity;
@@ -17,6 +16,7 @@ import org.bukkit.event.entity.EntityListener;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.classes.HeroClass.ExperienceType;
 import com.herocraftonline.dev.heroes.persistance.PlayerManager;
+import com.herocraftonline.dev.heroes.util.Messaging;
 import com.herocraftonline.dev.heroes.util.Properties;
 
 public class HEntityListener extends EntityListener {
@@ -38,11 +38,15 @@ public class HEntityListener extends EntityListener {
             HeroClass playerClass = plugin.getPlayerManager().getClass(attacker);
             // Get the sources of experience for the player's class
             Set<ExperienceType> expSources = playerClass.getExperienceSources();
+            // If the player gains experience from killing
             if (expSources.contains(ExperienceType.KILLING)) {
                 if (defender instanceof LivingEntity) {
+                    int addedExp = 0;
+                    // If the dying entity is a Player
                     if (defender instanceof Player) {
-                        // TODO: handle killing experience
+                        addedExp = Properties.playerKillingExp;
                     } else {
+                        // Get the dying entity's CreatureType
                         CreatureType type = null;
                         try {
                             Class<?>[] interfaces = defender.getClass().getInterfaces();
@@ -52,13 +56,15 @@ public class HEntityListener extends EntityListener {
                                     break;
                                 }
                             }
-                        } catch (IllegalArgumentException e) {e.printStackTrace();}
-                        plugin.log(Level.SEVERE, type.getName());
+                        } catch (IllegalArgumentException e) {}
                         if (type != null) {
-                            int exp = Properties.creatureKillingExp.get(type);
-                            playerManager.setExp(attacker, playerManager.getExp(attacker) + exp);
+                            addedExp = Properties.creatureKillingExp.get(type);
                         }
                     }
+                    // Add the experience to the player
+                    int exp = playerManager.getExp(attacker);
+                    Messaging.send(attacker, "$1: $2 Exp (+$3)", playerClass.getName(), String.valueOf(exp), String.valueOf(addedExp));
+                    playerManager.setExp(attacker, exp + addedExp);
                 }
             }
         }
