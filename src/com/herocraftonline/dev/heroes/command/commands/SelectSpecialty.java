@@ -7,7 +7,7 @@ import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.classes.ClassManager;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.command.BaseCommand;
-import com.herocraftonline.dev.heroes.persistance.PlayerManager;
+import com.herocraftonline.dev.heroes.persistance.HeroManager;
 import com.herocraftonline.dev.heroes.util.Messaging;
 
 public class SelectSpecialty extends BaseCommand {
@@ -26,7 +26,7 @@ public class SelectSpecialty extends BaseCommand {
     public void execute(CommandSender sender, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            PlayerManager playerManager = plugin.getPlayerManager();
+            HeroManager playerManager = plugin.getPlayerManager();
             ClassManager classManager = plugin.getClassManager();
             HeroClass playerClass = playerManager.getClass(player);
             if (playerClass.isPrimary()) {

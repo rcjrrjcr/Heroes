@@ -18,19 +18,19 @@ import com.herocraftonline.dev.heroes.api.PlayerPVEEvent;
 import com.herocraftonline.dev.heroes.api.PlayerPVPEvent;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.classes.HeroClass.ExperienceType;
-import com.herocraftonline.dev.heroes.persistance.PlayerManager;
+import com.herocraftonline.dev.heroes.persistance.HeroManager;
 import com.herocraftonline.dev.heroes.util.Messaging;
 
 
 public class HEntityListener extends EntityListener {
 
 	private final Heroes plugin;
-	private final PlayerManager playerManager;
+	private final HeroManager playerManager;
 	private HashMap<Entity, Player> kills = new HashMap<Entity, Player>();
 
 	public HEntityListener(Heroes plugin) {
 		this.plugin = plugin;
-		playerManager = new PlayerManager(plugin);
+		playerManager = new HeroManager(plugin);
 	}
 
     public void onEntityDeath(EntityDeathEvent event) {

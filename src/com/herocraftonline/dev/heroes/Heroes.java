@@ -18,8 +18,8 @@ import com.herocraftonline.dev.heroes.command.commands.SelectProfession;
 import com.herocraftonline.dev.heroes.command.commands.ConfigReloadCommand;
 import com.herocraftonline.dev.heroes.command.commands.SelectSpecialty;
 import com.herocraftonline.dev.heroes.command.commands.UpdateCommand;
-import com.herocraftonline.dev.heroes.persistance.PlayerManager;
-import com.herocraftonline.dev.heroes.persistance.SQLManager;
+import com.herocraftonline.dev.heroes.persistance.HeroManager;
+import com.herocraftonline.dev.heroes.persistance.SQLiteManager;
 import com.herocraftonline.dev.heroes.util.ConfigManager;
 
 import com.nijiko.permissions.PermissionHandler;
@@ -46,11 +46,11 @@ public class Heroes extends JavaPlugin {
     public static final File dataFolder = new File("plugins" + File.separator + "Heroes");
     
     // Various data managers
-    private SQLManager sqlManager;
+    private SQLiteManager sqlManager;
     private ConfigManager configManager;
     private CommandManager commandManager;
     private ClassManager classManager;
-    private PlayerManager playerManager;
+    private HeroManager playerManager;
 
     // Variable for the Permissions plugin handler.
     public static PermissionHandler Permissions;
@@ -62,9 +62,9 @@ public class Heroes extends JavaPlugin {
 
     public void onLoad() {
         dataFolder.mkdirs(); // Create the Heroes Plugin Directory.
-        sqlManager = new SQLManager(this);
+        sqlManager = new SQLiteManager(this);
         configManager = new ConfigManager(this);
-        playerManager = new PlayerManager(this);
+        playerManager = new HeroManager(this);
     }
 
     @Override
@@ -193,11 +193,11 @@ public class Heroes extends JavaPlugin {
         log.log(level, "[Heroes] " + msg);
     }
 
-    public SQLManager getSqlManager() {
+    public SQLiteManager getSqlManager() {
         return sqlManager;
     }
 
-    public PlayerManager getPlayerManager() {
+    public HeroManager getPlayerManager() {
         return playerManager;
     }
 

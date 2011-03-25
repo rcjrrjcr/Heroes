@@ -10,7 +10,7 @@ import org.bukkit.event.block.BlockListener;
 
 import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.classes.HeroClass.ExperienceType;
-import com.herocraftonline.dev.heroes.persistance.PlayerManager;
+import com.herocraftonline.dev.heroes.persistance.HeroManager;
 import com.herocraftonline.dev.heroes.util.Messaging;
 
 public class HBlockListener extends BlockListener {
@@ -31,7 +31,7 @@ public class HBlockListener extends BlockListener {
         // Get the sources of experience for the player's class
         Set<ExperienceType> expSources = playerClass.getExperienceSources();
 
-        PlayerManager playerManager = plugin.getPlayerManager();
+        HeroManager playerManager = plugin.getPlayerManager();
         int exp = playerManager.getExp(player);
         int addedExp = 0;
 

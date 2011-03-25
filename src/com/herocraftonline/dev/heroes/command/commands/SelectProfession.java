@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.command.BaseCommand;
-import com.herocraftonline.dev.heroes.persistance.PlayerManager;
+import com.herocraftonline.dev.heroes.persistance.HeroManager;
 import com.herocraftonline.dev.heroes.util.Messaging;
 import com.nijiko.coelho.iConomy.iConomy;
 
@@ -29,7 +29,7 @@ public class SelectProfession extends BaseCommand {
             HeroClass profession = plugin.getClassManager().getClass(args[0]);
             if (profession != null) {
                 if (profession.isPrimary()) {
-                    PlayerManager playerManager = plugin.getPlayerManager();
+                    HeroManager playerManager = plugin.getPlayerManager();
                     if (playerManager.getClass(player).equals(plugin.getClassManager().getDefaultClass())) {
                         playerManager.setClass(player, profession);
                     } else {

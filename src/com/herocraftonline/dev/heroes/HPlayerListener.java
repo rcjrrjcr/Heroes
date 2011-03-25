@@ -6,7 +6,7 @@ import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerLoginEvent;
 
-import com.herocraftonline.dev.heroes.persistance.PlayerManager;
+import com.herocraftonline.dev.heroes.persistance.HeroManager;
 
 @SuppressWarnings("unused")
 public class HPlayerListener extends PlayerListener {
@@ -18,7 +18,7 @@ public class HPlayerListener extends PlayerListener {
 
     @Override
     public void onPlayerLogin(PlayerLoginEvent e) {
-        PlayerManager playerManager = plugin.getPlayerManager();
+        HeroManager playerManager = plugin.getPlayerManager();
         if (playerManager.checkPlayer(e.getPlayer().getName()) == false) {
             playerManager.newPlayer(e.getPlayer());
             plugin.log(Level.INFO, "Created");

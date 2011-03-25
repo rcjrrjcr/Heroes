@@ -19,11 +19,11 @@ import com.herocraftonline.dev.heroes.classes.HeroClass;
  * 
  * @author Herocraft's Plugin Team
  */
-public class PlayerManager {
+public class HeroManager {
 
 	private Heroes plugin;
 
-	public PlayerManager(Heroes plugin) {
+	public HeroManager(Heroes plugin) {
 		this.plugin = plugin;
 	}
 
