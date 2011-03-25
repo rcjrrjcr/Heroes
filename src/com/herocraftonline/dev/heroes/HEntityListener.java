@@ -44,7 +44,7 @@ public class HEntityListener extends EntityListener {
                     int addedExp = 0;
                     // If the dying entity is a Player
                     if (defender instanceof Player) {
-                        addedExp = Properties.playerKillingExp;
+                        addedExp = plugin.getConfigManager().getProperties().playerKillingExp;
                     } else {
                         // Get the dying entity's CreatureType
                         CreatureType type = null;
@@ -58,7 +58,7 @@ public class HEntityListener extends EntityListener {
                             }
                         } catch (IllegalArgumentException e) {}
                         if (type != null) {
-                            addedExp = Properties.creatureKillingExp.get(type);
+                            addedExp = plugin.getConfigManager().getProperties().creatureKillingExp.get(type);
                         }
                     }
                     // Add the experience to the player

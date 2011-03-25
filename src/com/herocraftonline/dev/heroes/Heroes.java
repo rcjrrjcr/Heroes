@@ -80,7 +80,7 @@ public class Heroes extends JavaPlugin {
         }
 
         // Setup the Property for Levels * Exp
-        Properties.calcExp();
+        getConfigManager().getProperties().calcExp();
 
         // Create the Player table if it doesn't already exist.
         sqlManager.tryUpdate("CREATE TABLE IF NOT EXISTS `players` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` VARCHAR, `class` VARCHAR, `exp` INT, `mana` INT)");

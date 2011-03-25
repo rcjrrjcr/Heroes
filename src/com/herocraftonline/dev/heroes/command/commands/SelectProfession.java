@@ -47,9 +47,9 @@ public class SelectProfession extends BaseCommand {
     }
 
     public void changeClass(Player player, HeroClass newClass) {
-        if (Properties.iConomy == true) {
-            if (iConomy.getBank().getAccount(player.getName()).hasOver(Properties.swapcost)) {
-                iConomy.getBank().getAccount(player.getName()).add(Properties.swapcost * -1);
+        if (plugin.getConfigManager().getProperties().iConomy == true) {
+            if (iConomy.getBank().getAccount(player.getName()).hasOver(plugin.getConfigManager().getProperties().swapcost)) {
+                iConomy.getBank().getAccount(player.getName()).add(plugin.getConfigManager().getProperties().swapcost * -1);
             }
             plugin.getPlayerManager().setClass(player, newClass);
         } else {

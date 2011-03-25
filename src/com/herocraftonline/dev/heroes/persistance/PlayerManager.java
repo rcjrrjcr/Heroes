@@ -98,7 +98,7 @@ public class PlayerManager {
 		String name = event.getPlayer().getName();
 		for(String n : getMasterys(player)){
 			if(n.equalsIgnoreCase(playerClass.toString())){
-				exp = Properties.maxExp;
+				exp = plugin.getConfigManager().getProperties().maxExp;
 			}
 		}
 		setExp(player, exp);
@@ -142,7 +142,7 @@ public class PlayerManager {
 	 */
 	public int getLevel(Integer exp) {
 		int n = 0;
-		for (Integer i : Properties.level) {
+		for (Integer i : plugin.getConfigManager().getProperties().level) {
 			if (!(exp >= i)) {
 				return n;
 			}

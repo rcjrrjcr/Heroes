@@ -58,12 +58,12 @@ public class HBlockListener extends BlockListener {
         case SOUL_SAND:
         case STONE:
             if (expSources.contains(ExperienceType.MINING)) {
-                addedExp = Properties.miningExp.get(block.getType());
+                addedExp = plugin.getConfigManager().getProperties().miningExp.get(block.getType());
             }
             break;
         case LOG:
             if (expSources.contains(ExperienceType.LOGGING)) {
-                addedExp = Properties.loggingExp;
+                addedExp = plugin.getConfigManager().getProperties().loggingExp;
             }
         }
 
