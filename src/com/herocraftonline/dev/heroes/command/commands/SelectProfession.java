@@ -29,7 +29,7 @@ public class SelectProfession extends BaseCommand {
             HeroClass profession = plugin.getClassManager().getClass(args[0]);
             if (profession != null) {
                 if (profession.isPrimary()) {
-                    HeroManager playerManager = plugin.getPlayerManager();
+                    HeroManager playerManager = plugin.getHeroManager();
                     if (playerManager.getClass(player).equals(plugin.getClassManager().getDefaultClass())) {
                         playerManager.setClass(player, profession);
                     } else {
@@ -50,9 +50,9 @@ public class SelectProfession extends BaseCommand {
             if (iConomy.getBank().getAccount(player.getName()).hasOver(plugin.getConfigManager().getProperties().swapcost)) {
                 iConomy.getBank().getAccount(player.getName()).add(plugin.getConfigManager().getProperties().swapcost * -1);
             }
-            plugin.getPlayerManager().setClass(player, newClass);
+            plugin.getHeroManager().setClass(player, newClass);
         } else {
-            plugin.getPlayerManager().setClass(player, newClass);
+            plugin.getHeroManager().setClass(player, newClass);
         }
     }
 }

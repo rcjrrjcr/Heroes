@@ -27,11 +27,11 @@ public class HBlockListener extends BlockListener {
         Player player = event.getPlayer();
 
         // Get the player's class definition
-        HeroClass playerClass = plugin.getPlayerManager().getClass(player);
+        HeroClass playerClass = plugin.getHeroManager().getClass(player);
         // Get the sources of experience for the player's class
         Set<ExperienceType> expSources = playerClass.getExperienceSources();
 
-        HeroManager playerManager = plugin.getPlayerManager();
+        HeroManager playerManager = plugin.getHeroManager();
         int exp = playerManager.getExp(player);
         int addedExp = 0;
 

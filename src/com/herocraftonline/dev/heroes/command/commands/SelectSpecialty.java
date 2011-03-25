@@ -26,7 +26,7 @@ public class SelectSpecialty extends BaseCommand {
     public void execute(CommandSender sender, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            HeroManager playerManager = plugin.getPlayerManager();
+            HeroManager playerManager = plugin.getHeroManager();
             ClassManager classManager = plugin.getClassManager();
             HeroClass playerClass = playerManager.getClass(player);
             if (playerClass.isPrimary()) {

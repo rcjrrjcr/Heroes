@@ -50,7 +50,7 @@ public class Heroes extends JavaPlugin {
     private ConfigManager configManager;
     private CommandManager commandManager;
     private ClassManager classManager;
-    private HeroManager playerManager;
+    private HeroManager heroManager;
 
     // Variable for the Permissions plugin handler.
     public static PermissionHandler Permissions;
@@ -64,7 +64,7 @@ public class Heroes extends JavaPlugin {
         dataFolder.mkdirs(); // Create the Heroes Plugin Directory.
         sqlManager = new SQLiteManager(this);
         configManager = new ConfigManager(this);
-        playerManager = new HeroManager(this);
+        heroManager = new HeroManager(this);
     }
 
     @Override
@@ -197,8 +197,8 @@ public class Heroes extends JavaPlugin {
         return sqlManager;
     }
 
-    public HeroManager getPlayerManager() {
-        return playerManager;
+    public HeroManager getHeroManager() {
+        return heroManager;
     }
 
     public ConfigManager getConfigManager() {

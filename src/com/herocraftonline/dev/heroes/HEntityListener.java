@@ -38,7 +38,7 @@ public class HEntityListener extends EntityListener {
         Player attacker = kills.get(defender);
         if (attacker != null) {
             // Get the player's class definition
-            HeroClass playerClass = plugin.getPlayerManager().getClass(attacker);
+            HeroClass playerClass = plugin.getHeroManager().getClass(attacker);
             // Get the sources of experience for the player's class
             Set<ExperienceType> expSources = playerClass.getExperienceSources();
             // If the player gains experience from killing
