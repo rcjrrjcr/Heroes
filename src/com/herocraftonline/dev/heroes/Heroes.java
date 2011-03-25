@@ -84,7 +84,7 @@ public class Heroes extends JavaPlugin {
 
         // Create the Player table if it doesn't already exist.
         sqlManager.tryUpdate("CREATE TABLE IF NOT EXISTS `players` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` VARCHAR, `class` VARCHAR, `exp` INT, `mana` INT)");
-
+        sqlManager.tryUpdate("CREATE TABLE IF NOT EXISTS `mastery` (`id` INT, `name` VARCHAR, `class` VARCHAR)");
         // Call our function to register the events Heroes needs.
         registerEvents();
         // Call our function to setup Heroes Commands.
