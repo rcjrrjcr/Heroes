@@ -1,5 +1,7 @@
 package com.herocraftonline.dev.heroes.persistance;
 
+import java.util.Set;
+
 import org.bukkit.entity.Player;
 
 import com.herocraftonline.dev.heroes.classes.HeroClass;
@@ -57,9 +59,14 @@ public class Hero {
         mana = value;
     }
 
-    public boolean equals(Player p){
-        if(p.getName().equalsIgnoreCase(player.getName())){
-            return true;
+    public boolean equals(Object o){
+        if(o instanceof Hero){
+            Hero hero = (Hero) o;
+            if(hero.getPlayer().getName().equalsIgnoreCase(player.getName())){
+                return true;
+            } else {
+                return false;
+            }
         } else {
             return false;
         }
