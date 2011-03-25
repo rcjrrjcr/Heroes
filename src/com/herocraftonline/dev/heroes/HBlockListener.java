@@ -31,8 +31,8 @@ public class HBlockListener extends BlockListener {
         // Get the sources of experience for the player's class
         Set<ExperienceType> expSources = playerClass.getExperienceSources();
 
-        HeroManager playerManager = plugin.getHeroManager();
-        int exp = playerManager.getExp(player);
+        HeroManager heroManager = plugin.getHeroManager();
+        int exp = heroManager.getExp(player);
         int addedExp = 0;
 
         switch (block.getType()) {
@@ -67,7 +67,7 @@ public class HBlockListener extends BlockListener {
         }
 
         if (addedExp > 0) {
-            playerManager.setExp(player, exp + addedExp);
+            heroManager.setExp(player, exp + addedExp);
             Messaging.send(player, "$1: $2 Exp (+$3)", playerClass.getName(), String.valueOf(exp), String.valueOf(addedExp));
         }
         plugin.log(Level.INFO, "Time: " + (System.currentTimeMillis() - start));

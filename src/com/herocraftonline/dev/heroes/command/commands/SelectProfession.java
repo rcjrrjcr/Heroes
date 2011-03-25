@@ -29,9 +29,9 @@ public class SelectProfession extends BaseCommand {
             HeroClass profession = plugin.getClassManager().getClass(args[0]);
             if (profession != null) {
                 if (profession.isPrimary()) {
-                    HeroManager playerManager = plugin.getHeroManager();
-                    if (playerManager.getClass(player).equals(plugin.getClassManager().getDefaultClass())) {
-                        playerManager.setClass(player, profession);
+                    HeroManager heroManager = plugin.getHeroManager();
+                    if (heroManager.getClass(player).equals(plugin.getClassManager().getDefaultClass())) {
+                        heroManager.setClass(player, profession);
                     } else {
                         changeClass(player, profession);
                     }

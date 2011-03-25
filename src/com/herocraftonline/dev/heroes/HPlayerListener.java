@@ -18,9 +18,9 @@ public class HPlayerListener extends PlayerListener {
 
     @Override
     public void onPlayerLogin(PlayerLoginEvent e) {
-        HeroManager playerManager = plugin.getHeroManager();
-        if (playerManager.checkPlayer(e.getPlayer().getName()) == false) {
-            playerManager.newPlayer(e.getPlayer());
+        HeroManager heroManager = plugin.getHeroManager();
+        if (heroManager.checkPlayer(e.getPlayer().getName()) == false) {
+            heroManager.newPlayer(e.getPlayer());
             plugin.log(Level.INFO, "Created");
         } else {
             plugin.log(Level.INFO, "Player Found");

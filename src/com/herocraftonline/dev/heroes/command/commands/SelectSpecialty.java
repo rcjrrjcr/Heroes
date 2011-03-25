@@ -26,14 +26,14 @@ public class SelectSpecialty extends BaseCommand {
     public void execute(CommandSender sender, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            HeroManager playerManager = plugin.getHeroManager();
+            HeroManager heroManager = plugin.getHeroManager();
             ClassManager classManager = plugin.getClassManager();
-            HeroClass playerClass = playerManager.getClass(player);
+            HeroClass playerClass = heroManager.getClass(player);
             if (playerClass.isPrimary()) {
                 HeroClass subClass = classManager.getClass(args[0]);
                 if (subClass != null) {
                     if (subClass.getParent() == playerClass) {
-                        playerManager.setClass(player, subClass);
+                        heroManager.setClass(player, subClass);
                         Messaging.send(player, "Well done $1!", subClass.getName());
                     } else {
                         Messaging.send(player, "Sorry, that specialty doesn't belong to $1.", playerClass.getName());

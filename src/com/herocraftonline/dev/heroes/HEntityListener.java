@@ -25,12 +25,12 @@ import com.herocraftonline.dev.heroes.util.Messaging;
 public class HEntityListener extends EntityListener {
 
 	private final Heroes plugin;
-	private final HeroManager playerManager;
+	private final HeroManager heroManager;
 	private HashMap<Entity, Player> kills = new HashMap<Entity, Player>();
 
 	public HEntityListener(Heroes plugin) {
 		this.plugin = plugin;
-		playerManager = new HeroManager(plugin);
+		heroManager = new HeroManager(plugin);
 	}
 
     public void onEntityDeath(EntityDeathEvent event) {
@@ -77,11 +77,11 @@ public class HEntityListener extends EntityListener {
                         }
                     }
                     // Add the experience to the player
-                    int exp = playerManager.getExp(attacker);
+                    int exp = heroManager.getExp(attacker);
                     Messaging.send(attacker, "$1: $2 Exp (+$3)", playerClass.getName(), String.valueOf(exp), String.valueOf(addedExp));
                     // Only perform an experience update if we're actually adding or subtracting from their experience.
                     if(addedExp!=0){
-                        playerManager.setExp(attacker, exp + addedExp);
+                        heroManager.setExp(attacker, exp + addedExp);
                     }
                 }
             }
