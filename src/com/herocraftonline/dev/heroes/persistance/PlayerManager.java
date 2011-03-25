@@ -13,7 +13,6 @@ import com.herocraftonline.dev.heroes.api.PlayerClassEvent;
 import com.herocraftonline.dev.heroes.api.PlayerExpEvent;
 import com.herocraftonline.dev.heroes.api.PlayerNewEvent;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
-import com.herocraftonline.dev.heroes.util.Properties;
 
 /**
  * Player management

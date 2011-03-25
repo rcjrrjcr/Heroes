@@ -8,7 +8,6 @@ import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.command.BaseCommand;
 import com.herocraftonline.dev.heroes.persistance.PlayerManager;
 import com.herocraftonline.dev.heroes.util.Messaging;
-import com.herocraftonline.dev.heroes.util.Properties;
 import com.nijiko.coelho.iConomy.iConomy;
 
 public class SelectProfession extends BaseCommand {

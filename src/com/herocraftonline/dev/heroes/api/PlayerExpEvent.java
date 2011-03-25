@@ -2,8 +2,6 @@ package com.herocraftonline.dev.heroes.api;
 
 import org.bukkit.entity.Player;
 
-import com.herocraftonline.dev.heroes.Heroes;
-import com.herocraftonline.dev.heroes.util.Properties;
 
 @SuppressWarnings("serial")
 public class PlayerExpEvent extends PlayerEvent{
