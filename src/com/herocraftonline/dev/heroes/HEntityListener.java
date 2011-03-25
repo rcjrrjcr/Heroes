@@ -79,7 +79,10 @@ public class HEntityListener extends EntityListener {
                     // Add the experience to the player
                     int exp = playerManager.getExp(attacker);
                     Messaging.send(attacker, "$1: $2 Exp (+$3)", playerClass.getName(), String.valueOf(exp), String.valueOf(addedExp));
-                    playerManager.setExp(attacker, exp + addedExp);
+                    // Only perform an experience update if we're actually adding or subtracting from their experience.
+                    if(addedExp!=0){
+                        playerManager.setExp(attacker, exp + addedExp);
+                    }
                 }
             }
         }
