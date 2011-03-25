@@ -21,7 +21,6 @@ import com.herocraftonline.dev.heroes.command.commands.UpdateCommand;
 import com.herocraftonline.dev.heroes.persistance.PlayerManager;
 import com.herocraftonline.dev.heroes.persistance.SQLManager;
 import com.herocraftonline.dev.heroes.util.ConfigManager;
-import com.herocraftonline.dev.heroes.util.Properties;
 
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;

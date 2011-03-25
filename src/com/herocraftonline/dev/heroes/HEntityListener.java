@@ -7,17 +7,20 @@ import org.bukkit.entity.CreatureType;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event.Type;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageByProjectileEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityListener;
 
+import com.herocraftonline.dev.heroes.api.PlayerPVEEvent;
+import com.herocraftonline.dev.heroes.api.PlayerPVPEvent;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.classes.HeroClass.ExperienceType;
 import com.herocraftonline.dev.heroes.persistance.PlayerManager;
 import com.herocraftonline.dev.heroes.util.Messaging;
-import com.herocraftonline.dev.heroes.util.Properties;
+
 
 public class HEntityListener extends EntityListener {
 
@@ -44,7 +47,13 @@ public class HEntityListener extends EntityListener {
                     int addedExp = 0;
                     // If the dying entity is a Player
                     if (defender instanceof Player) {
+                    	PlayerPVPEvent pvpEvent = new PlayerPVPEvent(Type.CUSTOM_EVENT, attacker, (Player) defender, addedExp);   
                         addedExp = plugin.getConfigManager().getProperties().playerKillingExp;
+                		plugin.getServer().getPluginManager().callEvent(pvpEvent);
+                		if(pvpEvent.isCancelled() == true){
+                			return;
+                		}
+                		addedExp = pvpEvent.getExp();
                     } else {
                         // Get the dying entity's CreatureType
                         CreatureType type = null;
@@ -58,7 +67,13 @@ public class HEntityListener extends EntityListener {
                             }
                         } catch (IllegalArgumentException e) {}
                         if (type != null) {
+                        	PlayerPVEEvent pveEvent = new PlayerPVEEvent(Type.CUSTOM_EVENT, attacker, defender, addedExp);   
                             addedExp = plugin.getConfigManager().getProperties().creatureKillingExp.get(type);
+                    		plugin.getServer().getPluginManager().callEvent(pveEvent);
+                    		if(pveEvent.isCancelled() == true){
+                    			return;
+                    		}
+                    		addedExp = pveEvent.getExp();
                         }
                     }
                     // Add the experience to the player
