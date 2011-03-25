@@ -6,19 +6,23 @@ import com.herocraftonline.dev.heroes.classes.HeroClass;
 
 public class Hero {
 
-    public Player player;
+    private Player player;
     private HeroClass playerClass;
     private HeroClass playerSubClass;
     private int experience;
     private int mana;
 
     // Constructor
-    public Hero(Player p, HeroClass pClass, HeroClass pSubClass, int exp, int mana){
+    public Hero(Player p, HeroClass pClass, HeroClass pSubClass, int exp, int mana) {
         this.player = p;
         this.playerClass = pClass;
         this.playerSubClass = pSubClass;
         this.experience = exp;
         this.mana = mana;
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 
     public HeroClass getPlayerClass() {
@@ -36,7 +40,7 @@ public class Hero {
     public int getMana() {
         return mana;
     }
-    
+
     public void setPlayerClass(HeroClass heroclass) {
         playerClass = heroclass;
     }
@@ -51,5 +55,13 @@ public class Hero {
 
     public void setMana(int value) {
         mana = value;
+    }
+
+    public boolean equals(Player p){
+        if(p.getName().equalsIgnoreCase(player.getName())){
+            return true;
+        } else {
+            return false;
+        }
     }
 }
