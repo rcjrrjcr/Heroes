@@ -22,6 +22,7 @@ import com.herocraftonline.dev.heroes.command.commands.UpdateCommand;
 import com.herocraftonline.dev.heroes.persistance.HeroManager;
 import com.herocraftonline.dev.heroes.persistance.SQLiteManager;
 import com.herocraftonline.dev.heroes.util.ConfigManager;
+import com.herocraftonline.dev.heroes.util.DebugLog;
 
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
@@ -34,8 +35,13 @@ import com.nijiko.coelho.iConomy.iConomy;
  * @author Herocraft's Plugin Team
  */
 public class Heroes extends JavaPlugin {
+
+    // Using this instead of getDataFolder(), getDataFolder() uses the File Name. We wan't a constant folder name.
+    public static final File dataFolder = new File("plugins" + File.separator + "Heroes");
+
     // Simple hook to Minecraft's logger so we can output to the console.
     private static final Logger log = Logger.getLogger("Minecraft");
+    private static DebugLog debugLog;
 
     // Setup the Player and Plugin listener for Heroes.
     private final HPlayerListener playerListener = new HPlayerListener(this);
@@ -43,16 +49,13 @@ public class Heroes extends JavaPlugin {
     private final HEntityListener entityListener = new HEntityListener(this);
     private final HBlockListener blockListener = new HBlockListener(this);
 
-    // Using this instead of getDataFolder(), getDataFolder() uses the File Name. We wan't a constant folder name.
-    public static final File dataFolder = new File("plugins" + File.separator + "Heroes");
-    
     // Various data managers
     private SQLiteManager sqlManager;
     private ConfigManager configManager;
     private CommandManager commandManager;
     private ClassManager classManager;
     private HeroManager heroManager;
-    
+
     // Data connections
     private Connection dbConnection;
 
@@ -69,6 +72,7 @@ public class Heroes extends JavaPlugin {
         sqlManager = new SQLiteManager(this);
         configManager = new ConfigManager(this);
         heroManager = new HeroManager(this);
+        debugLog = new DebugLog("Heroes", dataFolder + File.separator + "debug.log");
     }
 
     @Override
@@ -84,7 +88,7 @@ public class Heroes extends JavaPlugin {
 
         // Setup the Property for Levels * Exp
         getConfigManager().getProperties().calcExp();
-        
+
         // Database Connection Initialization
         dbConnection = sqlManager.getConnection();
 
@@ -186,10 +190,10 @@ public class Heroes extends JavaPlugin {
         Heroes.iConomy = null; // When it Enables again it performs the checks anyways.
         Heroes.Permissions = null; // When it Enables again it performs the checks anyways.
         try {
-			dbConnection.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+            dbConnection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         log.info(getDescription().getName() + " version " + getDescription().getVersion() + " is disabled!");
     }
 
@@ -200,9 +204,16 @@ public class Heroes extends JavaPlugin {
     public void setClassManager(ClassManager classManager) {
         this.classManager = classManager;
     }
-    
+
     public void log(Level level, String msg) {
         log.log(level, "[Heroes] " + msg);
+    }
+
+    public void debugLog(Level level, String msg) {
+        if (this.configManager.getProperties().debug) {
+            log.log(level, msg);
+        }
+        debugLog.log(level, msg);
     }
 
     public SQLiteManager getSqlManager() {
@@ -216,8 +227,8 @@ public class Heroes extends JavaPlugin {
     public ConfigManager getConfigManager() {
         return configManager;
     }
-    
-    public Connection getDatabaseConnection(){
-		return dbConnection;
+
+    public Connection getDatabaseConnection() {
+        return dbConnection;
     }
 }
