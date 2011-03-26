@@ -1,25 +1,20 @@
 package com.herocraftonline.dev.heroes.persistance;
 
-import java.util.Set;
-
 import org.bukkit.entity.Player;
 
 import com.herocraftonline.dev.heroes.classes.HeroClass;
 
 public class Hero {
 
-    private Player player;
-    private HeroClass playerClass;
-    private HeroClass playerSubClass;
-    private int experience;
-    private int mana;
+    protected Player player;
+    protected HeroClass playerClass;
+    protected int experience;
+    protected int mana;
 
-    // Constructor
-    public Hero(Player p, HeroClass pClass, HeroClass pSubClass, int exp, int mana) {
-        this.player = p;
-        this.playerClass = pClass;
-        this.playerSubClass = pSubClass;
-        this.experience = exp;
+    public Hero(Player player, HeroClass playerClass, int experience, int mana) {
+        this.player = player;
+        this.playerClass = playerClass;
+        this.experience = experience;
         this.mana = mana;
     }
 
@@ -31,11 +26,7 @@ public class Hero {
         return playerClass;
     }
 
-    public HeroClass getPlayerSubClass() {
-        return playerSubClass;
-    }
-
-    public int getExp() {
+    public int getExperience() {
         return experience;
     }
 
@@ -43,30 +34,21 @@ public class Hero {
         return mana;
     }
 
-    public void setPlayerClass(HeroClass heroclass) {
-        playerClass = heroclass;
+    public void setPlayerClass(HeroClass playerClass) {
+        this.playerClass = playerClass;
     }
 
-    public void setPlayerSubClass(HeroClass heroclass) {
-        playerSubClass = heroclass;
+    public void setExperience(int experience) {
+        this.experience = experience;
     }
 
-    public void setExperience(int value) {
-        experience = value;
+    public void setMana(int mana) {
+        this.mana = mana;
     }
 
-    public void setMana(int value) {
-        mana = value;
-    }
-
-    public boolean equals(Object o){
-        if(o instanceof Hero){
-            Hero hero = (Hero) o;
-            if(hero.getPlayer().getName().equalsIgnoreCase(player.getName())){
-                return true;
-            } else {
-                return false;
-            }
+    public boolean equals(Object o) {
+        if (o instanceof Hero) {
+            return player.getName().equalsIgnoreCase(((Hero) o).getPlayer().getName());
         } else {
             return false;
         }

@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.command.BaseCommand;
+import com.herocraftonline.dev.heroes.persistance.Hero;
 import com.herocraftonline.dev.heroes.persistance.HeroManager;
 import com.herocraftonline.dev.heroes.util.Messaging;
 import com.nijiko.coelho.iConomy.iConomy;
@@ -30,10 +31,11 @@ public class SelectProfession extends BaseCommand {
             if (profession != null) {
                 if (profession.isPrimary()) {
                     HeroManager heroManager = plugin.getHeroManager();
-                    if (heroManager.getClass(player).equals(plugin.getClassManager().getDefaultClass())) {
-                        heroManager.setClass(player, profession);
+                    Hero hero = heroManager.getHero(player);
+                    if (hero.getPlayerClass().equals(plugin.getClassManager().getDefaultClass())) {
+                        hero.setPlayerClass(profession);
                     } else {
-                        changeClass(player, profession);
+                        changeClass(hero, profession);
                     }
                     Messaging.send(player, "Welcome to the path of the $1!", profession.getName());
                 } else {
@@ -45,14 +47,15 @@ public class SelectProfession extends BaseCommand {
         }
     }
 
-    public void changeClass(Player player, HeroClass newClass) {
+    public void changeClass(Hero hero, HeroClass newClass) {
         if (plugin.getConfigManager().getProperties().iConomy == true) {
-            if (iConomy.getBank().getAccount(player.getName()).hasOver(plugin.getConfigManager().getProperties().swapcost)) {
-                iConomy.getBank().getAccount(player.getName()).add(plugin.getConfigManager().getProperties().swapcost * -1);
+            String playerName = hero.getPlayer().getName();
+            if (iConomy.getBank().getAccount(playerName).hasOver(plugin.getConfigManager().getProperties().swapcost)) {
+                iConomy.getBank().getAccount(playerName).add(plugin.getConfigManager().getProperties().swapcost * -1);
             }
-            plugin.getHeroManager().setClass(player, newClass);
+            hero.setPlayerClass(newClass);
         } else {
-            plugin.getHeroManager().setClass(player, newClass);
+            hero.setPlayerClass(newClass);
         }
     }
 }

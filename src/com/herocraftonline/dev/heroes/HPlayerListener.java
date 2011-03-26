@@ -2,6 +2,7 @@ package com.herocraftonline.dev.heroes;
 
 import java.util.logging.Level;
 
+import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerLoginEvent;
@@ -17,13 +18,11 @@ public class HPlayerListener extends PlayerListener {
     }
 
     @Override
-    public void onPlayerLogin(PlayerLoginEvent e) {
+    public void onPlayerLogin(PlayerLoginEvent event) {
+        Player player = event.getPlayer();
         HeroManager heroManager = plugin.getHeroManager();
-        if (heroManager.checkPlayer(e.getPlayer().getName()) == false) {
-            heroManager.newPlayer(e.getPlayer());
-            plugin.log(Level.INFO, "Created");
-        } else {
-            plugin.log(Level.INFO, "Player Found");
+        if (!heroManager.containsPlayer(player)) {
+            heroManager.createNewHero(player);
         }
     }
 

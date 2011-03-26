@@ -7,6 +7,7 @@ import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.classes.ClassManager;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.command.BaseCommand;
+import com.herocraftonline.dev.heroes.persistance.Hero;
 import com.herocraftonline.dev.heroes.persistance.HeroManager;
 import com.herocraftonline.dev.heroes.util.Messaging;
 
@@ -28,12 +29,13 @@ public class SelectSpecialty extends BaseCommand {
             Player player = (Player) sender;
             HeroManager heroManager = plugin.getHeroManager();
             ClassManager classManager = plugin.getClassManager();
-            HeroClass playerClass = heroManager.getClass(player);
+            Hero hero = heroManager.getHero(player);
+            HeroClass playerClass = hero.getPlayerClass();
             if (playerClass.isPrimary()) {
                 HeroClass subClass = classManager.getClass(args[0]);
                 if (subClass != null) {
                     if (subClass.getParent() == playerClass) {
-                        heroManager.setClass(player, subClass);
+                        hero.setPlayerClass(subClass);
                         Messaging.send(player, "Well done $1!", subClass.getName());
                     } else {
                         Messaging.send(player, "Sorry, that specialty doesn't belong to $1.", playerClass.getName());

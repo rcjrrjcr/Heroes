@@ -7,38 +7,35 @@ import org.bukkit.entity.CreatureType;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event.Type;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageByProjectileEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityListener;
 
-import com.herocraftonline.dev.heroes.api.PlayerPVEEvent;
-import com.herocraftonline.dev.heroes.api.PlayerPVPEvent;
+import com.herocraftonline.dev.heroes.api.PlayerKillsEntityEvent;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.classes.HeroClass.ExperienceType;
-import com.herocraftonline.dev.heroes.persistance.HeroManager;
+import com.herocraftonline.dev.heroes.persistance.Hero;
 import com.herocraftonline.dev.heroes.util.Messaging;
-
 
 public class HEntityListener extends EntityListener {
 
-	private final Heroes plugin;
-	private final HeroManager heroManager;
-	private HashMap<Entity, Player> kills = new HashMap<Entity, Player>();
+    private final Heroes plugin;
+    private HashMap<Entity, Player> kills = new HashMap<Entity, Player>();
 
-	public HEntityListener(Heroes plugin) {
-		this.plugin = plugin;
-		heroManager = new HeroManager(plugin);
-	}
+    public HEntityListener(Heroes plugin) {
+        this.plugin = plugin;
+    }
 
     public void onEntityDeath(EntityDeathEvent event) {
         Entity defender = event.getEntity();
         Player attacker = kills.get(defender);
         if (attacker != null) {
+            // Get the Hero representing the player
+            Hero hero = plugin.getHeroManager().getHero(attacker);
             // Get the player's class definition
-            HeroClass playerClass = plugin.getHeroManager().getClass(attacker);
+            HeroClass playerClass = hero.getPlayerClass();
             // Get the sources of experience for the player's class
             Set<ExperienceType> expSources = playerClass.getExperienceSources();
             // If the player gains experience from killing
@@ -47,13 +44,12 @@ public class HEntityListener extends EntityListener {
                     int addedExp = 0;
                     // If the dying entity is a Player
                     if (defender instanceof Player) {
-                    	PlayerPVPEvent pvpEvent = new PlayerPVPEvent(Type.CUSTOM_EVENT, attacker, (Player) defender, addedExp);   
                         addedExp = plugin.getConfigManager().getProperties().playerKillingExp;
-                		plugin.getServer().getPluginManager().callEvent(pvpEvent);
-                		if(pvpEvent.isCancelled() == true){
-                			return;
-                		}
-                		addedExp = pvpEvent.getExp();
+                        PlayerKillsEntityEvent pvpEvent = new PlayerKillsEntityEvent(attacker, defender, addedExp);
+                        plugin.getServer().getPluginManager().callEvent(pvpEvent);
+                        if (!pvpEvent.isCancelled()) {
+                            addedExp = pvpEvent.getExp();
+                        }
                     } else {
                         // Get the dying entity's CreatureType
                         CreatureType type = null;
@@ -67,21 +63,21 @@ public class HEntityListener extends EntityListener {
                             }
                         } catch (IllegalArgumentException e) {}
                         if (type != null) {
-                        	PlayerPVEEvent pveEvent = new PlayerPVEEvent(Type.CUSTOM_EVENT, attacker, defender, addedExp);   
                             addedExp = plugin.getConfigManager().getProperties().creatureKillingExp.get(type);
-                    		plugin.getServer().getPluginManager().callEvent(pveEvent);
-                    		if(pveEvent.isCancelled() == true){
-                    			return;
-                    		}
-                    		addedExp = pveEvent.getExp();
+                            PlayerKillsEntityEvent pveEvent = new PlayerKillsEntityEvent(attacker, defender, addedExp);
+                            plugin.getServer().getPluginManager().callEvent(pveEvent);
+                            if (!pveEvent.isCancelled()) {
+                                addedExp = pveEvent.getExp();
+                            }
                         }
                     }
                     // Add the experience to the player
-                    int exp = heroManager.getExp(attacker);
-                    Messaging.send(attacker, "$1: $2 Exp (+$3)", playerClass.getName(), String.valueOf(exp), String.valueOf(addedExp));
-                    // Only perform an experience update if we're actually adding or subtracting from their experience.
-                    if(addedExp!=0){
-                        heroManager.setExp(attacker, exp + addedExp);
+                    int exp = hero.getExperience();
+                    // Only perform an experience update if we're actually
+                    // adding or subtracting from their experience.
+                    if (addedExp != 0) {
+                        hero.setExperience(exp + addedExp);
+                        Messaging.send(attacker, "$1: $2 Exp (+$3)", playerClass.getName(), String.valueOf(exp), String.valueOf(addedExp));
                     }
                 }
             }
@@ -89,25 +85,25 @@ public class HEntityListener extends EntityListener {
         kills.remove(defender);
     }
 
-	public void onEntityDamage(EntityDamageEvent event) {
-		Entity defender = event.getEntity();
-		if (defender instanceof LivingEntity) {
-			if (((LivingEntity) defender).getHealth() - event.getDamage() <= 0) {
-				Entity attacker = null;
-				if (event instanceof EntityDamageByProjectileEvent) {
-					EntityDamageByProjectileEvent subEvent = (EntityDamageByProjectileEvent) event;
-					attacker = subEvent.getDamager();
-				} else if (event instanceof EntityDamageByEntityEvent) {
-					EntityDamageByEntityEvent subEvent = (EntityDamageByEntityEvent) event;
-					attacker = subEvent.getDamager();
-				}
-				if (attacker != null && attacker instanceof Player) {
-					kills.put(defender, (Player) attacker);
-				} else {
-					kills.remove(defender);
-				}
-			}
-		}
-	}
+    public void onEntityDamage(EntityDamageEvent event) {
+        Entity defender = event.getEntity();
+        if (defender instanceof LivingEntity) {
+            if (((LivingEntity) defender).getHealth() - event.getDamage() <= 0) {
+                Entity attacker = null;
+                if (event instanceof EntityDamageByProjectileEvent) {
+                    EntityDamageByProjectileEvent subEvent = (EntityDamageByProjectileEvent) event;
+                    attacker = subEvent.getDamager();
+                } else if (event instanceof EntityDamageByEntityEvent) {
+                    EntityDamageByEntityEvent subEvent = (EntityDamageByEntityEvent) event;
+                    attacker = subEvent.getDamager();
+                }
+                if (attacker != null && attacker instanceof Player) {
+                    kills.put(defender, (Player) attacker);
+                } else {
+                    kills.remove(defender);
+                }
+            }
+        }
+    }
 
 }

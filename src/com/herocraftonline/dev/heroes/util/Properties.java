@@ -1,6 +1,5 @@
 package com.herocraftonline.dev.heroes.util;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.bukkit.ChatColor;
@@ -14,7 +13,7 @@ public class Properties {
 	public int baseExp;
 	public int maxExp;
 	public int maxLevel;
-	public ArrayList<Integer> level = new ArrayList<Integer>();
+	public int[] levels;
 	// Experience//
 	public int playerKillingExp = 0;
 	public HashMap<CreatureType, Integer> creatureKillingExp = new HashMap<CreatureType, Integer>();
@@ -34,10 +33,10 @@ public class Properties {
 	 * Generate experience for the level ArrayList<Integer>
 	 */
 	public void calcExp() {
-		level.clear();
+	    levels = new int[maxLevel];
 		double A = 2 * (maxExp - baseExp) * Math.pow(maxLevel, (power * -1));
-		for (int n = 1; n <= maxLevel; n++) {
-			level.add((int) (A / 2 * Math.pow(n - 1, power) + baseExp));
+		for (int n = 0; n < maxLevel; n++) {
+			levels[n] = (int) (A / 2 * Math.pow(n, power) + baseExp);
 		}
 	}
 
