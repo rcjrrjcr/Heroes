@@ -43,11 +43,10 @@ public class SQLiteManager {
         try {
             plugin.log(Level.INFO, sqlString);
 
-            Connection conn = getConnection();
+            Connection conn = plugin.getDatabaseConnection();
             Statement st = conn.createStatement();
             st.executeUpdate(sqlString);
             st.close();
-            conn.close();
         } catch (Exception e) {
             plugin.log(Level.WARNING, "The following statement failed: " + sqlString);
             plugin.log(Level.WARNING, "Statement failed: " + e.toString());
@@ -64,7 +63,7 @@ public class SQLiteManager {
         try {
             plugin.log(Level.INFO, sqlString);
 
-            Connection conn = getConnection();
+            Connection conn = plugin.getDatabaseConnection();
             Statement st = conn.createStatement();
             return st.executeQuery(sqlString);
         } catch (Exception e) {

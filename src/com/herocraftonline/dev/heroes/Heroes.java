@@ -1,6 +1,8 @@
 package com.herocraftonline.dev.heroes;
 
 import java.io.File;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -51,6 +53,9 @@ public class Heroes extends JavaPlugin {
     private CommandManager commandManager;
     private ClassManager classManager;
     private HeroManager heroManager;
+    
+    // Data connections
+    private Connection dbConnection;
 
     // Variable for the Permissions plugin handler.
     public static PermissionHandler Permissions;
@@ -80,6 +85,9 @@ public class Heroes extends JavaPlugin {
 
         // Setup the Property for Levels * Exp
         getConfigManager().getProperties().calcExp();
+        
+        // Database Connection Initialization
+        dbConnection = sqlManager.getConnection();
 
         // Create the Player table if it doesn't already exist.
         sqlManager.tryUpdate("CREATE TABLE IF NOT EXISTS `players` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` VARCHAR, `class` VARCHAR, `exp` INT, `mana` INT)");
@@ -178,6 +186,11 @@ public class Heroes extends JavaPlugin {
     public void onDisable() {
         Heroes.iConomy = null; // When it Enables again it performs the checks anyways.
         Heroes.Permissions = null; // When it Enables again it performs the checks anyways.
+        try {
+			dbConnection.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
         log.info(getDescription().getName() + " version " + getDescription().getVersion() + " is disabled!");
     }
 
@@ -203,5 +216,9 @@ public class Heroes extends JavaPlugin {
 
     public ConfigManager getConfigManager() {
         return configManager;
+    }
+    
+    public Connection getDatabaseConnection(){
+		return dbConnection;
     }
 }
