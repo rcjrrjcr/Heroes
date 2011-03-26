@@ -100,6 +100,7 @@ public class ConfigManager {
         plugin.getConfigManager().getProperties().iConomy = config.getBoolean(root + "iConomy", false);
         plugin.getConfigManager().getProperties().cColor = ChatColor.valueOf(config.getString(root + "color", "WHITE"));
         plugin.getConfigManager().getProperties().swapcost = config.getInt(root + "swapcost", 0);
+        plugin.getConfigManager().getProperties().debug = config.getBoolean(root + "debug", false);
     }
 
     private void loadExperience(Configuration config) {

@@ -8,6 +8,9 @@ import org.bukkit.entity.CreatureType;
 
 public class Properties {
 
+    // Debug Mode //
+    public boolean debug;
+    
 	// Leveling//
 	public double power;
 	public int baseExp;
