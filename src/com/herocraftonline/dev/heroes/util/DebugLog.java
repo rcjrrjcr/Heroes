@@ -39,7 +39,7 @@ public class DebugLog {
     }
     
     private class LogFormatter extends Formatter {
-        private final SimpleDateFormat date = new SimpleDateFormat("HH:mm:ss");
+        private final SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         @Override
         public String format(LogRecord record) {
