@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockListener;
 
+import com.herocraftonline.dev.heroes.api.BlockBreakExperienceEvent;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.classes.HeroClass.ExperienceType;
 import com.herocraftonline.dev.heroes.persistance.Hero;
@@ -22,7 +23,7 @@ public class HBlockListener extends BlockListener {
     }
 
     public void onBlockBreak(BlockBreakEvent event) {
-    	long start = System.currentTimeMillis();
+        long start = System.currentTimeMillis();
         Block block = event.getBlock();
         Player player = event.getPlayer();
 
@@ -67,9 +68,15 @@ public class HBlockListener extends BlockListener {
             }
         }
 
-        if (addedExp > 0) {
-            hero.setExperience(exp + addedExp);
-            Messaging.send(player, "$1: $2 Exp (+$3)", playerClass.getName(), String.valueOf(exp), String.valueOf(addedExp));
+        BlockBreakExperienceEvent expEvent = new BlockBreakExperienceEvent(player, addedExp, block.getType());
+        plugin.getServer().getPluginManager().callEvent(expEvent);
+        if (!expEvent.isCancelled()) {
+            addedExp = expEvent.getExp();
+
+            if (addedExp > 0) {
+                hero.setExperience(exp + addedExp);
+                Messaging.send(player, "$1: $2 Exp (+$3)", playerClass.getName(), String.valueOf(exp), String.valueOf(addedExp));
+            }
         }
         plugin.log(Level.INFO, "Time: " + (System.currentTimeMillis() - start));
     }

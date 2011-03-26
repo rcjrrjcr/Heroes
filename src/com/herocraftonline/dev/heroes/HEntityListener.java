@@ -13,7 +13,7 @@ import org.bukkit.event.entity.EntityDamageByProjectileEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityListener;
 
-import com.herocraftonline.dev.heroes.api.PlayerKillsEntityEvent;
+import com.herocraftonline.dev.heroes.api.KillExperienceEvent;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.classes.HeroClass.ExperienceType;
 import com.herocraftonline.dev.heroes.persistance.Hero;
@@ -45,7 +45,7 @@ public class HEntityListener extends EntityListener {
                     // If the dying entity is a Player
                     if (defender instanceof Player) {
                         addedExp = plugin.getConfigManager().getProperties().playerKillingExp;
-                        PlayerKillsEntityEvent pvpEvent = new PlayerKillsEntityEvent(attacker, defender, addedExp);
+                        KillExperienceEvent pvpEvent = new KillExperienceEvent(attacker, defender, addedExp);
                         plugin.getServer().getPluginManager().callEvent(pvpEvent);
                         if (!pvpEvent.isCancelled()) {
                             addedExp = pvpEvent.getExp();
@@ -64,7 +64,7 @@ public class HEntityListener extends EntityListener {
                         } catch (IllegalArgumentException e) {}
                         if (type != null) {
                             addedExp = plugin.getConfigManager().getProperties().creatureKillingExp.get(type);
-                            PlayerKillsEntityEvent pveEvent = new PlayerKillsEntityEvent(attacker, defender, addedExp);
+                            KillExperienceEvent pveEvent = new KillExperienceEvent(attacker, defender, addedExp);
                             plugin.getServer().getPluginManager().callEvent(pveEvent);
                             if (!pveEvent.isCancelled()) {
                                 addedExp = pveEvent.getExp();

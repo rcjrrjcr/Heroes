@@ -1,5 +1,6 @@
 package com.herocraftonline.dev.heroes.api;
 
+import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 
@@ -7,9 +8,15 @@ import org.bukkit.event.Event;
 public class CustomPlayerEvent extends Event implements Cancellable {
 
     protected boolean cancelled = false;
-    
-    public CustomPlayerEvent() {
+    protected Player player;
+
+    public CustomPlayerEvent(Player player) {
         super(Type.CUSTOM_EVENT);
+        this.player = player;
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 
     @Override
@@ -21,5 +28,5 @@ public class CustomPlayerEvent extends Event implements Cancellable {
     public void setCancelled(boolean cancelled) {
         this.cancelled = cancelled;
     }
-    
+
 }
