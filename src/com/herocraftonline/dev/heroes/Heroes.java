@@ -206,15 +206,28 @@ public class Heroes extends JavaPlugin {
         this.classManager = classManager;
     }
 
+    /**
+     * Print messages to the server Log as well as to our DebugLog.
+     * 'debugLog' is used to seperate Heroes information from the Servers Log Output.
+     * @param level
+     * @param msg
+     */
     public void log(Level level, String msg) {
         log.log(level, "[Heroes] " + msg);
+        debugLog.log(level, "[Heroes] " + msg);
     }
 
+    /**
+     * Print messages to the Debug Log, if the servers in Debug Mode then we
+     * also wan't to print the messages to the standard Server Console.
+     * @param level
+     * @param msg
+     */
     public void debugLog(Level level, String msg) {
         if (this.configManager.getProperties().debug) {
-            log.log(level, msg);
+            log.log(level, "[Debug] " + msg);
         }
-        debugLog.log(level, msg);
+        debugLog.log(level, "[Debug] " + msg);
     }
 
     public SQLiteManager getSqlManager() {
