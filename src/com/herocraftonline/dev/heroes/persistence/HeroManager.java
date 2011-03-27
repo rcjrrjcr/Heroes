@@ -1,26 +1,15 @@
 package com.herocraftonline.dev.heroes.persistence;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.logging.FileHandler;
-import java.util.logging.Handler;
-import java.util.logging.Level;
 
 import org.bukkit.entity.Player;
 import org.bukkit.util.config.Configuration;
 
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.api.NewPlayerEvent;
-import com.herocraftonline.dev.heroes.classes.ClassManager;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
-import com.herocraftonline.dev.heroes.util.ConfigManager;
 
 /**
  * Player management
@@ -35,10 +24,11 @@ public class HeroManager {
     public HeroManager(Heroes plugin) {
         this.plugin = plugin;
         this.heroes = new HashSet<Hero>();
+        File usersFolder = new File(plugin.getDataFolder(), "users");
+        usersFolder.mkdirs();
     }
 
     public boolean createNewHero(Player player) {
-        // TODO: check if the hero is in the db and if so, load it
         NewPlayerEvent event = new NewPlayerEvent(player);
         plugin.getServer().getPluginManager().callEvent(event);
         if (!event.isCancelled()) {
@@ -69,72 +59,35 @@ public class HeroManager {
         return null;
     }
 
-    public Hero[] getHeroes() {	
+    public Hero[] getHeroes() {
         return heroes.toArray(new Hero[0]);
     }
-    
-    public void loadHeroFile(Player p){
-    	File playerFile = new File(plugin.getDataFolder(), "users" + File.pathSeparator + p.getName() + ".yml");
-    	String root = "player.";
-    	if(playerFile.exists()){
+
+    public void loadHeroFile(Player player) {
+        File playerFile = new File(plugin.getDataFolder(), "users" + File.pathSeparator + player.getName() + ".yml");
+        String root = "player.";
+        if (playerFile.exists()) {
             Configuration playerConfig = new Configuration(playerFile);
             // Grab the players stuff
             HeroClass playerClass = plugin.getClassManager().getClass(playerConfig.getString(root + "class"));
             int playerExp = playerConfig.getInt(root + "experience", 0);
             int playerMana = playerConfig.getInt(root + "mana", 0);
-            Hero playerHero = new Hero(p, playerClass , playerExp, playerMana);
+            Hero playerHero = new Hero(player, playerClass, playerExp, playerMana);
             addHero(playerHero);
-    	}else{
-    		try {
-    			checkForConfig(playerFile);
-    			loadHeroFile(p);
-	            plugin.debugLog(Level.WARNING, "[LoadUserFile] Userfile not found for " + p.getName());
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-    	}
-    }
-    
-    public void unLoadHeroFile(Player p){
-    	File playerFile = new File(plugin.getDataFolder(), "users" + File.pathSeparator + p.getName() + ".yml");
-    	if(playerFile.exists()){
-            Configuration playerConfig = new Configuration(playerFile);
-            // Save the players stuff
-            playerConfig.setProperty("class", getHero(p).playerClass.toString());
-            playerConfig.setProperty("experience", getHero(p).experience);
-            playerConfig.setProperty("mana", getHero(p).mana);
-            playerConfig.save();
-    	}else{
-            plugin.debugLog(Level.WARNING, "[SaveUserFile] Userfile not found for " + p.getName());
-    	}
-    }
-    
-    private void checkForConfig(File config) {
-        if (!config.exists()) {
-            try {
-                plugin.log(Level.WARNING, "File " + config.getName() + " not found - generating defaults.");
-                config.getParentFile().mkdir();
-                config.createNewFile();
-                OutputStream output = new FileOutputStream(config, false);
-                InputStream input = ConfigManager.class.getResourceAsStream("/defaults/user.yml");
-                byte[] buf = new byte[8192];
-                while (true) {
-                    int length = input.read(buf);
-                    if (length < 0) {
-                        break;
-                    }
-                    output.write(buf, 0, length);
-                }
-                input.close();
-                output.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        } else {
+            createNewHero(player);
         }
     }
-    
-    
-    
+
+    public void unloadHeroFile(Player p) {
+        File playerFile = new File(plugin.getDataFolder(), "users" + File.pathSeparator + p.getName() + ".yml");
+        Configuration playerConfig = new Configuration(playerFile);
+        // Save the players stuff
+        playerConfig.setProperty("class", getHero(p).playerClass.toString());
+        playerConfig.setProperty("experience", getHero(p).experience);
+        playerConfig.setProperty("mana", getHero(p).mana);
+        playerConfig.save();
+    }
 
     /*******************************************************/
     /*********** THE METHODS BELOW WILL BE MOVED ***********/
