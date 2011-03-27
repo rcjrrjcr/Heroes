@@ -1,4 +1,4 @@
-package com.herocraftonline.dev.heroes.persistance;
+package com.herocraftonline.dev.heroes.persistence;
 
 import org.bukkit.entity.Player;
 

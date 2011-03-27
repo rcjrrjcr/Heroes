@@ -1,4 +1,4 @@
-package com.herocraftonline.dev.heroes.persistance;
+package com.herocraftonline.dev.heroes.persistence;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -31,6 +31,7 @@ public class SQLiteManager {
             connection.setAutoCommit(true);
         } catch (Exception e) {
             plugin.log(Level.WARNING, "SQLite connection failed: " + e.toString());
+            plugin.debugLog(Level.WARNING, "SQLite connection failed: " + e.toString());
         }
         return connection;
     }
