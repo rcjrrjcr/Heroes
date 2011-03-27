@@ -13,13 +13,14 @@ import java.util.logging.Logger;
 
 public class DebugLog {
 
+    private FileHandler fh; 
     private Logger log;
 
     public DebugLog(String logger, String file) {
         log = Logger.getLogger(logger);
 
         try {
-            FileHandler fh = new FileHandler(file, true);
+            fh = new FileHandler(file, true);
             log.setUseParentHandlers(false);
             for (Handler handler : log.getHandlers()) {
                 log.removeHandler(handler);
@@ -61,5 +62,9 @@ public class DebugLog {
 
             return builder.toString();
         }
+    }
+
+    public void close() {
+        fh.close();
     }
 }

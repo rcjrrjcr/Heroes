@@ -195,6 +195,7 @@ public class Heroes extends JavaPlugin {
             e.printStackTrace();
         }
         log.info(getDescription().getName() + " version " + getDescription().getVersion() + " is disabled!");
+        debugLog.close();
     }
 
     public ClassManager getClassManager() {
