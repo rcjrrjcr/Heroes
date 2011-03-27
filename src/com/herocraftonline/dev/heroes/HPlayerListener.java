@@ -4,6 +4,7 @@ import java.util.logging.Level;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerLoginEvent;
 
@@ -21,9 +22,14 @@ public class HPlayerListener extends PlayerListener {
     public void onPlayerLogin(PlayerLoginEvent event) {
         Player player = event.getPlayer();
         HeroManager heroManager = plugin.getHeroManager();
-        if (!heroManager.containsPlayer(player)) {
-            heroManager.createNewHero(player);
-        }
+        heroManager.loadHeroFile(player);
+    }
+    
+    @Override
+    public void onPlayerQuit(PlayerEvent event) {
+        Player player = event.getPlayer();
+        HeroManager heroManager = plugin.getHeroManager();
+        heroManager.unLoadHeroFile(player);
     }
 
 }
