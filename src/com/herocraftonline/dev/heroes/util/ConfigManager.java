@@ -44,6 +44,7 @@ public class ConfigManager {
             loadLevelConfig(primaryConfig);
             loadDefaultConfig(primaryConfig);
             loadProperties(primaryConfig);
+            loadPersistence(primaryConfig);
 
             Configuration expConfig = new Configuration(expConfigFile);
             expConfig.load();
@@ -103,13 +104,23 @@ public class ConfigManager {
         plugin.getConfigManager().getProperties().debug = config.getBoolean(root + "debug", false);
     }
 
+    private void loadPersistence(Configuration config) {
+        String root = "data.";
+        plugin.getConfigManager().getProperties().host = config.getString(root + "host", "localhost");
+        plugin.getConfigManager().getProperties().port = config.getString(root + "port", "3306");
+        plugin.getConfigManager().getProperties().database = config.getString(root + "database", "heroes");
+        plugin.getConfigManager().getProperties().username = config.getString(root + "username", "root");
+        plugin.getConfigManager().getProperties().password = config.getString(root + "password", "");
+        plugin.getConfigManager().getProperties().method = config.getString(root + "method", "sqlite");
+    }
+
     private void loadExperience(Configuration config) {
         String root = "killing.";
         for (String item : config.getKeys(root)) {
             try {
                 int exp = config.getInt(root + item, 0);
                 if (item.equals("player")) {
-                	plugin.getConfigManager().getProperties().playerKillingExp = exp;
+                    plugin.getConfigManager().getProperties().playerKillingExp = exp;
                 } else {
                     CreatureType type = CreatureType.valueOf(item.toUpperCase());
                     plugin.getConfigManager().getProperties().creatureKillingExp.put(type, exp);
@@ -124,21 +135,18 @@ public class ConfigManager {
             int exp = config.getInt(root + item, 0);
             Material type = Material.matchMaterial(item);
             if (type != null) {
-            	plugin.getConfigManager().getProperties().miningExp.put(type, exp);
+                plugin.getConfigManager().getProperties().miningExp.put(type, exp);
             } else {
                 plugin.log(Level.WARNING, "Invalid material type (" + item + ") found in experience.yml.");
             }
         }
-        
+
         root = "logging.";
         int exp = config.getInt(root + "log", 0);
         plugin.getConfigManager().getProperties().loggingExp = exp;
     }
-    
-    public Properties getProperties(){
-		return propertiesFile;
-		
-    	
-    }
 
+    public Properties getProperties() {
+        return propertiesFile;
+    }
 }

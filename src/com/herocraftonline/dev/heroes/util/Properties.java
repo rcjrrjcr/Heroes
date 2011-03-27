@@ -11,6 +11,14 @@ public class Properties {
     // Debug Mode //
     public boolean debug;
 
+    // Persistence //
+    public String host;
+    public String port;
+    public String database;
+    public String username;
+    public String password;
+    public String method;
+    
     // Leveling//
     public double power;
     public int baseExp;
