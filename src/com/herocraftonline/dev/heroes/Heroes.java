@@ -19,8 +19,8 @@ import com.herocraftonline.dev.heroes.command.commands.SelectProfession;
 import com.herocraftonline.dev.heroes.command.commands.ConfigReloadCommand;
 import com.herocraftonline.dev.heroes.command.commands.SelectSpecialty;
 import com.herocraftonline.dev.heroes.command.commands.UpdateCommand;
-import com.herocraftonline.dev.heroes.persistance.HeroManager;
-import com.herocraftonline.dev.heroes.persistance.SQLiteManager;
+import com.herocraftonline.dev.heroes.persistence.HeroManager;
+import com.herocraftonline.dev.heroes.persistence.SQLiteManager;
 import com.herocraftonline.dev.heroes.util.ConfigManager;
 import com.herocraftonline.dev.heroes.util.DebugLog;
 

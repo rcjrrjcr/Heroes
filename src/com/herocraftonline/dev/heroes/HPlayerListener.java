@@ -7,7 +7,7 @@ import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerLoginEvent;
 
-import com.herocraftonline.dev.heroes.persistance.HeroManager;
+import com.herocraftonline.dev.heroes.persistence.HeroManager;
 
 @SuppressWarnings("unused")
 public class HPlayerListener extends PlayerListener {

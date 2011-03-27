@@ -11,7 +11,7 @@ import org.bukkit.event.block.BlockListener;
 import com.herocraftonline.dev.heroes.api.BlockBreakExperienceEvent;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.classes.HeroClass.ExperienceType;
-import com.herocraftonline.dev.heroes.persistance.Hero;
+import com.herocraftonline.dev.heroes.persistence.Hero;
 import com.herocraftonline.dev.heroes.util.Messaging;
 
 public class HBlockListener extends BlockListener {
