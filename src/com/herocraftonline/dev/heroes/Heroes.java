@@ -55,9 +55,6 @@ public class Heroes extends JavaPlugin {
     private ClassManager classManager;
     private HeroManager heroManager;
 
-    // Data connections
-    private Connection dbConnection;
-    
     // Messaging
     private Messaging messaging = new Messaging();
 
@@ -185,11 +182,7 @@ public class Heroes extends JavaPlugin {
     public void onDisable() {
         Heroes.iConomy = null; // When it Enables again it performs the checks anyways.
         Heroes.Permissions = null; // When it Enables again it performs the checks anyways.
-        try {
-            dbConnection.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
         log.info(getDescription().getName() + " version " + getDescription().getVersion() + " is disabled!");
         debugLog.close();
     }
