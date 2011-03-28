@@ -226,10 +226,6 @@ public class Heroes extends JavaPlugin {
     public ConfigManager getConfigManager() {
         return configManager;
     }
-
-    public Connection getDatabaseConnection() {
-        return dbConnection;
-    }
     
     public Messaging getMessaging(){
     	return messaging;
