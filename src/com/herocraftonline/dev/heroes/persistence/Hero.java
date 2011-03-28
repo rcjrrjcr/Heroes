@@ -13,14 +13,14 @@ public class Hero {
     protected HeroClass playerClass;
     protected int experience;
     protected int mana;
-    protected List<String> masterys;
+    protected List<String> masteries;
 
-    public Hero(Player player, HeroClass playerClass, int experience, int mana, List<String> masterys) {
+    public Hero(Player player, HeroClass playerClass, int experience, int mana, List<String> masteries) {
         this.player = player;
         this.playerClass = playerClass;
         this.experience = experience;
         this.mana = mana;
-        this.masterys = masterys;
+        this.masteries = masteries;
     }
 
     public Player getPlayer() {
@@ -39,8 +39,8 @@ public class Hero {
         return mana;
     }
     
-    public List<String> getMasterys(){
-		return masterys;
+    public List<String> getMasteries(){
+		return masteries;
     }
 
     public void setPlayerClass(HeroClass playerClass) {
@@ -55,8 +55,8 @@ public class Hero {
         this.mana = mana;
     }
     
-    public void setMasterys(ArrayList<String> masterys){
-    	this.masterys = masterys;
+    public void setMasteries(ArrayList<String> masterys){
+    	this.masteries = masterys;
     }
 
     public boolean equals(Object o) {
