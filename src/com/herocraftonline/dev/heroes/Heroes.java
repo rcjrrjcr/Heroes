@@ -122,6 +122,7 @@ public class Heroes extends JavaPlugin {
     private void registerEvents() {
         PluginManager pluginManager = getServer().getPluginManager();
         pluginManager.registerEvent(Type.PLAYER_LOGIN, playerListener, Priority.Normal, this); // To setup the Players Initial Class.
+        pluginManager.registerEvent(Type.PLAYER_QUIT, playerListener, Priority.Normal, this); // To setup the Players Initial Class.
         pluginManager.registerEvent(Type.PLUGIN_ENABLE, pluginListener, Priority.Monitor, this); // To keep an eye out for Permissions and iConomy.
         pluginManager.registerEvent(Type.ENTITY_DAMAGED, entityListener, Priority.Normal, this);
         pluginManager.registerEvent(Type.ENTITY_DEATH, entityListener, Priority.Normal, this);

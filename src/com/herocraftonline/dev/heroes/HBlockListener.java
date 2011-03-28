@@ -22,7 +22,6 @@ public class HBlockListener extends BlockListener {
     }
 
     public void onBlockBreak(BlockBreakEvent event) {
-        long start = System.currentTimeMillis();
         Block block = event.getBlock();
         Player player = event.getPlayer();
 
@@ -77,7 +76,6 @@ public class HBlockListener extends BlockListener {
                 plugin.getMessaging().send(player, "$1: $2 Exp (+$3)", playerClass.getName(), String.valueOf(exp), String.valueOf(addedExp));
             }
         }
-        plugin.log(Level.INFO, "Time: " + (System.currentTimeMillis() - start));
     }
 
 }
