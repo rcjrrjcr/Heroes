@@ -29,13 +29,9 @@ public class HeroManager {
     }
 
     public boolean createNewHero(Player player) {
-        NewPlayerEvent event = new NewPlayerEvent(player);
-        plugin.getServer().getPluginManager().callEvent(event);
-        if (!event.isCancelled()) {
-            HeroClass playerClass = plugin.getClassManager().getDefaultClass();
-            return addHero(new Hero(player, playerClass, 0, 0));
-        }
-        return false;
+        plugin.getServer().getPluginManager().callEvent(new NewPlayerEvent(player));
+        HeroClass playerClass = plugin.getClassManager().getDefaultClass();
+        return addHero(new Hero(player, playerClass, 0, 0));
     }
 
     public boolean addHero(Hero hero) {
