@@ -1,5 +1,8 @@
 package com.herocraftonline.dev.heroes.persistence;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.entity.Player;
 
 import com.herocraftonline.dev.heroes.classes.HeroClass;
@@ -10,12 +13,14 @@ public class Hero {
     protected HeroClass playerClass;
     protected int experience;
     protected int mana;
+    protected List<String> masterys;
 
-    public Hero(Player player, HeroClass playerClass, int experience, int mana) {
+    public Hero(Player player, HeroClass playerClass, int experience, int mana, List<String> masterys) {
         this.player = player;
         this.playerClass = playerClass;
         this.experience = experience;
         this.mana = mana;
+        this.masterys = masterys;
     }
 
     public Player getPlayer() {
@@ -33,6 +38,10 @@ public class Hero {
     public int getMana() {
         return mana;
     }
+    
+    public List<String> getMasterys(){
+		return masterys;
+    }
 
     public void setPlayerClass(HeroClass playerClass) {
         this.playerClass = playerClass;
@@ -44,6 +53,10 @@ public class Hero {
 
     public void setMana(int mana) {
         this.mana = mana;
+    }
+    
+    public void setMasterys(ArrayList<String> masterys){
+    	this.masterys = masterys;
     }
 
     public boolean equals(Object o) {

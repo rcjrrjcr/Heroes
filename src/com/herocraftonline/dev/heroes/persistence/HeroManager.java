@@ -1,7 +1,9 @@
 package com.herocraftonline.dev.heroes.persistence;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.bukkit.entity.Player;
@@ -31,7 +33,7 @@ public class HeroManager {
     public boolean createNewHero(Player player) {
         plugin.getServer().getPluginManager().callEvent(new NewPlayerEvent(player));
         HeroClass playerClass = plugin.getClassManager().getDefaultClass();
-        return addHero(new Hero(player, playerClass, 0, 0));
+        return addHero(new Hero(player, playerClass, 0, 0, null));
     }
 
     public boolean addHero(Hero hero) {
@@ -68,7 +70,8 @@ public class HeroManager {
             HeroClass playerClass = plugin.getClassManager().getClass(playerConfig.getString(root + "class"));
             int playerExp = playerConfig.getInt(root + "experience", 0);
             int playerMana = playerConfig.getInt(root + "mana", 0);
-            Hero playerHero = new Hero(player, playerClass, playerExp, playerMana);
+            List<String> masterys = playerConfig.getStringList(root + "masterys", null);
+            Hero playerHero = new Hero(player, playerClass, playerExp, playerMana, masterys);
             addHero(playerHero);
         } else {
             createNewHero(player);
@@ -82,6 +85,7 @@ public class HeroManager {
         playerConfig.setProperty("class", getHero(p).playerClass.toString());
         playerConfig.setProperty("experience", getHero(p).experience);
         playerConfig.setProperty("mana", getHero(p).mana);
+        playerConfig.setProperty("mastery", getHero(p).getMasterys());
         playerConfig.save();
     }
 

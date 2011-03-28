@@ -2,3 +2,4 @@ player:
     class:
     experience:
     mana:
+    masterys:[]

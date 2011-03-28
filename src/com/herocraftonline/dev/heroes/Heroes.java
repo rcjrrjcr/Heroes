@@ -20,7 +20,6 @@ import com.herocraftonline.dev.heroes.command.commands.ConfigReloadCommand;
 import com.herocraftonline.dev.heroes.command.commands.SelectSpecialty;
 import com.herocraftonline.dev.heroes.command.commands.UpdateCommand;
 import com.herocraftonline.dev.heroes.persistence.HeroManager;
-import com.herocraftonline.dev.heroes.persistence.SQLiteManager;
 import com.herocraftonline.dev.heroes.util.ConfigManager;
 import com.herocraftonline.dev.heroes.util.DebugLog;
 
@@ -50,7 +49,6 @@ public class Heroes extends JavaPlugin {
     private final HBlockListener blockListener = new HBlockListener(this);
 
     // Various data managers
-    private SQLiteManager sqlManager;
     private ConfigManager configManager;
     private CommandManager commandManager;
     private ClassManager classManager;
@@ -69,7 +67,6 @@ public class Heroes extends JavaPlugin {
 
     public void onLoad() {
         dataFolder.mkdirs(); // Create the Heroes Plugin Directory.
-        sqlManager = new SQLiteManager(this);
         configManager = new ConfigManager(this);
         heroManager = new HeroManager(this);
         debugLog = new DebugLog("Heroes", dataFolder + File.separator + "debug.log");
@@ -89,12 +86,6 @@ public class Heroes extends JavaPlugin {
         // Setup the Property for Levels * Exp
         getConfigManager().getProperties().calcExp();
 
-        // Database Connection Initialization
-        dbConnection = sqlManager.getConnection();
-
-        // Create the Player table if it doesn't already exist.
-        sqlManager.tryUpdate("CREATE TABLE IF NOT EXISTS `players` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` VARCHAR, `class` VARCHAR, `exp` INT, `mana` INT)");
-        sqlManager.tryUpdate("CREATE TABLE IF NOT EXISTS `mastery` (`id` INT, `name` VARCHAR, `class` VARCHAR)");
         // Call our function to register the events Heroes needs.
         registerEvents();
         // Call our function to setup Heroes Commands.
@@ -228,10 +219,6 @@ public class Heroes extends JavaPlugin {
             log.log(level, "[Debug] " + msg);
         }
         debugLog.log(level, "[Debug] " + msg);
-    }
-
-    public SQLiteManager getSqlManager() {
-        return sqlManager;
     }
 
     public HeroManager getHeroManager() {
