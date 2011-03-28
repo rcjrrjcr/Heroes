@@ -12,7 +12,6 @@ import com.herocraftonline.dev.heroes.api.BlockBreakExperienceEvent;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.classes.HeroClass.ExperienceType;
 import com.herocraftonline.dev.heroes.persistence.Hero;
-import com.herocraftonline.dev.heroes.util.Messaging;
 
 public class HBlockListener extends BlockListener {
 
@@ -38,34 +37,34 @@ public class HBlockListener extends BlockListener {
         int addedExp = 0;
 
         switch (block.getType()) {
-        case COAL:
-        case COBBLESTONE:
-        case CLAY:
-        case DIAMOND_ORE:
-        case DIRT:
-        case GLOWSTONE:
-        case GOLD_ORE:
-        case GRASS:
-        case GRAVEL:
-        case IRON_ORE:
-        case LAPIS_ORE:
-        case MOSSY_COBBLESTONE:
-        case NETHERRACK:
-        case OBSIDIAN:
-        case REDSTONE_ORE:
-        case SAND:
-        case SANDSTONE:
-        case SNOW_BLOCK:
-        case SOUL_SAND:
-        case STONE:
-            if (expSources.contains(ExperienceType.MINING)) {
-                addedExp = plugin.getConfigManager().getProperties().miningExp.get(block.getType());
-            }
-            break;
-        case LOG:
-            if (expSources.contains(ExperienceType.LOGGING)) {
-                addedExp = plugin.getConfigManager().getProperties().loggingExp;
-            }
+            case COAL:
+            case COBBLESTONE:
+            case CLAY:
+            case DIAMOND_ORE:
+            case DIRT:
+            case GLOWSTONE:
+            case GOLD_ORE:
+            case GRASS:
+            case GRAVEL:
+            case IRON_ORE:
+            case LAPIS_ORE:
+            case MOSSY_COBBLESTONE:
+            case NETHERRACK:
+            case OBSIDIAN:
+            case REDSTONE_ORE:
+            case SAND:
+            case SANDSTONE:
+            case SNOW_BLOCK:
+            case SOUL_SAND:
+            case STONE:
+                if (expSources.contains(ExperienceType.MINING)) {
+                    addedExp = plugin.getConfigManager().getProperties().miningExp.get(block.getType());
+                }
+                break;
+            case LOG:
+                if (expSources.contains(ExperienceType.LOGGING)) {
+                    addedExp = plugin.getConfigManager().getProperties().loggingExp;
+                }
         }
 
         BlockBreakExperienceEvent expEvent = new BlockBreakExperienceEvent(player, addedExp, block.getType());

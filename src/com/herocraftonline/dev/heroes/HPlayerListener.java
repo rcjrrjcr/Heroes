@@ -24,7 +24,7 @@ public class HPlayerListener extends PlayerListener {
         HeroManager heroManager = plugin.getHeroManager();
         heroManager.loadHeroFile(player);
     }
-    
+
     @Override
     public void onPlayerQuit(PlayerEvent event) {
         Player player = event.getPlayer();
