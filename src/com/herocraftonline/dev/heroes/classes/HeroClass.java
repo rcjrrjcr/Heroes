@@ -34,13 +34,13 @@ public class HeroClass {
         LOGGING,
     }
 
-    protected String name;
-    protected HeroClass parent;
-    protected ArmorType armorType;
-    protected WeaponType weaponType;
-    protected Set<ExperienceType> experienceSources;
-    protected Set<Spells> spells;
-    protected Set<HeroClass> specializations;
+    private String name;
+    private HeroClass parent;
+    private ArmorType armorType;
+    private WeaponType weaponType;
+    private Set<ExperienceType> experienceSources;
+    private Set<Spells> spells;
+    private Set<HeroClass> specializations;
 
     public HeroClass() {
         name = new String();
@@ -68,6 +68,10 @@ public class HeroClass {
         return parent == null;
     }
 
+    public String toString() {
+        return name;
+    }
+    
     public String getName() {
         return name;
     }
