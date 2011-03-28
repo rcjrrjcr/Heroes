@@ -75,7 +75,7 @@ public class HeroManager {
         }
     }
 
-    public void unloadHeroFile(Player p) {
+    public void saveHeroFile(Player p) {
         File playerFile = new File(plugin.getDataFolder(), "users" + File.pathSeparator + p.getName() + ".yml");
         Configuration playerConfig = new Configuration(playerFile);
         // Save the players stuff

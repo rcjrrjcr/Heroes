@@ -29,7 +29,7 @@ public class HPlayerListener extends PlayerListener {
     public void onPlayerQuit(PlayerEvent event) {
         Player player = event.getPlayer();
         HeroManager heroManager = plugin.getHeroManager();
-        heroManager.unloadHeroFile(player);
+        heroManager.saveHeroFile(player);
     }
 
 }
