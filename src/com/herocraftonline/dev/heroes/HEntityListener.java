@@ -77,7 +77,7 @@ public class HEntityListener extends EntityListener {
                     // adding or subtracting from their experience.
                     if (addedExp != 0) {
                         hero.setExperience(exp + addedExp);
-                        Messaging.send(attacker, "$1: $2 Exp (+$3)", playerClass.getName(), String.valueOf(exp), String.valueOf(addedExp));
+                        plugin.getMessaging().send(attacker, "$1: $2 Exp (+$3)", playerClass.getName(), String.valueOf(exp), String.valueOf(addedExp));
                     }
                 }
             }

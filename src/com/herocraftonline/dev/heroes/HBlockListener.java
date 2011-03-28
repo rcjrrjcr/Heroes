@@ -75,7 +75,7 @@ public class HBlockListener extends BlockListener {
 
             if (addedExp > 0) {
                 hero.setExperience(exp + addedExp);
-                Messaging.send(player, "$1: $2 Exp (+$3)", playerClass.getName(), String.valueOf(exp), String.valueOf(addedExp));
+                plugin.getMessaging().send(player, "$1: $2 Exp (+$3)", playerClass.getName(), String.valueOf(exp), String.valueOf(addedExp));
             }
         }
         plugin.log(Level.INFO, "Time: " + (System.currentTimeMillis() - start));

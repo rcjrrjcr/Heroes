@@ -22,6 +22,7 @@ import com.herocraftonline.dev.heroes.command.commands.UpdateCommand;
 import com.herocraftonline.dev.heroes.persistence.HeroManager;
 import com.herocraftonline.dev.heroes.util.ConfigManager;
 import com.herocraftonline.dev.heroes.util.DebugLog;
+import com.herocraftonline.dev.heroes.util.Messaging;
 
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
@@ -56,6 +57,9 @@ public class Heroes extends JavaPlugin {
 
     // Data connections
     private Connection dbConnection;
+    
+    // Messaging
+    private Messaging messaging = new Messaging();
 
     // Variable for the Permissions plugin handler.
     public static PermissionHandler Permissions;
@@ -64,6 +68,7 @@ public class Heroes extends JavaPlugin {
     private boolean useiConomy = false;
     // Variable for the iConomy plugin handler.
     private static iConomy iConomy = null;
+    
 
     public void onLoad() {
         dataFolder.mkdirs(); // Create the Heroes Plugin Directory.
@@ -231,5 +236,9 @@ public class Heroes extends JavaPlugin {
 
     public Connection getDatabaseConnection() {
         return dbConnection;
+    }
+    
+    public Messaging getMessaging(){
+    	return messaging;
     }
 }

@@ -39,6 +39,7 @@ public class Updater {
             pm.loadPlugin(file);
         } catch (Throwable ex) {
             plugin.log(Level.WARNING, "Could not load plugin");
+            plugin.debugLog(Level.SEVERE, "Couldn't reload the plugin");
         }
     }
 
