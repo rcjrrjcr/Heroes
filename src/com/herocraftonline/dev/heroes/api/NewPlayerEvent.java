@@ -10,7 +10,7 @@ public class NewPlayerEvent extends Event {
     protected Player player;
 
     public NewPlayerEvent(Player player) {
-        super(Type.CUSTOM_EVENT);
+        super("NewPlayerEvent");
         this.player = player;
     }
 

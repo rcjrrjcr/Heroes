@@ -11,7 +11,7 @@ public class CustomPlayerEvent extends Event implements Cancellable {
     protected Player player;
 
     public CustomPlayerEvent(Player player) {
-        super(Type.CUSTOM_EVENT);
+        super("CustomPlayerEvent");
         this.player = player;
     }
 
