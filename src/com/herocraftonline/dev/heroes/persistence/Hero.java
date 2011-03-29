@@ -38,9 +38,9 @@ public class Hero {
     public int getMana() {
         return mana;
     }
-    
-    public List<String> getMasteries(){
-		return masteries;
+
+    public List<String> getMasteries() {
+        return masteries;
     }
 
     public void setPlayerClass(HeroClass playerClass) {
@@ -54,9 +54,9 @@ public class Hero {
     public void setMana(int mana) {
         this.mana = mana;
     }
-    
-    public void setMasteries(ArrayList<String> masterys){
-    	this.masteries = masterys;
+
+    public void setMasteries(ArrayList<String> masterys) {
+        this.masteries = masterys;
     }
 
     public boolean equals(Object o) {

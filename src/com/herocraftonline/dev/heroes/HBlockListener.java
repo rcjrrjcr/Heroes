@@ -1,7 +1,6 @@
 package com.herocraftonline.dev.heroes;
 
 import java.util.Set;
-import java.util.logging.Level;
 
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;

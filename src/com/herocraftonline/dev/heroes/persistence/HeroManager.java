@@ -22,18 +22,68 @@ public class HeroManager {
 
     private Heroes plugin;
     private Set<Hero> heroes;
+    private File playerFolder;
 
     public HeroManager(Heroes plugin) {
         this.plugin = plugin;
         this.heroes = new HashSet<Hero>();
-        File usersFolder = new File(plugin.getDataFolder(), "users");
-        usersFolder.mkdirs();
+        playerFolder = new File(plugin.getDataFolder(), "players"); // Setup our Player Data Folder
+        playerFolder.mkdirs(); // Create the folder if it doesn't exist.
+    }
+
+    /**
+     * Load the given Players Data file.
+     * @param player
+     */
+    public void loadHeroFile(Player player) {
+        File playerFile = new File(playerFolder, player.getName() + ".yml"); // Setup our Players Data File.
+        // Check if it already exists, if so we load the data.
+        if (playerFile.exists()) {
+            Configuration playerConfig = new Configuration(playerFile); // Setup the Configuration
+            playerConfig.load(); // Load the Config File
+
+            HeroClass playerClass;
+            // Grab the Players Class.
+            if (playerConfig.getString("class") != null) {
+                playerClass = plugin.getClassManager().getClass(playerConfig.getString("class")); // Grab the Players Class from the File.
+            } else {
+                playerClass = plugin.getClassManager().getDefaultClass(); // If no Class saved then revert to the Default Class.
+            }
+
+            // Grab the Data we need.
+            List<String> masteries = playerConfig.getStringList("masteries", new ArrayList<String>());
+            int mana = playerConfig.getInt("mana", 0);
+            int exp = playerConfig.getInt("experience", 0);
+
+            // Create a New Hero
+            Hero playerHero = new Hero(player, playerClass, exp, mana, masteries);
+            // Add the Hero to the Set.
+            addHero(playerHero);
+        } else {
+            // Create a New Hero with the Default Setup.
+            createNewHero(player);
+        }
+    }
+
+    /**
+     * Save the given Players Data to a file.
+     * @param p
+     */
+    public void saveHeroFile(Player p) {
+        File playerFile = new File(playerFolder, p.getName() + ".yml");
+        Configuration playerConfig = new Configuration(playerFile);
+        // Save the players stuff
+        playerConfig.setProperty("class", getHero(p).getPlayerClass().toString());
+        playerConfig.setProperty("experience", getHero(p).getExperience());
+        playerConfig.setProperty("mana", getHero(p).getMana());
+        playerConfig.setProperty("masteries", getHero(p).getMasteries());
+        playerConfig.save();
     }
 
     public boolean createNewHero(Player player) {
         plugin.getServer().getPluginManager().callEvent(new NewPlayerEvent(player));
-        HeroClass playerClass = plugin.getClassManager().getDefaultClass();
-        return addHero(new Hero(player, playerClass, 0, 0, null));
+        // Add a new Hero with the default setup.
+        return addHero(new Hero(player, plugin.getClassManager().getDefaultClass(), 0, 0, null));
     }
 
     public boolean addHero(Hero hero) {
@@ -60,185 +110,4 @@ public class HeroManager {
     public Hero[] getHeroes() {
         return heroes.toArray(new Hero[0]);
     }
-
-    public void loadHeroFile(Player player) {
-        File playerFile = new File(plugin.getDataFolder(), "users" + File.pathSeparator + player.getName() + ".yml");
-        String root = "player.";
-        if (playerFile.exists()) {
-            Configuration playerConfig = new Configuration(playerFile);
-            // Grab the players stuff
-            HeroClass playerClass = plugin.getClassManager().getClass(playerConfig.getString(root + "class"));
-            int playerExp = playerConfig.getInt(root + "experience", 0);
-            int playerMana = playerConfig.getInt(root + "mana", 0);
-            List<String> masterys = playerConfig.getStringList(root + "masterys", null);
-            Hero playerHero = new Hero(player, playerClass, playerExp, playerMana, masterys);
-            addHero(playerHero);
-        } else {
-            createNewHero(player);
-        }
-    }
-
-    public void saveHeroFile(Player p) {
-        File playerFile = new File(plugin.getDataFolder(), "users" + File.pathSeparator + p.getName() + ".yml");
-        Configuration playerConfig = new Configuration(playerFile);
-        // Save the players stuff
-        playerConfig.setProperty("class", getHero(p).playerClass.toString());
-        playerConfig.setProperty("experience", getHero(p).experience);
-        playerConfig.setProperty("mana", getHero(p).mana);
-        playerConfig.setProperty("mastery", getHero(p).getMasterys());
-        playerConfig.save();
-    }
-
-    /*******************************************************/
-    /*********** THE METHODS BELOW WILL BE MOVED ***********/
-    /*******************************************************/
-
-    // /**
-    // * Grab the given Players current Experience.
-    // * @param player
-    // * @return
-    // */
-    // public int getExp(Player player) {
-    // String name = player.getName(); // Grab the players name.
-    // int value = -1;
-    // try {
-    // ResultSet rs =
-    // plugin.getSqlManager().trySelect("SELECT * FROM players WHERE name='" +
-    // name + "'");
-    // rs.next();
-    // value = rs.getInt("exp");
-    // rs.close();
-    // } catch (Exception e) {
-    // e.printStackTrace();
-    // }
-    // return value;
-    // }
-    //
-    // /**
-    // * Set the given Players Exp to the value given.
-    // * @param player
-    // * @param exp
-    // * @throws Exception
-    // */
-    // public void setExp(Player player, Integer exp){
-    // PlayerExpEvent event = new PlayerExpEvent(Type.CUSTOM_EVENT, player,
-    // getLevel(exp), exp);
-    // plugin.getServer().getPluginManager().callEvent(event);
-    // if(event.isCancelled() == true){
-    // return;
-    // }
-    // String name = event.getPlayer().getName();
-    // plugin.getSqlManager().tryUpdate("UPDATE players SET exp=" +
-    // event.getExp() + " WHERE name='" + name + "'");
-    // }
-    //
-    // /**
-    // * Grab the given Players Class.
-    // * @param player
-    // * @return
-    // */
-    // public HeroClass getClass(Player player) {
-    // String pClass = null;
-    // String name = player.getName();
-    // try {
-    // ResultSet rs =
-    // plugin.getSqlManager().trySelect("SELECT * FROM players WHERE name='" +
-    // name + "'");
-    // rs.next();
-    // pClass = rs.getString("class");
-    // rs.close();
-    // } catch (SQLException e) {
-    // e.printStackTrace();
-    // }
-    // return pClass == null ? null : plugin.getClassManager().getClass(pClass);
-    // }
-    //
-    // /**
-    // * Change the Players Class to the specified Class.
-    // * @param player
-    // * @param playerClass
-    // */
-    // public void setClass(Player player, HeroClass playerClass) {
-    // int exp = 0;
-    // PlayerClassEvent event = new PlayerClassEvent(Type.CUSTOM_EVENT, player,
-    // playerClass);
-    // plugin.getServer().getPluginManager().callEvent(event);
-    // if(event.isCancelled() == true){
-    // return;
-    // }
-    // String name = event.getPlayer().getName();
-    // for(String n : getMasterys(player)){
-    // if(n.equalsIgnoreCase(playerClass.toString())){
-    // exp = plugin.getConfigManager().getProperties().maxExp;
-    // }
-    // }
-    // setExp(player, exp);
-    // plugin.getSqlManager().tryUpdate("UPDATE players SET class='" +
-    // event.getPlayerClass().getName() + "' WHERE name='" + name + "'");
-    // }
-    //
-    // /**
-    // * Insert the Player into the Database with the default class.
-    // * @param player
-    // */
-    // public void newPlayer(Player player) {
-    // PlayerNewEvent event = new PlayerNewEvent(Type.CUSTOM_EVENT, player);
-    // plugin.getServer().getPluginManager().callEvent(event);
-    // if(event.isCancelled() == true){
-    // return;
-    // }
-    // String name = player.getName();
-    // String className = plugin.getClassManager().getDefaultClass().getName();
-    // plugin.getSqlManager().tryUpdate("INSERT INTO 'players' (name, class, exp, mana) VALUES ('"
-    // + name + "','" + className + "', '0', '0') ");
-    // plugin.log(Level.INFO, "New player stored in db: " + name);
-    // }
-    //
-    // /**
-    // * Check if the Player already exists within the Database.
-    // * @param name
-    // * @return
-    // */
-    // public boolean checkPlayer(String name) {
-    // String query = "SELECT * FROM players WHERE name='" + name + "'";
-    // if (plugin.getSqlManager().rowCount(query) > 0) {
-    // return true;
-    // } else {
-    // return false;
-    // }
-    // }
-    //
-    // /**
-    // * Convert the given Exp into the correct Level.
-    // * @param exp
-    // * @return
-    // */
-    // public int getLevel(Integer exp) {
-    // int n = 0;
-    // for (Integer i : plugin.getConfigManager().getProperties().levels) {
-    // if (!(exp >= i)) {
-    // return n;
-    // }
-    // n++;
-    // }
-    // return -1;
-    // }
-    //
-    // public ArrayList<String> getMasterys(Player player){
-    // ArrayList<String> pClass = new ArrayList<String>();
-    // String name = player.getName();
-    // try {
-    // ResultSet rs =
-    // plugin.getSqlManager().trySelect("SELECT * FROM masterys WHERE name='" +
-    // name + "'");
-    // while(rs.next()){
-    // pClass.add(rs.getString("class"));
-    // }
-    // rs.close();
-    // } catch (Exception e) {
-    // e.printStackTrace();
-    // }
-    // return pClass;
-    // }
-
 }
