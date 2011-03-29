@@ -83,7 +83,7 @@ public class HeroManager {
     public boolean createNewHero(Player player) {
         plugin.getServer().getPluginManager().callEvent(new NewPlayerEvent(player));
         // Add a new Hero with the default setup.
-        return addHero(new Hero(player, plugin.getClassManager().getDefaultClass(), 0, 0, null));
+        return addHero(new Hero(player, plugin.getClassManager().getDefaultClass(), 0, 0, new ArrayList<String>()));
     }
 
     public boolean addHero(Hero hero) {
