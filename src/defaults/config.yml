@@ -3,9 +3,6 @@ leveling:
     baseExperience: 100
     maxExperience: 90000
     maxLevel: 99
-default:
-    class: 'Vagrant'
-    level: 1
 properties:
     iConomy: false
     swapcost: 10
