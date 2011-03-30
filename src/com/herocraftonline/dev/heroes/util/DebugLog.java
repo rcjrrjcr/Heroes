@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 
 public class DebugLog {
 
-    private FileHandler fh; 
+    private FileHandler fh;
     private Logger log;
 
     public DebugLog(String logger, String file) {
@@ -36,9 +36,9 @@ public class DebugLog {
     }
 
     public void log(Level level, String msg) {
-        log.log(level,msg);
+        log.log(level, msg);
     }
-    
+
     private class LogFormatter extends Formatter {
         private final SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 

@@ -20,6 +20,7 @@ public class HBlockListener extends BlockListener {
         this.plugin = plugin;
     }
 
+    @Override
     public void onBlockBreak(BlockBreakEvent event) {
         Block block = event.getBlock();
         Player player = event.getPlayer();

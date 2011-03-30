@@ -1,7 +1,6 @@
 package com.herocraftonline.dev.heroes;
 
 import org.bukkit.event.server.PluginEnableEvent;
-import org.bukkit.event.server.PluginEvent;
 import org.bukkit.event.server.ServerListener;
 import org.bukkit.plugin.Plugin;
 

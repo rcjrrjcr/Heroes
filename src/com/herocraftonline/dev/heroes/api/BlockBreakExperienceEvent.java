@@ -5,7 +5,7 @@ import org.bukkit.entity.Player;
 
 @SuppressWarnings("serial")
 public class BlockBreakExperienceEvent extends ExperienceGainEvent {
-    
+
     protected Material blockType;
 
     public BlockBreakExperienceEvent(Player player, int exp, Material blockType) {

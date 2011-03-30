@@ -14,19 +14,17 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.herocraftonline.dev.heroes.classes.ClassManager;
 import com.herocraftonline.dev.heroes.command.CommandManager;
-import com.herocraftonline.dev.heroes.command.commands.SelectProfession;
 import com.herocraftonline.dev.heroes.command.commands.ConfigReloadCommand;
+import com.herocraftonline.dev.heroes.command.commands.SelectProfession;
 import com.herocraftonline.dev.heroes.command.commands.SelectSpecialty;
 import com.herocraftonline.dev.heroes.command.commands.UpdateCommand;
 import com.herocraftonline.dev.heroes.persistence.HeroManager;
 import com.herocraftonline.dev.heroes.util.ConfigManager;
 import com.herocraftonline.dev.heroes.util.DebugLog;
 import com.herocraftonline.dev.heroes.util.Messaging;
-
+import com.nijiko.coelho.iConomy.iConomy;
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
-
-import com.nijiko.coelho.iConomy.iConomy;
 
 /**
  * Heroes Plugin for Herocraft
@@ -65,6 +63,7 @@ public class Heroes extends JavaPlugin {
     // Variable for the iConomy plugin handler.
     private static iConomy iConomy = null;
 
+    @Override
     public void onLoad() {
         dataFolder.mkdirs(); // Create the Heroes Plugin Directory.
         configManager = new ConfigManager(this);

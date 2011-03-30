@@ -59,6 +59,7 @@ public class Hero {
         this.masteries = masterys;
     }
 
+    @Override
     public boolean equals(Object o) {
         if (o instanceof Hero) {
             return player.getName().equalsIgnoreCase(((Hero) o).getPlayer().getName());

@@ -52,7 +52,7 @@ public class ClassManager {
         List<String> classNames = config.getKeys("classes");
         for (String className : classNames) {
             HeroClass newClass = new HeroClass(className);
-            
+
             String armor = config.getString("classes." + className + ".permitted-armor", "DIAMOND");
             try {
                 newClass.setArmorType(ArmorType.valueOf(armor));
@@ -60,7 +60,7 @@ public class ClassManager {
                 plugin.log(Level.WARNING, "Invalid armor type (" + armor + ") defined for " + className + ". Using default armor type instead.");
                 newClass.setArmorType(ArmorType.DIAMOND);
             }
-            
+
             String weapon = config.getString("classes." + className + ".permitted-weapon", "DIAMOND");
             try {
                 newClass.setWeaponType(WeaponType.valueOf(weapon));
@@ -68,11 +68,12 @@ public class ClassManager {
                 plugin.log(Level.WARNING, "Invalid weapon type (" + weapon + ") defined for " + className + ". Using default weapon type instead.");
                 newClass.setWeaponType(WeaponType.DIAMOND);
             }
-            
+
             List<String> spellNames = config.getStringList("classes." + className + ".permitted-spells", null);
             Set<Spells> spells = new HashSet<Spells>();
             for (String spell : spellNames) {
-                try {;
+                try {
+                    ;
                     boolean added = spells.add(Spells.valueOf(spell));
                     if (!added) {
                         plugin.log(Level.WARNING, "Duplicate spell (" + weapon + ") defined for " + className + ".");
@@ -82,7 +83,7 @@ public class ClassManager {
                 }
             }
             newClass.setSpells(spells);
-            
+
             List<String> experienceNames = config.getStringList("classes." + className + ".experience-sources", null);
             Set<ExperienceType> experienceSources = new HashSet<ExperienceType>();
             for (String experience : experienceNames) {
@@ -108,7 +109,7 @@ public class ClassManager {
                 }
             }
         }
-        
+
         for (HeroClass unlinkedClass : classes) {
             String className = unlinkedClass.getName();
             String parentName = config.getString("classes." + className + "parent");

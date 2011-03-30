@@ -5,7 +5,7 @@ import org.bukkit.entity.Player;
 
 @SuppressWarnings("serial")
 public class KillExperienceEvent extends CustomPlayerEvent {
-    
+
     protected Entity entity;
     protected int exp;
 

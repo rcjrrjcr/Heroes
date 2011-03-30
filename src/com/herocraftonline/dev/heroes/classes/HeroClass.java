@@ -51,6 +51,7 @@ public class HeroClass {
         spells = new HashSet<Spells>();
     }
 
+    @Override
     public boolean equals(Object o) {
         if (o instanceof HeroClass) {
             return name.equalsIgnoreCase(((HeroClass) o).getName());
@@ -68,10 +69,11 @@ public class HeroClass {
         return parent == null;
     }
 
+    @Override
     public String toString() {
         return name;
     }
-    
+
     public String getName() {
         return name;
     }

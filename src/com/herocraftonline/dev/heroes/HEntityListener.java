@@ -7,9 +7,9 @@ import org.bukkit.entity.CreatureType;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageByProjectileEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityListener;
 
@@ -27,6 +27,7 @@ public class HEntityListener extends EntityListener {
         this.plugin = plugin;
     }
 
+    @Override
     public void onEntityDeath(EntityDeathEvent event) {
         Entity defender = event.getEntity();
         Player attacker = kills.get(defender);
@@ -60,7 +61,8 @@ public class HEntityListener extends EntityListener {
                                     break;
                                 }
                             }
-                        } catch (IllegalArgumentException e) {}
+                        } catch (IllegalArgumentException e) {
+                        }
                         if (type != null) {
                             addedExp = plugin.getConfigManager().getProperties().creatureKillingExp.get(type);
                             KillExperienceEvent pveEvent = new KillExperienceEvent(attacker, defender, addedExp);
@@ -84,6 +86,7 @@ public class HEntityListener extends EntityListener {
         kills.remove(defender);
     }
 
+    @Override
     public void onEntityDamage(EntityDamageEvent event) {
         Entity defender = event.getEntity();
         if (defender instanceof LivingEntity) {
