@@ -115,10 +115,10 @@ public class ConfigManager {
     }
 
     private void loadExperience(Configuration config) {
-        String root = "killing.";
+        String root = "killing";
         for (String item : config.getKeys(root)) {
             try {
-                int exp = config.getInt(root + item, 0);
+                int exp = config.getInt(root + "." + item, 0);
                 if (item.equals("player")) {
                     plugin.getConfigManager().getProperties().playerKillingExp = exp;
                 } else {
@@ -130,10 +130,11 @@ public class ConfigManager {
             }
         }
 
-        root = "mining.";
+        root = "mining";
         for (String item : config.getKeys(root)) {
-            int exp = config.getInt(root + item, 0);
+            int exp = config.getInt(root + "." + item, 0);
             Material type = Material.matchMaterial(item);
+
             if (type != null) {
                 plugin.getConfigManager().getProperties().miningExp.put(type, exp);
             } else {
@@ -141,9 +142,17 @@ public class ConfigManager {
             }
         }
 
-        root = "logging.";
-        int exp = config.getInt(root + "log", 0);
-        plugin.getConfigManager().getProperties().loggingExp = exp;
+        root = "logging";
+        for (String item : config.getKeys(root)) {
+            int exp = config.getInt(root + "." + item, 0);
+            Material type = Material.matchMaterial(item);
+
+            if (type != null) {
+                plugin.getConfigManager().getProperties().loggingExp.put(type, exp);
+            } else {
+                plugin.log(Level.WARNING, "Invalid material type (" + item + ") found in experience.yml.");
+            }
+        }
     }
 
     public Properties getProperties() {

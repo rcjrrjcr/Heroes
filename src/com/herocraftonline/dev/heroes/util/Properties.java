@@ -29,7 +29,7 @@ public class Properties {
     public int playerKillingExp = 0;
     public HashMap<CreatureType, Integer> creatureKillingExp = new HashMap<CreatureType, Integer>();
     public HashMap<Material, Integer> miningExp = new HashMap<Material, Integer>();
-    public int loggingExp = 0;
+    public HashMap<Material, Integer> loggingExp = new HashMap<Material, Integer>();
     // Default//
     public String defClass;
     public int defLevel;

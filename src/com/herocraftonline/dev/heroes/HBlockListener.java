@@ -35,35 +35,16 @@ public class HBlockListener extends BlockListener {
         int exp = hero.getExperience();
         int addedExp = 0;
 
-        switch (block.getType()) {
-            case COAL:
-            case COBBLESTONE:
-            case CLAY:
-            case DIAMOND_ORE:
-            case DIRT:
-            case GLOWSTONE:
-            case GOLD_ORE:
-            case GRASS:
-            case GRAVEL:
-            case IRON_ORE:
-            case LAPIS_ORE:
-            case MOSSY_COBBLESTONE:
-            case NETHERRACK:
-            case OBSIDIAN:
-            case REDSTONE_ORE:
-            case SAND:
-            case SANDSTONE:
-            case SNOW_BLOCK:
-            case SOUL_SAND:
-            case STONE:
-                if (expSources.contains(ExperienceType.MINING)) {
-                    addedExp = plugin.getConfigManager().getProperties().miningExp.get(block.getType());
-                }
-                break;
-            case LOG:
-                if (expSources.contains(ExperienceType.LOGGING)) {
-                    addedExp = plugin.getConfigManager().getProperties().loggingExp;
-                }
+        if (expSources.contains(ExperienceType.MINING)) {
+            if(plugin.getConfigManager().getProperties().miningExp.containsKey(block.getType())){
+                addedExp = plugin.getConfigManager().getProperties().miningExp.get(block.getType());
+            }
+        }
+
+        if (expSources.contains(ExperienceType.LOGGING)) {
+            if(plugin.getConfigManager().getProperties().loggingExp.containsKey(block.getType())){
+                addedExp = plugin.getConfigManager().getProperties().loggingExp.get(block.getType());
+            }
         }
 
         BlockBreakExperienceEvent expEvent = new BlockBreakExperienceEvent(player, addedExp, block.getType());
@@ -71,7 +52,7 @@ public class HBlockListener extends BlockListener {
         if (!expEvent.isCancelled()) {
             addedExp = expEvent.getExp();
 
-            if (addedExp > 0) {
+            if (addedExp!=0) {
                 hero.setExperience(exp + addedExp);
                 plugin.getMessaging().send(player, "$1: $2 Exp (+$3)", playerClass.getName(), String.valueOf(exp), String.valueOf(addedExp));
             }
