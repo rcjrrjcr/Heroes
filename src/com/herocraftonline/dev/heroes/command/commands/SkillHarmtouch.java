@@ -12,7 +12,7 @@ public class SkillHarmtouch extends BaseCommand {
     public SkillHarmtouch(Heroes plugin) {
         super(plugin);
         name = "Harmtouch";
-        description = "Dreadknight Skill - Harmtouch";
+        description = "Skill - Harmtouch";
         usage = "/harmtouch <player>";
         minArgs = 1;
         maxArgs = 1;

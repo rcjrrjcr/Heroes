@@ -12,7 +12,7 @@ public class SkillLayhands extends BaseCommand {
     public SkillLayhands(Heroes plugin) {
         super(plugin);
         name = "Layhands";
-        description = "Paladin Skill - Layhands";
+        description = "Skill - Layhands";
         usage = "/layhands <player>";
         minArgs = 1;
         maxArgs = 1;
