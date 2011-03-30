@@ -1,5 +1,6 @@
 package com.herocraftonline.dev.heroes;
 
+import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.event.server.PluginEvent;
 import org.bukkit.event.server.ServerListener;
 import org.bukkit.plugin.Plugin;
@@ -15,7 +16,7 @@ public class HPluginListener extends ServerListener {
     }
 
     @Override
-    public void onPluginEnabled(PluginEvent event) {
+    public void onPluginEnable(PluginEnableEvent event) {
         // First grab the Plugin.
         Plugin plugin = event.getPlugin(); // We'll check against the Plugins name, it's not fool proof but will do
 

@@ -64,7 +64,6 @@ public class Heroes extends JavaPlugin {
     private boolean useiConomy = false;
     // Variable for the iConomy plugin handler.
     private static iConomy iConomy = null;
-    
 
     public void onLoad() {
         dataFolder.mkdirs(); // Create the Heroes Plugin Directory.
@@ -121,12 +120,15 @@ public class Heroes extends JavaPlugin {
      */
     private void registerEvents() {
         PluginManager pluginManager = getServer().getPluginManager();
-        pluginManager.registerEvent(Type.PLAYER_LOGIN, playerListener, Priority.Normal, this); // To setup the Players Initial Class.
-        pluginManager.registerEvent(Type.PLAYER_QUIT, playerListener, Priority.Normal, this); // To setup the Players Initial Class.
-        pluginManager.registerEvent(Type.PLUGIN_ENABLE, pluginListener, Priority.Monitor, this); // To keep an eye out for Permissions and iConomy.
-        pluginManager.registerEvent(Type.ENTITY_DAMAGED, entityListener, Priority.Normal, this);
+        pluginManager.registerEvent(Type.PLAYER_LOGIN, playerListener, Priority.Normal, this);
+        pluginManager.registerEvent(Type.PLAYER_QUIT, playerListener, Priority.Normal, this);
+
+        pluginManager.registerEvent(Type.ENTITY_DAMAGE, entityListener, Priority.Normal, this);
         pluginManager.registerEvent(Type.ENTITY_DEATH, entityListener, Priority.Normal, this);
+
         pluginManager.registerEvent(Type.BLOCK_BREAK, blockListener, Priority.Normal, this);
+
+        pluginManager.registerEvent(Type.PLUGIN_ENABLE, pluginListener, Priority.Monitor, this); // To keep an eye out for Permissions and iConomy.
     }
 
     /**
@@ -226,8 +228,8 @@ public class Heroes extends JavaPlugin {
     public ConfigManager getConfigManager() {
         return configManager;
     }
-    
-    public Messaging getMessaging(){
-    	return messaging;
+
+    public Messaging getMessaging() {
+        return messaging;
     }
 }
