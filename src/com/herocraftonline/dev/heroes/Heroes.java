@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event.Type;
 import org.bukkit.plugin.Plugin;
@@ -92,6 +93,10 @@ public class Heroes extends JavaPlugin {
 
         // Perform the Permissions check.
         setupPermissions();
+
+        for(Player player : getServer().getOnlinePlayers()){
+            heroManager.loadHeroFile(player);
+        }
     }
 
     /**
