@@ -1,6 +1,10 @@
 classes:
     Warrior:
         default: true
+        tame: false
+        tame-max: 0
+        summon: false
+        summon-max: 0
         permitted-armor: IRON
         permitted-weapon: WOOD
         permitted-spells: [SPELL_A, SPELL_B]

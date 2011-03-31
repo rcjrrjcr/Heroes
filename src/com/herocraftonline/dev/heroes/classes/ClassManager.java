@@ -97,7 +97,36 @@ public class ClassManager {
                 }
             }
             newClass.setExperienceSources(experienceSources);
-
+            
+            boolean Tame = config.getBoolean("classes." + className + ".tame", false);
+            try{
+            	newClass.setTamable(Tame);
+            }catch(Exception e){
+            	plugin.log(Level.WARNING, "tame not set correctly -  (" + Tame + ") is not true or false for " + className);
+            }
+            
+            int maxTame = config.getInt("classes." + className + ".tameMax", 0);
+            try{
+            	newClass.setTameMax(maxTame);
+            }catch(Exception e){
+            	plugin.log(Level.WARNING, "tame-max not set correctly -  (" + maxTame + ") is not a number for - " + className);
+            }
+            
+            boolean summon = config.getBoolean("classes." + className + ".summon", false);
+            try{
+            	newClass.setTamable(summon);
+            }catch(Exception e){
+            	plugin.log(Level.WARNING, "summon not set correctly -  (" + summon + ") is not true or false for " + className);
+            }
+            
+            int maxSummon = config.getInt("classes." + className + ".tameMax", 0);
+            try{
+            	newClass.setTameMax(maxSummon);
+            }catch(Exception e){
+            	plugin.log(Level.WARNING, "summon-max not set correctly -  (" + maxSummon + ") is not a number for - " + className);
+            }
+            
+            
             boolean added = addClass(newClass);
             if (!added) {
                 plugin.log(Level.WARNING, "Duplicate class (" + className + ") found. Skipping this class.");
