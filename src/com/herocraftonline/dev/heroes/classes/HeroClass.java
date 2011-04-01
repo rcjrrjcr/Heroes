@@ -1,5 +1,6 @@
 package com.herocraftonline.dev.heroes.classes;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -33,7 +34,9 @@ public class HeroClass {
         CRAFTING,
         LOGGING,
     }
-
+    
+    
+    
     private String name;
     private HeroClass parent;
     private ArmorType armorType;
@@ -45,7 +48,7 @@ public class HeroClass {
     private Set<ExperienceType> experienceSources;
     private Set<Spells> spells;
     private Set<HeroClass> specializations;
-
+    
     public HeroClass() {
         name = new String();
         armorType = ArmorType.LEATHER;
@@ -101,7 +104,7 @@ public class HeroClass {
     public WeaponType getWeaponType() {
         return weaponType;
     }
-
+    
     public void setWeaponType(WeaponType weapon) {
         this.weaponType = weapon;
     }
@@ -109,7 +112,7 @@ public class HeroClass {
     public HeroClass getParent() {
         return parent == null ? null : parent;
     }
-    
+        
     public boolean getTamable(){
     	return tameWolves;
     }

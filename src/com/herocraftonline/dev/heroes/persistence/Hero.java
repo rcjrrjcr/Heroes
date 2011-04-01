@@ -1,6 +1,7 @@
 package com.herocraftonline.dev.heroes.persistence;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.bukkit.entity.Player;
@@ -14,6 +15,8 @@ public class Hero {
     protected int experience;
     protected int mana;
     protected List<String> masteries;
+    private HashMap<String, Long> cooldowns;
+
 
     public Hero(Player player, HeroClass playerClass, int experience, int mana, List<String> masteries) {
         this.player = player;
@@ -21,6 +24,7 @@ public class Hero {
         this.experience = experience;
         this.mana = mana;
         this.masteries = masteries;
+        this.cooldowns = new HashMap<String, Long>();
     }
 
     public Player getPlayer() {
@@ -57,6 +61,10 @@ public class Hero {
 
     public void setMasteries(ArrayList<String> masterys) {
         this.masteries = masterys;
+    }
+    
+    public HashMap<String, Long> getCooldowns(){
+		return cooldowns;
     }
 
     @Override
