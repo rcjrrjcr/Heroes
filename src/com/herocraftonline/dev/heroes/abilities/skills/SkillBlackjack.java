@@ -6,7 +6,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 import com.herocraftonline.dev.heroes.Heroes;
+import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.command.BaseCommand;
+import com.herocraftonline.dev.heroes.persistence.Hero;
 
 public class SkillBlackjack extends BaseCommand {
 
@@ -24,6 +26,9 @@ public class SkillBlackjack extends BaseCommand {
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (sender instanceof Player) {
+            Hero hero = plugin.getHeroManager().getHero((Player) sender);
+            HeroClass heroClass = plugin.getClassManager().getClass(hero.toString());
+            
             // TODO: Check for CD time left, if 0 execute.
             if (!(plugin.getClassManager().getClass(plugin.getHeroManager().getHero((Player) sender).getClass().toString()).getSpells().contains("blackjack"))) {
                 plugin.getMessaging().send(sender, "Sorry, $1, that ability isn't for your class!", ((Player) sender).getName());
@@ -35,7 +40,15 @@ public class SkillBlackjack extends BaseCommand {
                     if(entity instanceof Player){
                         Player surroundingPlayer = (Player) entity;
                         if(surroundingPlayer.getName() == p.getName()){
-                            p.setVelocity(new Vector(0, 0, 0));
+                            
+                            if (!(hero.getEffects().containsKey("blackjack"))) {
+                                hero.getEffects().put("blackjack", System.currentTimeMillis());
+                            }else{
+                                if (hero.getEffects().get("blackjack") > 60000){
+                                    hero.getEffects().put("blackjack", System.currentTimeMillis());
+                                }
+                            }
+                            
                         }
                     }
                 }

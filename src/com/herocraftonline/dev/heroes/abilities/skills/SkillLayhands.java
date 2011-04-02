@@ -33,5 +33,4 @@ public class SkillLayhands extends BaseCommand {
             }
         }
     }
-
 }
