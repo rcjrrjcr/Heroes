@@ -19,6 +19,7 @@ public class Hero {
     protected List<String> masteries;
     protected HashMap<String, Long> cooldowns;
     protected HashMap<Entity, CreatureType> summons;
+    protected HashMap<String, Long> effects;
 
 
     public Hero(Player player, HeroClass playerClass, int experience, int mana, List<String> masteries) {
@@ -29,6 +30,7 @@ public class Hero {
         this.masteries = masteries;
         this.cooldowns = new HashMap<String, Long>();
         this.summons = new HashMap<Entity, CreatureType>();
+        this.effects = effects;
     }
 
     public Player getPlayer() {
@@ -73,6 +75,10 @@ public class Hero {
     
     public HashMap<Entity, CreatureType> getSummons(){
         return summons;
+    }
+    
+    public HashMap<String, Long> getEffects(){
+        return effects;
     }
 
     @Override
