@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageByProjectileEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityListener;
 
@@ -110,6 +111,13 @@ public class HEntityListener extends EntityListener {
                     kills.remove(defender);
                 }
             }
+        }
+        if(defender instanceof Player){
+            if(plugin.getHeroManager().getHero((Player) defender).getEffects().get("bladegrasp") != null){
+                if(event.getCause() == DamageCause.ENTITY_ATTACK || event.getCause() == DamageCause.ENTITY_EXPLOSION){
+                    event.setCancelled(true);
+                }
+            }   
         }
     }
 
