@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.bukkit.entity.CreatureType;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 import com.herocraftonline.dev.heroes.classes.HeroClass;
@@ -15,7 +17,8 @@ public class Hero {
     protected int experience;
     protected int mana;
     protected List<String> masteries;
-    private HashMap<String, Long> cooldowns;
+    protected HashMap<String, Long> cooldowns;
+    protected HashMap<Entity, CreatureType> summons;
 
 
     public Hero(Player player, HeroClass playerClass, int experience, int mana, List<String> masteries) {
@@ -25,6 +28,7 @@ public class Hero {
         this.mana = mana;
         this.masteries = masteries;
         this.cooldowns = new HashMap<String, Long>();
+        this.summons = new HashMap<Entity, CreatureType>();
     }
 
     public Player getPlayer() {
@@ -65,6 +69,10 @@ public class Hero {
     
     public HashMap<String, Long> getCooldowns(){
 		return cooldowns;
+    }
+    
+    public HashMap<Entity, CreatureType> getSummons(){
+        return summons;
     }
 
     @Override

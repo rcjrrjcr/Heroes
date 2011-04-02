@@ -57,4 +57,6 @@ public class AbiltiesManager {
     public void removeCommand(BaseCommand command) {
         commands.remove(command);
     }
+    
+    
 }

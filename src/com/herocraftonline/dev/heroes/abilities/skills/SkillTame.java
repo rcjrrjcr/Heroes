@@ -15,12 +15,12 @@ public class SkillTame extends BaseCommand {
         usage = "/tame";
         minArgs = 1;
         maxArgs = 1;
-        identifiers.add("/tame");
+        identifiers.add("tame");
     }
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-    	// TODO: Not sure if you needed this - Fullwall
-    }
+        // TODO Bukkit doesn't allow for wolf taming to do done via this. Yet.
+        }
 
 }

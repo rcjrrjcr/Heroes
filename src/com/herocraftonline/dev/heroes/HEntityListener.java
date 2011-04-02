@@ -84,6 +84,11 @@ public class HEntityListener extends EntityListener {
             }
         }
         kills.remove(defender);
+        for(Hero h : plugin.getHeroManager().getHeroes()){
+            if(h.getSummons().containsKey(defender)){
+                h.getSummons().remove(defender);
+            }
+        }
     }
 
     @Override

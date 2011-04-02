@@ -7,8 +7,9 @@ import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.BaseCommand;
 
 public class SkillHarmtouch extends BaseCommand {
-	protected String skillName = "Harmtouch";
-	protected int cooldown = 3000;
+    protected String skillName = "Harmtouch";
+    protected int cooldown = 3000;
+
     // TODO: Register this command in Heroes
     public SkillHarmtouch(Heroes plugin) {
         super(plugin);
@@ -19,27 +20,27 @@ public class SkillHarmtouch extends BaseCommand {
         maxArgs = 1;
         identifiers.add("harmtouch");
     }
+    
+        @Override
+        public void execute(CommandSender sender, String[] args) {
+            if (sender instanceof Player) {
+                // Cooldown - This is just a mockup for it. Change it if you want. Just trying this out for now.
+                if (plugin.getHeroManager().getHero((Player) sender).getCooldowns().containsKey(skillName)) {
+                    if (plugin.getHeroManager().getHero((Player) sender).getCooldowns().get(skillName) - System.currentTimeMillis() >= cooldown) {
+                        plugin.getHeroManager().getHero((Player) sender).getCooldowns().put(skillName, System.currentTimeMillis());
+                    } else {
+                        plugin.getMessaging().send(sender, "Sorry, $1, that skill is still on cooldown!!", ((Player) sender).getName());
+                        return;
+                    }
+                }
 
-    @Override
-    public void execute(CommandSender sender, String[] args) {
-        if (sender instanceof Player) {	
-        	// Cooldown - This is just a mockup for it. Change it if you want. Just trying this out for now.
-        	if(plugin.getHeroManager().getHero((Player) sender).getCooldowns().containsKey(skillName)){
-        		if(plugin.getHeroManager().getHero((Player) sender).getCooldowns().get(skillName) - System.currentTimeMillis() >= cooldown){
-        			plugin.getHeroManager().getHero((Player) sender).getCooldowns().remove(skillName);
-        		}else{
-                    plugin.getMessaging().send(sender, "Sorry, $1, that skill is still on cooldown!!", ((Player) sender).getName());
-                    return;
-        		}
-        	}
-        	
-        	// Ability checker
-        	if (!(plugin.getClassManager().getClass(plugin.getHeroManager().getHero((Player) sender).getClass().toString()).getSpells().contains("Harmtouch"))) {
+            // Ability checker
+            if (!(plugin.getClassManager().getClass(plugin.getHeroManager().getHero((Player) sender).getClass().toString()).getSpells().contains("Harmtouch"))) {
                 plugin.getMessaging().send(sender, "Sorry, $1, that ability isn't for your class!", ((Player) sender).getName());
                 return;
             }
-        	
-        	// Spell Stuff
+
+            // Spell Stuff
             if (plugin.getServer().getPlayer(args[0]) != null) {
                 double x1 = plugin.getServer().getPlayer(args[0]).getLocation().getX();
                 double z1 = plugin.getServer().getPlayer(args[0]).getLocation().getZ();
@@ -49,8 +50,7 @@ public class SkillHarmtouch extends BaseCommand {
                 if (distance > 20) {
                     Player p = plugin.getServer().getPlayer(args[0]);
                     p.setHealth((int) (p.getHealth() - (plugin.getConfigManager().getProperties().getLevel(plugin.getHeroManager().getHero((Player) sender).getExperience()) * 0.5)));
-                    plugin.getHeroManager().getHero((Player) sender).getCooldowns().put(skillName, System.currentTimeMillis());
-                }else{
+                } else {
                     plugin.getMessaging().send(sender, "Sorry, $1, that person isn't close enough!", ((Player) sender).getName());
                 }
             }
