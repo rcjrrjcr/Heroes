@@ -12,7 +12,6 @@ import com.herocraftonline.dev.heroes.command.BaseCommand;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 
 public class SkillHarmtouch extends BaseCommand {
-    protected String skillName = "Harmtouch";
     protected int cooldown = 3000;
 
     // TODO: Register this command in Heroes
@@ -36,9 +35,9 @@ public class SkillHarmtouch extends BaseCommand {
             // Cooldown - This is just a mockup for it. Change it if you want.
             // Just trying this out for now.
             HashMap<String, Long> cooldowns = hero.getCooldowns();
-            if (hero.getCooldowns().containsKey(skillName)) {
-                if (cooldowns.get(skillName) - System.currentTimeMillis() >= cooldown) {
-                    cooldowns.put(skillName, System.currentTimeMillis());
+            if (hero.getCooldowns().containsKey(name)) {
+                if (cooldowns.get(name) - System.currentTimeMillis() >= cooldown) {
+                    cooldowns.put(name, System.currentTimeMillis());
                 } else {
                     plugin.getMessaging().send(sender, "Sorry, that skill is still on cooldown!");
                     return;
