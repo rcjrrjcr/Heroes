@@ -1,10 +1,15 @@
-package com.herocraftonline.dev.heroes.abilities.skills;
+package com.herocraftonline.dev.heroes.command.skills;
+
+import java.util.HashMap;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.herocraftonline.dev.heroes.Heroes;
+import com.herocraftonline.dev.heroes.classes.HeroClass;
+import com.herocraftonline.dev.heroes.classes.HeroClass.Spells;
 import com.herocraftonline.dev.heroes.command.BaseCommand;
+import com.herocraftonline.dev.heroes.persistence.Hero;
 
 public class SkillHarmtouch extends BaseCommand {
     protected String skillName = "Harmtouch";
@@ -20,23 +25,28 @@ public class SkillHarmtouch extends BaseCommand {
         maxArgs = 1;
         identifiers.add("harmtouch");
     }
-    
-        @Override
-        public void execute(CommandSender sender, String[] args) {
-            if (sender instanceof Player) {
-                // Cooldown - This is just a mockup for it. Change it if you want. Just trying this out for now.
-                if (plugin.getHeroManager().getHero((Player) sender).getCooldowns().containsKey(skillName)) {
-                    if (plugin.getHeroManager().getHero((Player) sender).getCooldowns().get(skillName) - System.currentTimeMillis() >= cooldown) {
-                        plugin.getHeroManager().getHero((Player) sender).getCooldowns().put(skillName, System.currentTimeMillis());
-                    } else {
-                        plugin.getMessaging().send(sender, "Sorry, $1, that skill is still on cooldown!!", ((Player) sender).getName());
-                        return;
-                    }
+
+    @Override
+    public void execute(CommandSender sender, String[] args) {
+        if (sender instanceof Player) {
+            Hero hero = plugin.getHeroManager().getHero((Player) sender);
+            HeroClass heroClass = plugin.getClassManager().getClass(hero.toString());
+
+            // Cooldown - This is just a mockup for it. Change it if you want.
+            // Just trying this out for now.
+            HashMap<String, Long> cooldowns = hero.getCooldowns();
+            if (hero.getCooldowns().containsKey(skillName)) {
+                if (cooldowns.get(skillName) - System.currentTimeMillis() >= cooldown) {
+                    cooldowns.put(skillName, System.currentTimeMillis());
+                } else {
+                    plugin.getMessaging().send(sender, "Sorry, that skill is still on cooldown!");
+                    return;
                 }
+            }
 
             // Ability checker
-            if (!(plugin.getClassManager().getClass(plugin.getHeroManager().getHero((Player) sender).getClass().toString()).getSpells().contains("Harmtouch"))) {
-                plugin.getMessaging().send(sender, "Sorry, $1, that ability isn't for your class!", ((Player) sender).getName());
+            if (!(heroClass.getSpells().contains(Spells.HARMTOUCH))) {
+                plugin.getMessaging().send(sender, "Sorry, that ability isn't for your class!");
                 return;
             }
 
@@ -51,7 +61,7 @@ public class SkillHarmtouch extends BaseCommand {
                     Player p = plugin.getServer().getPlayer(args[0]);
                     p.setHealth((int) (p.getHealth() - (plugin.getConfigManager().getProperties().getLevel(plugin.getHeroManager().getHero((Player) sender).getExperience()) * 0.5)));
                 } else {
-                    plugin.getMessaging().send(sender, "Sorry, $1, that person isn't close enough!", ((Player) sender).getName());
+                    plugin.getMessaging().send(sender, "Sorry, that person isn't close enough!");
                 }
             }
         }

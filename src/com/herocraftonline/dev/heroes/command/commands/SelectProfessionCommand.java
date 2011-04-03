@@ -10,9 +10,9 @@ import com.herocraftonline.dev.heroes.persistence.Hero;
 import com.herocraftonline.dev.heroes.persistence.HeroManager;
 import com.nijiko.coelho.iConomy.iConomy;
 
-public class SelectProfession extends BaseCommand {
+public class SelectProfessionCommand extends BaseCommand {
 
-    public SelectProfession(Heroes plugin) {
+    public SelectProfessionCommand(Heroes plugin) {
         super(plugin);
         name = "Select Profession";
         description = "Selects a new profession";

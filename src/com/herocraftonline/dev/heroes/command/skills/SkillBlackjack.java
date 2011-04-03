@@ -1,12 +1,12 @@
-package com.herocraftonline.dev.heroes.abilities.skills;
+package com.herocraftonline.dev.heroes.command.skills;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.util.Vector;
 
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
+import com.herocraftonline.dev.heroes.classes.HeroClass.Spells;
 import com.herocraftonline.dev.heroes.command.BaseCommand;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 
@@ -30,8 +30,8 @@ public class SkillBlackjack extends BaseCommand {
             HeroClass heroClass = plugin.getClassManager().getClass(hero.toString());
             
             // TODO: Check for CD time left, if 0 execute.
-            if (!(plugin.getClassManager().getClass(plugin.getHeroManager().getHero((Player) sender).getClass().toString()).getSpells().contains("blackjack"))) {
-                plugin.getMessaging().send(sender, "Sorry, $1, that ability isn't for your class!", ((Player) sender).getName());
+            if (!(heroClass.getSpells().contains(Spells.BLACKJACK))) {
+                plugin.getMessaging().send(sender, "Sorry, that ability isn't for your class!");
                 return;
             }
             if (plugin.getServer().getPlayer(args[0]) != null) {
