@@ -1,7 +1,6 @@
 package com.herocraftonline.dev.heroes.command.skills;
 
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 import com.herocraftonline.dev.heroes.Heroes;
@@ -17,9 +16,9 @@ public class SkillBlackjack extends BaseCommand {
         super(plugin);
         name = "Blackjack";
         description = "Skill - blackjack";
-        usage = "/blackjack <player>";
-        minArgs = 1;
-        maxArgs = 1;
+        usage = "/blackjack";
+        minArgs = 0;
+        maxArgs = 0;
         identifiers.add("blackjack");
     }
 
@@ -28,31 +27,19 @@ public class SkillBlackjack extends BaseCommand {
         if (sender instanceof Player) {
             Hero hero = plugin.getHeroManager().getHero((Player) sender);
             HeroClass heroClass = plugin.getClassManager().getClass(hero.toString());
-            
+
             // TODO: Check for CD time left, if 0 execute.
             if (!(heroClass.getSpells().contains(Spells.BLACKJACK))) {
                 plugin.getMessaging().send(sender, "Sorry, that ability isn't for your class!");
                 return;
             }
-            if (plugin.getServer().getPlayer(args[0]) != null) {
-                Player p = plugin.getServer().getPlayer(args[0]);
-                for(Entity entity : p.getNearbyEntities(p.getLocation().getX(), p.getLocation().getY(), p.getLocation().getZ())){
-                    if(entity instanceof Player){
-                        Player surroundingPlayer = (Player) entity;
-                        if(surroundingPlayer.getName() == p.getName()){
-                            
-                            if (!(hero.getEffects().containsKey("blackjack"))) {
-                                hero.getEffects().put("blackjack", System.currentTimeMillis());
-                            }else{
-                                if (hero.getEffects().get("blackjack") > 60000){
-                                    hero.getEffects().put("blackjack", System.currentTimeMillis());
-                                }
-                            }
-                            
-                        }
-                    }
+            
+            if (!(hero.getEffects().containsKey("blackjack"))) {
+                hero.getEffects().put("blackjack", System.currentTimeMillis());
+            } else {
+                if (hero.getEffects().get("blackjack") > 60000) {
+                    hero.getEffects().put("blackjack", System.currentTimeMillis());
                 }
-                p.setHealth(20);
             }
         }
     }
