@@ -30,7 +30,6 @@ public class Hero {
         this.masteries = masteries;
         this.cooldowns = new HashMap<String, Long>();
         this.summons = new HashMap<Entity, CreatureType>();
-        this.effects = effects;
     }
 
     public Player getPlayer() {

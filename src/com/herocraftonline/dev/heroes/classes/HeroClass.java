@@ -22,9 +22,13 @@ public class HeroClass {
 
     // place holder
     public static enum Spells {
-        SPELL_A,
-        SPELL_B,
-        SPELL_C
+        BLACKJACK,
+        BLADEGRASP,
+        HARMTOUCH,
+        LAYHANDS,
+        SUMMON,
+        TAME,
+        TRACK
     }
 
     public static enum ExperienceType {

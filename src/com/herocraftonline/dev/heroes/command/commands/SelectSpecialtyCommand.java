@@ -10,9 +10,9 @@ import com.herocraftonline.dev.heroes.command.BaseCommand;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 import com.herocraftonline.dev.heroes.persistence.HeroManager;
 
-public class SelectSpecialty extends BaseCommand {
+public class SelectSpecialtyCommand extends BaseCommand {
 
-    public SelectSpecialty(Heroes plugin) {
+    public SelectSpecialtyCommand(Heroes plugin) {
         super(plugin);
         name = "Select Specialty";
         description = "Allows you to advance from a primary class to it's specialty";

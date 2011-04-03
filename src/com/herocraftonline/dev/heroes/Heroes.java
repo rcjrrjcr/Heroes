@@ -16,8 +16,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.herocraftonline.dev.heroes.classes.ClassManager;
 import com.herocraftonline.dev.heroes.command.CommandManager;
 import com.herocraftonline.dev.heroes.command.commands.ConfigReloadCommand;
-import com.herocraftonline.dev.heroes.command.commands.SelectProfession;
-import com.herocraftonline.dev.heroes.command.commands.SelectSpecialty;
+import com.herocraftonline.dev.heroes.command.commands.SelectProfessionCommand;
+import com.herocraftonline.dev.heroes.command.commands.SelectSpecialtyCommand;
 import com.herocraftonline.dev.heroes.command.commands.UpdateCommand;
 import com.herocraftonline.dev.heroes.persistence.HeroManager;
 import com.herocraftonline.dev.heroes.util.ConfigManager;
@@ -143,9 +143,9 @@ public class Heroes extends JavaPlugin {
         commandManager = new CommandManager();
         // Page 1
         commandManager.addCommand(new UpdateCommand(this));
-        commandManager.addCommand(new SelectProfession(this));
+        commandManager.addCommand(new SelectProfessionCommand(this));
         commandManager.addCommand(new ConfigReloadCommand(this));
-        commandManager.addCommand(new SelectSpecialty(this));
+        commandManager.addCommand(new SelectSpecialtyCommand(this));
     }
 
     /**
