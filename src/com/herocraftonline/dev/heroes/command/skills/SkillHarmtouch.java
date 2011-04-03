@@ -51,15 +51,14 @@ public class SkillHarmtouch extends BaseCommand {
             }
 
             // Spell Stuff
-            if (plugin.getServer().getPlayer(args[0]) != null) {
-                double x1 = plugin.getServer().getPlayer(args[0]).getLocation().getX();
-                double z1 = plugin.getServer().getPlayer(args[0]).getLocation().getZ();
-                double x2 = ((Player) sender).getLocation().getX();
-                double z2 = ((Player) sender).getLocation().getZ();
-                double distance = Math.sqrt((x2 - x1) * (x2 - x1) + (z2 - z1) * (z2 - z1));
-                if (distance > 20) {
-                    Player p = plugin.getServer().getPlayer(args[0]);
-                    p.setHealth((int) (p.getHealth() - (plugin.getConfigManager().getProperties().getLevel(plugin.getHeroManager().getHero((Player) sender).getExperience()) * 0.5)));
+            Player player = (Player) sender;
+            Player target = plugin.getServer().getPlayer(args[0]);
+            if (target != null) {
+                double dx = player.getLocation().getX() - target.getLocation().getX();
+                double dz = player.getLocation().getZ() - target.getLocation().getZ();
+                double distance = Math.sqrt(dx * dx + dz * dz);
+                if (distance < 15) {
+                    target.setHealth((int) (target.getHealth() - (plugin.getConfigManager().getProperties().getLevel(hero.getExperience()) * 0.5)));
                 } else {
                     plugin.getMessaging().send(sender, "Sorry, that person isn't close enough!");
                 }

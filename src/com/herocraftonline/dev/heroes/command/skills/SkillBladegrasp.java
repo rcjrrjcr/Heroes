@@ -27,7 +27,7 @@ public class SkillBladegrasp extends BaseCommand {
         if (sender instanceof Player) {
             Hero hero = plugin.getHeroManager().getHero((Player) sender);
             HeroClass heroClass = plugin.getClassManager().getClass(hero.toString());
-            
+
             // TODO: Check for CD time left, if 0 execute.
             if (!(heroClass.getSpells().contains(Spells.BLADEGRASP))) {
                 plugin.getMessaging().send(sender, "Sorry, that ability isn't for your class!");
@@ -36,8 +36,8 @@ public class SkillBladegrasp extends BaseCommand {
 
             if (!(hero.getEffects().containsKey("bladegrasp"))) {
                 hero.getEffects().put("bladegrasp", System.currentTimeMillis());
-            }else{
-                if (hero.getEffects().get("bladegrasp") > 60000){
+            } else {
+                if (hero.getEffects().get("bladegrasp") > 60000) {
                     hero.getEffects().put("bladegrasp", System.currentTimeMillis());
                 }
             }
