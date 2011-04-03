@@ -8,10 +8,10 @@ import org.bukkit.entity.Player;
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.classes.HeroClass.Spells;
-import com.herocraftonline.dev.heroes.command.BaseCommand;
+import com.herocraftonline.dev.heroes.command.BaseSkill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 
-public class SkillSummon extends BaseCommand {
+public class SkillSummon extends BaseSkill {
 
     // TODO: Register this command in Heroes
     public SkillSummon(Heroes plugin) {

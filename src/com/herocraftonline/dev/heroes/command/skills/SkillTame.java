@@ -3,9 +3,9 @@ package com.herocraftonline.dev.heroes.command.skills;
 import org.bukkit.command.CommandSender;
 
 import com.herocraftonline.dev.heroes.Heroes;
-import com.herocraftonline.dev.heroes.command.BaseCommand;
+import com.herocraftonline.dev.heroes.command.BaseSkill;
 
-public class SkillTame extends BaseCommand {
+public class SkillTame extends BaseSkill {
 
     // TODO: Register this command in Heroes
     public SkillTame(Heroes plugin) {
