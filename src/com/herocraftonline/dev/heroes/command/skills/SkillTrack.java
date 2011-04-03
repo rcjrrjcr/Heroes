@@ -1,5 +1,6 @@
 package com.herocraftonline.dev.heroes.command.skills;
 
+import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -25,7 +26,8 @@ public class SkillTrack extends BaseCommand {
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (sender instanceof Player) {
-            Hero hero = plugin.getHeroManager().getHero((Player) sender);
+            Player player = (Player) sender;
+            Hero hero = plugin.getHeroManager().getHero(player);
             HeroClass heroClass = plugin.getClassManager().getClass(hero.toString());
 
             if (!(heroClass.getSpells().contains(Spells.TRACK))) {
@@ -34,9 +36,10 @@ public class SkillTrack extends BaseCommand {
             }
             
             if (plugin.getServer().getPlayer(args[0]) != null) {
-                Player p = plugin.getServer().getPlayer(args[0]);
-                sender.sendMessage(p.getLocation().toString());
-                ((Player) sender).setCompassTarget(p.getLocation());
+                Player target = plugin.getServer().getPlayer(args[0]);
+                Location location = target.getLocation();
+                sender.sendMessage(location.toString());
+                player.setCompassTarget(location);
             }
         }
     }

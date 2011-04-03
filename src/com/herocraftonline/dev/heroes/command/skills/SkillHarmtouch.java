@@ -29,7 +29,8 @@ public class SkillHarmtouch extends BaseCommand {
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (sender instanceof Player) {
-            Hero hero = plugin.getHeroManager().getHero((Player) sender);
+            Player player = (Player) sender;
+            Hero hero = plugin.getHeroManager().getHero(player);
             HeroClass heroClass = plugin.getClassManager().getClass(hero.toString());
 
             // Cooldown - This is just a mockup for it. Change it if you want.
@@ -51,7 +52,6 @@ public class SkillHarmtouch extends BaseCommand {
             }
 
             // Spell Stuff
-            Player player = (Player) sender;
             Player target = plugin.getServer().getPlayer(args[0]);
             if (target != null) {
                 double dx = player.getLocation().getX() - target.getLocation().getX();

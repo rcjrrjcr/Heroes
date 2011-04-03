@@ -25,7 +25,8 @@ public class SkillLayhands extends BaseCommand {
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (sender instanceof Player) {
-            Hero hero = plugin.getHeroManager().getHero((Player) sender);
+            Player player = (Player) sender;
+            Hero hero = plugin.getHeroManager().getHero(player);
             HeroClass heroClass = plugin.getClassManager().getClass(hero.toString());
             
             // TODO: Check for CD time left, if 0 execute.
@@ -33,9 +34,10 @@ public class SkillLayhands extends BaseCommand {
                 plugin.getMessaging().send(sender, "Sorry, that ability isn't for your class!");
                 return;
             }
-            if (plugin.getServer().getPlayer(args[0]) != null) {
-                Player p = plugin.getServer().getPlayer(args[0]);
-                p.setHealth(20);
+            
+            Player target = plugin.getServer().getPlayer(args[0]);
+            if (target != null) {
+                target.setHealth(20);
             }
         }
     }
