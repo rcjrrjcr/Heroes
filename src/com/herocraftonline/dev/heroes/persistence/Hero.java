@@ -9,6 +9,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 import com.herocraftonline.dev.heroes.classes.HeroClass;
+import com.herocraftonline.dev.heroes.classes.HeroClass.Spells;
 
 public class Hero {
 
@@ -20,6 +21,7 @@ public class Hero {
     protected HashMap<String, Long> cooldowns;
     protected HashMap<Entity, CreatureType> summons;
     protected HashMap<String, Long> effects;
+    protected Spells skill;
 
 
     public Hero(Player player, HeroClass playerClass, int experience, int mana, List<String> masteries) {
@@ -30,6 +32,7 @@ public class Hero {
         this.masteries = masteries;
         this.cooldowns = new HashMap<String, Long>();
         this.summons = new HashMap<Entity, CreatureType>();
+        this.skill = null;
     }
 
     public Player getPlayer() {
@@ -78,6 +81,14 @@ public class Hero {
     
     public HashMap<String, Long> getEffects(){
         return effects;
+    }
+    
+    public Spells getSkill(){
+        return skill;
+    }
+    
+    public void setSkill(Spells skill){
+        this.skill = skill;
     }
 
     @Override

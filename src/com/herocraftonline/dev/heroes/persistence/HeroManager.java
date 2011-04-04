@@ -28,7 +28,7 @@ public class HeroManager {
         this.plugin = plugin;
         this.heroes = new HashSet<Hero>();
         playerFolder = new File(plugin.getDataFolder(), "players"); // Setup our Player Data Folder
-        playerFolder.mkdirs(); // Create the folder if it doesn't exist.
+        playerFolder.mkdirs(); // Create the folder if it do esn't exist.
     }
 
     /**
