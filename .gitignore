@@ -1,7 +1,5 @@
 # Eclipse stuff
 /.externalToolBuilders
-/.classpath
-/.project
 /.settings
 .gitignore
 
