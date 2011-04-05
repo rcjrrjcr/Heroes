@@ -14,7 +14,7 @@ import com.herocraftonline.dev.heroes.Heroes;
 public abstract class BaseSkill extends BaseCommand {
 
     protected int cooldown;
-
+    protected boolean nocommand;
     public BaseSkill(Heroes plugin) {
         super(plugin);
     }
@@ -48,5 +48,7 @@ public abstract class BaseSkill extends BaseCommand {
         }
         return null;
     }
+    
+    
 
 }

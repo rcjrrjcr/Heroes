@@ -49,7 +49,7 @@ public class Heroes extends JavaPlugin {
 
     // Various data managers
     private ConfigManager configManager;
-    private CommandManager commandManager;
+    private CommandManager commandManager = new CommandManager();
     private ClassManager classManager;
     private HeroManager heroManager;
 
@@ -140,7 +140,6 @@ public class Heroes extends JavaPlugin {
      * Register Heroes commands to DThielke's Command Manager.
      */
     private void registerCommands() {
-        commandManager = new CommandManager();
         // Page 1
         commandManager.addCommand(new UpdateCommand(this));
         commandManager.addCommand(new SelectProfessionCommand(this));
@@ -236,5 +235,9 @@ public class Heroes extends JavaPlugin {
 
     public Messaging getMessaging() {
         return messaging;
+    }
+    
+    public CommandManager getCommandManager(){
+        return commandManager;
     }
 }

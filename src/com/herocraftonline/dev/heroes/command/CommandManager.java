@@ -63,4 +63,8 @@ public class CommandManager {
     public void removeCommand(BaseCommand command) {
         commands.remove(command);
     }
+    
+    public List<BaseCommand> getCommands(){
+        return commands;
+    }
 }
