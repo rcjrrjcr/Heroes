@@ -19,6 +19,7 @@ import com.herocraftonline.dev.heroes.command.commands.ConfigReloadCommand;
 import com.herocraftonline.dev.heroes.command.commands.SelectProfessionCommand;
 import com.herocraftonline.dev.heroes.command.commands.SelectSpecialtyCommand;
 import com.herocraftonline.dev.heroes.command.commands.UpdateCommand;
+import com.herocraftonline.dev.heroes.party.PartyManager;
 import com.herocraftonline.dev.heroes.persistence.HeroManager;
 import com.herocraftonline.dev.heroes.util.ConfigManager;
 import com.herocraftonline.dev.heroes.util.DebugLog;
@@ -52,6 +53,7 @@ public class Heroes extends JavaPlugin {
     private CommandManager commandManager = new CommandManager();
     private ClassManager classManager;
     private HeroManager heroManager;
+    private PartyManager partyManager;
 
     // Messaging
     private Messaging messaging = new Messaging();
@@ -69,6 +71,7 @@ public class Heroes extends JavaPlugin {
         dataFolder.mkdirs(); // Create the Heroes Plugin Directory.
         configManager = new ConfigManager(this);
         heroManager = new HeroManager(this);
+        partyManager = new PartyManager(this);
         debugLog = new DebugLog("Heroes", dataFolder + File.separator + "debug.log");
     }
 
@@ -239,5 +242,9 @@ public class Heroes extends JavaPlugin {
     
     public CommandManager getCommandManager(){
         return commandManager;
+    }
+    
+    public PartyManager getPartyManager(){
+        return partyManager;
     }
 }

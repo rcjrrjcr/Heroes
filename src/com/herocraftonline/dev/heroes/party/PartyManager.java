@@ -1,5 +1,6 @@
 package com.herocraftonline.dev.heroes.party;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,6 +16,7 @@ public class PartyManager {
 
     private Heroes plugin;
     private Set<HeroParty> parties;
+    private HashMap<Player[], HeroParty> invites = new HashMap<Player[], HeroParty>();
 
     public PartyManager(Heroes plugin){
         this.plugin = plugin;
@@ -43,6 +45,10 @@ public class PartyManager {
     
     public Set<HeroParty> getHeroParties(){
         return parties;
+    }
+    
+    public HashMap<Player[], HeroParty> getInvites(){
+        return invites;
     }
     
     

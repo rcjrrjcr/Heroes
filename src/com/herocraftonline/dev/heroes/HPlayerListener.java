@@ -32,18 +32,6 @@ public class HPlayerListener extends PlayerListener {
         heroManager.saveHeroFile(player);
     }
     
-    public void onPlayerMove(PlayerMoveEvent event){
-        if(plugin.getHeroManager().getHero(event.getPlayer()).getEffects().containsKey("blackjack")){
-            event.getPlayer().setVelocity(event.getPlayer().getVelocity().multiply(0.1));
-        }
-    }
     
-    public void onPlayerInteract(PlayerInteractEvent event){
-        if(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK){
-            for(Spells n : Spells.values()){
-                // TODO: Finish this
-            }
-        }
-    }
 
 }
