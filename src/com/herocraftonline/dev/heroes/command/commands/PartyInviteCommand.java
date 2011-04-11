@@ -23,7 +23,7 @@ public class PartyInviteCommand extends BaseCommand {
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (sender instanceof Player) {
-            if (!Heroes.Permissions.has((Player) sender, "heroes.party.create")) {
+            if (!Heroes.Permissions.has((Player) sender, "heroes.party.invite")) {
                 return;
             }
             
@@ -31,14 +31,15 @@ public class PartyInviteCommand extends BaseCommand {
                 return;
             }
             
-            if(plugin.getPartyManager().getHeroParty((Player) sender) != null){
+            if(plugin.getHeroManager().getHero((Player) sender).getParty() == null){
                 return;
             }
             
+            
             Player player = plugin.getServer().getPlayer(args[0]);
-            HeroParty newParty = plugin.getPartyManager().getHeroParty((Player) sender);
-            Player[] pl = {player, (Player) sender};
-            plugin.getPartyManager().getInvites().put(pl, newParty);
+            HeroParty newParty = plugin.getHeroManager().getHero((Player) sender).getParty();
+            plugin.getHeroManager().getHero(player).getInvites().put(newParty.getName(), newParty);
+            player.sendMessage(ChatColor.RED + ((Player) sender).getName() + " has invited you to " + newParty.getName());
         }
     }
 

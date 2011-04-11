@@ -26,13 +26,13 @@ public class AssignSkillCommand extends BaseCommand {
                 if(plugin.getHeroManager().getHero((Player) sender).getPlayerClass().getSpells().contains(Spells.valueOf(args[0]))){
 
                     plugin.getHeroManager().getHero((Player) sender).setSkill(Spells.valueOf(args[0]));
-                    plugin.getMessaging().send(sender, "That has been assigned as your skill", null);
+                    plugin.getMessager().send(sender, "That has been assigned as your skill",(String[]) null);
                 }else{
-                    plugin.getMessaging().send(sender, "Yuou haven't got that skill!", null);
+                    plugin.getMessager().send(sender, "Yuou haven't got that skill!", (String[]) null);
 
                 }
             }else{
-                plugin.getMessaging().send(sender, "That isn't a skill", null);       
+                plugin.getMessager().send(sender, "That isn't a skill",(String[]) null);       
             }
         }
     }

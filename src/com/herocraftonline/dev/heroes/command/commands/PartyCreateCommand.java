@@ -2,7 +2,6 @@ package com.herocraftonline.dev.heroes.command.commands;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 
 import com.herocraftonline.dev.heroes.Heroes;
@@ -15,9 +14,9 @@ public class PartyCreateCommand extends BaseCommand {
         super(plugin);
         name = "PartyCreate";
         description = "Creates a party";
-        usage = "/heroes party create";
-        minArgs = 0;
-        maxArgs = 0;
+        usage = "/heroes party create <name>";
+        minArgs = 1;
+        maxArgs = 1;
         identifiers.add("heroes party create");
     }
 
@@ -28,12 +27,11 @@ public class PartyCreateCommand extends BaseCommand {
                 return;
             }
             
-            for(HeroParty heroParty : plugin.getPartyManager().getHeroParties()){
-                if(heroParty.getMembers().contains(((Player) sender).getName())){
-                    return;
-                }
+            if(plugin.getHeroManager().getHero((Player) sender).getParty().getLeader().equals((Player) sender)){
+                return;
             }
-            plugin.getPartyManager().addHeroParty(new HeroParty((Player) sender));
+            
+            plugin.getPartyManager().addHeroParty(new HeroParty((Player) sender, args[0]));
             sender.sendMessage(ChatColor.RED + "You're now the owner of a party!");
         }
     }

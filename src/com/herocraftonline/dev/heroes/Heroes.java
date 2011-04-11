@@ -236,7 +236,7 @@ public class Heroes extends JavaPlugin {
         return configManager;
     }
 
-    public Messaging getMessaging() {
+    public Messaging getMessager() {
         return messaging;
     }
     

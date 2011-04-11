@@ -36,12 +36,12 @@ public class SelectProfessionCommand extends BaseCommand {
                     } else {
                         changeClass(hero, profession);
                     }
-                    plugin.getMessaging().send(player, "Welcome to the path of the $1!", profession.getName());
+                    plugin.getMessager().send(player, "Welcome to the path of the $1!", profession.getName());
                 } else {
-                    plugin.getMessaging().send(player, "Sorry, $1 isn't a profession!", profession.getName());
+                    plugin.getMessager().send(player, "Sorry, $1 isn't a profession!", profession.getName());
                 }
             } else {
-                plugin.getMessaging().send(player, "Sorry, that isn't a profession!");
+                plugin.getMessager().send(player, "Sorry, that isn't a profession!");
             }
         }
     }

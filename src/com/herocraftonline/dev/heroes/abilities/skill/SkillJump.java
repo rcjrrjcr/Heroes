@@ -1,4 +1,4 @@
-package com.herocraftonline.dev.heroes.abilities.skills;
+package com.herocraftonline.dev.heroes.abilities.skill;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -27,7 +27,7 @@ public class SkillJump extends BaseCommand {
             
             // TODO: Check for CD time left, if 0 execute.
             if (!(plugin.getClassManager().getClass(plugin.getHeroManager().getHero((Player) sender).getClass().toString()).getSpells().contains("Jump"))) {
-                plugin.getMessaging().send(sender, "Sorry, $1, that ability isn't for your class!", ((Player) sender).getName());
+                plugin.getMessager().send(sender, "Sorry, $1, that ability isn't for your class!", ((Player) sender).getName());
                 return;
             }
             

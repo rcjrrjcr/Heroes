@@ -12,11 +12,13 @@ public class HeroParty {
     protected List<String> modes;
     protected Player leader;
     protected int level;
+    protected String name;
     
-    public HeroParty(Player leader){
+    public HeroParty(Player leader, String name){
         this.leader = leader;
         this.members = new HashMap<Player, Integer>();
         this.modes = null;
+        this.name = name;
     }
     
     public Set<Player> getMembers(){
@@ -33,6 +35,10 @@ public class HeroParty {
     
     public int getLevel(){
         return level;
+    }
+    
+    public String getName(){
+        return name;
     }
     
     public void addMember(Player member, int permissions){
@@ -57,5 +63,9 @@ public class HeroParty {
     
     public void setLevel(int level){
         this.level = level;
+    }
+    
+    public void setName(String name){
+        this.name = name;
     }
 }

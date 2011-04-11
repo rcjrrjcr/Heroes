@@ -35,15 +35,15 @@ public class SelectSpecialtyCommand extends BaseCommand {
                 if (subClass != null) {
                     if (subClass.getParent() == playerClass) {
                         hero.setPlayerClass(subClass);
-                        plugin.getMessaging().send(player, "Well done $1!", subClass.getName());
+                        plugin.getMessager().send(player, "Well done $1!", subClass.getName());
                     } else {
-                        plugin.getMessaging().send(player, "Sorry, that specialty doesn't belong to $1.", playerClass.getName());
+                        plugin.getMessager().send(player, "Sorry, that specialty doesn't belong to $1.", playerClass.getName());
                     }
                 } else {
-                    plugin.getMessaging().send(player, "Sorry, that isn't a specialty!");
+                    plugin.getMessager().send(player, "Sorry, that isn't a specialty!");
                 }
             } else {
-                plugin.getMessaging().send(player, "You have already selected a specialty!");
+                plugin.getMessager().send(player, "You have already selected a specialty!");
             }
         }
     }

@@ -1,10 +1,7 @@
 package com.herocraftonline.dev.heroes.party;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
-
-
 
 import org.bukkit.entity.Player;
 
@@ -14,17 +11,17 @@ import com.herocraftonline.dev.heroes.Heroes;
 
 public class PartyManager {
 
+    @SuppressWarnings("unused")
     private Heroes plugin;
     private Set<HeroParty> parties;
-    private HashMap<Player[], HeroParty> invites = new HashMap<Player[], HeroParty>();
 
     public PartyManager(Heroes plugin){
         this.plugin = plugin;
         this.parties = new HashSet<HeroParty>();
     }
 
-    public HeroParty createHeroParty(Player leader){
-        return new HeroParty(leader);
+    public HeroParty createHeroParty(Player leader, String name){
+        return new HeroParty(leader, name);
     }
 
     public void addHeroParty(HeroParty party){
@@ -43,13 +40,24 @@ public class PartyManager {
         return null;
     }
     
+    public HeroParty getHeroParty(String name){
+        for(HeroParty party : parties){
+            if(party.getName().equals(name)) continue;
+            return party;
+        }
+        return null;
+    }
+    
     public Set<HeroParty> getHeroParties(){
         return parties;
     }
     
-    public HashMap<Player[], HeroParty> getInvites(){
-        return invites;
+    public void dispatchMessage(HeroParty party, String message){
+        for(Player p : party.getMembers()){
+            p.sendMessage(message);
+        }
     }
+
     
     
 }

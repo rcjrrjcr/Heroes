@@ -33,7 +33,7 @@ public class SkillSummon extends BaseSkill {
 
             // TODO: Check for CD time left, if 0 execute.
             if (!(heroClass.getSpells().contains(Spells.SUMMON))) {
-                plugin.getMessaging().send(sender, "Sorry, that ability isn't for your class!");
+                plugin.getMessager().send(sender, "Sorry, that ability isn't for your class!");
                 return;
             }
             

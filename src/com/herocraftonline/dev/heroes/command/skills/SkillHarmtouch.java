@@ -40,14 +40,14 @@ public class SkillHarmtouch extends BaseSkill {
                 if (cooldowns.get(name) - System.currentTimeMillis() >= cooldown) {
                     cooldowns.put(name, System.currentTimeMillis());
                 } else {
-                    plugin.getMessaging().send(sender, "Sorry, that skill is still on cooldown!");
+                    plugin.getMessager().send(sender, "Sorry, that skill is still on cooldown!");
                     return;
                 }
             }
 
             // Ability checker
             if (!(heroClass.getSpells().contains(Spells.HARMTOUCH))) {
-                plugin.getMessaging().send(sender, "Sorry, that ability isn't for your class!");
+                plugin.getMessager().send(sender, "Sorry, that ability isn't for your class!");
                 return;
             }
 
@@ -67,7 +67,7 @@ public class SkillHarmtouch extends BaseSkill {
                 if (distance < 15) {
                     target.setHealth((int) (target.getHealth() - (plugin.getConfigManager().getProperties().getLevel(hero.getExperience()) * 0.5)));
                 } else {
-                    plugin.getMessaging().send(sender, "Sorry, that person isn't close enough!");
+                    plugin.getMessager().send(sender, "Sorry, that person isn't close enough!");
                 }
             }
         }

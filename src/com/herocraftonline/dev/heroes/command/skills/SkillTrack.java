@@ -31,7 +31,7 @@ public class SkillTrack extends BaseSkill {
             HeroClass heroClass = plugin.getClassManager().getClass(hero.toString());
 
             if (!(heroClass.getSpells().contains(Spells.TRACK))) {
-                plugin.getMessaging().send(sender, "Sorry, that ability isn't for your class!");
+                plugin.getMessager().send(sender, "Sorry, that ability isn't for your class!");
                 return;
             }
             
