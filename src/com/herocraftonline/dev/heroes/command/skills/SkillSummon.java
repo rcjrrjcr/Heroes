@@ -8,10 +8,9 @@ import org.bukkit.entity.Player;
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.classes.HeroClass.Spells;
-import com.herocraftonline.dev.heroes.command.BaseSkill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 
-public class SkillSummon extends BaseSkill {
+public class SkillSummon extends Skill {
 
     // TODO: Register this command in Heroes
     public SkillSummon(Heroes plugin) {
@@ -39,11 +38,17 @@ public class SkillSummon extends BaseSkill {
             
             CreatureType creatureType = CreatureType.valueOf(args[0]);
             if (creatureType != null) {
-                if (hero.getSummons().size() > heroClass.getSummonMax() && heroClass.getSummonable() == true) {
+                if (hero.getSummons().size() > heroClass.getSummonMax()) {
                     Entity spawnedEntity = player.getWorld().spawnCreature(player.getLocation(), creatureType);
                     hero.getSummons().put(spawnedEntity, creatureType);
                 }
             }
         }
+    }
+
+    @Override
+    public void use(Player user, String[] args) {
+        // TODO Auto-generated method stub
+        
     }
 }

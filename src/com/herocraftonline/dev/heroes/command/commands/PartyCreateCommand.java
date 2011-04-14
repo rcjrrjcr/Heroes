@@ -26,12 +26,14 @@ public class PartyCreateCommand extends BaseCommand {
             if (!Heroes.Permissions.has((Player) sender, "heroes.party.create")) {
                 return;
             }
-            
-            if(plugin.getHeroManager().getHero((Player) sender).getParty().getLeader().equals((Player) sender)){
+            Player p = (Player) sender;
+            if(plugin.getHeroManager().getHero(p).getParty() != null){
+                sender.sendMessage(ChatColor.RED + "You're already in a party");
                 return;
             }
-            
-            plugin.getPartyManager().addHeroParty(new HeroParty((Player) sender, args[0]));
+
+
+            plugin.getPartyManager().addHeroParty(new HeroParty(p, args[0]));
             sender.sendMessage(ChatColor.RED + "You're now the owner of a party!");
         }
     }

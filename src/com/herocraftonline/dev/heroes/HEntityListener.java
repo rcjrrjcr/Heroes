@@ -13,6 +13,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityListener;
+import org.bukkit.event.entity.EntityTargetEvent;
 
 import com.herocraftonline.dev.heroes.api.KillExperienceEvent;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
@@ -120,5 +121,14 @@ public class HEntityListener extends EntityListener {
             }   
         }
     }
-
+    
+    public void onEntityTarget(EntityTargetEvent event){
+        for(Hero h : plugin.getHeroManager().getHeroes()){
+            if(h.getSummons().containsKey(event.getEntity())){
+                if(h.getPlayer() == event.getTarget()){
+                    event.setTarget(null);
+                }
+            }
+        }
+    }
 }

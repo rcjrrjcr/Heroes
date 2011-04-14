@@ -15,10 +15,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.herocraftonline.dev.heroes.classes.ClassManager;
 import com.herocraftonline.dev.heroes.command.CommandManager;
-import com.herocraftonline.dev.heroes.command.commands.ConfigReloadCommand;
-import com.herocraftonline.dev.heroes.command.commands.SelectProfessionCommand;
-import com.herocraftonline.dev.heroes.command.commands.SelectSpecialtyCommand;
-import com.herocraftonline.dev.heroes.command.commands.UpdateCommand;
+import com.herocraftonline.dev.heroes.command.commands.*;
 import com.herocraftonline.dev.heroes.party.PartyManager;
 import com.herocraftonline.dev.heroes.persistence.HeroManager;
 import com.herocraftonline.dev.heroes.util.ConfigManager;
@@ -148,6 +145,10 @@ public class Heroes extends JavaPlugin {
         commandManager.addCommand(new SelectProfessionCommand(this));
         commandManager.addCommand(new ConfigReloadCommand(this));
         commandManager.addCommand(new SelectSpecialtyCommand(this));
+        commandManager.addCommand(new PartyAcceptCommand(this));
+        commandManager.addCommand(new PartyCreateCommand(this));
+        commandManager.addCommand(new PartyInviteCommand(this));
+
     }
 
     /**

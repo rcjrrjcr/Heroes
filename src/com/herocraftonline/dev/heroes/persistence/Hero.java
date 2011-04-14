@@ -37,6 +37,7 @@ public class Hero {
         this.cooldowns = new HashMap<String, Long>();
         this.summons = new HashMap<Entity, CreatureType>();
         this.skill = null;
+        this.party = null;
         this.invites = new HashMap<String, HeroParty>();
     }
 
