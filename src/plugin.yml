@@ -8,3 +8,6 @@ commands:
   heroes:
     description: Heroes commands
     usage: /heroes <command>
+  summon:
+    description: Heroes commands
+    usage: /summon <monster>

@@ -2,6 +2,7 @@ package com.herocraftonline.dev.heroes;
 
 import java.util.HashMap;
 import java.util.Set;
+import java.util.logging.Level;
 
 import org.bukkit.entity.CreatureType;
 import org.bukkit.entity.Entity;
@@ -121,12 +122,14 @@ public class HEntityListener extends EntityListener {
             }   
         }
     }
-    
+
     public void onEntityTarget(EntityTargetEvent event){
-        for(Hero h : plugin.getHeroManager().getHeroes()){
-            if(h.getSummons().containsKey(event.getEntity())){
-                if(h.getPlayer() == event.getTarget()){
-                    event.setTarget(null);
+        if(event.getTarget() instanceof Player){
+            for(Hero h : plugin.getHeroManager().getHeroes()){
+                if(h.getSummons().containsKey(event.getEntity())){
+                    if(h.getPlayer() == event.getTarget()){
+                        event.setCancelled(true);
+                    }
                 }
             }
         }

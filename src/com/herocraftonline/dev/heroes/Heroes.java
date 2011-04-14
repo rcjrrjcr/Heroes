@@ -16,6 +16,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.herocraftonline.dev.heroes.classes.ClassManager;
 import com.herocraftonline.dev.heroes.command.CommandManager;
 import com.herocraftonline.dev.heroes.command.commands.*;
+import com.herocraftonline.dev.heroes.command.skills.*;
 import com.herocraftonline.dev.heroes.party.PartyManager;
 import com.herocraftonline.dev.heroes.persistence.HeroManager;
 import com.herocraftonline.dev.heroes.util.ConfigManager;
@@ -130,6 +131,7 @@ public class Heroes extends JavaPlugin {
 
         pluginManager.registerEvent(Type.ENTITY_DAMAGE, entityListener, Priority.Normal, this);
         pluginManager.registerEvent(Type.ENTITY_DEATH, entityListener, Priority.Normal, this);
+        pluginManager.registerEvent(Type.ENTITY_TARGET, entityListener, Priority.Normal, this);
 
         pluginManager.registerEvent(Type.BLOCK_BREAK, blockListener, Priority.Normal, this);
 
@@ -148,6 +150,7 @@ public class Heroes extends JavaPlugin {
         commandManager.addCommand(new PartyAcceptCommand(this));
         commandManager.addCommand(new PartyCreateCommand(this));
         commandManager.addCommand(new PartyInviteCommand(this));
+        commandManager.addCommand(new SkillSummon(this));
 
     }
 

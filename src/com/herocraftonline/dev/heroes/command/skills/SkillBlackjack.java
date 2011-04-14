@@ -1,5 +1,7 @@
 package com.herocraftonline.dev.heroes.command.skills;
 
+import java.util.HashMap;
+
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -9,7 +11,7 @@ import com.herocraftonline.dev.heroes.classes.HeroClass.Spells;
 import com.herocraftonline.dev.heroes.command.BaseSkill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 
-public class SkillBlackjack extends BaseSkill {
+public class SkillBlackjack extends Skill {
 
     // TODO: Register this command in Heroes
     public SkillBlackjack(Heroes plugin) {
@@ -34,6 +36,16 @@ public class SkillBlackjack extends BaseSkill {
                 return;
             }
             
+            HashMap<String, Long> cooldowns = hero.getCooldowns();
+            if (cooldowns.containsKey(getName())) {
+                if (cooldowns.get(getName()) - System.currentTimeMillis() >= 3000) {
+                    cooldowns.put(getName(), System.currentTimeMillis());
+                } else {
+                    plugin.getMessager().send(sender, "Sorry, that skill is still on cooldown!");
+                    return;
+                }
+            }
+            
             if (!(hero.getEffects().containsKey("blackjack"))) {
                 hero.getEffects().put("blackjack", System.currentTimeMillis());
             } else {
@@ -42,5 +54,11 @@ public class SkillBlackjack extends BaseSkill {
                 }
             }
         }
+    }
+
+    @Override
+    public void use(Player user, String[] args) {
+        // TODO Auto-generated method stub
+        
     }
 }
