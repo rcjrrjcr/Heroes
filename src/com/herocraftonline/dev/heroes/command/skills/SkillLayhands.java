@@ -9,6 +9,7 @@ import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.classes.HeroClass.Spells;
 import com.herocraftonline.dev.heroes.persistence.Hero;
+import com.herocraftonline.dev.heroes.util.Properties;
 
 public class SkillLayhands extends Skill {
 
@@ -30,9 +31,10 @@ public class SkillLayhands extends Skill {
             Hero hero = plugin.getHeroManager().getHero(player);
             HeroClass heroClass = plugin.getClassManager().getClass(hero.toString());
 
+            Properties properties = plugin.getConfigManager().getProperties();
             HashMap<String, Long> cooldowns = hero.getCooldowns();
             if (cooldowns.containsKey(getName())) {
-                if (cooldowns.get(getName()) - System.currentTimeMillis() >= 3000) {
+                if (cooldowns.get(getName()) - System.currentTimeMillis() >= properties.layhandscooldown) {
                     cooldowns.put(getName(), System.currentTimeMillis());
                 } else {
                     plugin.getMessager().send(sender, "Sorry, that skill is still on cooldown!");

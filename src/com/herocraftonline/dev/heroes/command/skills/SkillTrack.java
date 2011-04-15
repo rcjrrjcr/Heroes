@@ -1,5 +1,7 @@
 package com.herocraftonline.dev.heroes.command.skills;
 
+import java.util.HashMap;
+
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -8,6 +10,7 @@ import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.classes.HeroClass.Spells;
 import com.herocraftonline.dev.heroes.persistence.Hero;
+import com.herocraftonline.dev.heroes.util.Properties;
 
 public class SkillTrack extends Skill {
 
@@ -35,8 +38,13 @@ public class SkillTrack extends Skill {
                 return;
             }
             
-            if(hero.getCooldowns().containsKey(getName())){
-                if(hero.getCooldowns().get(getName()) > 3000){
+            Properties properties = plugin.getConfigManager().getProperties();
+            HashMap<String, Long> cooldowns = hero.getCooldowns();
+            if (cooldowns.containsKey(getName())) {
+                if (cooldowns.get(getName()) - System.currentTimeMillis() >= properties.trackcooldown) {
+                    cooldowns.put(getName(), System.currentTimeMillis());
+                } else {
+                    plugin.getMessager().send(sender, "Sorry, that skill is still on cooldown!");
                     return;
                 }
             }

@@ -171,7 +171,6 @@ public class ConfigManager {
         getProperties().harmtouchmana = config.getInt("harmtouch.mana", 30);
         getProperties().layhandscooldown = config.getInt("layhands.cooldown", 3000);
         getProperties().layhandsmana = config.getInt("layhands.mana", 30);
-        getProperties().summoncooldown = config.getInt("summon.cooldown", 3000);
         getProperties().summonmana = config.getInt("summon.mana", 30);
         getProperties().tamecooldown = config.getInt("tame.cooldown", 3000);
         getProperties().tamemana = config.getInt("tame.mana", 30);

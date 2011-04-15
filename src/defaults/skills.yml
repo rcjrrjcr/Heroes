@@ -12,7 +12,6 @@ layhands:
     cooldown: 3000
 summon:
     mana: 30
-    cooldown: 3000
 tame:
     mana: 30
     cooldown: 3000

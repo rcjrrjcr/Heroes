@@ -11,6 +11,7 @@ import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.classes.HeroClass.Spells;
 import com.herocraftonline.dev.heroes.command.BaseSkill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
+import com.herocraftonline.dev.heroes.util.Properties;
 
 public class SkillHarmtouch extends Skill {
 
@@ -34,9 +35,10 @@ public class SkillHarmtouch extends Skill {
 
             // Cooldown - This is just a mockup for it. Change it if you want.
             // Just trying this out for now.
+            Properties properties = plugin.getConfigManager().getProperties();
             HashMap<String, Long> cooldowns = hero.getCooldowns();
             if (cooldowns.containsKey(getName())) {
-                if (cooldowns.get(getName()) - System.currentTimeMillis() >= 3000) {
+                if (cooldowns.get(getName()) - System.currentTimeMillis() >= properties.harmtouchcooldown) {
                     cooldowns.put(getName(), System.currentTimeMillis());
                 } else {
                     plugin.getMessager().send(sender, "Sorry, that skill is still on cooldown!");
