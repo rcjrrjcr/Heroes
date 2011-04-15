@@ -19,6 +19,7 @@ public class ConfigManager {
     protected File primaryConfigFile;
     protected File classConfigFile;
     protected File expConfigFile;
+    protected File skillConfigFile;
     protected Properties propertiesFile = new Properties();
 
     public ConfigManager(Heroes plugin) {
@@ -26,6 +27,7 @@ public class ConfigManager {
         this.primaryConfigFile = new File(plugin.getDataFolder(), "config.yml");
         this.classConfigFile = new File(plugin.getDataFolder(), "classes.yml");
         this.expConfigFile = new File(plugin.getDataFolder(), "experience.yml");
+        this.skillConfigFile = new File(plugin.getDataFolder(), "skills.yml");
     }
 
     public void reload() throws Exception {
@@ -38,6 +40,7 @@ public class ConfigManager {
             checkForConfig(primaryConfigFile);
             checkForConfig(classConfigFile);
             checkForConfig(expConfigFile);
+            checkForConfig(skillConfigFile);
 
             Configuration primaryConfig = new Configuration(primaryConfigFile);
             primaryConfig.load();
@@ -49,6 +52,10 @@ public class ConfigManager {
             Configuration expConfig = new Configuration(expConfigFile);
             expConfig.load();
             loadExperience(expConfig);
+            
+            Configuration skillConfig = new Configuration(skillConfigFile);
+            skillConfig.load();
+            loadSkills(skillConfig);
 
             ClassManager classManager = new ClassManager(plugin);
             classManager.loadClasses(classConfigFile);
@@ -153,6 +160,26 @@ public class ConfigManager {
                 plugin.log(Level.WARNING, "Invalid material type (" + item + ") found in experience.yml.");
             }
         }
+    }
+    
+    private void loadSkills(Configuration config){
+        getProperties().blackjackcooldown = config.getInt("blackjack.cooldown", 3000);
+        getProperties().blackjackmana = config.getInt("blackjack.mana", 30);
+        getProperties().bladegraspcooldown = config.getInt("bladegrasp.cooldown", 3000);
+        getProperties().bladegraspmana = config.getInt("bladegrasp.mana", 30);
+        getProperties().harmtouchcooldown = config.getInt("harmtouch.cooldown", 3000);
+        getProperties().harmtouchmana = config.getInt("harmtouch.mana", 30);
+        getProperties().layhandscooldown = config.getInt("layhands.cooldown", 3000);
+        getProperties().layhandsmana = config.getInt("layhands.mana", 30);
+        getProperties().summoncooldown = config.getInt("summon.cooldown", 3000);
+        getProperties().summonmana = config.getInt("summon.mana", 30);
+        getProperties().tamecooldown = config.getInt("tame.cooldown", 3000);
+        getProperties().tamemana = config.getInt("tame.mana", 30);
+        getProperties().trackcooldown = config.getInt("track.cooldown", 3000);
+        getProperties().trackmana = config.getInt("track.mana", 30);
+        getProperties().jumpcooldown = config.getInt("jump.cooldown", 3000);
+        getProperties().jumpmana = config.getInt("jump.mana", 30);
+        
     }
 
     public Properties getProperties() {

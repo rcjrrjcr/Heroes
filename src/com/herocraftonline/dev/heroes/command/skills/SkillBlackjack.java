@@ -8,7 +8,6 @@ import org.bukkit.entity.Player;
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.classes.HeroClass.Spells;
-import com.herocraftonline.dev.heroes.command.BaseSkill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 
 public class SkillBlackjack extends Skill {

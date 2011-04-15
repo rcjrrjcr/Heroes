@@ -1,0 +1,24 @@
+blackjack:
+    mana: 30
+    cooldown: 3000
+bladegrasp:
+    mana: 30
+    cooldown: 3000
+harmtouch:
+    mana: 30
+    cooldown: 3000
+layhands:
+    mana: 30
+    cooldown: 3000
+summon:
+    mana: 30
+    cooldown: 3000
+tame:
+    mana: 30
+    cooldown: 3000
+track:
+    mana: 30
+    cooldown: 3000
+jump:
+    mana: 30
+    cooldown: 3000

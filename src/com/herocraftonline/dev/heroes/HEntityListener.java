@@ -2,7 +2,6 @@ package com.herocraftonline.dev.heroes;
 
 import java.util.HashMap;
 import java.util.Set;
-import java.util.logging.Level;
 
 import org.bukkit.entity.CreatureType;
 import org.bukkit.entity.Entity;

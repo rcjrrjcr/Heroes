@@ -28,7 +28,8 @@ public class HeroClass {
         LAYHANDS,
         SUMMON,
         TAME,
-        TRACK
+        TRACK,
+        JUMP
     }
 
     public static enum ExperienceType {

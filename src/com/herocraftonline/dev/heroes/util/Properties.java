@@ -30,6 +30,35 @@ public class Properties {
     public HashMap<CreatureType, Integer> creatureKillingExp = new HashMap<CreatureType, Integer>();
     public HashMap<Material, Integer> miningExp = new HashMap<Material, Integer>();
     public HashMap<Material, Integer> loggingExp = new HashMap<Material, Integer>();
+    // Skills //
+    
+    public enum Skills{
+        BLACKJACK,
+        BLADEGRASP,
+        HARMTOUCH,
+        LAYHANDS,
+        SUMMON,
+        TAME,
+        TRACK,
+        JUMP
+    }
+    
+    public int blackjackmana;
+    public int blackjackcooldown;
+    public int bladegraspmana;
+    public int bladegraspcooldown;
+    public int harmtouchmana;
+    public int harmtouchcooldown;
+    public int layhandsmana;
+    public int layhandscooldown;
+    public int summonmana;
+    public int summoncooldown;
+    public int tamemana;
+    public int tamecooldown;
+    public int trackmana;
+    public int trackcooldown;
+    public int jumpmana;
+    public int jumpcooldown;
     // Default//
     public String defClass;
     public int defLevel;
@@ -66,4 +95,7 @@ public class Properties {
         return -1;
     }
 
+    public Skills[] getSkills(){
+        return Skills.values();
+    }
 }
