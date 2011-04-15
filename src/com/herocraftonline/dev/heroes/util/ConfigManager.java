@@ -178,7 +178,6 @@ public class ConfigManager {
         getProperties().trackmana = config.getInt("track.mana", 30);
         getProperties().jumpcooldown = config.getInt("jump.cooldown", 3000);
         getProperties().jumpmana = config.getInt("jump.mana", 30);
-        
     }
 
     public Properties getProperties() {

@@ -18,6 +18,7 @@ import com.herocraftonline.dev.heroes.command.CommandManager;
 import com.herocraftonline.dev.heroes.command.commands.*;
 import com.herocraftonline.dev.heroes.command.skills.*;
 import com.herocraftonline.dev.heroes.party.PartyManager;
+import com.herocraftonline.dev.heroes.persistence.Hero;
 import com.herocraftonline.dev.heroes.persistence.HeroManager;
 import com.herocraftonline.dev.heroes.util.ConfigManager;
 import com.herocraftonline.dev.heroes.util.DebugLog;
@@ -98,7 +99,22 @@ public class Heroes extends JavaPlugin {
         for(Player player : getServer().getOnlinePlayers()){
             heroManager.loadHeroFile(player);
         }
-    }
+        
+        // Start mana regen
+        getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
+            public void run() {
+                for(Hero hero : getHeroManager().getHeroes()){
+                    if(hero.getMana() < 100){
+                        if(hero.getMana() > 95){
+                            hero.setMana(100);
+                        }else{
+                            hero.setMana(hero.getMana() + 5);
+                        }
+                    }
+                }
+            }
+        }, 100L, 100L);
+        }
 
     /**
      * Perform a Permissions check and setup Permissions if found.
@@ -231,6 +247,9 @@ public class Heroes extends JavaPlugin {
         }
         debugLog.log(level, "[Debug] " + msg);
     }
+    
+    
+    
 
     public HeroManager getHeroManager() {
         return heroManager;
