@@ -1,16 +1,12 @@
 package com.herocraftonline.dev.heroes;
 
 import java.io.File;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.logging.*;
 
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
+import org.bukkit.command.*;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event.Priority;
-import org.bukkit.event.Event.Type;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.PluginManager;
+import org.bukkit.event.Event.*;
+import org.bukkit.plugin.*;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.herocraftonline.dev.heroes.classes.ClassManager;
@@ -18,11 +14,8 @@ import com.herocraftonline.dev.heroes.command.CommandManager;
 import com.herocraftonline.dev.heroes.command.commands.*;
 import com.herocraftonline.dev.heroes.command.skills.*;
 import com.herocraftonline.dev.heroes.party.PartyManager;
-import com.herocraftonline.dev.heroes.persistence.Hero;
-import com.herocraftonline.dev.heroes.persistence.HeroManager;
-import com.herocraftonline.dev.heroes.util.ConfigManager;
-import com.herocraftonline.dev.heroes.util.DebugLog;
-import com.herocraftonline.dev.heroes.util.Messaging;
+import com.herocraftonline.dev.heroes.persistence.*;
+import com.herocraftonline.dev.heroes.util.*;
 import com.nijiko.coelho.iConomy.iConomy;
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
@@ -64,6 +57,8 @@ public class Heroes extends JavaPlugin {
     private boolean useiConomy = false;
     // Variable for the iConomy plugin handler.
     private static iConomy iConomy = null;
+    // Variable for mana regen
+    private long regenrate;
 
     @Override
     public void onLoad() {
@@ -113,7 +108,7 @@ public class Heroes extends JavaPlugin {
                     }
                 }
             }
-        }, 100L, 100L);
+        }, 100L, regenrate);
         }
 
     /**
@@ -166,6 +161,12 @@ public class Heroes extends JavaPlugin {
         commandManager.addCommand(new PartyAcceptCommand(this));
         commandManager.addCommand(new PartyCreateCommand(this));
         commandManager.addCommand(new PartyInviteCommand(this));
+        commandManager.addCommand(new SkillBlackjack(this));
+        commandManager.addCommand(new SkillHarmtouch(this));
+        commandManager.addCommand(new SkillJump(this));
+        commandManager.addCommand(new SkillLayhands(this));
+        commandManager.addCommand(new SkillTame(this));
+        commandManager.addCommand(new SkillTrack(this));
         commandManager.addCommand(new SkillSummon(this));
 
     }
