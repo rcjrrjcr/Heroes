@@ -11,28 +11,28 @@ import com.herocraftonline.dev.heroes.command.BaseCommand;
 
 public abstract class Skill extends BaseCommand {
 
-	protected HashMap<Material, Integer> cost = new HashMap<Material, Integer>();
-	protected Material bind;
-	
-	public Skill(Heroes plugin) {
-		super(plugin);
-	}
+    protected HashMap<Material, Integer> cost = new HashMap<Material, Integer>();
+    protected Material bind;
 
-	@Override
-	public void execute(CommandSender sender, String[] args) {
-		if (sender instanceof Player) {
-			use((Player) sender, args);
-		}
-	}
-	
-	public abstract void use(Player user, String[] args);
+    public Skill(Heroes plugin) {
+        super(plugin);
+    }
 
-	public HashMap<Material, Integer> getCost() {
-		return cost;
-	}
+    @Override
+    public void execute(CommandSender sender, String[] args) {
+        if (sender instanceof Player) {
+            use((Player) sender, args);
+        }
+    }
 
-	public Material getBind() {
-		return bind;
-	}
+    public abstract void use(Player user, String[] args);
+
+    public HashMap<Material, Integer> getCost() {
+        return cost;
+    }
+
+    public Material getBind() {
+        return bind;
+    }
 
 }

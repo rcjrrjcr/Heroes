@@ -27,11 +27,10 @@ public class PartyCreateCommand extends BaseCommand {
                 return;
             }
             Player p = (Player) sender;
-            if(plugin.getHeroManager().getHero(p).getParty() != null){
+            if (plugin.getHeroManager().getHero(p).getParty() != null) {
                 sender.sendMessage(ChatColor.RED + "You're already in a party");
                 return;
             }
-
 
             plugin.getPartyManager().addHeroParty(new HeroParty(p, args[0]));
             sender.sendMessage(ChatColor.RED + "You're now the owner of a party!");

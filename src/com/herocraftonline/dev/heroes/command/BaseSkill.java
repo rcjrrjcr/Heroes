@@ -15,6 +15,7 @@ public abstract class BaseSkill extends BaseCommand {
 
     protected int cooldown;
     protected boolean nocommand;
+
     public BaseSkill(Heroes plugin) {
         super(plugin);
     }
@@ -25,9 +26,9 @@ public abstract class BaseSkill extends BaseCommand {
     /**
      * Returns the first LivingEntity in the line of sight of a Player.
      * 
-     * @param player        the player being checked
-     * @param maxDistance   the maximum distance to search for a target
-     * @return  the player's target or null if no target is found
+     * @param player the player being checked
+     * @param maxDistance the maximum distance to search for a target
+     * @return the player's target or null if no target is found
      */
     public static LivingEntity getPlayerTarget(Player player, int maxDistance) {
         List<Block> lineOfSight = player.getLineOfSight(null, maxDistance);
@@ -48,7 +49,5 @@ public abstract class BaseSkill extends BaseCommand {
         }
         return null;
     }
-    
-    
 
 }

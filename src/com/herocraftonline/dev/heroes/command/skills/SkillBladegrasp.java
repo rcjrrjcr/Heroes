@@ -30,12 +30,11 @@ public class SkillBladegrasp extends Skill {
             Hero hero = plugin.getHeroManager().getHero((Player) sender);
             HeroClass heroClass = plugin.getClassManager().getClass(hero.toString());
 
-            
             if (!(heroClass.getSpells().contains(Spells.BLADEGRASP))) {
                 plugin.getMessager().send(sender, "Sorry, that ability isn't for your class!");
                 return;
             }
-            
+
             Properties properties = plugin.getConfigManager().getProperties();
             HashMap<String, Long> cooldowns = hero.getCooldowns();
             if (cooldowns.containsKey(getName())) {
@@ -60,6 +59,6 @@ public class SkillBladegrasp extends Skill {
     @Override
     public void use(Player user, String[] args) {
         // TODO Auto-generated method stub
-        
+
     }
 }

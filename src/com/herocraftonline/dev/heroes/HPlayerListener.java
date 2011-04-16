@@ -1,9 +1,7 @@
 package com.herocraftonline.dev.heroes;
 
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerListener;
-import org.bukkit.event.player.PlayerLoginEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.*;
 
 import com.herocraftonline.dev.heroes.persistence.HeroManager;
 
@@ -27,7 +25,4 @@ public class HPlayerListener extends PlayerListener {
         HeroManager heroManager = plugin.getHeroManager();
         heroManager.saveHeroFile(player);
     }
-    
-    
-
 }

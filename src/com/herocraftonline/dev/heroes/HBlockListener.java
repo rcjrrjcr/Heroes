@@ -36,13 +36,13 @@ public class HBlockListener extends BlockListener {
         int addedExp = 0;
 
         if (expSources.contains(ExperienceType.MINING)) {
-            if(plugin.getConfigManager().getProperties().miningExp.containsKey(block.getType())){
+            if (plugin.getConfigManager().getProperties().miningExp.containsKey(block.getType())) {
                 addedExp = plugin.getConfigManager().getProperties().miningExp.get(block.getType());
             }
         }
 
         if (expSources.contains(ExperienceType.LOGGING)) {
-            if(plugin.getConfigManager().getProperties().loggingExp.containsKey(block.getType())){
+            if (plugin.getConfigManager().getProperties().loggingExp.containsKey(block.getType())) {
                 addedExp = plugin.getConfigManager().getProperties().loggingExp.get(block.getType());
             }
         }
@@ -52,7 +52,7 @@ public class HBlockListener extends BlockListener {
         if (!expEvent.isCancelled()) {
             addedExp = expEvent.getExp();
 
-            if (addedExp!=0) {
+            if (addedExp != 0) {
                 hero.setExperience(exp + addedExp);
                 plugin.getMessager().send(player, "$1: $2 Exp (+$3)", playerClass.getName(), String.valueOf(exp), String.valueOf(addedExp));
             }

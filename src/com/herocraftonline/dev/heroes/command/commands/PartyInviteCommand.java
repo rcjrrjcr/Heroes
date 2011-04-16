@@ -26,16 +26,15 @@ public class PartyInviteCommand extends BaseCommand {
             if (!Heroes.Permissions.has((Player) sender, "heroes.party.invite")) {
                 return;
             }
-            
-            if(plugin.getServer().getPlayer(args[0]) != null){
+
+            if (plugin.getServer().getPlayer(args[0]) != null) {
                 return;
             }
-            
-            if(plugin.getHeroManager().getHero((Player) sender).getParty() == null){
+
+            if (plugin.getHeroManager().getHero((Player) sender).getParty() == null) {
                 return;
             }
-            
-            
+
             Player player = plugin.getServer().getPlayer(args[0]);
             HeroParty newParty = plugin.getHeroManager().getHero((Player) sender).getParty();
             plugin.getHeroManager().getHero(player).getInvites().put(newParty.getName(), newParty);

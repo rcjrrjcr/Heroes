@@ -26,8 +26,6 @@ public class Hero {
     protected HeroParty party;
     private HashMap<String, HeroParty> invites;
 
-
-
     public Hero(Player player, HeroClass playerClass, int experience, int mana, List<String> masteries) {
         this.player = player;
         this.playerClass = playerClass;
@@ -76,36 +74,36 @@ public class Hero {
     public void setMasteries(ArrayList<String> masterys) {
         this.masteries = masterys;
     }
-    
-    public HashMap<String, Long> getCooldowns(){
-		return cooldowns;
+
+    public HashMap<String, Long> getCooldowns() {
+        return cooldowns;
     }
-    
-    public HashMap<Entity, CreatureType> getSummons(){
+
+    public HashMap<Entity, CreatureType> getSummons() {
         return summons;
     }
-    
-    public HashMap<String, Long> getEffects(){
+
+    public HashMap<String, Long> getEffects() {
         return effects;
     }
-    
-    public Spells getSkill(){
+
+    public Spells getSkill() {
         return skill;
     }
-    
-    public void setSkill(Spells skill){
+
+    public void setSkill(Spells skill) {
         this.skill = skill;
     }
-    
-    public HeroParty getParty(){
+
+    public HeroParty getParty() {
         return party;
     }
-    
-    public void setParty(HeroParty party){
+
+    public void setParty(HeroParty party) {
         this.party = party;
     }
-    
-    public HashMap<String, HeroParty> getInvites(){
+
+    public HashMap<String, HeroParty> getInvites() {
         return invites;
     }
 

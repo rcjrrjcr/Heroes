@@ -77,7 +77,7 @@ public class SkillHarmtouch extends Skill {
     @Override
     public void use(Player user, String[] args) {
         // TODO Auto-generated method stub
-        
+
     }
 
 }

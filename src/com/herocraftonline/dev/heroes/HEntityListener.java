@@ -86,8 +86,8 @@ public class HEntityListener extends EntityListener {
             }
         }
         kills.remove(defender);
-        for(Hero h : plugin.getHeroManager().getHeroes()){
-            if(h.getSummons().containsKey(defender)){
+        for (Hero h : plugin.getHeroManager().getHeroes()) {
+            if (h.getSummons().containsKey(defender)) {
                 h.getSummons().remove(defender);
             }
         }
@@ -113,20 +113,20 @@ public class HEntityListener extends EntityListener {
                 }
             }
         }
-        if(defender instanceof Player){
-            if(plugin.getHeroManager().getHero((Player) defender).getEffects().get("bladegrasp") != null){
-                if(event.getCause() == DamageCause.ENTITY_ATTACK || event.getCause() == DamageCause.ENTITY_EXPLOSION){
+        if (defender instanceof Player) {
+            if (plugin.getHeroManager().getHero((Player) defender).getEffects().get("bladegrasp") != null) {
+                if (event.getCause() == DamageCause.ENTITY_ATTACK || event.getCause() == DamageCause.ENTITY_EXPLOSION) {
                     event.setCancelled(true);
                 }
-            }   
+            }
         }
     }
 
-    public void onEntityTarget(EntityTargetEvent event){
-        if(event.getTarget() instanceof Player){
-            for(Hero h : plugin.getHeroManager().getHeroes()){
-                if(h.getSummons().containsKey(event.getEntity())){
-                    if(h.getPlayer() == event.getTarget()){
+    public void onEntityTarget(EntityTargetEvent event) {
+        if (event.getTarget() instanceof Player) {
+            for (Hero h : plugin.getHeroManager().getHeroes()) {
+                if (h.getSummons().containsKey(event.getEntity())) {
+                    if (h.getPlayer() == event.getTarget()) {
                         event.setCancelled(true);
                     }
                 }

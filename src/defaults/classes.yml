@@ -1,8 +1,8 @@
 classes:
     Warrior:
         default: true
-        summon-max: 3
-        permitted-armor: IRON
-        permitted-weapon: WOOD
+        summon-max: 0
+        permitted-armor: [IRON]
+        permitted-weapon: [WOOD]
         permitted-spells: [SPELL_A, SPELL_B]
         experience-sources: [KILLING]

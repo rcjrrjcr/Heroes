@@ -97,15 +97,14 @@ public class ClassManager {
                 }
             }
             newClass.setExperienceSources(experienceSources);
-            
+
             int maxSummon = config.getInt("classes." + className + ".tameMax", 0);
-            try{
-            	newClass.setTameMax(maxSummon);
-            }catch(Exception e){
-            	plugin.log(Level.WARNING, "summon-max not set correctly -  (" + maxSummon + ") is not a number for - " + className);
+            try {
+                newClass.setTameMax(maxSummon);
+            } catch (Exception e) {
+                plugin.log(Level.WARNING, "summon-max not set correctly -  (" + maxSummon + ") is not a number for - " + className);
             }
-            
-            
+
             boolean added = addClass(newClass);
             if (!added) {
                 plugin.log(Level.WARNING, "Duplicate class (" + className + ") found. Skipping this class.");
@@ -120,7 +119,7 @@ public class ClassManager {
 
         for (HeroClass unlinkedClass : classes) {
             String className = unlinkedClass.getName();
-            String parentName = config.getString("classes." + className + "parent");
+            String parentName = config.getString("classes." + className + ".parent");
             if (parentName != null && (!parentName.isEmpty() || parentName.equals("null"))) {
                 HeroClass parent = getClass(parentName);
                 parent.getSpecializations().add(unlinkedClass);

@@ -38,9 +38,7 @@ public class HeroClass {
         CRAFTING,
         LOGGING,
     }
-    
-    
-    
+
     private String name;
     private HeroClass parent;
     private ArmorType armorType;
@@ -52,7 +50,7 @@ public class HeroClass {
     private Set<ExperienceType> experienceSources;
     private Set<Spells> spells;
     private Set<HeroClass> specializations;
-    
+
     public HeroClass() {
         name = new String();
         armorType = ArmorType.LEATHER;
@@ -108,7 +106,7 @@ public class HeroClass {
     public WeaponType getWeaponType() {
         return weaponType;
     }
-    
+
     public void setWeaponType(WeaponType weapon) {
         this.weaponType = weapon;
     }
@@ -116,21 +114,21 @@ public class HeroClass {
     public HeroClass getParent() {
         return parent == null ? null : parent;
     }
-        
-    public boolean getTamable(){
-    	return tameWolves;
+
+    public boolean getTamable() {
+        return tameWolves;
     }
-    
-    public int getTameMax(){
-    	return tameMax;
+
+    public int getTameMax() {
+        return tameMax;
     }
-    
-    public boolean getSummonable(){
-    	return summonCreatures;
+
+    public boolean getSummonable() {
+        return summonCreatures;
     }
-    
-    public int getSummonMax(){
-    	return summonMax;
+
+    public int getSummonMax() {
+        return summonMax;
     }
 
     public void setParent(HeroClass parent) {
@@ -160,21 +158,21 @@ public class HeroClass {
     public void setExperienceSources(Set<ExperienceType> experienceSources) {
         this.experienceSources = experienceSources;
     }
-    
-    public void setTamable(Boolean tameWolves){
-    	this.tameWolves = tameWolves;
+
+    public void setTamable(Boolean tameWolves) {
+        this.tameWolves = tameWolves;
     }
-    
-    public void setTameMax(int tameMax){
-    	this.tameMax = tameMax;
+
+    public void setTameMax(int tameMax) {
+        this.tameMax = tameMax;
     }
-    
-    public void setSummonable(Boolean summonCreatures){
-    	this.summonCreatures = summonCreatures;
+
+    public void setSummonable(Boolean summonCreatures) {
+        this.summonCreatures = summonCreatures;
     }
-    
-    public void setSummonMax(int summonMax){
-    	this.summonMax = summonMax;
+
+    public void setSummonMax(int summonMax) {
+        this.summonMax = summonMax;
     }
 
 }

@@ -25,16 +25,16 @@ public class PartyAcceptCommand extends BaseCommand {
             if (!Heroes.Permissions.has((Player) sender, "heroes.party.accept")) {
                 return;
             }
-            
-            if(plugin.getServer().getPlayer(args[0]) != null){
+
+            if (plugin.getServer().getPlayer(args[0]) != null) {
                 return;
             }
 
-            if(plugin.getHeroManager().getHero((Player) sender).getInvites().containsKey(args[0])){
+            if (plugin.getHeroManager().getHero((Player) sender).getInvites().containsKey(args[0])) {
                 plugin.getHeroManager().getHero((Player) sender).setParty(plugin.getHeroManager().getHero((Player) sender).getParty());
                 plugin.getPartyManager().dispatchMessage(plugin.getHeroManager().getHero((Player) sender).getParty(), ChatColor.RED + ((Player) sender).getName() + " Has joined the party!");
                 plugin.getHeroManager().getHero((Player) sender).getInvites().remove(args[0]);
-            }else{
+            } else {
                 sender.sendMessage(ChatColor.RED + "Sorry, that party hasn't invited you in yet!");
             }
         }

@@ -41,7 +41,7 @@ public class SkillLayhands extends Skill {
                     return;
                 }
             }
-            
+
             if (!(heroClass.getSpells().contains(Spells.LAYHANDS))) {
                 plugin.getMessager().send(sender, "Sorry, that ability isn't for your class!");
                 return;

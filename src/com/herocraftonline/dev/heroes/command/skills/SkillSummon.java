@@ -39,10 +39,9 @@ public class SkillSummon extends Skill {
             }
 
             CreatureType creatureType = CreatureType.fromName(args[0].toUpperCase());
-            if(creatureType != null && hero.getSummons().size() <= heroClass.getSummonMax()){
+            if (creatureType != null && hero.getSummons().size() <= heroClass.getSummonMax()) {
                 Entity spawnedEntity = player.getWorld().spawnCreature(player.getLocation(), creatureType);
-                if(spawnedEntity instanceof Creature && spawnedEntity instanceof Ghast
-                        && spawnedEntity instanceof Slime){
+                if (spawnedEntity instanceof Creature && spawnedEntity instanceof Ghast && spawnedEntity instanceof Slime) {
                     spawnedEntity.remove();
                     return;
                 }
@@ -51,7 +50,6 @@ public class SkillSummon extends Skill {
             }
         }
     }
-
 
     @Override
     public void use(Player user, String[] args) {

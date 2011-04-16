@@ -52,7 +52,7 @@ public class ConfigManager {
             Configuration expConfig = new Configuration(expConfigFile);
             expConfig.load();
             loadExperience(expConfig);
-            
+
             Configuration skillConfig = new Configuration(skillConfigFile);
             skillConfig.load();
             loadSkills(skillConfig);
@@ -161,8 +161,8 @@ public class ConfigManager {
             }
         }
     }
-    
-    private void loadSkills(Configuration config){
+
+    private void loadSkills(Configuration config) {
         getProperties().blackjackcooldown = config.getInt("blackjack.cooldown", 3000);
         getProperties().blackjackmana = config.getInt("blackjack.mana", 30);
         getProperties().bladegraspcooldown = config.getInt("bladegrasp.cooldown", 3000);

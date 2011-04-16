@@ -35,7 +35,7 @@ public class SkillBlackjack extends Skill {
                 plugin.getMessager().send(sender, "Sorry, that ability isn't for your class!");
                 return;
             }
-            
+
             Properties properties = plugin.getConfigManager().getProperties();
             HashMap<String, Long> cooldowns = hero.getCooldowns();
             if (cooldowns.containsKey(getName())) {
@@ -46,7 +46,7 @@ public class SkillBlackjack extends Skill {
                     return;
                 }
             }
-            
+
             if (!(hero.getEffects().containsKey("blackjack"))) {
                 hero.getEffects().put("blackjack", System.currentTimeMillis());
             } else {
@@ -60,6 +60,6 @@ public class SkillBlackjack extends Skill {
     @Override
     public void use(Player user, String[] args) {
         // TODO Auto-generated method stub
-        
+
     }
 }

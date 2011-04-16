@@ -58,7 +58,7 @@ public class Heroes extends JavaPlugin {
     // Variable for the iConomy plugin handler.
     private static iConomy iConomy = null;
     // Variable for mana regen
-    private long regenrate;
+    private long regenrate = 100L;
 
     @Override
     public void onLoad() {
@@ -91,25 +91,25 @@ public class Heroes extends JavaPlugin {
         // Perform the Permissions check.
         setupPermissions();
 
-        for(Player player : getServer().getOnlinePlayers()){
+        for (Player player : getServer().getOnlinePlayers()) {
             heroManager.loadHeroFile(player);
         }
-        
+
         // Start mana regen
         getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
             public void run() {
-                for(Hero hero : getHeroManager().getHeroes()){
-                    if(hero.getMana() < 100){
-                        if(hero.getMana() > 95){
+                for (Hero hero : getHeroManager().getHeroes()) {
+                    if (hero.getMana() < 100) {
+                        if (hero.getMana() > 95) {
                             hero.setMana(100);
-                        }else{
+                        } else {
                             hero.setMana(hero.getMana() + 5);
                         }
                     }
                 }
             }
         }, 100L, regenrate);
-        }
+    }
 
     /**
      * Perform a Permissions check and setup Permissions if found.
@@ -248,9 +248,6 @@ public class Heroes extends JavaPlugin {
         }
         debugLog.log(level, "[Debug] " + msg);
     }
-    
-    
-    
 
     public HeroManager getHeroManager() {
         return heroManager;
@@ -263,12 +260,12 @@ public class Heroes extends JavaPlugin {
     public Messaging getMessager() {
         return messaging;
     }
-    
-    public CommandManager getCommandManager(){
+
+    public CommandManager getCommandManager() {
         return commandManager;
     }
-    
-    public PartyManager getPartyManager(){
+
+    public PartyManager getPartyManager() {
         return partyManager;
     }
 }

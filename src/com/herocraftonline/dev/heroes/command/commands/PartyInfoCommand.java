@@ -23,25 +23,21 @@ public class PartyInfoCommand extends BaseCommand {
     public void execute(CommandSender sender, String[] args) {
         if (sender instanceof Player) {
             Player p = (Player) sender;
-            if(args[0].equalsIgnoreCase("me")){
-                if(plugin.getHeroManager().getHero(p).getParty() != null){
-                    sender.sendMessage(ChatColor.RED + "You're in the party " + ChatColor.BLUE
-                            + plugin.getHeroManager().getHero(p).getParty().getName());
-                    sender.sendMessage(ChatColor.RED + "The owner of the party is " + ChatColor.BLUE 
-                            + plugin.getHeroManager().getHero(p).getParty().getLeader().getName());
+            if (args[0].equalsIgnoreCase("me")) {
+                if (plugin.getHeroManager().getHero(p).getParty() != null) {
+                    sender.sendMessage(ChatColor.RED + "You're in the party " + ChatColor.BLUE + plugin.getHeroManager().getHero(p).getParty().getName());
+                    sender.sendMessage(ChatColor.RED + "The owner of the party is " + ChatColor.BLUE + plugin.getHeroManager().getHero(p).getParty().getLeader().getName());
                     return;
-                }else{
+                } else {
                     sender.sendMessage(ChatColor.RED + "You aren't in a party");
                 }
-            }else if(plugin.getServer().getPlayer(args[0]) != null){
+            } else if (plugin.getServer().getPlayer(args[0]) != null) {
                 p = plugin.getServer().getPlayer(args[0]);
-                if(plugin.getHeroManager().getHero(p).getParty() != null){
-                    sender.sendMessage(ChatColor.RED + "They're in the party " + ChatColor.BLUE
-                            + plugin.getHeroManager().getHero(p).getParty().getName());
-                    sender.sendMessage(ChatColor.RED + "The owner of the party is " + ChatColor.BLUE 
-                            + plugin.getHeroManager().getHero(p).getParty().getLeader().getName());
+                if (plugin.getHeroManager().getHero(p).getParty() != null) {
+                    sender.sendMessage(ChatColor.RED + "They're in the party " + ChatColor.BLUE + plugin.getHeroManager().getHero(p).getParty().getName());
+                    sender.sendMessage(ChatColor.RED + "The owner of the party is " + ChatColor.BLUE + plugin.getHeroManager().getHero(p).getParty().getLeader().getName());
                     return;
-                }else{
+                } else {
                     sender.sendMessage(ChatColor.RED + "They aren't in a party");
                 }
             }

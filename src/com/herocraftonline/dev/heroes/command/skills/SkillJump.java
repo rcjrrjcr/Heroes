@@ -27,7 +27,7 @@ public class SkillJump extends BaseCommand {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        if (sender instanceof Player) {            
+        if (sender instanceof Player) {
             Player player = (Player) sender;
             Hero hero = plugin.getHeroManager().getHero(player);
             HeroClass heroClass = hero.getPlayerClass();
@@ -42,13 +42,13 @@ public class SkillJump extends BaseCommand {
                     return;
                 }
             }
-            
+
             if (!(heroClass.getSpells().contains(Spells.JUMP))) {
                 plugin.getMessager().send(sender, "Sorry, that ability isn't for your class!");
                 return;
             }
-            
-            hero.getPlayer().setVelocity(hero.getPlayer().getVelocity().setY((hero.getPlayer().getVelocity().getY()*2)));
+
+            hero.getPlayer().setVelocity(hero.getPlayer().getVelocity().setY((hero.getPlayer().getVelocity().getY() * 2)));
         }
     }
 }
