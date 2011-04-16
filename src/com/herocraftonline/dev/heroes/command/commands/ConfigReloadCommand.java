@@ -1,5 +1,6 @@
 package com.herocraftonline.dev.heroes.command.commands;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -22,6 +23,7 @@ public class ConfigReloadCommand extends BaseCommand {
     public void execute(CommandSender sender, String[] args) {
         if (sender instanceof Player) {
             if (!Heroes.Permissions.has((Player) sender, "heroes.admin.reload")) {
+                sender.sendMessage(ChatColor.RED + "You don't have permission to do this");
                 return;
             }
             try {

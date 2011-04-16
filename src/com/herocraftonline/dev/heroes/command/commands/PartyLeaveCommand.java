@@ -22,9 +22,7 @@ public class PartyLeaveCommand extends BaseCommand {
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (sender instanceof Player) {
-            if (!Heroes.Permissions.has((Player) sender, "heroes.party.create")) {
-                return;
-            }
+
             Player p = (Player) sender;
             plugin.getPartyManager().dispatchMessage(plugin.getHeroManager().getHero(p).getParty(), ChatColor.BLUE + p.getName() + ChatColor.RED + " has left the party");
             plugin.getHeroManager().getHero(p).setParty(null);

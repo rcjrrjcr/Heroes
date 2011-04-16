@@ -23,6 +23,8 @@ public class PartyAcceptCommand extends BaseCommand {
     public void execute(CommandSender sender, String[] args) {
         if (sender instanceof Player) {
             if (!Heroes.Permissions.has((Player) sender, "heroes.party.accept")) {
+                sender.sendMessage(ChatColor.RED + "You don't have permission to do this");
+
                 return;
             }
 
@@ -35,7 +37,7 @@ public class PartyAcceptCommand extends BaseCommand {
                 plugin.getPartyManager().dispatchMessage(plugin.getHeroManager().getHero((Player) sender).getParty(), ChatColor.RED + ((Player) sender).getName() + " Has joined the party!");
                 plugin.getHeroManager().getHero((Player) sender).getInvites().remove(args[0]);
             } else {
-                sender.sendMessage(ChatColor.RED + "Sorry, that party hasn't invited you in yet!");
+                sender.sendMessage(ChatColor.RED + "Sorry, that party hasn't invited you");
             }
         }
     }

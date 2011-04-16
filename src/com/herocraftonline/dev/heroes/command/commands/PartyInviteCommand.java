@@ -24,6 +24,8 @@ public class PartyInviteCommand extends BaseCommand {
     public void execute(CommandSender sender, String[] args) {
         if (sender instanceof Player) {
             if (!Heroes.Permissions.has((Player) sender, "heroes.party.invite")) {
+                sender.sendMessage(ChatColor.RED + "You don't have permission to do this");
+
                 return;
             }
 
