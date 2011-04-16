@@ -32,17 +32,14 @@ public class SkillLoader extends URLClassLoader{
         Enumeration<JarEntry> entries = jarFile.entries();
 
         while (entries.hasMoreElements()) {
-            plugin.log(Level.INFO, "A");
             JarEntry element = entries.nextElement();
             if (element.getName().equalsIgnoreCase("skill.yml")) {
-                plugin.log(Level.INFO, "B");
                 File n = new File(clazzLoader.loadClass(file.getName()).getClassLoader().getResource("skill.yml").getPath());
                 Configuration config = new Configuration(n);
                 config.getString("main");
                 if(config.getString("main").equalsIgnoreCase("")){
                     c = clazzLoader.loadClass(file.getName()).forName(config.getString("main"));
                 }else{
-                    plugin.log(Level.INFO, "A");
                     plugin.log(Level.INFO, "The skill " + file.getName() + " failed to load");
                     return;
                 }

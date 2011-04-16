@@ -260,8 +260,6 @@ public class Heroes extends JavaPlugin {
      */
     @SuppressWarnings("deprecation")
     public void loadSkills(){
-        log(Level.INFO, "4F");
-
         File fd = new File(getDataFolder() + File.separator + "externals");
         try {
             skillLoader = new SkillLoader(fd.toURL(), this);
@@ -273,11 +271,8 @@ public class Heroes extends JavaPlugin {
             dir.mkdir();
         }
         for(String f : dir.list()){
-            log(Level.INFO, "ADASD");
             if(f.contains(".jar")){
-                log(Level.INFO, "SDAS");
                 try {
-                    log(Level.INFO, "DD");
                     skillLoader.loadSkill(new File(dir + File.separator + f));
                 } catch (Exception e) {
                     e.printStackTrace();
