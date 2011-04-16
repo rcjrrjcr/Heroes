@@ -11,6 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.herocraftonline.dev.heroes.classes.ClassManager;
 import com.herocraftonline.dev.heroes.command.CommandManager;
+import com.herocraftonline.dev.heroes.command.SkillLoader;
 import com.herocraftonline.dev.heroes.command.commands.*;
 import com.herocraftonline.dev.heroes.command.skills.*;
 import com.herocraftonline.dev.heroes.party.PartyManager;
@@ -59,6 +60,8 @@ public class Heroes extends JavaPlugin {
     private static iConomy iConomy = null;
     // Variable for mana regen
     private long regenrate = 100L;
+    // Loaders
+    private SkillLoader skillLoader;
 
     @Override
     public void onLoad() {
@@ -109,6 +112,9 @@ public class Heroes extends JavaPlugin {
                 }
             }
         }, 100L, regenrate);
+
+        // Skills Loader
+        loadSkills();
     }
 
     /**
@@ -247,6 +253,37 @@ public class Heroes extends JavaPlugin {
             log.log(level, "[Debug] " + msg);
         }
         debugLog.log(level, "[Debug] " + msg);
+    }
+
+    /**
+     * Load all the external classes.
+     */
+    @SuppressWarnings("deprecation")
+    public void loadSkills(){
+        log(Level.INFO, "4F");
+
+        File fd = new File(getDataFolder() + File.separator + "externals");
+        try {
+            skillLoader = new SkillLoader(fd.toURL(), this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        File dir = new File(getDataFolder() + File.separator + "externals");
+        if(dir.exists() == false){
+            dir.mkdir();
+        }
+        for(String f : dir.list()){
+            log(Level.INFO, "ADASD");
+            if(f.contains(".jar")){
+                log(Level.INFO, "SDAS");
+                try {
+                    log(Level.INFO, "DD");
+                    skillLoader.loadSkill(new File(dir + File.separator + f));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     public HeroManager getHeroManager() {
