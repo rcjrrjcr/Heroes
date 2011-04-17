@@ -11,6 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.herocraftonline.dev.heroes.classes.ClassManager;
 import com.herocraftonline.dev.heroes.command.CommandManager;
+import com.herocraftonline.dev.heroes.command.SkillLoader;
 import com.herocraftonline.dev.heroes.command.commands.*;
 import com.herocraftonline.dev.heroes.command.skills.*;
 import com.herocraftonline.dev.heroes.party.PartyManager;
@@ -27,7 +28,8 @@ import com.nijikokun.bukkit.Permissions.Permissions;
  */
 public class Heroes extends JavaPlugin {
 
-    // Using this instead of getDataFolder(), getDataFolder() uses the File Name. We wan't a constant folder name.
+    // Using this instead of getDataFolder(), getDataFolder() uses the File
+    // Name. We wan't a constant folder name.
     public static final File dataFolder = new File("plugins" + File.separator + "Heroes");
 
     // Simple hook to Minecraft's logger so we can output to the console.
@@ -71,7 +73,7 @@ public class Heroes extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        log(Level.INFO, "version " + getDescription().getVersion() + " is enabled!"); // Simple Name and Version output.
+        log(Level.INFO, "version " + getDescription().getVersion() + " is enabled!");
 
         // Attempt to load the Configuration file.
         try {
@@ -109,6 +111,9 @@ public class Heroes extends JavaPlugin {
                 }
             }
         }, 100L, regenrate);
+
+        // Skills Loader
+        loadSkills();
     }
 
     /**
@@ -124,7 +129,8 @@ public class Heroes extends JavaPlugin {
     }
 
     /**
-     * Handle Heroes Commands, in this case we send them straight to the commandManager.
+     * Handle Heroes Commands, in this case we send them straight to the
+     * commandManager.
      */
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -146,7 +152,7 @@ public class Heroes extends JavaPlugin {
 
         pluginManager.registerEvent(Type.BLOCK_BREAK, blockListener, Priority.Normal, this);
 
-        pluginManager.registerEvent(Type.PLUGIN_ENABLE, pluginListener, Priority.Monitor, this); // To keep an eye out for Permissions and iConomy.
+        pluginManager.registerEvent(Type.PLUGIN_ENABLE, pluginListener, Priority.Monitor, this);
     }
 
     /**
@@ -177,7 +183,9 @@ public class Heroes extends JavaPlugin {
      * @return
      */
     public boolean checkiConomy() {
-        this.useiConomy = (iConomy != null); // Tbf this needs changing... even if iConomy is detected we only want to use it if its setup.
+        this.useiConomy = (iConomy != null); // Tbf this needs changing... even
+                                             // if iConomy is detected we only
+                                             // want to use it if its setup.
         return this.useiConomy;
     }
 
@@ -206,12 +214,15 @@ public class Heroes extends JavaPlugin {
     }
 
     /**
-     * What to do during the Disabling of Heroes -- Likely save data and close connections.
+     * What to do during the Disabling of Heroes -- Likely save data and close
+     * connections.
      */
     @Override
     public void onDisable() {
-        Heroes.iConomy = null; // When it Enables again it performs the checks anyways.
-        Heroes.Permissions = null; // When it Enables again it performs the checks anyways.
+        Heroes.iConomy = null; // When it Enables again it performs the checks
+                               // anyways.
+        Heroes.Permissions = null; // When it Enables again it performs the
+                                   // checks anyways.
 
         log.info(getDescription().getName() + " version " + getDescription().getVersion() + " is disabled!");
         debugLog.close();
@@ -226,8 +237,9 @@ public class Heroes extends JavaPlugin {
     }
 
     /**
-     * Print messages to the server Log as well as to our DebugLog.
-     * 'debugLog' is used to seperate Heroes information from the Servers Log Output.
+     * Print messages to the server Log as well as to our DebugLog. 'debugLog'
+     * is used to seperate Heroes information from the Servers Log Output.
+     * 
      * @param level
      * @param msg
      */
@@ -239,6 +251,7 @@ public class Heroes extends JavaPlugin {
     /**
      * Print messages to the Debug Log, if the servers in Debug Mode then we
      * also wan't to print the messages to the standard Server Console.
+     * 
      * @param level
      * @param msg
      */
@@ -247,6 +260,21 @@ public class Heroes extends JavaPlugin {
             log.log(level, "[Debug] " + msg);
         }
         debugLog.log(level, "[Debug] " + msg);
+    }
+
+    /**
+     * Load all the external classes.
+     */
+    public void loadSkills() {
+        File dir = new File(getDataFolder(), "externals");
+        dir.mkdir();
+        for (String f : dir.list()) {
+            if (f.contains(".jar")) {
+                Skill skill = SkillLoader.loadSkill(new File(dir, f), this);
+                commandManager.addCommand(skill);
+                log(Level.INFO, "Loaded skill: " + skill.getName());
+            }
+        }
     }
 
     public HeroManager getHeroManager() {
