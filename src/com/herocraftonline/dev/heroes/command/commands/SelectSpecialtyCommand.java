@@ -9,8 +9,10 @@ import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.command.BaseCommand;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 import com.herocraftonline.dev.heroes.persistence.HeroManager;
+import com.herocraftonline.dev.heroes.util.Properties;
 
 public class SelectSpecialtyCommand extends BaseCommand {
+    Properties prop = plugin.getConfigManager().getProperties();
 
     public SelectSpecialtyCommand(Heroes plugin) {
         super(plugin);
@@ -30,7 +32,7 @@ public class SelectSpecialtyCommand extends BaseCommand {
             ClassManager classManager = plugin.getClassManager();
             Hero hero = heroManager.getHero(player);
             HeroClass playerClass = hero.getPlayerClass();
-            if (playerClass.isPrimary()) {
+            if (playerClass.isPrimary() && prop.getLevel(hero.getExperience()) > prop.maxLevel *0.20) {
                 HeroClass subClass = classManager.getClass(args[0]);
                 if (subClass != null) {
                     if (subClass.getParent() == playerClass) {
