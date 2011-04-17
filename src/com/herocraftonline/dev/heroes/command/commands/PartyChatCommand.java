@@ -14,7 +14,7 @@ public class PartyChatCommand extends BaseCommand {
         description = "Sends a message to the whole party";
         usage = "/heroes admin reload";
         minArgs = 1;
-        maxArgs = 1;
+        maxArgs = 100000;
         identifiers.add("p");
     }
 
@@ -23,8 +23,9 @@ public class PartyChatCommand extends BaseCommand {
         if (sender instanceof Player) {
             Player p = (Player) sender;
             if(plugin.getHeroManager().getHero(p).getParty() != null){
+
                 for(Player player : plugin.getHeroManager().getHero(p).getParty().getMembers()){
-                    player.sendMessage(p.getName() + ":" + args[0]);
+                    player.sendMessage("[p]" + p.getName() + ":" + args.toString());
                 }
             }
         }

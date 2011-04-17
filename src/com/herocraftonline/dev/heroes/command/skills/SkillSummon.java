@@ -45,6 +45,7 @@ public class SkillSummon extends Skill {
             }
             hero.getSummons().put(spawnedEntity, creatureType);
             plugin.getMessager().send(player, "You have succesfully summoned a " + creatureType.toString());
+
         }
     }
 }

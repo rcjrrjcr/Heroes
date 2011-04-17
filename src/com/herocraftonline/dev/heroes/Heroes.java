@@ -272,12 +272,12 @@ public class Heroes extends JavaPlugin {
         for (String f : dir.list()) {
             if (f.contains(".jar")) {
                 Skill skill = SkillLoader.loadSkill(new File(dir, f), this);
-                commandManager.addCommand(skill);
-                if (!added) {
-                    log(Level.INFO, "Yo dawg, I heard you like plugins, so I put plugins in your plugin so you could plugin while you plugin.");
-                    added = true;
-                }
                 if(skill != null){
+                    commandManager.addCommand(skill);
+                    if (!added) {
+                        log(Level.INFO, "Rigby did this");
+                        added = true;
+                    }
                     log(Level.INFO, "Skill " + skill.getName() + " has been loaded");
                 }
             }
