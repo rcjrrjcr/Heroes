@@ -6,7 +6,6 @@ import org.bukkit.entity.Player;
 
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
-import com.herocraftonline.dev.heroes.classes.HeroClass.Spells;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 import com.herocraftonline.dev.heroes.util.Properties;
 
@@ -28,7 +27,7 @@ public class SkillBladegrasp extends Skill {
         Hero hero = plugin.getHeroManager().getHero(player);
         HeroClass heroClass = plugin.getClassManager().getClass(hero.toString());
 
-        if (!(heroClass.getSpells().contains(Spells.BLADEGRASP))) {
+        if (!(heroClass.getSkills().contains("BLADEGRASP"))) {
             plugin.getMessager().send(player, "Sorry, that ability isn't for your class!");
             return;
         }

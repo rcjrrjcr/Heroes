@@ -9,7 +9,6 @@ import org.bukkit.entity.Slime;
 
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
-import com.herocraftonline.dev.heroes.classes.HeroClass.Spells;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 
 public class SkillSummon extends Skill {
@@ -31,7 +30,7 @@ public class SkillSummon extends Skill {
         HeroClass heroClass = hero.getPlayerClass();
 
         // This spells will have no CD, as it has a max limit and will take mana.
-        if (!(heroClass.getSpells().contains(Spells.SUMMON))) {
+        if (!(heroClass.getSkills().contains("SUMMON"))) {
             plugin.getMessager().send(player, "Sorry, that ability isn't for your class!");
             return;
         }

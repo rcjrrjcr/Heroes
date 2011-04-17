@@ -7,7 +7,6 @@ import org.bukkit.entity.Player;
 
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
-import com.herocraftonline.dev.heroes.classes.HeroClass.Spells;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 import com.herocraftonline.dev.heroes.util.Properties;
 
@@ -40,7 +39,7 @@ public class SkillLayhands extends TargettedSkill {
             }
         }
 
-        if (!(heroClass.getSpells().contains(Spells.LAYHANDS))) {
+        if (!(heroClass.getSkills().contains("LAYHANDS"))) {
             plugin.getMessager().send(player, "Sorry, that ability isn't for your class!");
             return;
         }

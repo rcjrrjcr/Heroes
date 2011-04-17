@@ -7,7 +7,6 @@ import org.bukkit.entity.Player;
 
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
-import com.herocraftonline.dev.heroes.classes.HeroClass.Spells;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 import com.herocraftonline.dev.heroes.util.Properties;
 
@@ -48,7 +47,7 @@ public class SkillHarmtouch extends TargettedSkill {
         }
 
         // Ability checker
-        if (!(heroClass.getSpells().contains(Spells.HARMTOUCH))) {
+        if (!(heroClass.getSkills().contains("HARMTOUCH"))) {
             plugin.getMessager().send(player, "Sorry, that ability isn't for your class!");
             return;
         }

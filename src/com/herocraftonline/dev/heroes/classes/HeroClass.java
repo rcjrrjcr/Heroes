@@ -1,6 +1,7 @@
 package com.herocraftonline.dev.heroes.classes;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class HeroClass {
@@ -21,16 +22,7 @@ public class HeroClass {
     }
 
     // TODO: We need to convert this into something we can add to at runtime (for skillLoader)
-    public static enum Spells {
-        BLACKJACK,
-        BLADEGRASP,
-        HARMTOUCH,
-        LAYHANDS,
-        SUMMON,
-        TAME,
-        TRACK,
-        JUMP
-    }
+    public List<String> Skills;
 
     public static enum ExperienceType {
         KILLING,
@@ -48,7 +40,7 @@ public class HeroClass {
     private int summonMax;
     private WeaponType weaponType;
     private Set<ExperienceType> experienceSources;
-    private Set<Spells> spells;
+    private Set<String> skills;
     private Set<HeroClass> specializations;
 
     public HeroClass() {
@@ -57,7 +49,7 @@ public class HeroClass {
         weaponType = WeaponType.WOOD;
         experienceSources = new HashSet<ExperienceType>();
         specializations = new HashSet<HeroClass>();
-        spells = new HashSet<Spells>();
+        skills = new HashSet<String>();
         tameWolves = false;
         tameMax = 0;
         summonCreatures = false;
@@ -143,12 +135,12 @@ public class HeroClass {
         this.specializations = specializations;
     }
 
-    public Set<Spells> getSpells() {
-        return spells;
+    public Set<String> getSkills() {
+        return skills;
     }
 
-    public void setSpells(Set<Spells> spells) {
-        this.spells = spells;
+    public void setSkills(Set<String> skills) {
+        this.skills = skills;
     }
 
     public Set<ExperienceType> getExperienceSources() {

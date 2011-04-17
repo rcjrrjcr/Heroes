@@ -7,7 +7,6 @@ import org.bukkit.entity.Player;
 
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
-import com.herocraftonline.dev.heroes.classes.HeroClass.Spells;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 import com.herocraftonline.dev.heroes.util.Properties;
 
@@ -31,7 +30,7 @@ public class SkillBlackjack extends Skill {
             HeroClass heroClass = plugin.getClassManager().getClass(hero.toString());
 
             // TODO: Check for CD time left, if 0 execute.
-            if (!(heroClass.getSpells().contains(Spells.BLACKJACK))) {
+            if (!(heroClass.getSkills().contains("BLACKJACK"))) {
                 plugin.getMessager().send(sender, "Sorry, that ability isn't for your class!");
                 return;
             }
@@ -63,7 +62,7 @@ public class SkillBlackjack extends Skill {
         HeroClass heroClass = plugin.getClassManager().getClass(hero.toString());
 
         // TODO: Check for CD time left, if 0 execute.
-        if (!(heroClass.getSpells().contains(Spells.BLACKJACK))) {
+        if (!(heroClass.getSkills().contains("BLACKJACK"))) {
             plugin.getMessager().send(player, "Sorry, that ability isn't for your class!");
             return;
         }

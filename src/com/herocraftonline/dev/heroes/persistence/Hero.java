@@ -91,7 +91,7 @@ public class Hero {
     public Map<Material, String> getBinds() {
         return binds;
     }
-    
+
     public void bind(Material material, String skillName) {
         binds.put(material, skillName);
     }

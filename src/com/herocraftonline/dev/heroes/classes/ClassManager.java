@@ -11,7 +11,6 @@ import org.bukkit.util.config.Configuration;
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.classes.HeroClass.ArmorType;
 import com.herocraftonline.dev.heroes.classes.HeroClass.ExperienceType;
-import com.herocraftonline.dev.heroes.classes.HeroClass.Spells;
 import com.herocraftonline.dev.heroes.classes.HeroClass.WeaponType;
 
 public class ClassManager {
@@ -69,20 +68,20 @@ public class ClassManager {
                 newClass.setWeaponType(WeaponType.DIAMOND);
             }
 
-            List<String> spellNames = config.getStringList("classes." + className + ".permitted-skill", null);
-            Set<Spells> spells = new HashSet<Spells>();
-            for (String spell : spellNames) {
+            List<String> skillNames = config.getStringList("classes." + className + ".permitted-skill", null);
+            Set<String> skills = new HashSet<String>();
+            for (String skill : skillNames) {
                 try {
                     ;
-                    boolean added = spells.add(Spells.valueOf(spell));
+                    boolean added = skills.add(skill);
                     if (!added) {
                         plugin.log(Level.WARNING, "Duplicate skill (" + weapon + ") defined for " + className + ".");
                     }
                 } catch (IllegalArgumentException e) {
-                    plugin.log(Level.WARNING, "Invalid skill (" + spell + ") defined for " + className + ". Skipping this skill.");
+                    plugin.log(Level.WARNING, "Invalid skill (" + skill + ") defined for " + className + ". Skipping this skill.");
                 }
             }
-            newClass.setSpells(spells);
+            newClass.setSkills(skills);
 
             List<String> experienceNames = config.getStringList("classes." + className + ".experience-sources", null);
             Set<ExperienceType> experienceSources = new HashSet<ExperienceType>();
