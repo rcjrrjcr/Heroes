@@ -16,7 +16,7 @@ import com.herocraftonline.dev.heroes.command.skills.Skill;
 
 public final class SkillLoader {
 
-    public static Skill loadSkill(File file, Heroes plugin) throws Exception {
+    public static Skill loadSkill(File file, Heroes plugin) {
         try {
             JarFile jarFile = null;
             jarFile = new JarFile(file);

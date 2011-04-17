@@ -73,11 +73,7 @@ public class Heroes extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        log(Level.INFO, "version " + getDescription().getVersion() + " is enabled!"); // Simple
-                                                                                      // Name
-                                                                                      // and
-                                                                                      // Version
-                                                                                      // output.
+        log(Level.INFO, "version " + getDescription().getVersion() + " is enabled!");
 
         // Attempt to load the Configuration file.
         try {
@@ -274,13 +270,9 @@ public class Heroes extends JavaPlugin {
         dir.mkdir();
         for (String f : dir.list()) {
             if (f.contains(".jar")) {
-                try {
-                    Skill skill = SkillLoader.loadSkill(new File(dir, f), this);
-                    commandManager.addCommand(skill);
-                    log(Level.INFO, "Loaded skill: " + skill.getName());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                Skill skill = SkillLoader.loadSkill(new File(dir, f), this);
+                commandManager.addCommand(skill);
+                log(Level.INFO, "Loaded skill: " + skill.getName());
             }
         }
     }
