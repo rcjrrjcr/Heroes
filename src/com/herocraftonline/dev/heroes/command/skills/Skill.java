@@ -25,7 +25,7 @@ public abstract class Skill extends BaseCommand {
         }
     }
 
-    public abstract void use(Player user, String[] args);
+    public abstract void use(Player player, String[] args);
 
     public HashMap<Material, Integer> getCost() {
         return cost;

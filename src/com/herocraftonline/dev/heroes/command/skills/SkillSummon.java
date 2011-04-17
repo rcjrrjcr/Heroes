@@ -1,6 +1,5 @@
 package com.herocraftonline.dev.heroes.command.skills;
 
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Creature;
 import org.bukkit.entity.CreatureType;
 import org.bukkit.entity.Entity;
@@ -26,33 +25,26 @@ public class SkillSummon extends Skill {
         identifiers.add("summon");
     }
 
-    public void execute(CommandSender sender, String[] args) {
-        if (sender instanceof Player) {
-            Player player = (Player) sender;
-            Hero hero = plugin.getHeroManager().getHero(player);
-            HeroClass heroClass = hero.getPlayerClass();
+    @Override
+    public void use(Player player, String[] args) {
+        Hero hero = plugin.getHeroManager().getHero(player);
+        HeroClass heroClass = hero.getPlayerClass();
 
-            // This spells will have no CD, as it has a max limit and will take mana.
-            if (!(heroClass.getSpells().contains(Spells.SUMMON))) {
-                plugin.getMessager().send(sender, "Sorry, that ability isn't for your class!");
+        // This spells will have no CD, as it has a max limit and will take mana.
+        if (!(heroClass.getSpells().contains(Spells.SUMMON))) {
+            plugin.getMessager().send(player, "Sorry, that ability isn't for your class!");
+            return;
+        }
+
+        CreatureType creatureType = CreatureType.fromName(args[0].toUpperCase());
+        if (creatureType != null && hero.getSummons().size() <= heroClass.getSummonMax()) {
+            Entity spawnedEntity = player.getWorld().spawnCreature(player.getLocation(), creatureType);
+            if (spawnedEntity instanceof Creature && spawnedEntity instanceof Ghast && spawnedEntity instanceof Slime) {
+                spawnedEntity.remove();
                 return;
             }
-
-            CreatureType creatureType = CreatureType.fromName(args[0].toUpperCase());
-            if (creatureType != null && hero.getSummons().size() <= heroClass.getSummonMax()) {
-                Entity spawnedEntity = player.getWorld().spawnCreature(player.getLocation(), creatureType);
-                if (spawnedEntity instanceof Creature && spawnedEntity instanceof Ghast && spawnedEntity instanceof Slime) {
-                    spawnedEntity.remove();
-                    return;
-                }
-                hero.getSummons().put(spawnedEntity, creatureType);
-                plugin.getMessager().send(sender, "You have succesfully summoned a " + creatureType.toString());
-            }
+            hero.getSummons().put(spawnedEntity, creatureType);
+            plugin.getMessager().send(player, "You have succesfully summoned a " + creatureType.toString());
         }
-    }
-
-    @Override
-    public void use(Player user, String[] args) {
-
     }
 }

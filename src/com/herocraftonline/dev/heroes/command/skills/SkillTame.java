@@ -1,11 +1,10 @@
 package com.herocraftonline.dev.heroes.command.skills;
 
-import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import com.herocraftonline.dev.heroes.Heroes;
-import com.herocraftonline.dev.heroes.command.BaseSkill;
 
-public class SkillTame extends BaseSkill {
+public class SkillTame extends Skill {
 
     // TODO: Register this command in Heroes
     public SkillTame(Heroes plugin) {
@@ -19,8 +18,8 @@ public class SkillTame extends BaseSkill {
     }
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
-        // TODO Bukkit doesn't allow for wolf taming to do done via this. Yet.
+    public void use(Player user, String[] args) {
+        
     }
 
 }

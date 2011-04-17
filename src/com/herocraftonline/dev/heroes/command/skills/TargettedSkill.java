@@ -20,26 +20,25 @@ public abstract class TargettedSkill extends Skill {
     }
 
     @Override
-    public void use(Player user, String[] args) {
+    public void use(Player player, String[] args) {
         LivingEntity target = null;
         if (args.length > 0) {
             target = plugin.getServer().getPlayer(args[0]);
         }
         if (target == null) {
-            target = getPlayerTarget(user, maxDistance);
+            target = getPlayerTarget(player, maxDistance);
         } else {
             if (args.length > 1) {
                 args = Arrays.copyOfRange(args, 1, args.length);
             }
         }
         if (target == null) {
-            plugin.getMessager().send(user, "The skill $1 requires a target.", name);
-        } else {
-            use(user, target, args);
+            target = player;
         }
+        use(player, target, args);
     }
 
-    public abstract void use(Player user, LivingEntity target, String[] args);
+    public abstract void use(Player player, LivingEntity target, String[] args);
 
     public int getMaxDistance() {
         return maxDistance;

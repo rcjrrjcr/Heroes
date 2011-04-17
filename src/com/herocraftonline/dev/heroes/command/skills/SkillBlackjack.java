@@ -58,8 +58,33 @@ public class SkillBlackjack extends Skill {
     }
 
     @Override
-    public void use(Player user, String[] args) {
-        // TODO Auto-generated method stub
+    public void use(Player player, String[] args) {
+        Hero hero = plugin.getHeroManager().getHero(player);
+        HeroClass heroClass = plugin.getClassManager().getClass(hero.toString());
 
+        // TODO: Check for CD time left, if 0 execute.
+        if (!(heroClass.getSpells().contains(Spells.BLACKJACK))) {
+            plugin.getMessager().send(player, "Sorry, that ability isn't for your class!");
+            return;
+        }
+
+        Properties properties = plugin.getConfigManager().getProperties();
+        HashMap<String, Long> cooldowns = hero.getCooldowns();
+        if (cooldowns.containsKey(getName())) {
+            if (cooldowns.get(getName()) - System.currentTimeMillis() >= properties.blackjackcooldown) {
+                cooldowns.put(getName(), System.currentTimeMillis());
+            } else {
+                plugin.getMessager().send(player, "Sorry, that skill is still on cooldown!");
+                return;
+            }
+        }
+
+        if (!(hero.getEffects().containsKey("blackjack"))) {
+            hero.getEffects().put("blackjack", System.currentTimeMillis());
+        } else {
+            if (hero.getEffects().get("blackjack") > 60000) {
+                hero.getEffects().put("blackjack", System.currentTimeMillis());
+            }
+        }
     }
 }
