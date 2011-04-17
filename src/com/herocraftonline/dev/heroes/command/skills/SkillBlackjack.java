@@ -1,6 +1,6 @@
 package com.herocraftonline.dev.heroes.command.skills;
 
-import java.util.HashMap;
+import java.util.Map;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -37,7 +37,7 @@ public class SkillBlackjack extends Skill {
             }
 
             Properties properties = plugin.getConfigManager().getProperties();
-            HashMap<String, Long> cooldowns = hero.getCooldowns();
+            Map<String, Long> cooldowns = hero.getCooldowns();
             if (cooldowns.containsKey(getName())) {
                 if (cooldowns.get(getName()) - System.currentTimeMillis() >= properties.blackjackcooldown) {
                     cooldowns.put(getName(), System.currentTimeMillis());
@@ -69,7 +69,7 @@ public class SkillBlackjack extends Skill {
         }
 
         Properties properties = plugin.getConfigManager().getProperties();
-        HashMap<String, Long> cooldowns = hero.getCooldowns();
+        Map<String, Long> cooldowns = hero.getCooldowns();
         if (cooldowns.containsKey(getName())) {
             if (cooldowns.get(getName()) - System.currentTimeMillis() >= properties.blackjackcooldown) {
                 cooldowns.put(getName(), System.currentTimeMillis());

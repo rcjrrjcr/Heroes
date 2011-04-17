@@ -1,6 +1,6 @@
 package com.herocraftonline.dev.heroes.command.skills;
 
-import java.util.HashMap;
+import java.util.Map;
 
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -37,7 +37,7 @@ public class SkillHarmtouch extends TargettedSkill {
         // Cooldown - This is just a mockup for it. Change it if you want.
         // Just trying this out for now.
         Properties properties = plugin.getConfigManager().getProperties();
-        HashMap<String, Long> cooldowns = hero.getCooldowns();
+        Map<String, Long> cooldowns = hero.getCooldowns();
         if (cooldowns.containsKey(getName())) {
             if (cooldowns.get(getName()) - System.currentTimeMillis() >= properties.harmtouchcooldown) {
                 cooldowns.put(getName(), System.currentTimeMillis());

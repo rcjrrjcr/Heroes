@@ -63,8 +63,7 @@ public class HEntityListener extends EntityListener {
                                     break;
                                 }
                             }
-                        } catch (IllegalArgumentException e) {
-                        }
+                        } catch (IllegalArgumentException e) {}
                         if (type != null) {
                             addedExp = plugin.getConfigManager().getProperties().creatureKillingExp.get(type);
                             KillExperienceEvent pveEvent = new KillExperienceEvent(attacker, defender, addedExp);

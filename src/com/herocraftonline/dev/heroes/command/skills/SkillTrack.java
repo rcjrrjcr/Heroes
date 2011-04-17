@@ -1,6 +1,6 @@
 package com.herocraftonline.dev.heroes.command.skills;
 
-import java.util.HashMap;
+import java.util.Map;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -35,7 +35,7 @@ public class SkillTrack extends Skill {
         }
 
         Properties properties = plugin.getConfigManager().getProperties();
-        HashMap<String, Long> cooldowns = hero.getCooldowns();
+        Map<String, Long> cooldowns = hero.getCooldowns();
         if (cooldowns.containsKey(getName())) {
             if (cooldowns.get(getName()) - System.currentTimeMillis() >= properties.trackcooldown) {
                 cooldowns.put(getName(), System.currentTimeMillis());

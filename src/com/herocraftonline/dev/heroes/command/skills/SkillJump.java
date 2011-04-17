@@ -1,6 +1,6 @@
 package com.herocraftonline.dev.heroes.command.skills;
 
-import java.util.HashMap;
+import java.util.Map;
 
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
@@ -30,7 +30,7 @@ public class SkillJump extends Skill {
         HeroClass heroClass = hero.getPlayerClass();
 
         Properties properties = plugin.getConfigManager().getProperties();
-        HashMap<String, Long> cooldowns = hero.getCooldowns();
+        Map<String, Long> cooldowns = hero.getCooldowns();
         if (cooldowns.containsKey(getName())) {
             if (cooldowns.get(getName()) - System.currentTimeMillis() >= properties.jumpcooldown) {
                 cooldowns.put(getName(), System.currentTimeMillis());

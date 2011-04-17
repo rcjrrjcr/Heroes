@@ -129,8 +129,7 @@ public class Heroes extends JavaPlugin {
     }
 
     /**
-     * Handle Heroes Commands, in this case we send them straight to the
-     * commandManager.
+     * Handle Heroes Commands, in this case we send them straight to the commandManager.
      */
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -214,8 +213,7 @@ public class Heroes extends JavaPlugin {
     }
 
     /**
-     * What to do during the Disabling of Heroes -- Likely save data and close
-     * connections.
+     * What to do during the Disabling of Heroes -- Likely save data and close connections.
      */
     @Override
     public void onDisable() {
@@ -237,8 +235,7 @@ public class Heroes extends JavaPlugin {
     }
 
     /**
-     * Print messages to the server Log as well as to our DebugLog. 'debugLog'
-     * is used to seperate Heroes information from the Servers Log Output.
+     * Print messages to the server Log as well as to our DebugLog. 'debugLog' is used to seperate Heroes information from the Servers Log Output.
      * 
      * @param level
      * @param msg
@@ -249,8 +246,7 @@ public class Heroes extends JavaPlugin {
     }
 
     /**
-     * Print messages to the Debug Log, if the servers in Debug Mode then we
-     * also wan't to print the messages to the standard Server Console.
+     * Print messages to the Debug Log, if the servers in Debug Mode then we also wan't to print the messages to the standard Server Console.
      * 
      * @param level
      * @param msg

@@ -3,13 +3,14 @@ package com.herocraftonline.dev.heroes.persistence;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.bukkit.Material;
 import org.bukkit.entity.CreatureType;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 import com.herocraftonline.dev.heroes.classes.HeroClass;
-import com.herocraftonline.dev.heroes.classes.HeroClass.Spells;
 import com.herocraftonline.dev.heroes.party.HeroParty;
 
 public class Hero {
@@ -19,12 +20,12 @@ public class Hero {
     protected int experience;
     protected int mana;
     protected List<String> masteries;
-    protected HashMap<String, Long> cooldowns;
-    protected HashMap<Entity, CreatureType> summons;
-    protected HashMap<String, Long> effects;
-    protected Spells skill;
+    protected Map<String, Long> cooldowns;
+    protected Map<Entity, CreatureType> summons;
+    protected Map<String, Long> effects;
+    protected Map<Material, String> binds;
     protected HeroParty party;
-    private HashMap<String, HeroParty> invites;
+    protected Map<String, HeroParty> invites;
 
     public Hero(Player player, HeroClass playerClass, int experience, int mana, List<String> masteries) {
         this.player = player;
@@ -34,7 +35,7 @@ public class Hero {
         this.masteries = masteries;
         this.cooldowns = new HashMap<String, Long>();
         this.summons = new HashMap<Entity, CreatureType>();
-        this.skill = null;
+        this.binds = new HashMap<Material, String>();
         this.party = null;
         this.invites = new HashMap<String, HeroParty>();
     }
@@ -75,24 +76,24 @@ public class Hero {
         this.masteries = masterys;
     }
 
-    public HashMap<String, Long> getCooldowns() {
+    public Map<String, Long> getCooldowns() {
         return cooldowns;
     }
 
-    public HashMap<Entity, CreatureType> getSummons() {
+    public Map<Entity, CreatureType> getSummons() {
         return summons;
     }
 
-    public HashMap<String, Long> getEffects() {
+    public Map<String, Long> getEffects() {
         return effects;
     }
 
-    public Spells getSkill() {
-        return skill;
+    public Map<Material, String> getBinds() {
+        return binds;
     }
-
-    public void setSkill(Spells skill) {
-        this.skill = skill;
+    
+    public void bind(Material material, String skillName) {
+        binds.put(material, skillName);
     }
 
     public HeroParty getParty() {
@@ -103,7 +104,7 @@ public class Hero {
         this.party = party;
     }
 
-    public HashMap<String, HeroParty> getInvites() {
+    public Map<String, HeroParty> getInvites() {
         return invites;
     }
 
