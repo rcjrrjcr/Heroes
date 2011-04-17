@@ -1,6 +1,7 @@
 package com.herocraftonline.dev.heroes;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.CustomEventListener;
 import org.bukkit.event.Event;
@@ -9,6 +10,7 @@ import com.herocraftonline.dev.heroes.api.BlockBreakExperienceEvent;
 import com.herocraftonline.dev.heroes.api.KillExperienceEvent;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 import com.herocraftonline.dev.heroes.util.Properties;
+
 
 public class HCustomEventListener extends CustomEventListener {
     protected Heroes plugin;
@@ -25,7 +27,9 @@ public class HCustomEventListener extends CustomEventListener {
             if(hero.getParty().getExp() == true){
                 for(Player p : hero.getParty().getMembers()){
                     Hero nHero = plugin.getHeroManager().getHero(p);
-                    nHero.setExperience(nHero.getExperience() + (e.getExp() / hero.getParty().getMembers().size()));
+                    if(distance(p.getLocation(), e.getPlayer().getLocation()) < 50){
+                        nHero.setExperience(nHero.getExperience() + (e.getExp() / hero.getParty().getMembers().size()));
+                    }
                 }
                 e.setExp(e.getExp() / hero.getParty().getMembers().size());
             }
@@ -40,7 +44,9 @@ public class HCustomEventListener extends CustomEventListener {
             if(hero.getParty().getExp() == true){
                 for(Player p : hero.getParty().getMembers()){
                     Hero nHero = plugin.getHeroManager().getHero(p);
-                    nHero.setExperience(nHero.getExperience() + (e.getExp() / hero.getParty().getMembers().size()));
+                    if(distance(p.getLocation(), e.getPlayer().getLocation()) < 50){
+                        nHero.setExperience(nHero.getExperience() + (e.getExp() / hero.getParty().getMembers().size()));
+                    }
                 }
                 e.setExp(e.getExp() / hero.getParty().getMembers().size());
             }
@@ -49,4 +55,14 @@ public class HCustomEventListener extends CustomEventListener {
             }
         }
     }
+
+    public double distance(Location p, Location q)
+    { 
+        double dx   = p.getX() - q.getX();        
+        double dy   = p.getY() - q.getY();         
+        double dist = Math.sqrt( dx*dx + dy*dy );
+        return dist;
+    }
 }
+
+
