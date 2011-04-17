@@ -14,17 +14,9 @@ import java.util.logging.Level;
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.skills.Skill;
 
-public class SkillLoader extends URLClassLoader {
-    protected Heroes plugin;
-    protected URL url;
+public final class SkillLoader {
 
-    public SkillLoader(URL path, Heroes plugin) throws Exception {
-        super(new URL[] { path });
-        this.url = path;
-        this.plugin = plugin;
-    }
-
-    public Skill loadSkill(File file) throws Exception {
+    public static Skill loadSkill(File file, Heroes plugin) throws Exception {
         try {
             JarFile jarFile = null;
             jarFile = new JarFile(file);
@@ -42,10 +34,10 @@ public class SkillLoader extends URLClassLoader {
             
             if (mainClass != null) {
                 plugin.log(Level.INFO, "main-class: " + mainClass);
-                ClassLoader loader = URLClassLoader.newInstance(new URL[] {file.toURI().toURL() }, getClass().getClassLoader());
+                ClassLoader loader = URLClassLoader.newInstance(new URL[] {file.toURI().toURL() }, plugin.getClass().getClassLoader());
                 Class<?> clazz = Class.forName(mainClass, true, loader);
                 Class<? extends Skill> skillClass = clazz.asSubclass(Skill.class);
-                Constructor<? extends Skill> ctor = skillClass.getConstructor(Heroes.class);
+                Constructor<? extends Skill> ctor = skillClass.getConstructor(plugin.getClass());
                 return ctor.newInstance(plugin);
             } else {
                 throw new Exception();
@@ -56,14 +48,4 @@ public class SkillLoader extends URLClassLoader {
             return null;
         }
     }
-
-    /*
-     * ClassLoader loader = URLClassLoader.newInstance( new URL[] { yourURL },
-     * getClass().getClassLoader() ); Class<?> clazz =
-     * Class.forName("mypackage.MyClass", true, loader); Class<? extends
-     * Runnable> runClass = clazz.asSubclass(Runnable.class); // Avoid
-     * Class.newInstance, for it is evil. Constructor<? extends Runnable> ctor =
-     * runClass.getConstructor(); Runnable doRun = ctor.newInstance();
-     * doRun.run();
-     */
 }
