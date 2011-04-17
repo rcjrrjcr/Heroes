@@ -32,7 +32,7 @@ public class SelectSpecialtyCommand extends BaseCommand {
             ClassManager classManager = plugin.getClassManager();
             Hero hero = heroManager.getHero(player);
             HeroClass playerClass = hero.getPlayerClass();
-            if (playerClass.isPrimary() && prop.getLevel(hero.getExperience()) > prop.maxLevel *0.20) {
+            if (playerClass.isPrimary() && prop.getLevel(hero.getExperience()) > prop.maxLevel * 0.20) {
                 HeroClass subClass = classManager.getClass(args[0]);
                 if (subClass != null) {
                     if (subClass.getParent() == playerClass) {

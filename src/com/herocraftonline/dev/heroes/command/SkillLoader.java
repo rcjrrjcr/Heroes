@@ -31,10 +31,10 @@ public final class SkillLoader {
                     break;
                 }
             }
-            
+
             if (mainClass != null) {
                 plugin.log(Level.INFO, "main-class: " + mainClass);
-                ClassLoader loader = URLClassLoader.newInstance(new URL[] {file.toURI().toURL() }, plugin.getClass().getClassLoader());
+                ClassLoader loader = URLClassLoader.newInstance(new URL[] { file.toURI().toURL() }, plugin.getClass().getClassLoader());
                 Class<?> clazz = Class.forName(mainClass, true, loader);
                 Class<? extends Skill> skillClass = clazz.asSubclass(Skill.class);
                 Constructor<? extends Skill> ctor = skillClass.getConstructor(plugin.getClass());

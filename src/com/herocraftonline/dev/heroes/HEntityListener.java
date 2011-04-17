@@ -91,7 +91,7 @@ public class HEntityListener extends EntityListener {
                 h.getSummons().remove(defender);
             }
         }
-        
+
     }
 
     @Override

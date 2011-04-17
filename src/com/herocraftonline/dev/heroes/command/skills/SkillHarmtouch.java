@@ -30,7 +30,7 @@ public class SkillHarmtouch extends TargettedSkill {
             plugin.getMessager().send(player, "Sorry, you need a target!");
             return;
         }
-        
+
         Hero hero = plugin.getHeroManager().getHero(player);
         HeroClass heroClass = plugin.getClassManager().getClass(hero.toString());
 

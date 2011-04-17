@@ -22,9 +22,9 @@ public class PartyChatCommand extends BaseCommand {
     public void execute(CommandSender sender, String[] args) {
         if (sender instanceof Player) {
             Player p = (Player) sender;
-            if(plugin.getHeroManager().getHero(p).getParty() != null){
+            if (plugin.getHeroManager().getHero(p).getParty() != null) {
 
-                for(Player player : plugin.getHeroManager().getHero(p).getParty().getMembers()){
+                for (Player player : plugin.getHeroManager().getHero(p).getParty().getMembers()) {
                     player.sendMessage("[p]" + p.getName() + ":" + args.toString());
                 }
             }

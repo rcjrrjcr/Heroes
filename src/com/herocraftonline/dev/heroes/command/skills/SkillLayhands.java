@@ -44,7 +44,7 @@ public class SkillLayhands extends TargettedSkill {
             plugin.getMessager().send(player, "Sorry, that ability isn't for your class!");
             return;
         }
-        
+
         target.setHealth(20);
     }
 }

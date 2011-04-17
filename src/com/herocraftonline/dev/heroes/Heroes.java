@@ -272,7 +272,7 @@ public class Heroes extends JavaPlugin {
         for (String f : dir.list()) {
             if (f.contains(".jar")) {
                 Skill skill = SkillLoader.loadSkill(new File(dir, f), this);
-                if(skill != null){
+                if (skill != null) {
                     commandManager.addCommand(skill);
                     if (!added) {
                         log(Level.INFO, "Rigby did this");
