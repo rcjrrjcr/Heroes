@@ -260,20 +260,22 @@ public class Heroes extends JavaPlugin {
      */
     @SuppressWarnings("deprecation")
     public void loadSkills(){
-        File fd = new File(getDataFolder() + File.separator + "externals");
+        File fd = new File(getDataFolder(), "externals");
         try {
             skillLoader = new SkillLoader(fd.toURL(), this);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        File dir = new File(getDataFolder() + File.separator + "externals");
+        File dir = new File(getDataFolder(), "externals");
         if(dir.exists() == false){
             dir.mkdir();
         }
         for(String f : dir.list()){
             if(f.contains(".jar")){
                 try {
-                    skillLoader.loadSkill(new File(dir + File.separator + f));
+                    Skill skill = skillLoader.loadSkill(new File(dir, f));
+                    commandManager.addCommand(skill);
+                    log(Level.INFO, "Loaded skill: " + skill.getName());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
