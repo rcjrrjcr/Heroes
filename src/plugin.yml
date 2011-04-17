@@ -11,3 +11,6 @@ commands:
   summon:
     description: Heroes commands
     usage: /summon <monster>
+  p:
+    description: Heroes command
+    usage: /p <message>

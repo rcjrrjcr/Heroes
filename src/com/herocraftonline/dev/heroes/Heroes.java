@@ -174,7 +174,7 @@ public class Heroes extends JavaPlugin {
         commandManager.addCommand(new SkillTame(this));
         commandManager.addCommand(new SkillTrack(this));
         commandManager.addCommand(new SkillSummon(this));
-
+        commandManager.addCommand(new PartyChatCommand(this));
     }
 
     /**
@@ -277,7 +277,9 @@ public class Heroes extends JavaPlugin {
                     log(Level.INFO, "Yo dawg, I heard you like plugins, so I put plugins in your plugin so you could plugin while you plugin.");
                     added = true;
                 }
-                log(Level.INFO, "Loaded skill: " + skill.getName());
+                if(skill != null){
+                    log(Level.INFO, "Skill " + skill.getName() + " has been loaded");
+                }
             }
         }
     }

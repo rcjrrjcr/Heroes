@@ -69,17 +69,17 @@ public class ClassManager {
                 newClass.setWeaponType(WeaponType.DIAMOND);
             }
 
-            List<String> spellNames = config.getStringList("classes." + className + ".permitted-spells", null);
+            List<String> spellNames = config.getStringList("classes." + className + ".permitted-skill", null);
             Set<Spells> spells = new HashSet<Spells>();
             for (String spell : spellNames) {
                 try {
                     ;
                     boolean added = spells.add(Spells.valueOf(spell));
                     if (!added) {
-                        plugin.log(Level.WARNING, "Duplicate spell (" + weapon + ") defined for " + className + ".");
+                        plugin.log(Level.WARNING, "Duplicate skill (" + weapon + ") defined for " + className + ".");
                     }
                 } catch (IllegalArgumentException e) {
-                    plugin.log(Level.WARNING, "Invalid spell (" + spell + ") defined for " + className + ". Skipping this spell.");
+                    plugin.log(Level.WARNING, "Invalid skill (" + spell + ") defined for " + className + ". Skipping this skill.");
                 }
             }
             newClass.setSpells(spells);

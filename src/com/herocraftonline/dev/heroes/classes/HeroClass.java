@@ -20,7 +20,7 @@ public class HeroClass {
         DIAMOND
     }
 
-    // place holder
+    // TODO: We need to convert this into something we can add to at runtime (for skillLoader)
     public static enum Spells {
         BLACKJACK,
         BLADEGRASP,
