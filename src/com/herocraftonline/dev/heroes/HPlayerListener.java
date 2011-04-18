@@ -34,7 +34,7 @@ public class HPlayerListener extends PlayerListener {
     public void onPlayerInteract(PlayerInteractEvent event) {
         Player p = event.getPlayer();
         if (plugin.getHeroManager().getHero(p).getBinds().containsKey(event.getMaterial())) {
-            if (event.getAction() == Action.RIGHT_CLICK_AIR) {
+            if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
                 String[] args = plugin.getHeroManager().getHero(p).getBinds().get(event.getMaterial());
                 for (BaseCommand baseCommand : plugin.getCommandManager().getCommands()) {
                     if (baseCommand instanceof Skill) {
