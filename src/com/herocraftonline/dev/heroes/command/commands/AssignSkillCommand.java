@@ -1,5 +1,8 @@
 package com.herocraftonline.dev.heroes.command.commands;
 
+import java.util.Arrays;
+
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -14,7 +17,7 @@ public class AssignSkillCommand extends BaseCommand {
         description = "Assigns a skill to an item";
         usage = "/assign <spell>";
         minArgs = 1;
-        maxArgs = 1;
+        maxArgs = 1000;
         identifiers.add("assign");
     }
 
@@ -22,10 +25,10 @@ public class AssignSkillCommand extends BaseCommand {
     public void execute(CommandSender sender, String[] args) {
         if (sender instanceof Player) {
             if (plugin.getHeroManager().getHero((Player) sender).getPlayerClass().getSkills().contains(args[0])) {
-                // plugin.getHeroManager().getHero((Player) sender).setSkill(Spells.valueOf(args[0]));
+                plugin.getHeroManager().getHero((Player) sender).bind(Material.getMaterial(args[0]), Arrays.copyOf(args, 1));
                 plugin.getMessager().send(sender, "That has been assigned as your skill", (String[]) null);
             } else {
-                plugin.getMessager().send(sender, "Yuou haven't got that skill!", (String[]) null);
+                plugin.getMessager().send(sender, "You haven't got that skill!", (String[]) null);
 
             }
         } else {

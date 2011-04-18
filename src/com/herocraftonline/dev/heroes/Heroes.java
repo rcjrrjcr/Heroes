@@ -299,4 +299,5 @@ public class Heroes extends JavaPlugin {
     public PartyManager getPartyManager() {
         return partyManager;
     }
+
 }

@@ -23,7 +23,7 @@ public class Hero {
     protected Map<String, Long> cooldowns;
     protected Map<Entity, CreatureType> summons;
     protected Map<String, Long> effects;
-    protected Map<Material, String> binds;
+    protected Map<Material, String[]> binds;
     protected HeroParty party;
     protected Map<String, HeroParty> invites;
 
@@ -35,7 +35,7 @@ public class Hero {
         this.masteries = masteries;
         this.cooldowns = new HashMap<String, Long>();
         this.summons = new HashMap<Entity, CreatureType>();
-        this.binds = new HashMap<Material, String>();
+        this.binds = new HashMap<Material, String[]>();
         this.party = null;
         this.invites = new HashMap<String, HeroParty>();
     }
@@ -88,11 +88,11 @@ public class Hero {
         return effects;
     }
 
-    public Map<Material, String> getBinds() {
+    public Map<Material, String[]> getBinds() {
         return binds;
     }
 
-    public void bind(Material material, String skillName) {
+    public void bind(Material material, String[] skillName) {
         binds.put(material, skillName);
     }
 
