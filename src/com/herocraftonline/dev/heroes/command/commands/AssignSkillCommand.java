@@ -29,10 +29,11 @@ public class AssignSkillCommand extends BaseCommand {
                     plugin.getHeroManager().getHero((Player) sender).bind(Material.getMaterial(args[0]), Arrays.copyOf(args, 1));
                     plugin.getMessager().send(sender, "That has been assigned as your skill", (String[]) null);
                 } else {
-                    plugin.getMessager().send(sender, "That Skill does not exist for your class", (String[]) null);
+                    plugin.getMessager().send(sender, "That skill does not exist for your class", (String[]) null);
                 }
             } else {
                 plugin.getHeroManager().getHero((Player) sender).unbind(Material.getMaterial(args[0]));
+                plugin.getMessager().send(sender, "Your equipped item is no longer bound to a skill.", (String[]) null);
             }
         }
     }
