@@ -57,6 +57,7 @@ public class ConfigManager {
 
             Configuration skillConfig = new Configuration(skillConfigFile);
             skillConfig.load();
+            generateSkills(skillConfig);
             loadSkills(skillConfig);
 
             ClassManager classManager = new ClassManager(plugin);
@@ -172,7 +173,20 @@ public class ConfigManager {
                 getProperties().skillInfo.put(baseSkill.getName() + "cooldown", config.getInt(baseSkill.getName() + ".cooldown", 30));
                 getProperties().skillInfo.put(baseSkill.getName() + "mana", config.getInt(baseSkill.getName() + ".mana", 30));
                 getProperties().skillInfo.put(baseSkill.getName() + "level", config.getInt(baseSkill.getName() + ".level", 30));
+            }
+        }
+    }
 
+    private void generateSkills(Configuration config){
+        for (BaseCommand baseCommand : plugin.getCommandManager().getCommands()) {
+            if (baseCommand instanceof Skill) {
+                Skill baseSkill = (Skill) baseCommand;
+                if(config.getProperty(baseSkill.getName()) == null){
+                    config.setProperty(baseSkill.getName(), null);
+                    config.setProperty(baseSkill.getName() + ".cooldown", 3000);
+                    config.setProperty(baseSkill.getName() + ".mana", 3000);
+                    config.setProperty(baseSkill.getName() + ".level", 3000);
+                }
             }
         }
     }
