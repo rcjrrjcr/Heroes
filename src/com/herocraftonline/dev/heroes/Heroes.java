@@ -75,13 +75,6 @@ public class Heroes extends JavaPlugin {
     public void onEnable() {
         log(Level.INFO, "version " + getDescription().getVersion() + " is enabled!");
 
-        // Attempt to load the Configuration file.
-        try {
-            configManager.load();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
         // Setup the Property for Levels * Exp
         getConfigManager().getProperties().calcExp();
 
@@ -114,6 +107,13 @@ public class Heroes extends JavaPlugin {
 
         // Skills Loader
         loadSkills();
+        
+        // Attempt to load the Configuration file.
+        try {
+            configManager.load();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
