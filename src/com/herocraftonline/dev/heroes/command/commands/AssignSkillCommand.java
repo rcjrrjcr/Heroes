@@ -24,7 +24,7 @@ public class AssignSkillCommand extends BaseCommand {
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (sender instanceof Player) {
-            if(!args[1].equalsIgnoreCase("")){
+            if (args[1] != null) {
                 if (plugin.getHeroManager().getHero((Player) sender).getPlayerClass().getSkills().contains(args[0])) {
                     plugin.getHeroManager().getHero((Player) sender).bind(Material.getMaterial(args[0]), Arrays.copyOf(args, 1));
                     plugin.getMessager().send(sender, "That has been assigned as your skill", (String[]) null);
@@ -35,7 +35,7 @@ public class AssignSkillCommand extends BaseCommand {
             } else {
                 plugin.getMessager().send(sender, "That isn't a skill", (String[]) null);
             }
-        }else{
+        } else {
             plugin.getHeroManager().getHero((Player) sender).bind(Material.getMaterial(args[0]), null);
         }
     }

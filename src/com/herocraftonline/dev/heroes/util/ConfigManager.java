@@ -13,6 +13,8 @@ import org.bukkit.util.config.Configuration;
 
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.classes.ClassManager;
+import com.herocraftonline.dev.heroes.command.BaseCommand;
+import com.herocraftonline.dev.heroes.command.skills.Skill;
 
 public class ConfigManager {
     protected Heroes plugin;
@@ -164,21 +166,15 @@ public class ConfigManager {
     }
 
     private void loadSkills(Configuration config) {
-        getProperties().blackjackcooldown = config.getInt("blackjack.cooldown", 3000);
-        getProperties().blackjackmana = config.getInt("blackjack.mana", 30);
-        getProperties().bladegraspcooldown = config.getInt("bladegrasp.cooldown", 3000);
-        getProperties().bladegraspmana = config.getInt("bladegrasp.mana", 30);
-        getProperties().harmtouchcooldown = config.getInt("harmtouch.cooldown", 3000);
-        getProperties().harmtouchmana = config.getInt("harmtouch.mana", 30);
-        getProperties().layhandscooldown = config.getInt("layhands.cooldown", 3000);
-        getProperties().layhandsmana = config.getInt("layhands.mana", 30);
-        getProperties().summonmana = config.getInt("summon.mana", 30);
-        getProperties().tamecooldown = config.getInt("tame.cooldown", 3000);
-        getProperties().tamemana = config.getInt("tame.mana", 30);
-        getProperties().trackcooldown = config.getInt("track.cooldown", 3000);
-        getProperties().trackmana = config.getInt("track.mana", 30);
-        getProperties().jumpcooldown = config.getInt("jump.cooldown", 3000);
-        getProperties().jumpmana = config.getInt("jump.mana", 30);
+        for (BaseCommand baseCommand : plugin.getCommandManager().getCommands()) {
+            if (baseCommand instanceof Skill) {
+                Skill baseSkill = (Skill) baseCommand;
+                getProperties().skillInfo.put(baseSkill.getName() + "cooldown", config.getInt(baseSkill.getName() + ".cooldown", 30));
+                getProperties().skillInfo.put(baseSkill.getName() + "mana", config.getInt(baseSkill.getName() + ".mana", 30));
+                getProperties().skillInfo.put(baseSkill.getName() + "level", config.getInt(baseSkill.getName() + ".level", 30));
+
+            }
+        }
     }
 
     public Properties getProperties() {

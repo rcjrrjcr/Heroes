@@ -45,22 +45,7 @@ public class Properties {
         JUMP
     }
 
-    public int blackjackmana;
-    public int blackjackcooldown;
-    public int bladegraspmana;
-    public int bladegraspcooldown;
-    public int harmtouchmana;
-    public int harmtouchcooldown;
-    public int layhandsmana;
-    public int layhandscooldown;
-    public int summonmana;
-    public int summoncooldown;
-    public int tamemana;
-    public int tamecooldown;
-    public int trackmana;
-    public int trackcooldown;
-    public int jumpmana;
-    public int jumpcooldown;
+    public HashMap<String, Integer> skillInfo;
     // Default//
     public String defClass;
     public int defLevel;
