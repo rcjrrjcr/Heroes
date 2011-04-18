@@ -106,9 +106,9 @@ public class HEntityListener extends EntityListener {
                 } else if (event instanceof EntityDamageByEntityEvent) {
                     EntityDamageByEntityEvent subEvent = (EntityDamageByEntityEvent) event;
                     attacker = subEvent.getDamager();
-                    if(attacker instanceof Player && defender instanceof Player){
+                    if (attacker instanceof Player && defender instanceof Player) {
                         Player p = (Player) attacker;
-                        if(plugin.getHeroManager().getHero(p).getParty().getMembers().contains((Player) defender)){
+                        if (plugin.getHeroManager().getHero(p).getParty().getMembers().contains((Player) defender)) {
                             event.setCancelled(true);
                             return;
                         }
@@ -128,8 +128,7 @@ public class HEntityListener extends EntityListener {
                 }
             }
         }
-        
-       
+
     }
 
     public void onEntityTarget(EntityTargetEvent event) {

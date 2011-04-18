@@ -25,7 +25,7 @@ public class HeroParty {
     public Set<Player> getMembers() {
         return members.keySet();
     }
-    
+
     public Player getLeader() {
         return leader;
     }
@@ -73,6 +73,5 @@ public class HeroParty {
     public void setExp(boolean exp) {
         this.exp = exp;
     }
-    
-    
+
 }

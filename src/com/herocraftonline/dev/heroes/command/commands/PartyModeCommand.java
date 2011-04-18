@@ -22,23 +22,23 @@ public class PartyModeCommand extends BaseCommand {
     public void execute(CommandSender sender, String[] args) {
         if (sender instanceof Player) {
             Player p = (Player) sender;
-            
-            if(!plugin.getHeroManager().getHero(p).getParty().getLeader().equals(p)){
+
+            if (!plugin.getHeroManager().getHero(p).getParty().getLeader().equals(p)) {
                 return;
             }
-            
-            if(args[0].contains("exp")){
-                if(args[0].contains("+")){
+
+            if (args[0].contains("exp")) {
+                if (args[0].contains("+")) {
                     plugin.getHeroManager().getHero(p).getParty().setPvp(true);
-                }else if(args[0].contains("-")){
+                } else if (args[0].contains("-")) {
                     plugin.getHeroManager().getHero(p).getParty().setPvp(false);
                 }
-            }else if(args[0].contains("pvp")){
-                if(args[0].contains("+")){
+            } else if (args[0].contains("pvp")) {
+                if (args[0].contains("+")) {
                     plugin.getHeroManager().getHero(p).getParty().setExp(true);
-                }else if(args[0].contains("-")){
+                } else if (args[0].contains("-")) {
                     plugin.getHeroManager().getHero(p).getParty().setExp(false);
-                }  
+                }
             }
         }
     }

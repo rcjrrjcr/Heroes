@@ -12,7 +12,6 @@ import com.herocraftonline.dev.heroes.api.LevelEvent;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 import com.herocraftonline.dev.heroes.util.Properties;
 
-
 public class HCustomEventListener extends CustomEventListener {
     protected Heroes plugin;
 
@@ -25,10 +24,10 @@ public class HCustomEventListener extends CustomEventListener {
             BlockBreakExperienceEvent e = (BlockBreakExperienceEvent) event;
             Properties prop = plugin.getConfigManager().getProperties();
             Hero hero = plugin.getHeroManager().getHero(e.getPlayer());
-            if(hero.getParty().getExp() == true){
-                for(Player p : hero.getParty().getMembers()){
+            if (hero.getParty().getExp() == true) {
+                for (Player p : hero.getParty().getMembers()) {
                     Hero nHero = plugin.getHeroManager().getHero(p);
-                    if(distance(p.getLocation(), e.getPlayer().getLocation()) < 50){
+                    if (distance(p.getLocation(), e.getPlayer().getLocation()) < 50) {
                         nHero.setExperience(nHero.getExperience() + (e.getExp() / hero.getParty().getMembers().size()));
                     }
                 }
@@ -49,11 +48,11 @@ public class HCustomEventListener extends CustomEventListener {
             KillExperienceEvent e = (KillExperienceEvent) event;
             Properties prop = plugin.getConfigManager().getProperties();
             Hero hero = plugin.getHeroManager().getHero(e.getPlayer());
-            if(hero.getParty().getExp() == true){
-                for(Player p : hero.getParty().getMembers()){
-                    p.getNearbyEntities(p.getLocation().getX(),p.getLocation().getY(),p.getLocation().getZ() );
+            if (hero.getParty().getExp() == true) {
+                for (Player p : hero.getParty().getMembers()) {
+                    p.getNearbyEntities(p.getLocation().getX(), p.getLocation().getY(), p.getLocation().getZ());
                     Hero nHero = plugin.getHeroManager().getHero(p);
-                    if(distance(p.getLocation(), e.getPlayer().getLocation()) < 50){
+                    if (distance(p.getLocation(), e.getPlayer().getLocation()) < 50) {
                         nHero.setExperience(nHero.getExperience() + (e.getExp() / hero.getParty().getMembers().size()));
                     }
                 }
@@ -72,12 +71,10 @@ public class HCustomEventListener extends CustomEventListener {
         }
     }
 
-    public double distance(Location p, Location q){ 
-        double dx   = p.getX() - q.getX();        
-        double dy   = p.getY() - q.getY();         
-        double dist = Math.sqrt( dx*dx + dy*dy );
+    public double distance(Location p, Location q) {
+        double dx = p.getX() - q.getX();
+        double dy = p.getY() - q.getY();
+        double dist = Math.sqrt(dx * dx + dy * dy);
         return dist;
     }
 }
-
-
