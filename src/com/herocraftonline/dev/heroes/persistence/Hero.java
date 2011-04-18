@@ -96,6 +96,10 @@ public class Hero {
         binds.put(material, skillName);
     }
 
+    public void unbind(Material material) {
+        binds.remove(material);
+    }
+
     public HeroParty getParty() {
         return party;
     }
