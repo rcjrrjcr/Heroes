@@ -36,10 +36,10 @@ public class HCustomEventListener extends CustomEventListener {
             }
             if (prop.getLevel(hero.getExperience()) != prop.getLevel(hero.getExperience() + e.getExp())) {
                 int eLevel = prop.getLevel(hero.getExperience() + e.getExp());
-                LevelEvent lEvent = new LevelEvent(e.getPlayer(), e.getExp(), prop.getLevel(e.getExp()));
+                LevelEvent lEvent = new LevelEvent(e.getPlayer(), e.getExp(), prop.getLevel(e.getExp()), prop.getLevel(e.getExp()) - 1);
                 plugin.getServer().getPluginManager().callEvent(lEvent);
                 if (!lEvent.isCancelled()) {
-                    eLevel = lEvent.getLevel();
+                    eLevel = lEvent.getToLevel();
                     e.setExp(prop.levels[eLevel - 1]);
                 }
                 e.getPlayer().sendMessage(ChatColor.RED + "You just reached level" + ChatColor.BLUE + prop.getLevel(eLevel));
@@ -61,10 +61,10 @@ public class HCustomEventListener extends CustomEventListener {
             }
             if (prop.getLevel(hero.getExperience()) != prop.getLevel(hero.getExperience() + e.getExp())) {
                 int eLevel = prop.getLevel(hero.getExperience() + e.getExp());
-                LevelEvent lEvent = new LevelEvent(e.getPlayer(), e.getExp(), prop.getLevel(e.getExp()));
+                LevelEvent lEvent = new LevelEvent(e.getPlayer(), e.getExp(), prop.getLevel(e.getExp()), prop.getLevel(e.getExp()) - 1);
                 plugin.getServer().getPluginManager().callEvent(lEvent);
                 if (!lEvent.isCancelled()) {
-                    eLevel = lEvent.getLevel();
+                    eLevel = lEvent.getToLevel();
                     e.setExp(prop.levels[eLevel - 1]);
                 }
                 e.getPlayer().sendMessage(ChatColor.RED + "You just reached level" + ChatColor.BLUE + prop.getLevel(eLevel));
