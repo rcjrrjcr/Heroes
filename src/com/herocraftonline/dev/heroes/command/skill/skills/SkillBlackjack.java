@@ -30,7 +30,6 @@ public class SkillBlackjack extends Skill {
             Hero hero = plugin.getHeroManager().getHero((Player) sender);
             HeroClass heroClass = plugin.getClassManager().getClass(hero.toString());
 
-            // TODO: Check for CD time left, if 0 execute.
             if (!(heroClass.getSkills().contains("BLACKJACK"))) {
                 plugin.getMessager().send(sender, "Sorry, that ability isn't for your class!");
                 return;

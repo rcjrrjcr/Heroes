@@ -274,7 +274,7 @@ public class Heroes extends JavaPlugin {
                 }
             }
         }
-        log(Level.INFO, skNo.toString());
+        log(Level.INFO, "Skills loaded: " + skNo.toString());
     }
 
     public HeroManager getHeroManager() {
@@ -296,5 +296,4 @@ public class Heroes extends JavaPlugin {
     public PartyManager getPartyManager() {
         return partyManager;
     }
-
 }
