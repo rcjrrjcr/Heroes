@@ -1,6 +1,7 @@
 package com.herocraftonline.dev.heroes;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.logging.*;
 
 import org.bukkit.command.*;
@@ -107,7 +108,7 @@ public class Heroes extends JavaPlugin {
 
         // Skills Loader
         loadSkills();
-        
+
         // Attempt to load the Configuration file.
         try {
             configManager.load();
@@ -256,6 +257,7 @@ public class Heroes extends JavaPlugin {
      */
     public void loadSkills() {
         File dir = new File(getDataFolder(), "externals");
+        ArrayList<String> skNo = new ArrayList<String>();
         dir.mkdir();
         boolean added = false;
         for (String f : dir.list()) {
@@ -264,13 +266,15 @@ public class Heroes extends JavaPlugin {
                 if (skill != null) {
                     commandManager.addCommand(skill);
                     if (!added) {
-                        log(Level.INFO, "Rigby did this");
+                        log(Level.INFO, "Collecting and loading skills");
                         added = true;
                     }
-                    log(Level.INFO, "Skill " + skill.getName() + " has been loaded");
+                    skNo.add(skill.getName());
+                    debugLog.log(Level.INFO, "Skill " + skill.getName() + " Loaded");
                 }
             }
         }
+        log(Level.INFO, skNo.toString());
     }
 
     public HeroManager getHeroManager() {

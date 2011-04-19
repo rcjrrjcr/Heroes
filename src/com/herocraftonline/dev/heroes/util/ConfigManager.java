@@ -177,13 +177,13 @@ public class ConfigManager {
         }
     }
 
-    private void generateSkills(Configuration config){
+    private void generateSkills(Configuration config) {
         for (BaseCommand baseCommand : plugin.getCommandManager().getCommands()) {
             if (baseCommand instanceof Skill) {
                 Skill baseSkill = (Skill) baseCommand;
-                    config.setProperty(baseSkill.getName() + ".cooldown", config.getInt(baseSkill.getName() + ".mana", 30));
-                    config.setProperty(baseSkill.getName() + ".mana", config.getInt(baseSkill.getName() + ".mana", 30));
-                    config.setProperty(baseSkill.getName() + ".level", config.getInt(baseSkill.getName() + ".level", 30));
+                config.setProperty(baseSkill.getName() + ".cooldown", config.getInt(baseSkill.getName() + ".mana", 30));
+                config.setProperty(baseSkill.getName() + ".mana", config.getInt(baseSkill.getName() + ".mana", 30));
+                config.setProperty(baseSkill.getName() + ".level", config.getInt(baseSkill.getName() + ".level", 30));
             }
         }
         config.save();
