@@ -166,10 +166,11 @@ public class ConfigManager {
     }
 
     private void loadSkills(Configuration config) {
+        config.load();
         for (BaseCommand baseCommand : plugin.getCommandManager().getCommands()) {
             if (baseCommand instanceof Skill) {
                 Skill baseSkill = (Skill) baseCommand;
-                getProperties().skillInfo.put(baseSkill.getName() + "cooldown", config.getInt(baseSkill.getName() + ".mana", 30));
+                getProperties().skillInfo.put(baseSkill.getName() + "cooldown", config.getInt(baseSkill.getName() + ".cooldown", 30));
                 getProperties().skillInfo.put(baseSkill.getName() + "mana", config.getInt(baseSkill.getName() + ".mana", 30));
                 getProperties().skillInfo.put(baseSkill.getName() + "level", config.getInt(baseSkill.getName() + ".level", 30));
             }
@@ -177,12 +178,9 @@ public class ConfigManager {
     }
 
     private void generateSkills(Configuration config){
-        plugin.log(Level.INFO, "1");
         for (BaseCommand baseCommand : plugin.getCommandManager().getCommands()) {
-            plugin.log(Level.INFO, "1");
             if (baseCommand instanceof Skill) {
                 Skill baseSkill = (Skill) baseCommand;
-                plugin.log(Level.INFO, "3 + " + baseSkill.getName());
                     config.setProperty(baseSkill.getName() + ".cooldown", config.getInt(baseSkill.getName() + ".mana", 30));
                     config.setProperty(baseSkill.getName() + ".mana", config.getInt(baseSkill.getName() + ".mana", 30));
                     config.setProperty(baseSkill.getName() + ".level", config.getInt(baseSkill.getName() + ".level", 30));

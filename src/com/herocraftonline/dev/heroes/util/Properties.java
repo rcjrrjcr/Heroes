@@ -45,7 +45,7 @@ public class Properties {
         JUMP
     }
 
-    public HashMap<String, Integer> skillInfo;
+    public HashMap<String, Integer> skillInfo = new HashMap<String, Integer>();
     // Default//
     public String defClass;
     public int defLevel;
