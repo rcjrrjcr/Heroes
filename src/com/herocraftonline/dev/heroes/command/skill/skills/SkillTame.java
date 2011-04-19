@@ -1,8 +1,9 @@
-package com.herocraftonline.dev.heroes.command.skills;
+package com.herocraftonline.dev.heroes.command.skill.skills;
 
 import org.bukkit.entity.Player;
 
 import com.herocraftonline.dev.heroes.Heroes;
+import com.herocraftonline.dev.heroes.command.skill.Skill;
 
 public class SkillTame extends Skill {
 

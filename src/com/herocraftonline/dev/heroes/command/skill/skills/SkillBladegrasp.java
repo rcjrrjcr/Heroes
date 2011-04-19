@@ -1,26 +1,26 @@
-package com.herocraftonline.dev.heroes.command.skills;
+package com.herocraftonline.dev.heroes.command.skill.skills;
 
 import java.util.Map;
 
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
+import com.herocraftonline.dev.heroes.command.skill.Skill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 import com.herocraftonline.dev.heroes.util.Properties;
 
-public class SkillTrack extends Skill {
+public class SkillBladegrasp extends Skill {
 
     // TODO: Register this command in Heroes
-    public SkillTrack(Heroes plugin) {
+    public SkillBladegrasp(Heroes plugin) {
         super(plugin);
-        name = "Track";
-        description = "Skill - Track";
-        usage = "/track <player>";
-        minArgs = 1;
-        maxArgs = 1;
-        identifiers.add("track");
+        name = "Bladegrasp";
+        description = "Skill - Bladegrasp";
+        usage = "/bladegrasp";
+        minArgs = 0;
+        maxArgs = 0;
+        identifiers.add("bladegrasp");
     }
 
     @Override
@@ -28,7 +28,7 @@ public class SkillTrack extends Skill {
         Hero hero = plugin.getHeroManager().getHero(player);
         HeroClass heroClass = plugin.getClassManager().getClass(hero.toString());
 
-        if (!(heroClass.getSkills().contains("TRACK"))) {
+        if (!(heroClass.getSkills().contains("BLADEGRASP"))) {
             plugin.getMessager().send(player, "Sorry, that ability isn't for your class!");
             return;
         }
@@ -44,11 +44,12 @@ public class SkillTrack extends Skill {
             }
         }
 
-        if (plugin.getServer().getPlayer(args[0]) != null) {
-            Player target = plugin.getServer().getPlayer(args[0]);
-            Location location = target.getLocation();
-            player.sendMessage(location.toString());
-            player.setCompassTarget(location);
+        if (!(hero.getEffects().containsKey("bladegrasp"))) {
+            hero.getEffects().put("bladegrasp", System.currentTimeMillis());
+        } else {
+            if (hero.getEffects().get("bladegrasp") > 60000) {
+                hero.getEffects().put("bladegrasp", System.currentTimeMillis());
+            }
         }
     }
 }

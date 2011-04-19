@@ -7,7 +7,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.*;
 
 import com.herocraftonline.dev.heroes.command.BaseCommand;
-import com.herocraftonline.dev.heroes.command.skills.Skill;
+import com.herocraftonline.dev.heroes.command.skill.Skill;
 import com.herocraftonline.dev.heroes.persistence.HeroManager;
 
 public class HPlayerListener extends PlayerListener {

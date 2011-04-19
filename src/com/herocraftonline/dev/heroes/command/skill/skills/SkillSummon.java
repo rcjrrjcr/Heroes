@@ -1,4 +1,4 @@
-package com.herocraftonline.dev.heroes.command.skills;
+package com.herocraftonline.dev.heroes.command.skill.skills;
 
 import org.bukkit.entity.Creature;
 import org.bukkit.entity.CreatureType;
@@ -9,6 +9,7 @@ import org.bukkit.entity.Slime;
 
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
+import com.herocraftonline.dev.heroes.command.skill.Skill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 
 public class SkillSummon extends Skill {

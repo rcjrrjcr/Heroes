@@ -14,7 +14,7 @@ import org.bukkit.util.config.Configuration;
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.classes.ClassManager;
 import com.herocraftonline.dev.heroes.command.BaseCommand;
-import com.herocraftonline.dev.heroes.command.skills.Skill;
+import com.herocraftonline.dev.heroes.command.skill.Skill;
 
 public class ConfigManager {
     protected Heroes plugin;

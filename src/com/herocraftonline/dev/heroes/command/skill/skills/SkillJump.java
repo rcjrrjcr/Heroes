@@ -1,4 +1,4 @@
-package com.herocraftonline.dev.heroes.command.skills;
+package com.herocraftonline.dev.heroes.command.skill.skills;
 
 import java.util.Map;
 
@@ -7,6 +7,7 @@ import org.bukkit.util.Vector;
 
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
+import com.herocraftonline.dev.heroes.command.skill.Skill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 import com.herocraftonline.dev.heroes.util.Properties;
 

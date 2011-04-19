@@ -1,4 +1,4 @@
-package com.herocraftonline.dev.heroes.command.skills;
+package com.herocraftonline.dev.heroes.command.skill;
 
 import java.util.Arrays;
 import java.util.List;

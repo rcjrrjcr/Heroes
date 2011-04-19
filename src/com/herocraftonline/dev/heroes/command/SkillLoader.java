@@ -12,7 +12,7 @@ import java.util.jar.JarFile;
 import java.util.logging.Level;
 
 import com.herocraftonline.dev.heroes.Heroes;
-import com.herocraftonline.dev.heroes.command.skills.Skill;
+import com.herocraftonline.dev.heroes.command.skill.Skill;
 
 public final class SkillLoader {
 
