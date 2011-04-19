@@ -4,6 +4,8 @@ import java.util.Map;
 
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
@@ -34,8 +36,6 @@ public class SkillHarmtouch extends TargettedSkill {
         Hero hero = plugin.getHeroManager().getHero(player);
         HeroClass heroClass = plugin.getClassManager().getClass(hero.toString());
 
-        // Cooldown - This is just a mockup for it. Change it if you want.
-        // Just trying this out for now.
         Properties properties = plugin.getConfigManager().getProperties();
         Map<String, Long> cooldowns = hero.getCooldowns();
         if (cooldowns.containsKey(getName())) {
@@ -47,18 +47,21 @@ public class SkillHarmtouch extends TargettedSkill {
             }
         }
 
-        // Ability checker
         if (!(heroClass.getSkills().contains("HARMTOUCH"))) {
             plugin.getMessager().send(player, "Sorry, that ability isn't for your class!");
             return;
         }
 
-        // Spell Stuff
         double dx = player.getLocation().getX() - target.getLocation().getX();
         double dz = player.getLocation().getZ() - target.getLocation().getZ();
         double distance = Math.sqrt(dx * dx + dz * dz);
         if (distance < 15) {
-            target.setHealth((int) (target.getHealth() - (plugin.getConfigManager().getProperties().getLevel(hero.getExperience()) * 0.5)));
+            int damage = (int) (target.getHealth() - (plugin.getConfigManager().getProperties().getLevel(hero.getExperience()) * 0.5));
+            EntityDamageByEntityEvent damageEntity = new EntityDamageByEntityEvent(player, target, DamageCause.CUSTOM, damage);
+            plugin.getServer().getPluginManager().callEvent(damageEntity);
+            if (damageEntity.isCancelled() == false) {
+                target.setHealth(damageEntity.getDamage());
+            }
         } else {
             plugin.getMessager().send(player, "Sorry, that person isn't close enough!");
         }
