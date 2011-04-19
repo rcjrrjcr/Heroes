@@ -14,13 +14,6 @@ import com.herocraftonline.dev.heroes.command.CommandManager;
 import com.herocraftonline.dev.heroes.command.SkillLoader;
 import com.herocraftonline.dev.heroes.command.commands.*;
 import com.herocraftonline.dev.heroes.command.skill.*;
-import com.herocraftonline.dev.heroes.command.skill.skills.SkillBlackjack;
-import com.herocraftonline.dev.heroes.command.skill.skills.SkillHarmtouch;
-import com.herocraftonline.dev.heroes.command.skill.skills.SkillJump;
-import com.herocraftonline.dev.heroes.command.skill.skills.SkillLayhands;
-import com.herocraftonline.dev.heroes.command.skill.skills.SkillSummon;
-import com.herocraftonline.dev.heroes.command.skill.skills.SkillTame;
-import com.herocraftonline.dev.heroes.command.skill.skills.SkillTrack;
 import com.herocraftonline.dev.heroes.party.PartyManager;
 import com.herocraftonline.dev.heroes.persistence.*;
 import com.herocraftonline.dev.heroes.util.*;
@@ -173,13 +166,6 @@ public class Heroes extends JavaPlugin {
         commandManager.addCommand(new PartyAcceptCommand(this));
         commandManager.addCommand(new PartyCreateCommand(this));
         commandManager.addCommand(new PartyInviteCommand(this));
-        commandManager.addCommand(new SkillBlackjack(this));
-        commandManager.addCommand(new SkillHarmtouch(this));
-        commandManager.addCommand(new SkillJump(this));
-        commandManager.addCommand(new SkillLayhands(this));
-        commandManager.addCommand(new SkillTame(this));
-        commandManager.addCommand(new SkillTrack(this));
-        commandManager.addCommand(new SkillSummon(this));
         commandManager.addCommand(new PartyChatCommand(this));
     }
 
