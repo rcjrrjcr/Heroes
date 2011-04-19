@@ -1,7 +1,7 @@
 # Eclipse stuff
 /.externalToolBuilders
 /.settings
-.gitignore
+/.gitignore
 
 # netbeans
 /nbproject
