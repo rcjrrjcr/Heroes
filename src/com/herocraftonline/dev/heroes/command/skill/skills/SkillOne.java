@@ -25,13 +25,17 @@ public class SkillOne extends Skill{
     @Override
     public void use(Player player, String[] args) {
         Hero hero = plugin.getHeroManager().getHero(player);
-        HeroClass heroClass = plugin.getClassManager().getClass(hero.toString());
+        HeroClass heroClass = hero.getPlayerClass();
         Properties p = plugin.getConfigManager().getProperties();
-        
-        if(!heroClass.getSkills().contains(getName()) || !(p.getLevel(hero.getExperience()) > Integer.parseInt(p.skillInfo.get(getName() + "level"))) || !(hero.getMana() > Integer.parseInt(p.skillInfo.get(getName() + "mana")))){
-            return;
+
+        if(!heroClass.getSkills().contains(getName())){
+            if(!(p.getLevel(hero.getExperience()) > Integer.parseInt(p.skillInfo.get(getName() + "level")))){
+                if(!(hero.getMana() > Integer.parseInt(p.skillInfo.get(getName() + "mana")))){
+                    return;
+                }
+            }
         }
-        
+
         hero.getEffects().put(getName(), System.currentTimeMillis() + 300000);
     }
 

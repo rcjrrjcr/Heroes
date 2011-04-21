@@ -6,6 +6,7 @@ import java.util.logging.Level;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.*;
+import org.bukkit.util.Vector;
 
 import com.herocraftonline.dev.heroes.command.BaseCommand;
 import com.herocraftonline.dev.heroes.command.skill.Skill;
@@ -56,7 +57,7 @@ public class HPlayerListener extends PlayerListener {
         
         if(hero.getEffects().containsKey("One")){
             if(hero.getEffects().get("One") > System.currentTimeMillis()){
-                player.setVelocity(player.getVelocity().multiply(1.3));
+                player.setVelocity(player.getLocation().getDirection().multiply(1.3).setY(0));
             }
         }
     }
