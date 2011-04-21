@@ -28,9 +28,7 @@ public class SkillOne extends Skill{
         HeroClass heroClass = plugin.getClassManager().getClass(hero.toString());
         Properties p = plugin.getConfigManager().getProperties();
         
-        if(!heroClass.getSkills().contains(getName()) || 
-                !(p.getLevel(hero.getExperience()) > Integer.parseInt(p.skillInfo.get(getName() + "level")))
-                || !(hero.getMana() > Integer.parseInt(p.skillInfo.get(getName() + "mana")))){
+        if(!heroClass.getSkills().contains(getName()) || !(p.getLevel(hero.getExperience()) > Integer.parseInt(p.skillInfo.get(getName() + "level"))) || !(hero.getMana() > Integer.parseInt(p.skillInfo.get(getName() + "mana")))){
             return;
         }
         

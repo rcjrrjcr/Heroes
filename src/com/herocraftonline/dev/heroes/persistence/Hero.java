@@ -38,6 +38,7 @@ public class Hero {
         this.binds = new HashMap<Material, String[]>();
         this.party = null;
         this.invites = new HashMap<String, HeroParty>();
+        this.effects = new HashMap<String, Long>();
     }
 
     public Player getPlayer() {

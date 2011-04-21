@@ -1,6 +1,7 @@
 package com.herocraftonline.dev.heroes;
 
 import java.util.Arrays;
+import java.util.logging.Level;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
@@ -52,8 +53,9 @@ public class HPlayerListener extends PlayerListener {
     public void onPlayerMove(PlayerMoveEvent event){
         Player player = event.getPlayer();
         Hero hero = plugin.getHeroManager().getHero(player);
-        if(hero.getEffects().get("ONE") != null){
-            if(hero.getEffects().get("ONE") > System.currentTimeMillis()){
+        
+        if(hero.getEffects().containsKey("One")){
+            if(hero.getEffects().get("One") > System.currentTimeMillis()){
                 player.setVelocity(player.getVelocity().multiply(1.3));
             }
         }

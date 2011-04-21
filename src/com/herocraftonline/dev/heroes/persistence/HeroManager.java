@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
 
 import org.bukkit.entity.Player;
 import org.bukkit.util.config.Configuration;
@@ -36,6 +37,7 @@ public class HeroManager {
      * @param player
      */
     public void loadHeroFile(Player player) {
+        plugin.log(Level.INFO, "load hero");
         File playerFile = new File(playerFolder, player.getName() + ".yml"); // Setup our Players Data File.
         // Check if it already exists, if so we load the data.
         if (playerFile.exists()) {
@@ -60,6 +62,7 @@ public class HeroManager {
             // Add the Hero to the Set.
             addHero(playerHero);
         } else {
+            plugin.log(Level.INFO, "create hero");
             // Create a New Hero with the Default Setup.
             createNewHero(player);
         }
