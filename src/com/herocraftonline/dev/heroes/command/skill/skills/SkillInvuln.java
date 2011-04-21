@@ -8,16 +8,16 @@ import com.herocraftonline.dev.heroes.command.skill.Skill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 import com.herocraftonline.dev.heroes.util.Properties;
 
-public class SkillOne extends Skill{
+public class SkillInvuln extends Skill{
 
-    public SkillOne(Heroes plugin) {
+    public SkillInvuln(Heroes plugin) {
         super(plugin);
-        name = "One";
-        description = "Skill - one";
-        usage = "/one";
+        name = "Invuln";
+        description = "Skill - Invuln";
+        usage = "/Invuln";
         minArgs = 0;
         maxArgs = 0;
-        identifiers.add("one");
+        identifiers.add("invuln");
         configs.put("mana", "20");
         configs.put("level", "20");
     }
@@ -34,7 +34,9 @@ public class SkillOne extends Skill{
             return;
         }
         
-        hero.getEffects().put(getName(), System.currentTimeMillis() + 300000);
-    }
-
+        hero.getEffects().put(getName(), System.currentTimeMillis() + 10000);
+        
+    }    
+  
+    
 }
