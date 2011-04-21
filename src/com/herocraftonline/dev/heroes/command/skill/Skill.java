@@ -35,8 +35,8 @@ public abstract class Skill extends BaseCommand {
     public Material getBind() {
         return bind;
     }
-    
-    public HashMap<String, String> getConfig(){
+
+    public HashMap<String, String> getConfig() {
         return configs;
     }
 

@@ -170,8 +170,8 @@ public class ConfigManager {
         for (BaseCommand baseCommand : plugin.getCommandManager().getCommands()) {
             if (baseCommand instanceof Skill) {
                 Skill baseSkill = (Skill) baseCommand;
-                if(!baseSkill.getConfig().isEmpty()){
-                    for(String conf : baseSkill.getConfig().keySet()){
+                if (!baseSkill.getConfig().isEmpty()) {
+                    for (String conf : baseSkill.getConfig().keySet()) {
                         getProperties().skillInfo.put(baseSkill.getName() + conf, config.getString(baseSkill.getName() + "." + conf));
                     }
                 }
@@ -181,12 +181,12 @@ public class ConfigManager {
 
     private void generateSkills(Configuration config) {
         for (BaseCommand baseCommand : plugin.getCommandManager().getCommands()) {
-            if(baseCommand instanceof Skill){
+            if (baseCommand instanceof Skill) {
                 Skill baseSkill = (Skill) baseCommand;
-                if(config.getString(baseSkill.getName()) == null){
-                    if(!baseSkill.getConfig().isEmpty()){
+                if (config.getString(baseSkill.getName()) == null) {
+                    if (!baseSkill.getConfig().isEmpty()) {
                         config.setProperty(baseSkill.getName(), "");
-                        for(String conf : baseSkill.getConfig().keySet()){
+                        for (String conf : baseSkill.getConfig().keySet()) {
                             config.setProperty(baseSkill.getName() + "." + conf, baseSkill.getConfig().get(conf));
                         }
                     }

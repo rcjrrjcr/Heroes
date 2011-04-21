@@ -10,7 +10,7 @@ import com.herocraftonline.dev.heroes.command.skill.TargettedSkill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 import com.herocraftonline.dev.heroes.util.Properties;
 
-public class SkillBandages extends TargettedSkill{
+public class SkillBandages extends TargettedSkill {
 
     public SkillBandages(Heroes plugin) {
         super(plugin);
@@ -35,12 +35,12 @@ public class SkillBandages extends TargettedSkill{
             plugin.getMessager().send(player, "Sorry, that ability isn't for your class!");
             return;
         }
-        
-        if(!player.getItemInHand().equals(Material.PAPER)){
+
+        if (!player.getItemInHand().equals(Material.PAPER)) {
             return;
         }
-        
-        if(hero.getMana() >= Integer.parseInt(properties.skillInfo.get(getName() + "mana"))){
+
+        if (hero.getMana() >= Integer.parseInt(properties.skillInfo.get(getName() + "mana"))) {
             target.setHealth(target.getHealth() + 4);
         }
     }
