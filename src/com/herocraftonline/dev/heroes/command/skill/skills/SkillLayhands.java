@@ -22,6 +22,9 @@ public class SkillLayhands extends TargettedSkill {
         minArgs = 1;
         maxArgs = 1;
         identifiers.add("layhands");
+        configs.put("mana", "20");
+        configs.put("damage", "20");
+        configs.put("cooldown", "20");
     }
 
     @Override
@@ -32,7 +35,7 @@ public class SkillLayhands extends TargettedSkill {
         Properties properties = plugin.getConfigManager().getProperties();
         Map<String, Long> cooldowns = hero.getCooldowns();
         if (cooldowns.containsKey(getName())) {
-            if (cooldowns.get(getName()) - System.currentTimeMillis() >= properties.skillInfo.get(getName() + "cooldown")) {
+            if (cooldowns.get(getName()) - System.currentTimeMillis() >= Long.parseLong(properties.skillInfo.get(getName() + "cooldown"))) {
                 cooldowns.put(getName(), System.currentTimeMillis());
             } else {
                 plugin.getMessager().send(player, "Sorry, that skill is still on cooldown!");

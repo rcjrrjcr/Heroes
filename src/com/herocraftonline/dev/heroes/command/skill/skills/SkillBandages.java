@@ -20,6 +20,9 @@ public class SkillBandages extends TargettedSkill{
         minArgs = 0;
         maxArgs = 0;
         identifiers.add("cast bandage");
+        configs.put("mana", "20");
+        configs.put("health", "20");
+        configs.put("cooldown", "20");
     }
 
     @Override
@@ -37,7 +40,7 @@ public class SkillBandages extends TargettedSkill{
             return;
         }
         
-        if(hero.getMana() == properties.skillInfo.get(getName() + "mana")){
+        if(hero.getMana() >= Integer.parseInt(properties.skillInfo.get(getName() + "mana"))){
             target.setHealth(target.getHealth() + 4);
         }
     }

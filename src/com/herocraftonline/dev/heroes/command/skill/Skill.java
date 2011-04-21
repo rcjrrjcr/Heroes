@@ -13,6 +13,7 @@ public abstract class Skill extends BaseCommand {
 
     protected HashMap<Material, Integer> cost = new HashMap<Material, Integer>();
     protected Material bind;
+    protected HashMap<String, String> configs = new HashMap<String, String>();
 
     public Skill(Heroes plugin) {
         super(plugin);
@@ -33,6 +34,10 @@ public abstract class Skill extends BaseCommand {
 
     public Material getBind() {
         return bind;
+    }
+    
+    public HashMap<String, String> getConfig(){
+        return configs;
     }
 
 }

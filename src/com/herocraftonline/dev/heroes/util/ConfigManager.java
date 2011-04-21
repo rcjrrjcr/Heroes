@@ -170,21 +170,29 @@ public class ConfigManager {
         for (BaseCommand baseCommand : plugin.getCommandManager().getCommands()) {
             if (baseCommand instanceof Skill) {
                 Skill baseSkill = (Skill) baseCommand;
-                getProperties().skillInfo.put(baseSkill.getName() + "cooldown", config.getInt(baseSkill.getName() + ".cooldown", 30));
-                getProperties().skillInfo.put(baseSkill.getName() + "mana", config.getInt(baseSkill.getName() + ".mana", 30));
-                getProperties().skillInfo.put(baseSkill.getName() + "level", config.getInt(baseSkill.getName() + ".level", 30));
+                if(!baseSkill.getConfig().isEmpty()){
+                    for(String conf : baseSkill.getConfig().keySet()){
+                        getProperties().skillInfo.put(baseSkill.getName() + conf, config.getString(baseSkill.getName() + "." + conf));
+                    }
+                }
             }
         }
     }
 
     private void generateSkills(Configuration config) {
         for (BaseCommand baseCommand : plugin.getCommandManager().getCommands()) {
-            if (baseCommand instanceof Skill) {
+            if(baseCommand instanceof Skill){
                 Skill baseSkill = (Skill) baseCommand;
-                config.setProperty(baseSkill.getName() + ".cooldown", config.getInt(baseSkill.getName() + ".mana", 30));
-                config.setProperty(baseSkill.getName() + ".mana", config.getInt(baseSkill.getName() + ".mana", 30));
-                config.setProperty(baseSkill.getName() + ".level", config.getInt(baseSkill.getName() + ".level", 30));
+                if(config.getString(baseSkill.getName()) == null){
+                    if(!baseSkill.getConfig().isEmpty()){
+                        config.setProperty(baseSkill.getName(), "");
+                        for(String conf : baseSkill.getConfig().keySet()){
+                            config.setProperty(baseSkill.getName() + "." + conf, baseSkill.getConfig().get(conf));
+                        }
+                    }
+                }
             }
+
         }
         config.save();
         loadSkills(config);
