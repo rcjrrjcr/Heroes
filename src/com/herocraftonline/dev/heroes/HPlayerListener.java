@@ -8,6 +8,7 @@ import org.bukkit.event.player.*;
 
 import com.herocraftonline.dev.heroes.command.BaseCommand;
 import com.herocraftonline.dev.heroes.command.skill.Skill;
+import com.herocraftonline.dev.heroes.persistence.Hero;
 import com.herocraftonline.dev.heroes.persistence.HeroManager;
 
 public class HPlayerListener extends PlayerListener {
@@ -44,6 +45,16 @@ public class HPlayerListener extends PlayerListener {
                         }
                     }
                 }
+            }
+        }
+    }
+    
+    public void onPlayerMove(PlayerMoveEvent event){
+        Player player = event.getPlayer();
+        Hero hero = plugin.getHeroManager().getHero(player);
+        if(hero.getEffects().get("ONE") != null){
+            if(hero.getEffects().get("ONE") > System.currentTimeMillis()){
+                player.setVelocity(player.getVelocity().multiply(1.3));
             }
         }
     }
