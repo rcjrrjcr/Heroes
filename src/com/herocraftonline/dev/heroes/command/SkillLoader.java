@@ -35,6 +35,10 @@ public final class SkillLoader {
             if (mainClass != null) {
                 ClassLoader loader = URLClassLoader.newInstance(new URL[] { file.toURI().toURL() }, plugin.getClass().getClassLoader());
                 Class<?> clazz = Class.forName(mainClass, true, loader);
+                for (Class<?> subclazz : clazz.getClasses()) {
+                    System.out.println(subclazz.getName());
+                    Class.forName(subclazz.getName(), true, loader);
+                }
                 Class<? extends Skill> skillClass = clazz.asSubclass(Skill.class);
                 Constructor<? extends Skill> ctor = skillClass.getConstructor(plugin.getClass());
                 return ctor.newInstance(plugin);

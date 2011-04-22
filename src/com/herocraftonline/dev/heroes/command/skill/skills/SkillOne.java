@@ -1,6 +1,10 @@
 package com.herocraftonline.dev.heroes.command.skill.skills;
 
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event.Priority;
+import org.bukkit.event.Event.Type;
+import org.bukkit.event.player.PlayerListener;
+import org.bukkit.event.player.PlayerMoveEvent;
 
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
@@ -20,6 +24,8 @@ public class SkillOne extends Skill{
         identifiers.add("one");
         configs.put("mana", "20");
         configs.put("level", "20");
+        
+        plugin.getServer().getPluginManager().registerEvent(Type.PLAYER_MOVE, new SkillPlayerListener(), Priority.Normal, plugin);
     }
 
     @Override
@@ -38,5 +44,19 @@ public class SkillOne extends Skill{
 
         hero.getEffects().put(getName(), System.currentTimeMillis() + 300000);
     }
-
+    
+    public class SkillPlayerListener extends PlayerListener {
+        
+        public void onPlayerMove(PlayerMoveEvent event) {
+            Player player = event.getPlayer();
+            Hero hero = plugin.getHeroManager().getHero(player);
+            
+            if(hero.getEffects().containsKey("One")){
+                if(hero.getEffects().get("One") > System.currentTimeMillis()){
+                    player.setVelocity(player.getLocation().getDirection().multiply(1.3).setY(0));
+                }
+            }
+        }
+        
+    }
 }

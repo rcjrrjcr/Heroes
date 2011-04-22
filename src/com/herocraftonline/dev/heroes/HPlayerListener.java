@@ -51,6 +51,7 @@ public class HPlayerListener extends PlayerListener {
         }
     }
     
+    /*
     public void onPlayerMove(PlayerMoveEvent event){
         Player player = event.getPlayer();
         Hero hero = plugin.getHeroManager().getHero(player);
@@ -60,5 +61,5 @@ public class HPlayerListener extends PlayerListener {
                 player.setVelocity(player.getLocation().getDirection().multiply(1.3).setY(0));
             }
         }
-    }
+    }*/
 }
