@@ -6,18 +6,10 @@ import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event.Type;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityListener;
-import org.bukkit.event.player.PlayerListener;
-import org.bukkit.event.player.PlayerMoveEvent;
 
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.skill.Skill;
-import com.herocraftonline.dev.heroes.command.skill.skills.SkillOne.SkillPlayerListener;
 import com.herocraftonline.dev.heroes.persistence.Hero;
-
-import net.minecraft.server.EntityPlayer;
-import net.minecraft.server.NetServerHandler;
-import net.minecraft.server.Packet20NamedEntitySpawn;
-import net.minecraft.server.Packet29DestroyEntity;
 
 public class SkillSmoke extends Skill{
 
@@ -39,12 +31,13 @@ public class SkillSmoke extends Skill{
     @Override
     public void use(Player player, String[] args) {
         CraftPlayer player1 = (CraftPlayer)player;
-        player1.getHandle().a.b(new Packet29DestroyEntity(player1.getEntityId()));
+        //player1.getHandle().a.b(new Packet29DestroyEntity(player1.getEntityId())); // This lines erroring tut tut.
         plugin.getHeroManager().getHero(player1).getEffects().put(getName(), System.currentTimeMillis() + 10000);
     }
 
     public class SkillEntityListener extends EntityListener {
 
+        @Override
         public void onEntityDamage(EntityDamageEvent event) {
             if(event.getEntity() instanceof Player){
                 Player player = (Player) event.getEntity();
