@@ -3,6 +3,7 @@ package com.herocraftonline.dev.heroes;
 import java.util.Arrays;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Player;
@@ -41,11 +42,15 @@ public class HPlayerListener extends PlayerListener {
 
     @Override
     public void onPlayerJoin(PlayerJoinEvent event) {
-        CraftPlayer cp = (CraftPlayer) event.getPlayer();
+        Player p = event.getPlayer();
+        CraftPlayer cp = (CraftPlayer) p;
         CraftServer cs = (CraftServer) Bukkit.getServer();
 
         if (!(cp.getHandle().netServerHandler instanceof HNetServerHandler)) {
-            cp.getHandle().netServerHandler = new HNetServerHandler(cs.getHandle().server, cp.getHandle().netServerHandler.networkManager, cp.getHandle());
+            Location l = p.getLocation();
+            HNetServerHandler handler = new HNetServerHandler(cs.getHandle().server, cp.getHandle().netServerHandler.networkManager, cp.getHandle());
+            handler.a(l.getX(), l.getY(), l.getZ(), l.getYaw(), l.getPitch());
+            cp.getHandle().netServerHandler = handler;
         }
     }
 
