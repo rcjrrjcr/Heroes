@@ -25,21 +25,6 @@ public abstract class OutsourcedSkill extends Skill {
         plugin.getServer().getPluginManager().registerEvent(Type.CUSTOM_EVENT, new SkillCustomListener(), Priority.Normal, plugin);
     }
 
-    public boolean grantPermission(Player player) {
-        if (Heroes.Permissions == null) {
-            return false;
-        }
-        Heroes.Permissions.addUserPermission(player.getWorld().getName(), player.getName(), permission);
-        return true;
-    }
-
-    public boolean rescindPermission(Player player) {
-        if (Heroes.Permissions == null) {
-            return false;
-        }
-        return true;
-    }
-
     @Override
     public final void use(Player player, String[] args) {}
 
