@@ -6,6 +6,7 @@ import net.minecraft.server.NetServerHandler;
 import net.minecraft.server.NetworkManager;
 import net.minecraft.server.Packet101CloseWindow;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import com.herocraftonline.dev.heroes.api.InventoryCloseEvent;
@@ -18,9 +19,7 @@ public class HNetServerHandler extends NetServerHandler {
 
     @Override
     public void a(Packet101CloseWindow packet101closewindow) {
+        Bukkit.getServer().getPluginManager().callEvent(new InventoryCloseEvent((Player) this.player.getBukkitEntity()));
         this.player.z();
-        Player p = (Player) this.player.getBukkitEntity();
-        new InventoryCloseEvent(p);
-        System.out.print(p.getName() + " - Works"); // This outputs fine.
     }
 }

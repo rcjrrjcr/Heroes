@@ -22,19 +22,13 @@ public class HCustomEventListener extends CustomEventListener {
 
     @Override
     public void onCustomEvent(Event event) {
-        System.out.print(event.getEventName() + " - just fired"); // Nothing appears.
         /*
          * Handle Inventory Rules
          */
         if (event instanceof InventoryCloseEvent) {
             Player player = ((InventoryCloseEvent) event).getPlayer();
-            System.out.print("This doesn't"); // No output at all.
-            System.out.print(player.getName() + " closed their inventory");
             // Check the Armor slots for armor they are not allowed to wear, unequip it and place in inventory
             // if inventory is full drop the item to the ground for them to sort out.
-        }
-        if (event.getEventName().equalsIgnoreCase("InventoryCloseEvent")) {
-            System.out.print("Sigh"); // Same here.
         }
         /*
          * Handle Block Experience
