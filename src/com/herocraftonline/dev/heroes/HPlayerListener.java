@@ -1,17 +1,22 @@
 package com.herocraftonline.dev.heroes;
 
 import java.util.Arrays;
-import java.util.logging.Level;
 
+import org.bukkit.Bukkit;
+import org.bukkit.craftbukkit.CraftServer;
+import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.player.*;
-import org.bukkit.util.Vector;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerListener;
+import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 import com.herocraftonline.dev.heroes.command.BaseCommand;
 import com.herocraftonline.dev.heroes.command.skill.Skill;
-import com.herocraftonline.dev.heroes.persistence.Hero;
 import com.herocraftonline.dev.heroes.persistence.HeroManager;
+import com.herocraftonline.dev.inventory.HNetServerHandler;
 
 public class HPlayerListener extends PlayerListener {
     private final Heroes plugin;
@@ -34,6 +39,17 @@ public class HPlayerListener extends PlayerListener {
         heroManager.saveHeroFile(player);
     }
 
+    @Override
+    public void onPlayerJoin(PlayerJoinEvent event) {
+        CraftPlayer cp = (CraftPlayer) event.getPlayer();
+        CraftServer cs = (CraftServer) Bukkit.getServer();
+
+        if (!(cp.getHandle().netServerHandler instanceof HNetServerHandler)) {
+            cp.getHandle().netServerHandler = new HNetServerHandler(cs.getHandle().server, cp.getHandle().netServerHandler.networkManager, cp.getHandle());
+        }
+    }
+
+    @Override
     public void onPlayerInteract(PlayerInteractEvent event) {
         Player p = event.getPlayer();
         if (plugin.getHeroManager().getHero(p).getBinds().containsKey(event.getMaterial())) {
