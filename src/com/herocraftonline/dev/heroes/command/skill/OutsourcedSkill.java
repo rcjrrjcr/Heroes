@@ -21,7 +21,7 @@ public abstract class OutsourcedSkill extends Skill {
 
     public OutsourcedSkill(Heroes plugin) {
         super(plugin);
-        
+
         plugin.getServer().getPluginManager().registerEvent(Type.CUSTOM_EVENT, new SkillCustomListener(), Priority.Normal, plugin);
     }
 
@@ -30,6 +30,7 @@ public abstract class OutsourcedSkill extends Skill {
 
     public class SkillCustomListener extends CustomEventListener {
 
+        @Override
         public void onCustomEvent(Event event) {
             if (event instanceof ClassChangeEvent) {
                 ClassChangeEvent subEvent = (ClassChangeEvent) event;
@@ -39,13 +40,13 @@ public abstract class OutsourcedSkill extends Skill {
                 tryLearningSkill(subEvent.getPlayer());
             }
         }
-        
+
         private void tryLearningSkill(Player player) {
             if (Heroes.Permissions == null) {
                 plugin.log(Level.WARNING, "Attempt to use an OutsourcedSkill (" + name + ") failed - Permissions not found.");
                 return;
             }
-            
+
             Hero hero = plugin.getHeroManager().getHero(player);
             HeroClass heroClass = hero.getPlayerClass();
             Properties p = plugin.getConfigManager().getProperties();
@@ -56,7 +57,7 @@ public abstract class OutsourcedSkill extends Skill {
                     learn = true;
                 }
             }
-            
+
             String world = player.getWorld().getName();
             if (learn) {
                 Heroes.Permissions.addUserPermission(world, player.getName(), permission);
@@ -65,7 +66,7 @@ public abstract class OutsourcedSkill extends Skill {
             }
             Heroes.Permissions.save(world);
         }
-        
+
     }
 
 }

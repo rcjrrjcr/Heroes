@@ -2,22 +2,36 @@ package com.herocraftonline.dev.heroes;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.logging.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import org.bukkit.command.*;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event.*;
-import org.bukkit.plugin.*;
+import org.bukkit.event.Event.Priority;
+import org.bukkit.event.Event.Type;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.herocraftonline.dev.heroes.classes.ClassManager;
 import com.herocraftonline.dev.heroes.command.CommandManager;
 import com.herocraftonline.dev.heroes.command.SkillLoader;
-import com.herocraftonline.dev.heroes.command.commands.*;
-import com.herocraftonline.dev.heroes.command.skill.*;
+import com.herocraftonline.dev.heroes.command.commands.ConfigReloadCommand;
+import com.herocraftonline.dev.heroes.command.commands.PartyAcceptCommand;
+import com.herocraftonline.dev.heroes.command.commands.PartyChatCommand;
+import com.herocraftonline.dev.heroes.command.commands.PartyCreateCommand;
+import com.herocraftonline.dev.heroes.command.commands.PartyInviteCommand;
+import com.herocraftonline.dev.heroes.command.commands.SelectProfessionCommand;
+import com.herocraftonline.dev.heroes.command.commands.SelectSpecialtyCommand;
+import com.herocraftonline.dev.heroes.command.commands.UpdateCommand;
+import com.herocraftonline.dev.heroes.command.skill.Skill;
 import com.herocraftonline.dev.heroes.party.PartyManager;
-import com.herocraftonline.dev.heroes.persistence.*;
-import com.herocraftonline.dev.heroes.util.*;
+import com.herocraftonline.dev.heroes.persistence.Hero;
+import com.herocraftonline.dev.heroes.persistence.HeroManager;
+import com.herocraftonline.dev.heroes.util.ConfigManager;
+import com.herocraftonline.dev.heroes.util.DebugLog;
+import com.herocraftonline.dev.heroes.util.Messaging;
 import com.nijiko.coelho.iConomy.iConomy;
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
@@ -93,6 +107,7 @@ public class Heroes extends JavaPlugin {
 
         // Start mana regen
         getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
+            @Override
             public void run() {
                 for (Hero hero : getHeroManager().getHeroes()) {
                     if (hero.getMana() < 100) {
@@ -144,6 +159,7 @@ public class Heroes extends JavaPlugin {
         PluginManager pluginManager = getServer().getPluginManager();
         pluginManager.registerEvent(Type.PLAYER_LOGIN, playerListener, Priority.Normal, this);
         pluginManager.registerEvent(Type.PLAYER_QUIT, playerListener, Priority.Normal, this);
+        pluginManager.registerEvent(Type.PLAYER_JOIN, playerListener, Priority.Normal, this);
         //pluginManager.registerEvent(Type.PLAYER_MOVE, playerListener, Priority.Normal, this);
 
         pluginManager.registerEvent(Type.ENTITY_DAMAGE, entityListener, Priority.Normal, this);
@@ -176,9 +192,7 @@ public class Heroes extends JavaPlugin {
      * @return
      */
     public boolean checkiConomy() {
-        this.useiConomy = (iConomy != null); // Tbf this needs changing... even
-                                             // if iConomy is detected we only
-                                             // want to use it if its setup.
+        this.useiConomy = (iConomy != null); // Tbf this needs changing... even if iConomy is detected we only want to use it if its setup.
         return this.useiConomy;
     }
 
@@ -211,10 +225,8 @@ public class Heroes extends JavaPlugin {
      */
     @Override
     public void onDisable() {
-        Heroes.iConomy = null; // When it Enables again it performs the checks
-                               // anyways.
-        Heroes.Permissions = null; // When it Enables again it performs the
-                                   // checks anyways.
+        Heroes.iConomy = null; // When it Enables again it performs the checks anyways.
+        Heroes.Permissions = null; // When it Enables again it performs the checks anyways.
 
         log.info(getDescription().getName() + " version " + getDescription().getVersion() + " is disabled!");
         debugLog.close();
