@@ -27,6 +27,7 @@ public class HCustomEventListener extends CustomEventListener {
          */
         if (event instanceof InventoryCloseEvent) {
             Player player = ((InventoryCloseEvent) event).getPlayer();
+            System.out.print(player.getName() + " - closed their inventory.");
             // Check the Armor slots for armor they are not allowed to wear, unequip it and place in inventory
             // if inventory is full drop the item to the ground for them to sort out.
         }
