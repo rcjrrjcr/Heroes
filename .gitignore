@@ -2,6 +2,7 @@
 /.externalToolBuilders
 /.settings
 /.gitignore
+.project
 
 # netbeans
 /nbproject
