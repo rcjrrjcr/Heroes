@@ -16,12 +16,12 @@ public class SkillOne extends Skill {
 
     public SkillOne(Heroes plugin) {
         super(plugin);
-        name = getName();
+        name = "One";
         description = "Skill - one";
         usage = "/one";
         minArgs = 0;
         maxArgs = 0;
-        identifiers.add(getName());
+        identifiers.add("one");
         configs.put("mana", "20");
         configs.put("level", "20");
 
@@ -47,6 +47,7 @@ public class SkillOne extends Skill {
 
     public class SkillPlayerListener extends PlayerListener {
 
+        @Override
         public void onPlayerMove(PlayerMoveEvent event) {
             Player player = event.getPlayer();
             Hero hero = plugin.getHeroManager().getHero(player);

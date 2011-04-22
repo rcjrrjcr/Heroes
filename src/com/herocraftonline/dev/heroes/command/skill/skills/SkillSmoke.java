@@ -24,8 +24,7 @@ public class SkillSmoke extends Skill{
         configs.put("mana", "20");
         configs.put("level", "20");
 
-        plugin.getServer().getPluginManager().registerEvent(Type.PLAYER_MOVE, new SkillEntityListener(), Priority.Normal, plugin);
-
+        plugin.getServer().getPluginManager().registerEvent(Type.ENTITY_DAMAGE, new SkillEntityListener(), Priority.Normal, plugin);
     }
 
     @Override

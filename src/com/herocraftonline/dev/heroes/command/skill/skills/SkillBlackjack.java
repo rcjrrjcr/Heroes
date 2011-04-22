@@ -16,12 +16,12 @@ public class SkillBlackjack extends Skill {
     // TODO: Register this command in Heroes
     public SkillBlackjack(Heroes plugin) {
         super(plugin);
-        name = getName();
+        name = "Blackjack";
         description = "Skill - blackjack";
         usage = "/blackjack";
         minArgs = 0;
         maxArgs = 0;
-        identifiers.add(getName());
+        identifiers.add("blackjack");
     }
 
     @Override
