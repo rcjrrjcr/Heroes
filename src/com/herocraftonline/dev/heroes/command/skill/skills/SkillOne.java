@@ -16,12 +16,12 @@ public class SkillOne extends Skill {
 
     public SkillOne(Heroes plugin) {
         super(plugin);
-        name = "One";
+        name = getName();
         description = "Skill - one";
         usage = "/one";
         minArgs = 0;
         maxArgs = 0;
-        identifiers.add("one");
+        identifiers.add(getName());
         configs.put("mana", "20");
         configs.put("level", "20");
 
@@ -51,8 +51,8 @@ public class SkillOne extends Skill {
             Player player = event.getPlayer();
             Hero hero = plugin.getHeroManager().getHero(player);
 
-            if (hero.getEffects().containsKey("One")) {
-                if (hero.getEffects().get("One") > System.currentTimeMillis()) {
+            if (hero.getEffects().containsKey(getName())) {
+                if (hero.getEffects().get(getName()) > System.currentTimeMillis()) {
                     player.setVelocity(player.getLocation().getDirection().multiply(1.3).setY(0));
                 }
             }

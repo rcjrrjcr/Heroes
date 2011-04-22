@@ -1,22 +1,17 @@
 package com.herocraftonline.dev.heroes;
 
 import java.util.Arrays;
+import java.util.logging.Level;
 
-import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.CraftServer;
-import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerListener;
-import org.bukkit.event.player.PlayerLoginEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.*;
+import org.bukkit.util.Vector;
 
 import com.herocraftonline.dev.heroes.command.BaseCommand;
 import com.herocraftonline.dev.heroes.command.skill.Skill;
+import com.herocraftonline.dev.heroes.persistence.Hero;
 import com.herocraftonline.dev.heroes.persistence.HeroManager;
-import com.herocraftonline.dev.inventory.HNetServerHandler;
 
 public class HPlayerListener extends PlayerListener {
     private final Heroes plugin;
@@ -30,17 +25,6 @@ public class HPlayerListener extends PlayerListener {
         Player player = event.getPlayer();
         HeroManager heroManager = plugin.getHeroManager();
         heroManager.loadHeroFile(player);
-
-    }
-
-    @Override
-    public void onPlayerJoin(PlayerJoinEvent event) {
-        CraftPlayer cp = (CraftPlayer) event.getPlayer();
-        CraftServer cs = (CraftServer) Bukkit.getServer();
-
-        if (!(cp.getHandle().netServerHandler instanceof HNetServerHandler)) {
-            cp.getHandle().netServerHandler = new HNetServerHandler(cs.getHandle().server, cp.getHandle().netServerHandler.networkManager, cp.getHandle());
-        }
     }
 
     @Override
@@ -50,7 +34,6 @@ public class HPlayerListener extends PlayerListener {
         heroManager.saveHeroFile(player);
     }
 
-    @Override
     public void onPlayerInteract(PlayerInteractEvent event) {
         Player p = event.getPlayer();
         if (plugin.getHeroManager().getHero(p).getBinds().containsKey(event.getMaterial())) {
@@ -67,17 +50,4 @@ public class HPlayerListener extends PlayerListener {
             }
         }
     }
-
-    /*
-     * public void onPlayerMove(PlayerMoveEvent event){
-     * Player player = event.getPlayer();
-     * Hero hero = plugin.getHeroManager().getHero(player);
-     * 
-     * if(hero.getEffects().containsKey("One")){
-     * if(hero.getEffects().get("One") > System.currentTimeMillis()){
-     * player.setVelocity(player.getLocation().getDirection().multiply(1.3).setY(0));
-     * }
-     * }
-     * }
-     */
 }
