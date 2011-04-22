@@ -7,6 +7,7 @@ import org.bukkit.event.CustomEventListener;
 import org.bukkit.event.Event;
 
 import com.herocraftonline.dev.heroes.api.BlockBreakExperienceEvent;
+import com.herocraftonline.dev.heroes.api.InventoryCloseEvent;
 import com.herocraftonline.dev.heroes.api.KillExperienceEvent;
 import com.herocraftonline.dev.heroes.api.LevelEvent;
 import com.herocraftonline.dev.heroes.persistence.Hero;
@@ -19,7 +20,25 @@ public class HCustomEventListener extends CustomEventListener {
         this.plugin = plugin;
     }
 
+    @Override
     public void onCustomEvent(Event event) {
+        System.out.print(event.getEventName() + " - just fired"); // Nothing appears.
+        /*
+         * Handle Inventory Rules
+         */
+        if (event instanceof InventoryCloseEvent) {
+            Player player = ((InventoryCloseEvent) event).getPlayer();
+            System.out.print("This doesn't"); // No output at all.
+            System.out.print(player.getName() + " closed their inventory");
+            // Check the Armor slots for armor they are not allowed to wear, unequip it and place in inventory
+            // if inventory is full drop the item to the ground for them to sort out.
+        }
+        if (event.getEventName().equalsIgnoreCase("InventoryCloseEvent")) {
+            System.out.print("Sigh"); // Same here.
+        }
+        /*
+         * Handle Block Experience
+         */
         if (event instanceof BlockBreakExperienceEvent) {
             BlockBreakExperienceEvent e = (BlockBreakExperienceEvent) event;
             Properties prop = plugin.getConfigManager().getProperties();
@@ -44,6 +63,9 @@ public class HCustomEventListener extends CustomEventListener {
                 e.getPlayer().sendMessage(ChatColor.RED + "You just reached level" + ChatColor.BLUE + prop.getLevel(eLevel));
             }
         }
+        /*
+         * Handle Killing Experience
+         */
         if (event instanceof KillExperienceEvent) {
             KillExperienceEvent e = (KillExperienceEvent) event;
             Properties prop = plugin.getConfigManager().getProperties();

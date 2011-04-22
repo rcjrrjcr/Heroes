@@ -56,6 +56,7 @@ public class Heroes extends JavaPlugin {
     private final HPluginListener pluginListener = new HPluginListener(this);
     private final HEntityListener entityListener = new HEntityListener(this);
     private final HBlockListener blockListener = new HBlockListener(this);
+    private final HCustomEventListener customListener = new HCustomEventListener(this);
 
     // Various data managers
     private ConfigManager configManager;
@@ -169,6 +170,7 @@ public class Heroes extends JavaPlugin {
         pluginManager.registerEvent(Type.BLOCK_BREAK, blockListener, Priority.Normal, this);
 
         pluginManager.registerEvent(Type.PLUGIN_ENABLE, pluginListener, Priority.Monitor, this);
+        pluginManager.registerEvent(Type.CUSTOM_EVENT, customListener, Priority.Normal, this);
     }
 
     /**
