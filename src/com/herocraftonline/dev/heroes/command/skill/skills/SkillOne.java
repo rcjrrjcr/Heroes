@@ -12,7 +12,7 @@ import com.herocraftonline.dev.heroes.command.skill.Skill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 import com.herocraftonline.dev.heroes.util.Properties;
 
-public class SkillOne extends Skill{
+public class SkillOne extends Skill {
 
     public SkillOne(Heroes plugin) {
         super(plugin);
@@ -24,7 +24,7 @@ public class SkillOne extends Skill{
         identifiers.add("one");
         configs.put("mana", "20");
         configs.put("level", "20");
-        
+
         plugin.getServer().getPluginManager().registerEvent(Type.PLAYER_MOVE, new SkillPlayerListener(), Priority.Normal, plugin);
     }
 
@@ -34,9 +34,9 @@ public class SkillOne extends Skill{
         HeroClass heroClass = hero.getPlayerClass();
         Properties p = plugin.getConfigManager().getProperties();
 
-        if(!heroClass.getSkills().contains(getName())){
-            if(!(p.getLevel(hero.getExperience()) > Integer.parseInt(p.skillInfo.get(getName() + "level")))){
-                if(!(hero.getMana() > Integer.parseInt(p.skillInfo.get(getName() + "mana")))){
+        if (!heroClass.getSkills().contains(getName())) {
+            if (!(p.getLevel(hero.getExperience()) > Integer.parseInt(p.skillInfo.get(getName() + "level")))) {
+                if (!(hero.getMana() > Integer.parseInt(p.skillInfo.get(getName() + "mana")))) {
                     return;
                 }
             }
@@ -44,19 +44,19 @@ public class SkillOne extends Skill{
 
         hero.getEffects().put(getName(), System.currentTimeMillis() + 300000);
     }
-    
+
     public class SkillPlayerListener extends PlayerListener {
-        
+
         public void onPlayerMove(PlayerMoveEvent event) {
             Player player = event.getPlayer();
             Hero hero = plugin.getHeroManager().getHero(player);
-            
-            if(hero.getEffects().containsKey("One")){
-                if(hero.getEffects().get("One") > System.currentTimeMillis()){
+
+            if (hero.getEffects().containsKey("One")) {
+                if (hero.getEffects().get("One") > System.currentTimeMillis()) {
                     player.setVelocity(player.getLocation().getDirection().multiply(1.3).setY(0));
                 }
             }
         }
-        
+
     }
 }

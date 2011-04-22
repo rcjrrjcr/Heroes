@@ -1,7 +1,6 @@
 package com.herocraftonline.dev.heroes.classes;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class HeroClass {
@@ -20,9 +19,6 @@ public class HeroClass {
         GOLD,
         DIAMOND
     }
-
-    // TODO: We need to convert this into something we can add to at runtime (for skillLoader)
-    public List<String> Skills;
 
     public static enum ExperienceType {
         KILLING,
