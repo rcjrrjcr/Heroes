@@ -16,12 +16,12 @@ public class SkillBlackjack extends Skill {
     // TODO: Register this command in Heroes
     public SkillBlackjack(Heroes plugin) {
         super(plugin);
-        name = "Blackjack";
+        name = getName();
         description = "Skill - blackjack";
         usage = "/blackjack";
         minArgs = 0;
         maxArgs = 0;
-        identifiers.add("blackjack");
+        identifiers.add(getName());
     }
 
     @Override
@@ -30,7 +30,7 @@ public class SkillBlackjack extends Skill {
             Hero hero = plugin.getHeroManager().getHero((Player) sender);
             HeroClass heroClass = plugin.getClassManager().getClass(hero.toString());
 
-            if (!(heroClass.getSkills().contains("BLACKJACK"))) {
+            if (!(heroClass.getSkills().contains(getName()))) {
                 plugin.getMessager().send(sender, "Sorry, that ability isn't for your class!");
                 return;
             }
@@ -46,11 +46,11 @@ public class SkillBlackjack extends Skill {
                 }
             }
 
-            if (!(hero.getEffects().containsKey("blackjack"))) {
-                hero.getEffects().put("blackjack", System.currentTimeMillis());
+            if (!(hero.getEffects().containsKey(getName()))) {
+                hero.getEffects().put(getName(), System.currentTimeMillis());
             } else {
-                if (hero.getEffects().get("blackjack") > 60000) {
-                    hero.getEffects().put("blackjack", System.currentTimeMillis());
+                if (hero.getEffects().get(getName()) > 60000) {
+                    hero.getEffects().put(getName(), System.currentTimeMillis());
                 }
             }
         }
@@ -62,7 +62,7 @@ public class SkillBlackjack extends Skill {
         HeroClass heroClass = plugin.getClassManager().getClass(hero.toString());
 
         // TODO: Check for CD time left, if 0 execute.
-        if (!(heroClass.getSkills().contains("BLACKJACK"))) {
+        if (!(heroClass.getSkills().contains(getName()))) {
             plugin.getMessager().send(player, "Sorry, that ability isn't for your class!");
             return;
         }
@@ -78,11 +78,11 @@ public class SkillBlackjack extends Skill {
             }
         }
 
-        if (!(hero.getEffects().containsKey("blackjack"))) {
-            hero.getEffects().put("blackjack", System.currentTimeMillis());
+        if (!(hero.getEffects().containsKey(getName()))) {
+            hero.getEffects().put(getName(), System.currentTimeMillis());
         } else {
-            if (hero.getEffects().get("blackjack") > 60000) {
-                hero.getEffects().put("blackjack", System.currentTimeMillis());
+            if (hero.getEffects().get(getName()) > 60000) {
+                hero.getEffects().put(getName(), System.currentTimeMillis());
             }
         }
     }

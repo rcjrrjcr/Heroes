@@ -130,7 +130,7 @@ public class HEntityListener extends EntityListener {
             }
         }
         if (defender instanceof Player) {
-            if (plugin.getHeroManager().getHero((Player) defender).getEffects().get("bladegrasp") != null) {
+            if (plugin.getHeroManager().getHero((Player) defender).getEffects().get("Bladegrasp") != null) {
                 if (event.getCause() == DamageCause.ENTITY_ATTACK || event.getCause() == DamageCause.ENTITY_EXPLOSION) {
                     event.setCancelled(true);
                 }

@@ -50,16 +50,4 @@ public class HPlayerListener extends PlayerListener {
             }
         }
     }
-    
-    /*
-    public void onPlayerMove(PlayerMoveEvent event){
-        Player player = event.getPlayer();
-        Hero hero = plugin.getHeroManager().getHero(player);
-        
-        if(hero.getEffects().containsKey("One")){
-            if(hero.getEffects().get("One") > System.currentTimeMillis()){
-                player.setVelocity(player.getLocation().getDirection().multiply(1.3).setY(0));
-            }
-        }
-    }*/
 }
