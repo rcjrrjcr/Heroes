@@ -8,6 +8,7 @@ import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
 
 import com.herocraftonline.dev.heroes.classes.HeroClass;
+import com.herocraftonline.dev.heroes.classes.HeroClass.WeaponItems;
 import com.herocraftonline.dev.heroes.inventory.InventoryChangeEvent;
 import com.herocraftonline.dev.heroes.inventory.InventoryCloseEvent;
 import com.herocraftonline.dev.heroes.persistence.Hero;
@@ -31,7 +32,8 @@ public class HCustomEventListener extends CustomEventListener {
             InventoryChangeEvent e = (InventoryChangeEvent) event;
             Player p = e.getPlayer();
 
-            // ItemStack slot = e.getSlot();
+            @SuppressWarnings("unused")
+            ItemStack slot = e.getSlot();
             ItemStack cursor = e.getCursor();
             int slotNumber = e.getSlotNumber();
 
@@ -52,8 +54,6 @@ public class HCustomEventListener extends CustomEventListener {
                 String item = cursor.getType().toString();
                 // System.out.print(item);
                 if (!(clazz.getAllowedArmor().contains(item))) {
-                    // System.out.print("Player cannot wear armor");
-                    // TODO: Alert the player of the restriction.
                     plugin.getMessager().send(p, "You cannot equip that! - $1", item);
                     e.setCancelled(true);
                     return;
@@ -63,11 +63,27 @@ public class HCustomEventListener extends CustomEventListener {
             if (slotNumber >= 36 && slotNumber <= 44) {
                 // Slots 36->44 are the Hotbar Slots.
                 // System.out.print("HotBar Slot - Slot = " + slot.getType() + " Cursor = " + cursor.getType());
+
                 String item = cursor.getType().toString();
-                // System.out.print(item);
+                //System.out.print(item);
+
+                // If it doesn't contain a _ then it definitely isn't a Weapon.
+                if(!(item.contains("_"))){ return; }
+
+                // Perform a check to see if what we have is a Weapon.
+                @SuppressWarnings("unused")
+                WeaponItems itemCheck = null;
+                try{
+                    // Get the value of the item.
+                    itemCheck = WeaponItems.valueOf(item.substring(item.indexOf("_")+1, item.length()));
+                } catch (IllegalArgumentException e1) {
+                    // If it isn't a Weapon then we exit out here.
+                    return;
+                }
+                //System.out.print(itemCheck);
+
+                // Check if the Players HeroClass allows this WEAPON to be equipped.
                 if (!(clazz.getAllowedWeapons().contains(item))) {
-                    // System.out.print("Player cannot equip weapon");
-                    // TODO: Alert the player of the restriction.
                     plugin.getMessager().send(p, "You cannot equip that! - $1", item);
                     e.setCancelled(true);
                     return;
