@@ -29,20 +29,20 @@ public class HeroClass {
 
     private String name;
     private HeroClass parent;
-    private ArmorType armorType;
     private boolean tameWolves;
     private int tameMax;
     private boolean summonCreatures;
     private int summonMax;
-    private WeaponType weaponType;
+    private Set<ArmorType> armorType;
+    private Set<WeaponType> weaponType;
     private Set<ExperienceType> experienceSources;
     private Set<String> skills;
     private Set<HeroClass> specializations;
 
     public HeroClass() {
         name = new String();
-        armorType = ArmorType.LEATHER;
-        weaponType = WeaponType.WOOD;
+        armorType.add(ArmorType.LEATHER);
+        weaponType.add(WeaponType.WOOD);
         experienceSources = new HashSet<ExperienceType>();
         specializations = new HashSet<HeroClass>();
         skills = new HashSet<String>();
@@ -83,20 +83,28 @@ public class HeroClass {
         this.name = name;
     }
 
-    public ArmorType getArmorType() {
+    public Set<ArmorType> getArmorType() {
         return armorType;
     }
 
-    public void setArmorType(ArmorType armor) {
-        this.armorType = armor;
+    public void addArmorType(ArmorType armor) {
+        this.armorType.add(armor);
     }
 
-    public WeaponType getWeaponType() {
+    public void removeArmorType(ArmorType armor) {
+        this.armorType.remove(armor);
+    }
+
+    public Set<WeaponType> getWeaponType() {
         return weaponType;
     }
 
-    public void setWeaponType(WeaponType weapon) {
-        this.weaponType = weapon;
+    public void addWeaponType(WeaponType weapon) {
+        this.weaponType.add(weapon);
+    }
+
+    public void removeWeaponType(WeaponType weapon) {
+        this.weaponType.remove(weapon);
     }
 
     public HeroClass getParent() {

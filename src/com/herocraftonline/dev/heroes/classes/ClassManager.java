@@ -1,6 +1,7 @@
 package com.herocraftonline.dev.heroes.classes;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -52,20 +53,27 @@ public class ClassManager {
         for (String className : classNames) {
             HeroClass newClass = new HeroClass(className);
 
-            String armor = config.getString("classes." + className + ".permitted-armor", "DIAMOND");
-            try {
-                newClass.setArmorType(ArmorType.valueOf(armor));
-            } catch (IllegalArgumentException e) {
-                plugin.log(Level.WARNING, "Invalid armor type (" + armor + ") defined for " + className + ". Using default armor type instead.");
-                newClass.setArmorType(ArmorType.DIAMOND);
+            List<String> defaultType = new ArrayList<String>();
+            defaultType.add("DIAMOND");
+
+            List<String> armor = config.getStringList("classes." + className + ".permitted-armor", defaultType);
+            for (String type : armor) {
+                try {
+                    newClass.addArmorType(ArmorType.valueOf(type));
+                } catch (IllegalArgumentException e) {
+                    plugin.log(Level.WARNING, "Invalid armor type (" + armor + ") defined for " + className + ". Using default armor type instead.");
+                    newClass.addArmorType(ArmorType.DIAMOND);
+                }
             }
 
-            String weapon = config.getString("classes." + className + ".permitted-weapon", "DIAMOND");
-            try {
-                newClass.setWeaponType(WeaponType.valueOf(weapon));
-            } catch (IllegalArgumentException e) {
-                plugin.log(Level.WARNING, "Invalid weapon type (" + weapon + ") defined for " + className + ". Using default weapon type instead.");
-                newClass.setWeaponType(WeaponType.DIAMOND);
+            List<String> weapon = config.getStringList("classes." + className + ".permitted-weapon", defaultType);
+            for (String type : weapon) {
+                try {
+                    newClass.addWeaponType(WeaponType.valueOf(type));
+                } catch (IllegalArgumentException e) {
+                    plugin.log(Level.WARNING, "Invalid weapon type (" + weapon + ") defined for " + className + ". Using default weapon type instead.");
+                    newClass.addWeaponType(WeaponType.DIAMOND);
+                }
             }
 
             List<String> skillNames = config.getStringList("classes." + className + ".permitted-skill", null);
