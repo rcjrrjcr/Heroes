@@ -16,8 +16,8 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import com.herocraftonline.dev.heroes.command.BaseCommand;
 import com.herocraftonline.dev.heroes.command.skill.Skill;
+import com.herocraftonline.dev.heroes.inventory.HNetServerHandler;
 import com.herocraftonline.dev.heroes.persistence.HeroManager;
-import com.herocraftonline.dev.inventory.HNetServerHandler;
 
 public class HPlayerListener extends PlayerListener {
     private final Heroes plugin;
