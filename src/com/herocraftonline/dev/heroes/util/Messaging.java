@@ -1,12 +1,17 @@
 package com.herocraftonline.dev.heroes.util;
 
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import com.herocraftonline.dev.heroes.Heroes;
 
 public class Messaging {
 
     public void send(CommandSender player, String msg, String... params) {
+        player.sendMessage(parameterizeMessage(msg, params));
+    }
+
+    public void send(Player player, String msg, String... params) {
         player.sendMessage(parameterizeMessage(msg, params));
     }
 
