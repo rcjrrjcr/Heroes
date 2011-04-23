@@ -2,8 +2,8 @@ classes:
     Warrior:
         default: true
         summon-max: 0
-        permitted-armor: [LEATHER]
-        permitted-weapon: [WOOD, IRON]
+        permitted-armor: [LEATHER, DIAMOND_CHESTPLATE, GOLD_BOOTS]
+        permitted-weapon: [WOOD, GOLD, DIAMOND_PICKAXE, IRON_AXE, IRON_SPADE]
         permitted-skills: [JUMP]
         experience-sources: [KILLING]
     Rogue:
@@ -26,4 +26,4 @@ classes:
         permitted-armor: [IRON]
         permitted-weapon: [WOOD]
         permitted-skills: [SPELL_A, SPELL_B]
-        experience-sources: [KILLING]    
+        experience-sources: [KILLING]
