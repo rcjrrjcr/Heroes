@@ -31,7 +31,6 @@ public class HPlayerListener extends PlayerListener {
         Player player = event.getPlayer();
         HeroManager heroManager = plugin.getHeroManager();
         heroManager.loadHeroFile(player);
-        this.plugin.inventoryCheck(player);
     }
 
     @Override
@@ -53,6 +52,7 @@ public class HPlayerListener extends PlayerListener {
             handler.a(l.getX(), l.getY(), l.getZ(), l.getYaw(), l.getPitch());
             cp.getHandle().netServerHandler = handler;
         }
+        this.plugin.inventoryCheck(p);
     }
 
     @Override
