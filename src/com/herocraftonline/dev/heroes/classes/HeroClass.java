@@ -41,7 +41,9 @@ public class HeroClass {
 
     public HeroClass() {
         name = new String();
+        armorType = new HashSet<ArmorType>();
         armorType.add(ArmorType.LEATHER);
+        weaponType = new HashSet<WeaponType>();
         weaponType.add(WeaponType.WOOD);
         experienceSources = new HashSet<ExperienceType>();
         specializations = new HashSet<HeroClass>();
