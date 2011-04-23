@@ -12,12 +12,27 @@ public class HeroClass {
         DIAMOND
     }
 
+    public static enum ArmorItems {
+        HELMET,
+        CHESTPLATE,
+        LEGGINGS,
+        BOOTS
+    }
+
     public static enum WeaponType {
         WOOD,
         STONE,
         IRON,
         GOLD,
         DIAMOND
+    }
+
+    public static enum WeaponItems {
+        PICKAXE,
+        AXE,
+        HOE,
+        SPADE,
+        SWORD
     }
 
     public static enum ExperienceType {
@@ -33,18 +48,16 @@ public class HeroClass {
     private int tameMax;
     private boolean summonCreatures;
     private int summonMax;
-    private Set<ArmorType> armorType;
-    private Set<WeaponType> weaponType;
+    private Set<String> allowedArmor;
+    private Set<String> allowedWeapons;
     private Set<ExperienceType> experienceSources;
     private Set<String> skills;
     private Set<HeroClass> specializations;
 
     public HeroClass() {
         name = new String();
-        armorType = new HashSet<ArmorType>();
-        armorType.add(ArmorType.LEATHER);
-        weaponType = new HashSet<WeaponType>();
-        weaponType.add(WeaponType.WOOD);
+        allowedArmor = new HashSet<String>();
+        allowedWeapons = new HashSet<String>();
         experienceSources = new HashSet<ExperienceType>();
         specializations = new HashSet<HeroClass>();
         skills = new HashSet<String>();
@@ -85,28 +98,20 @@ public class HeroClass {
         this.name = name;
     }
 
-    public Set<ArmorType> getArmorType() {
-        return armorType;
+    public Set<String> getAllowedArmor() {
+        return this.allowedArmor;
     }
 
-    public void addArmorType(ArmorType armor) {
-        this.armorType.add(armor);
+    public void addAllowedArmor(String armor) {
+        this.allowedArmor.add(armor);
     }
 
-    public void removeArmorType(ArmorType armor) {
-        this.armorType.remove(armor);
+    public Set<String> getAllowedWeapons() {
+        return this.allowedWeapons;
     }
 
-    public Set<WeaponType> getWeaponType() {
-        return weaponType;
-    }
-
-    public void addWeaponType(WeaponType weapon) {
-        this.weaponType.add(weapon);
-    }
-
-    public void removeWeaponType(WeaponType weapon) {
-        this.weaponType.remove(weapon);
+    public void addAllowedWeapon(String weapon) {
+        this.allowedWeapons.add(weapon);
     }
 
     public HeroClass getParent() {

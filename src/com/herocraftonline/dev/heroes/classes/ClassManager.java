@@ -10,8 +10,10 @@ import java.util.logging.Level;
 import org.bukkit.util.config.Configuration;
 
 import com.herocraftonline.dev.heroes.Heroes;
+import com.herocraftonline.dev.heroes.classes.HeroClass.ArmorItems;
 import com.herocraftonline.dev.heroes.classes.HeroClass.ArmorType;
 import com.herocraftonline.dev.heroes.classes.HeroClass.ExperienceType;
+import com.herocraftonline.dev.heroes.classes.HeroClass.WeaponItems;
 import com.herocraftonline.dev.heroes.classes.HeroClass.WeaponType;
 
 public class ClassManager {
@@ -57,22 +59,55 @@ public class ClassManager {
             defaultType.add("DIAMOND");
 
             List<String> armor = config.getStringList("classes." + className + ".permitted-armor", defaultType);
-            for (String type : armor) {
-                try {
-                    newClass.addArmorType(ArmorType.valueOf(type));
-                } catch (IllegalArgumentException e) {
-                    plugin.log(Level.WARNING, "Invalid armor type (" + armor + ") defined for " + className + ". Using default armor type instead.");
-                    newClass.addArmorType(ArmorType.DIAMOND);
+            for (String a : armor) {
+                // If it's a generic type like 'DIAMOND' or 'LEATHER' we add all the possible entries.
+                if (!(a.contains("_"))) {
+                    try {
+                        ArmorType aType = ArmorType.valueOf(a);
+                        newClass.addAllowedArmor(aType + "_HELMET");
+                        newClass.addAllowedArmor(aType + "_CHESTPLATE");
+                        newClass.addAllowedArmor(aType + "_LEGGINGS");
+                        newClass.addAllowedArmor(aType + "_BOOTS");
+                    } catch (IllegalArgumentException e) {
+                        plugin.log(Level.WARNING, "Invalid armor type (" + a + ") defined for " + className);
+                    }
+                } else {
+                    String type = a.substring(0, a.indexOf("_"));
+                    String item = a.substring(a.indexOf("_") + 1, a.length());
+                    try {
+                        ArmorType aType = ArmorType.valueOf(type);
+                        ArmorItems aItem = ArmorItems.valueOf(item);
+                        newClass.addAllowedArmor(aType + "_" + aItem);
+                    } catch (IllegalArgumentException e) {
+                        plugin.log(Level.WARNING, "Invalid armor type (" + type + "_" + item + ") defined for " + className);
+                    }
                 }
             }
 
             List<String> weapon = config.getStringList("classes." + className + ".permitted-weapon", defaultType);
-            for (String type : weapon) {
-                try {
-                    newClass.addWeaponType(WeaponType.valueOf(type));
-                } catch (IllegalArgumentException e) {
-                    plugin.log(Level.WARNING, "Invalid weapon type (" + weapon + ") defined for " + className + ". Using default weapon type instead.");
-                    newClass.addWeaponType(WeaponType.DIAMOND);
+            for (String w : weapon) {
+                // If it's a generic type like 'DIAMOND' or 'LEATHER' we add all the possible entries.
+                if (!(w.contains("_"))) {
+                    try {
+                        WeaponType wType = WeaponType.valueOf(w);
+                        newClass.addAllowedWeapon(wType + "_PICKAXE");
+                        newClass.addAllowedWeapon(wType + "_AXE");
+                        newClass.addAllowedWeapon(wType + "_HOE");
+                        newClass.addAllowedWeapon(wType + "_SPADE");
+                        newClass.addAllowedWeapon(wType + "_SWORD");
+                    } catch (IllegalArgumentException e) {
+                        plugin.log(Level.WARNING, "Invalid weapon type (" + w + ") defined for " + className);
+                    }
+                } else {
+                    String type = w.substring(0, w.indexOf("_"));
+                    String item = w.substring(w.indexOf("_") + 1, w.length());
+                    try {
+                        WeaponType wType = WeaponType.valueOf(type);
+                        WeaponItems wItem = WeaponItems.valueOf(item);
+                        newClass.addAllowedWeapon(wType + "_" + wItem);
+                    } catch (IllegalArgumentException e) {
+                        plugin.log(Level.WARNING, "Invalid weapon type (" + type + "_" + item + ") defined for " + className);
+                    }
                 }
             }
 
