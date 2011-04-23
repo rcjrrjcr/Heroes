@@ -1,5 +1,8 @@
 package com.herocraftonline.dev.heroes.command.skill.skills;
 
+import net.minecraft.server.Packet20NamedEntitySpawn;
+import net.minecraft.server.Packet29DestroyEntity;
+
 import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event.Priority;
@@ -12,6 +15,7 @@ import com.herocraftonline.dev.heroes.command.skill.Skill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 
 public class SkillSmoke extends Skill{
+  //TODO: Cooldown
 
     public SkillSmoke(Heroes plugin) {
         super(plugin);
@@ -30,7 +34,7 @@ public class SkillSmoke extends Skill{
     @Override
     public void use(Player player, String[] args) {
         CraftPlayer player1 = (CraftPlayer)player;
-        //player1.getHandle().a.b(new Packet29DestroyEntity(player1.getEntityId())); // This lines erroring tut tut.
+        player1.getHandle().netServerHandler.a(new Packet29DestroyEntity(player1.getEntityId()));
         plugin.getHeroManager().getHero(player1).getEffects().put(getName(), System.currentTimeMillis() + 10000);
     }
 
@@ -41,11 +45,9 @@ public class SkillSmoke extends Skill{
             if(event.getEntity() instanceof Player){
                 Player player = (Player) event.getEntity();
                 Hero hero = plugin.getHeroManager().getHero(player);
-
+                CraftPlayer player1 = (CraftPlayer)player;
                 if (hero.getEffects().containsKey(getName())) {
-                    if (hero.getEffects().get(getName()) > System.currentTimeMillis()) {
-                        player.setVelocity(player.getLocation().getDirection().multiply(1.3).setY(0));
-                    }
+                    player1.getHandle().netServerHandler.a(new Packet20NamedEntitySpawn());
                 }
             }
         }

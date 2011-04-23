@@ -6,24 +6,3 @@ classes:
         permitted-weapon: [WOOD, GOLD, DIAMOND_PICKAXE, IRON_AXE, IRON_SPADE]
         permitted-skills: [JUMP]
         experience-sources: [KILLING]
-    Rogue:
-        default: false
-        summon-max: 0
-        permitted-armor: [IRON]
-        permitted-weapon: [WOOD]
-        permitted-skills: [SNEAK]
-        experience-sources: [KILLING]
-    Knight:
-        default: false
-        summon-max: 1
-        permitted-armor: [IRON]
-        permitted-weapon: [WOOD]
-        permitted-skills: [SUMMON, SPELL_B]
-        experience-sources: [KILLING]
-    Bladedancer:
-        default: false
-        summon-max: 1
-        permitted-armor: [IRON]
-        permitted-weapon: [WOOD]
-        permitted-skills: [SPELL_A, SPELL_B]
-        experience-sources: [KILLING]

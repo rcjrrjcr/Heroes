@@ -3,8 +3,10 @@ package com.herocraftonline.dev.heroes.util;
 import java.util.HashMap;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.CreatureType;
+import org.bukkit.entity.Player;
 
 public class Properties {
 
@@ -46,6 +48,7 @@ public class Properties {
     }
 
     public HashMap<String, String> skillInfo = new HashMap<String, String>();
+    public HashMap<Player, Location> playerDeaths = new HashMap<Player, Location>();
     // Default//
     public String defClass;
     public int defLevel;
@@ -54,6 +57,7 @@ public class Properties {
     public ChatColor cColor;
     public String prefix;
     public int swapcost;
+   
 
     /**
      * Generate experience for the level ArrayList<Integer>
