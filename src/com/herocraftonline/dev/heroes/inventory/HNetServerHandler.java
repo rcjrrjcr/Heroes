@@ -1,4 +1,4 @@
-package com.herocraftonline.dev.inventory;
+package com.herocraftonline.dev.heroes.inventory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,13 +15,13 @@ import net.minecraft.server.Packet106Transaction;
 import net.minecraft.server.Slot;
 
 import org.bukkit.Bukkit;
+import org.bukkit.craftbukkit.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 
-import com.herocraftonline.dev.heroes.api.InventoryChangeEvent;
-import com.herocraftonline.dev.heroes.api.InventoryCloseEvent;
 
 public class HNetServerHandler extends NetServerHandler {
 
+    @SuppressWarnings("rawtypes")
     private Map n = new HashMap();
 
     public HNetServerHandler(MinecraftServer minecraftserver, NetworkManager networkmanager, EntityPlayer entityplayer) {
@@ -34,38 +34,43 @@ public class HNetServerHandler extends NetServerHandler {
         this.player.z();
     }
 
+    @SuppressWarnings({ "deprecation", "unchecked", "rawtypes" })
     @Override
     public void a(Packet102WindowClick packet102windowclick) {
-        //System.out.print("1 - Click");
         if (this.player.activeContainer.f == packet102windowclick.a && this.player.activeContainer.c(this.player)) {
-            //System.out.print("2 - Active Container");
-            //System.out.print("Location - " + packet102windowclick.b);
-            //System.out.print(packet102windowclick.c);
-
-            int pos = packet102windowclick.b;
+            // Heroes Start
             Player p = (Player) this.player.getBukkitEntity();
-            InventoryChangeEvent event = new InventoryChangeEvent(p, pos);
+
+            ItemStack before = ItemStack.b(packet102windowclick.e);
+
+            CraftItemStack slot = null;
+            if(before != null){
+                slot = new CraftItemStack(before);
+            }
+
+            CraftItemStack cursor = null;
+            if(this.player.inventory.j() != null){
+                cursor = new CraftItemStack(this.player.inventory.j());
+            }
+
+            InventoryChangeEvent event = new InventoryChangeEvent(p, slot, cursor, packet102windowclick.b);
             Bukkit.getServer().getPluginManager().callEvent(event);
 
             if(event.isCancelled()){
                 p.updateInventory();
                 return;
             }
+            // Heroes End
 
             ItemStack itemstack = this.player.activeContainer.a(packet102windowclick.b, packet102windowclick.c, packet102windowclick.f, this.player);
 
             if (ItemStack.equals(packet102windowclick.e, itemstack)) {
-                //System.out.print("3 - Both Items are same.");
-                //System.out.print(packet102windowclick.a);
-                //System.out.print("Click Amount - " + packet102windowclick.d);
-
                 this.player.netServerHandler.sendPacket(new Packet106Transaction(packet102windowclick.a, packet102windowclick.d, true));
                 this.player.h = true;
                 this.player.activeContainer.a();
                 this.player.y();
                 this.player.h = false;
             } else {
-                System.out.print("4 - Different Items.");
                 this.n.put(Integer.valueOf(this.player.activeContainer.f), Short.valueOf(packet102windowclick.d));
                 this.player.netServerHandler.sendPacket(new Packet106Transaction(packet102windowclick.a, packet102windowclick.d, false));
                 this.player.activeContainer.a(this.player, false);
@@ -78,7 +83,6 @@ public class HNetServerHandler extends NetServerHandler {
 
                 this.player.a(this.player.activeContainer, arraylist);
             }
-            //System.out.print("---");
         }
     }
 }

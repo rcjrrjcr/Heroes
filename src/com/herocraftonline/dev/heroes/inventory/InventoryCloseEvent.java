@@ -1,4 +1,4 @@
-package com.herocraftonline.dev.heroes.api;
+package com.herocraftonline.dev.heroes.inventory;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
