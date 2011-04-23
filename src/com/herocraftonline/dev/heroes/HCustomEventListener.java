@@ -7,8 +7,12 @@ import org.bukkit.event.CustomEventListener;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
 
-import com.herocraftonline.dev.heroes.api.InventoryChangeEvent;
-import com.herocraftonline.dev.heroes.api.InventoryCloseEvent;
+import com.herocraftonline.dev.heroes.classes.HeroClass;
+import com.herocraftonline.dev.heroes.classes.HeroClass.ArmorType;
+import com.herocraftonline.dev.heroes.classes.HeroClass.WeaponType;
+import com.herocraftonline.dev.heroes.inventory.InventoryChangeEvent;
+import com.herocraftonline.dev.heroes.inventory.InventoryCloseEvent;
+import com.herocraftonline.dev.heroes.persistence.Hero;
 
 public class HCustomEventListener extends CustomEventListener {
     protected Heroes plugin;
@@ -23,23 +27,59 @@ public class HCustomEventListener extends CustomEventListener {
          * Handle Inventory Rules
          */
         if (event instanceof InventoryCloseEvent) {
-            Player player = ((InventoryCloseEvent) event).getPlayer();
-            System.out.print(player.getName() + " - closed their inventory.");
-            // Check the Armor slots for armor they are not allowed to wear, unequip it and place in inventory
-            // if inventory is full drop the item to the ground for them to sort out.
+            // hmm this is no longer needed.
         }
         if (event instanceof InventoryChangeEvent) {
             InventoryChangeEvent e = (InventoryChangeEvent) event;
             Player p = e.getPlayer();
-            int slot = e.getSlot();
 
-            ItemStack item = p.getInventory().getItem(slot);
+            //ItemStack slot = e.getSlot();
+            ItemStack cursor = e.getCursor();
+            int slotNumber = e.getSlotNumber();
 
-            System.out.print(p.getName() + " - " + slot + " - " + item.getType());
+            if (cursor.getType() == Material.AIR) {
+                return;
+            }
 
-            if(item.getType()==Material.DIAMOND_LEGGINGS){
-                System.out.print("Cancelled");
-                e.setCancelled(true);
+            Hero hero = plugin.getHeroManager().getHero(p);
+            HeroClass clazz = hero.getPlayerClass();
+
+            // The following will check the players class armor and weapon restrictions.
+            if (slotNumber == 5 || slotNumber == 6 || slotNumber == 7 || slotNumber == 8) {
+                // 5 = Helm
+                // 6 = Chest
+                // 7 = Legs
+                // 8 = Shoes
+                // System.out.print("Armor Slot - Slot = " + slot.getType() + " Cursor = " + cursor.getType());
+
+                String type = cursor.getType().toString();
+                type = type.substring(0, type.indexOf("_"));
+
+                // System.out.print(type);
+
+                if (!(clazz.getArmorType().contains(ArmorType.valueOf(type)))) {
+                    // System.out.print("Player cannot wear armor");
+                    // TODO: Alert the player of the restriction.
+                    e.setCancelled(true);
+                    return;
+                }
+            }
+
+            if (slotNumber >= 36 && slotNumber <= 44) {
+                // Slots 36->44 are the Hotbar Slots.
+                // System.out.print("HotBar Slot - Slot = " + slot.getType() + " Cursor = " + cursor.getType());
+
+                String type = cursor.getType().toString();
+                type = type.substring(0, type.indexOf("_"));
+
+                // System.out.print(type);
+
+                if (!(clazz.getWeaponType().contains(WeaponType.valueOf(type)))) {
+                    // System.out.print("Player cannot equip weapon");
+                    // TODO: Alert the player of the restriction.
+                    e.setCancelled(true);
+                    return;
+                }
             }
         }
         /*
