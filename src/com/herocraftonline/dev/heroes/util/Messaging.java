@@ -11,8 +11,16 @@ public class Messaging {
         player.sendMessage(parameterizeMessage(msg, params));
     }
 
+    public void send(CommandSender player, String msg){
+        player.sendMessage(parameterizeMessage(msg, (String[]) null));
+    }
+
     public void send(Player player, String msg, String... params) {
         player.sendMessage(parameterizeMessage(msg, params));
+    }
+
+    public void send(Player player, String msg){
+        player.sendMessage(parameterizeMessage(msg, (String[]) null));
     }
 
     public void broadcast(Heroes plugin, String msg, String... params) {
@@ -21,8 +29,10 @@ public class Messaging {
 
     private String parameterizeMessage(String msg, String... params) {
         msg = "§cHeroes: " + msg;
-        for (int i = 0; i < params.length; i++) {
-            msg = msg.replace("$" + (i + 1), "§f" + params[i] + "§c");
+        if(params!=null){
+            for (int i = 0; i < params.length; i++) {
+                msg = msg.replace("$" + (i + 1), "§f" + params[i] + "§c");
+            }
         }
         return msg;
     }
