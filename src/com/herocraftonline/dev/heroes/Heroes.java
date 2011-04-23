@@ -5,16 +5,21 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event.Type;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.herocraftonline.dev.heroes.classes.ClassManager;
+import com.herocraftonline.dev.heroes.classes.HeroClass;
+import com.herocraftonline.dev.heroes.classes.HeroClass.WeaponItems;
 import com.herocraftonline.dev.heroes.command.CommandManager;
 import com.herocraftonline.dev.heroes.command.SkillLoader;
 import com.herocraftonline.dev.heroes.command.commands.ConfigReloadCommand;
@@ -22,6 +27,7 @@ import com.herocraftonline.dev.heroes.command.commands.PartyAcceptCommand;
 import com.herocraftonline.dev.heroes.command.commands.PartyChatCommand;
 import com.herocraftonline.dev.heroes.command.commands.PartyCreateCommand;
 import com.herocraftonline.dev.heroes.command.commands.PartyInviteCommand;
+import com.herocraftonline.dev.heroes.command.commands.RecoverItemsCommand;
 import com.herocraftonline.dev.heroes.command.commands.SelectProfessionCommand;
 import com.herocraftonline.dev.heroes.command.commands.SelectSpecialtyCommand;
 import com.herocraftonline.dev.heroes.command.commands.UpdateCommand;
@@ -102,10 +108,6 @@ public class Heroes extends JavaPlugin {
         // Perform the Permissions check.
         setupPermissions();
 
-        for (Player player : getServer().getOnlinePlayers()) {
-            heroManager.loadHeroFile(player);
-        }
-
         // Start mana regen
         getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
             @Override
@@ -130,6 +132,11 @@ public class Heroes extends JavaPlugin {
             configManager.load();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+
+        for (Player player : getServer().getOnlinePlayers()) {
+            heroManager.loadHeroFile(player);
+            inventoryCheck(player);
         }
     }
 
@@ -161,7 +168,7 @@ public class Heroes extends JavaPlugin {
         pluginManager.registerEvent(Type.PLAYER_LOGIN, playerListener, Priority.Normal, this);
         pluginManager.registerEvent(Type.PLAYER_QUIT, playerListener, Priority.Normal, this);
         pluginManager.registerEvent(Type.PLAYER_JOIN, playerListener, Priority.Normal, this);
-        //pluginManager.registerEvent(Type.PLAYER_MOVE, playerListener, Priority.Normal, this);
+        // pluginManager.registerEvent(Type.PLAYER_MOVE, playerListener, Priority.Normal, this);
 
         pluginManager.registerEvent(Type.ENTITY_DAMAGE, entityListener, Priority.Normal, this);
         pluginManager.registerEvent(Type.ENTITY_DEATH, entityListener, Priority.Normal, this);
@@ -186,6 +193,7 @@ public class Heroes extends JavaPlugin {
         commandManager.addCommand(new PartyCreateCommand(this));
         commandManager.addCommand(new PartyInviteCommand(this));
         commandManager.addCommand(new PartyChatCommand(this));
+        commandManager.addCommand(new RecoverItemsCommand(this));
     }
 
     /**
@@ -227,6 +235,10 @@ public class Heroes extends JavaPlugin {
      */
     @Override
     public void onDisable() {
+        for (Player player : getServer().getOnlinePlayers()) {
+            heroManager.saveHeroFile(player);
+        }
+
         Heroes.iConomy = null; // When it Enables again it performs the checks anyways.
         Heroes.Permissions = null; // When it Enables again it performs the checks anyways.
 
@@ -289,6 +301,85 @@ public class Heroes extends JavaPlugin {
             }
         }
         log(Level.INFO, "Skills loaded: " + skNo.toString());
+    }
+
+    public void inventoryCheck(Player p) {
+        PlayerInventory inv = p.getInventory();
+        Hero h = this.heroManager.getHero(p);
+        HeroClass hc = h.getPlayerClass();
+        int count = 0;
+        if ((inv.getHelmet() != null) && (inv.getHelmet().getTypeId() != 0)) {
+            if (!(hc.getAllowedArmor().contains(inv.getHelmet().getType()))) {
+                h.addItem(inv.getHelmet().getType().toString());
+                inv.setHelmet(null);
+                count++;
+            }
+        }
+        if ((inv.getChestplate() != null) && (inv.getChestplate().getTypeId() != 0)) {
+            if (!(hc.getAllowedArmor().contains(inv.getChestplate().getType()))) {
+                h.addItem(inv.getChestplate().getType().toString());
+                inv.setChestplate(null);
+                count++;
+            }
+        }
+        if ((inv.getLeggings() != null) && (inv.getLeggings().getTypeId() != 0)) {
+            if (!(hc.getAllowedArmor().contains(inv.getLeggings().getType()))) {
+                h.addItem(inv.getLeggings().getType().toString());
+                inv.setLeggings(null);
+                count++;
+            }
+        }
+        if ((inv.getBoots() != null) && (inv.getBoots().getTypeId() != 0)) {
+            if (!(hc.getAllowedArmor().contains(inv.getBoots().getType()))) {
+                h.addItem(inv.getBoots().getType().toString());
+                inv.setBoots(null);
+                count++;
+            }
+        }
+        for (int i = 0; i < 8; i++) {
+            String item = inv.getItem(i).getType().toString();
+
+            // Perform a check to see if what we have is a Weapon.
+            @SuppressWarnings("unused")
+            WeaponItems itemCheck = null;
+            try {
+                itemCheck = WeaponItems.valueOf(item.substring(item.indexOf("_") + 1, item.length()));
+            } catch (IllegalArgumentException e1) {
+                continue;
+            }
+
+            if (!(hc.getAllowedWeapons().contains(item))) {
+                int slot = firstEmpty(p);
+                if (slot == -1) {
+                    h.addItem(item);
+                    inv.setItem(i, null);
+                    count++;
+                } else {
+                    inv.setItem(slot, new ItemStack(Material.valueOf(item), 1));
+                    inv.setItem(i, null);
+                    count++;
+                }
+            }
+        }
+        if (count > 0) {
+            getMessager().send(p, "$1 have been removed from your inventory.", count + " Items");
+            getMessager().send(p, "Please make space in your inventory then type '$1'", "/heroes recoveritems");
+        }
+    }
+
+    /**
+     * Grab the first empty INVENTORY SLOT, skips the Hotbar.
+     * @param p
+     * @return
+     */
+    public int firstEmpty(Player p) {
+        ItemStack[] inventory = p.getInventory().getContents();
+        for (int i = 9; i < inventory.length; i++) {
+            if (inventory[i] == null) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     public HeroManager getHeroManager() {

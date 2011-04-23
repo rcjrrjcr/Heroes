@@ -54,11 +54,12 @@ public class HeroManager {
 
             // Grab the Data we need.
             List<String> masteries = playerConfig.getStringList("masteries", new ArrayList<String>());
+            List<String> itemRecovery = playerConfig.getStringList("itemrecovery", new ArrayList<String>());
             int mana = playerConfig.getInt("mana", 0);
             int exp = playerConfig.getInt("experience", 0);
 
             // Create a New Hero
-            Hero playerHero = new Hero(player, playerClass, exp, mana, masteries);
+            Hero playerHero = new Hero(player, playerClass, exp, mana, masteries, itemRecovery);
             // Add the Hero to the Set.
             addHero(playerHero);
         } else {
@@ -80,13 +81,14 @@ public class HeroManager {
         playerConfig.setProperty("experience", getHero(p).getExperience());
         playerConfig.setProperty("mana", getHero(p).getMana());
         playerConfig.setProperty("masteries", getHero(p).getMasteries());
+        playerConfig.setProperty("itemrecovery", getHero(p).getItems());
         playerConfig.save();
     }
 
     public boolean createNewHero(Player player) {
         plugin.getServer().getPluginManager().callEvent(new NewPlayerEvent(player));
         // Add a new Hero with the default setup.
-        return addHero(new Hero(player, plugin.getClassManager().getDefaultClass(), 0, 0, new ArrayList<String>()));
+        return addHero(new Hero(player, plugin.getClassManager().getDefaultClass(), 0, 0, new ArrayList<String>(), new ArrayList<String>()));
     }
 
     public boolean addHero(Hero hero) {

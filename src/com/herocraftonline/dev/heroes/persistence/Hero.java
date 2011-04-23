@@ -26,19 +26,33 @@ public class Hero {
     protected Map<Material, String[]> binds;
     protected HeroParty party;
     protected Map<String, HeroParty> invites;
+    protected List<String> itemRecovery;
 
-    public Hero(Player player, HeroClass playerClass, int experience, int mana, List<String> masteries) {
+    public Hero(Player player, HeroClass playerClass, int experience, int mana, List<String> masteries, List<String> itemRecovery) {
         this.player = player;
         this.playerClass = playerClass;
         this.experience = experience;
         this.mana = mana;
         this.masteries = masteries;
+        this.itemRecovery = itemRecovery;
         this.cooldowns = new HashMap<String, Long>();
         this.summons = new HashMap<Entity, CreatureType>();
         this.binds = new HashMap<Material, String[]>();
         this.party = null;
         this.invites = new HashMap<String, HeroParty>();
         this.effects = new HashMap<String, Long>();
+    }
+
+    public void addItem(String item) {
+        this.itemRecovery.add(item);
+    }
+
+    public void setItems(List<String> items) {
+        this.itemRecovery = items;
+    }
+
+    public List<String> getItems() {
+        return this.itemRecovery;
     }
 
     public Player getPlayer() {
