@@ -9,7 +9,6 @@ import net.minecraft.server.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.NetServerHandler;
 import net.minecraft.server.NetworkManager;
-import net.minecraft.server.Packet101CloseWindow;
 import net.minecraft.server.Packet102WindowClick;
 import net.minecraft.server.Packet106Transaction;
 import net.minecraft.server.Slot;
@@ -17,7 +16,6 @@ import net.minecraft.server.Slot;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
-
 
 public class HNetServerHandler extends NetServerHandler {
 
@@ -28,11 +26,13 @@ public class HNetServerHandler extends NetServerHandler {
         super(minecraftserver, networkmanager, entityplayer);
     }
 
-    @Override
-    public void a(Packet101CloseWindow packet101closewindow) {
-        Bukkit.getServer().getPluginManager().callEvent(new InventoryCloseEvent((Player) this.player.getBukkitEntity()));
-        this.player.z();
-    }
+    // - Heroes - Better if we only change things we're going to utilize.
+    // - If we decide we need to monitor players closing their inventory then we can uncomment this.
+    // @Override
+    // public void a(Packet101CloseWindow packet101closewindow) {
+    // Bukkit.getServer().getPluginManager().callEvent(new InventoryCloseEvent((Player) this.player.getBukkitEntity()));
+    // this.player.z();
+    // }
 
     @SuppressWarnings({ "deprecation", "unchecked", "rawtypes" })
     @Override
@@ -44,19 +44,19 @@ public class HNetServerHandler extends NetServerHandler {
             ItemStack before = ItemStack.b(packet102windowclick.e);
 
             CraftItemStack slot = null;
-            if(before != null){
+            if (before != null) {
                 slot = new CraftItemStack(before);
             }
 
             CraftItemStack cursor = null;
-            if(this.player.inventory.j() != null){
+            if (this.player.inventory.j() != null) {
                 cursor = new CraftItemStack(this.player.inventory.j());
             }
 
             InventoryChangeEvent event = new InventoryChangeEvent(p, slot, cursor, packet102windowclick.b);
             Bukkit.getServer().getPluginManager().callEvent(event);
 
-            if(event.isCancelled()){
+            if (event.isCancelled()) {
                 p.updateInventory();
                 return;
             }
@@ -77,7 +77,6 @@ public class HNetServerHandler extends NetServerHandler {
                 ArrayList arraylist = new ArrayList();
 
                 for (int i = 0; i < this.player.activeContainer.e.size(); ++i) {
-                    System.out.print("5 " + i);
                     arraylist.add(((Slot) this.player.activeContainer.e.get(i)).getItem());
                 }
 
