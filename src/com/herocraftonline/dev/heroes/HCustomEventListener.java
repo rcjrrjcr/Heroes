@@ -8,8 +8,6 @@ import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
 
 import com.herocraftonline.dev.heroes.classes.HeroClass;
-import com.herocraftonline.dev.heroes.classes.HeroClass.ArmorType;
-import com.herocraftonline.dev.heroes.classes.HeroClass.WeaponType;
 import com.herocraftonline.dev.heroes.inventory.InventoryChangeEvent;
 import com.herocraftonline.dev.heroes.inventory.InventoryCloseEvent;
 import com.herocraftonline.dev.heroes.persistence.Hero;
@@ -33,7 +31,7 @@ public class HCustomEventListener extends CustomEventListener {
             InventoryChangeEvent e = (InventoryChangeEvent) event;
             Player p = e.getPlayer();
 
-            //ItemStack slot = e.getSlot();
+            // ItemStack slot = e.getSlot();
             ItemStack cursor = e.getCursor();
             int slotNumber = e.getSlotNumber();
 
@@ -51,15 +49,12 @@ public class HCustomEventListener extends CustomEventListener {
                 // 7 = Legs
                 // 8 = Shoes
                 // System.out.print("Armor Slot - Slot = " + slot.getType() + " Cursor = " + cursor.getType());
-
-                String type = cursor.getType().toString();
-                type = type.substring(0, type.indexOf("_"));
-
-                // System.out.print(type);
-
-                if (!(clazz.getArmorType().contains(ArmorType.valueOf(type)))) {
+                String item = cursor.getType().toString();
+                // System.out.print(item);
+                if (!(clazz.getAllowedArmor().contains(item))) {
                     // System.out.print("Player cannot wear armor");
                     // TODO: Alert the player of the restriction.
+                    plugin.getMessager().send(p, "You cannot equip that! - $1", item);
                     e.setCancelled(true);
                     return;
                 }
@@ -68,15 +63,12 @@ public class HCustomEventListener extends CustomEventListener {
             if (slotNumber >= 36 && slotNumber <= 44) {
                 // Slots 36->44 are the Hotbar Slots.
                 // System.out.print("HotBar Slot - Slot = " + slot.getType() + " Cursor = " + cursor.getType());
-
-                String type = cursor.getType().toString();
-                type = type.substring(0, type.indexOf("_"));
-
-                // System.out.print(type);
-
-                if (!(clazz.getWeaponType().contains(WeaponType.valueOf(type)))) {
+                String item = cursor.getType().toString();
+                // System.out.print(item);
+                if (!(clazz.getAllowedWeapons().contains(item))) {
                     // System.out.print("Player cannot equip weapon");
                     // TODO: Alert the player of the restriction.
+                    plugin.getMessager().send(p, "You cannot equip that! - $1", item);
                     e.setCancelled(true);
                     return;
                 }
