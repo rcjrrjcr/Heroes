@@ -1,7 +1,6 @@
 package com.herocraftonline.dev.heroes.command.skill.skills;
 
 import org.bukkit.Material;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event.Type;
@@ -11,7 +10,7 @@ import org.bukkit.event.entity.EntityListener;
 
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.skill.PassiveSkill;
-import com.herocraftonline.dev.heroes.command.skill.Skill;
+import com.herocraftonline.dev.heroes.persistence.Hero;
 
 public class SkillIronFist extends PassiveSkill {
 
@@ -34,7 +33,8 @@ public class SkillIronFist extends PassiveSkill {
 				EntityDamageByEntityEvent subEvent = (EntityDamageByEntityEvent) event;
 				if (subEvent.getDamager() instanceof Player) {
 					Player player = (Player) subEvent.getDamager();
-					if (plugin.getHeroManager().getHero(player).getPlayerClass().getSkills().contains(getName())) {
+					Hero hero = plugin.getHeroManager().getHero(player);
+					if (hero.getEffects().containsKey(name)) {
 						if (player.getItemInHand().getType() == Material.AIR) {
 							event.setDamage(event.getDamage() * 2);
 						}

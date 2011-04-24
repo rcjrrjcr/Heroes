@@ -13,13 +13,10 @@ import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 import com.herocraftonline.dev.heroes.Heroes;
-import com.herocraftonline.dev.heroes.classes.HeroClass;
-import com.herocraftonline.dev.heroes.command.skill.Skill;
+import com.herocraftonline.dev.heroes.command.skill.ActiveSkill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
-import com.herocraftonline.dev.heroes.util.Properties;
 
-public class SkillFireball extends Skill {
-	// TODO: Cooldown
+public class SkillFireball extends ActiveSkill {
 
 	public SkillFireball(Heroes plugin) {
 		super(plugin);
@@ -29,26 +26,12 @@ public class SkillFireball extends Skill {
 		minArgs = 0;
 		maxArgs = 0;
 		identifiers.add("fireball");
-		configs.put("mana", "20");
-		configs.put("level", "20");
-		configs.put("cooldown", "20");
-
 	}
 
 	@Override
-	public void use(Player player, String[] args) {
-		Hero hero = plugin.getHeroManager().getHero(player);
-		HeroClass heroClass = hero.getPlayerClass();
-		Properties p = plugin.getConfigManager().getProperties();
-
-		if (!heroClass.getSkills().contains(getName())) {
-			if (!(p.getLevel(hero.getExperience()) > Integer.parseInt(p.skillInfo.get(getName() + "level")))) {
-				if (!(hero.getMana() > Integer.parseInt(p.skillInfo.get(getName() + "mana")))) {
-					return;
-				}
-			}
-		}
-
+	public void use(Hero hero, String[] args) {
+		Player player = hero.getPlayer();
+		
 		List<org.bukkit.block.Block> target = player.getLineOfSight(null, 600);
 		Location playerLoc = player.getLocation();
 		double dx = target.get(0).getX() - playerLoc.getX();
@@ -67,8 +50,6 @@ public class SkillFireball extends Skill {
 		fireball.locZ = playerLoc.getZ() + vec3d.c * d8;
 
 		((CraftWorld) player.getWorld()).getHandle().a(fireball);
-
-		hero.getCooldowns().put(getName(), System.currentTimeMillis() + Long.parseLong(p.skillInfo.get(getName() + "cooldown")));
 	}
 
 	public Vec3D getLocation(Player player, float f) {

@@ -38,10 +38,10 @@ public abstract class TargettedSkill extends ActiveSkill {
         if (target == null) {
             target = player;
         }
-        use(player, target, args);
+        use(hero, target, args);
     }
 
-    public abstract void use(Player player, LivingEntity target, String[] args);
+    public abstract void use(Hero hero, LivingEntity target, String[] args);
 
     public int getMaxDistance() {
         return maxDistance;

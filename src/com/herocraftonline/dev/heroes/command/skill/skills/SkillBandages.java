@@ -5,7 +5,6 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
 import com.herocraftonline.dev.heroes.Heroes;
-import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.command.skill.TargettedSkill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 import com.herocraftonline.dev.heroes.util.Properties;
@@ -20,22 +19,13 @@ public class SkillBandages extends TargettedSkill {
         minArgs = 0;
         maxArgs = 0;
         identifiers.add("cast bandage");
-        configs.put("mana", "20");
-        configs.put("health", "20");
-        configs.put("cooldown", "20");
     }
 
     @Override
-    public void use(Player player, LivingEntity target, String[] args) {
-        Hero hero = plugin.getHeroManager().getHero(player);
-        HeroClass heroClass = plugin.getClassManager().getClass(hero.toString());
+    public void use(Hero hero, LivingEntity target, String[] args) {
         Properties properties = plugin.getConfigManager().getProperties();
 
-        if (!(heroClass.getSkills().contains(getName()))) {
-            plugin.getMessager().send(player, "Sorry, that ability isn't for your class!");
-            return;
-        }
-
+        Player player = hero.getPlayer();
         if (!player.getItemInHand().equals(Material.PAPER)) {
             return;
         }

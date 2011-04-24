@@ -1,5 +1,7 @@
 package com.herocraftonline.dev.heroes.command.skill;
 
+import java.util.Map;
+
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -10,8 +12,6 @@ import com.herocraftonline.dev.heroes.persistence.Hero;
 
 public abstract class ActiveSkill extends Skill {
 
-	protected int manaCost;
-	
 	public ActiveSkill(Heroes plugin) {
 		super(plugin);
 	}
@@ -39,14 +39,19 @@ public abstract class ActiveSkill extends Skill {
 				plugin.getMessager().send(player, "You don't have enough mana to use $1.", name);
 				return;
 			}
+			Map<String, Long> cooldowns = hero.getCooldowns();
+			long time = System.currentTimeMillis();
+			int cooldown = settings.Cooldown;
+			if (cooldown > 0 && cooldowns.containsKey(name) && time - cooldowns.get(name) < cooldown) {
+				plugin.getMessager().send(hero.getPlayer(), "Sorry, $1 is still on cooldown!", name);
+				return;
+			} else {
+				cooldowns.put(name, time);
+			}
 			use(hero, args);
 		}
 	}
-	
+
 	public abstract void use(Hero hero, String[] args);
-	
-	public int getManaCost() {
-		return manaCost;
-	}
-	
+
 }
