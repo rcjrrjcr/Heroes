@@ -6,7 +6,6 @@ import com.herocraftonline.dev.heroes.persistence.Hero;
 
 public class SkillTame extends ActiveSkill {
 
-    // TODO: Register this command in Heroes
     public SkillTame(Heroes plugin) {
         super(plugin);
         name = "Tame";
@@ -18,8 +17,8 @@ public class SkillTame extends ActiveSkill {
     }
 
     @Override
-    public void use(Hero hero, String[] args) {
-
+    public boolean use(Hero hero, String[] args) {
+    	return true;
     }
 
 }

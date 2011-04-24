@@ -45,13 +45,13 @@ public abstract class ActiveSkill extends Skill {
 			if (cooldown > 0 && cooldowns.containsKey(name) && time - cooldowns.get(name) < cooldown) {
 				plugin.getMessager().send(hero.getPlayer(), "Sorry, $1 is still on cooldown!", name);
 				return;
-			} else {
+			}
+			if (use(hero, args)) {
 				cooldowns.put(name, time);
 			}
-			use(hero, args);
 		}
 	}
 
-	public abstract void use(Hero hero, String[] args);
+	public abstract boolean use(Hero hero, String[] args);
 
 }

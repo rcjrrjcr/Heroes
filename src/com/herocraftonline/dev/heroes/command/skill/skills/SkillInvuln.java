@@ -17,8 +17,9 @@ public class SkillInvuln extends ActiveSkill {
 	}
 
 	@Override
-	public void use(Hero hero, String[] args) {
+	public boolean use(Hero hero, String[] args) {
 		hero.getEffects().put(name, System.currentTimeMillis() + 10000.0);
+		return true;
 	}
 
 }

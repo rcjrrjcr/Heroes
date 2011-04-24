@@ -20,7 +20,7 @@ public class SkillSyphon extends TargettedSkill {
 	}
 
 	@Override
-	public void use(Hero hero, LivingEntity target, String[] args) {
+	public boolean use(Hero hero, LivingEntity target, String[] args) {
 		Player player = (Player) hero.getPlayer();
 
 		if (args.length == 1) {
@@ -33,9 +33,10 @@ public class SkillSyphon extends TargettedSkill {
 				player.setHealth(player.getHealth() - health);
 			} catch (NumberFormatException e) {
 				player.sendMessage("Sorry, that's an incorrect health value!");
+				return false;
 			}
 		}
-
+		return true;
 	}
 
 }

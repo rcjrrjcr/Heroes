@@ -29,10 +29,11 @@ public class SkillSmoke extends ActiveSkill {
 	}
 
 	@Override
-	public void use(Hero hero, String[] args) {
+	public boolean use(Hero hero, String[] args) {
 		CraftPlayer craftPlayer = (CraftPlayer) hero.getPlayer();
 		craftPlayer.getHandle().netServerHandler.a(new Packet29DestroyEntity(craftPlayer.getEntityId()));
 		hero.getEffects().put(getName(), System.currentTimeMillis() + 10000.0);
+		return true;
 	}
 
 	public class SkillEntityListener extends EntityListener {

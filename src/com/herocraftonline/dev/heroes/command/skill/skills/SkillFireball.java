@@ -29,7 +29,7 @@ public class SkillFireball extends ActiveSkill {
 	}
 
 	@Override
-	public void use(Hero hero, String[] args) {
+	public boolean use(Hero hero, String[] args) {
 		Player player = hero.getPlayer();
 		
 		List<org.bukkit.block.Block> target = player.getLineOfSight(null, 600);
@@ -50,6 +50,7 @@ public class SkillFireball extends ActiveSkill {
 		fireball.locZ = playerLoc.getZ() + vec3d.c * d8;
 
 		((CraftWorld) player.getWorld()).getHandle().a(fireball);
+		return true;
 	}
 
 	public Vec3D getLocation(Player player, float f) {

@@ -19,12 +19,14 @@ public class SkillGTeleport extends ActiveSkill {
 	}
 
 	@Override
-	public void use(Hero hero, String[] args) {
+	public boolean use(Hero hero, String[] args) {
 		if (hero.getParty() != null && hero.getParty().getMembers().size() != 1) {
 			Player player = hero.getPlayer();
 			for (Player n : hero.getParty().getMembers()) {
 				n.teleport(player);
 			}
+			return true;
 		}
+		return false;
 	}
 }

@@ -22,11 +22,11 @@ public class SkillRevive extends TargettedSkill {
 	}
 
 	@Override
-	public void use(Hero hero, LivingEntity target, String[] args) {
+	public boolean use(Hero hero, LivingEntity target, String[] args) {
 		Player player = hero.getPlayer();
 		if (!(target instanceof Player)) {
 			player.sendMessage("You must target a player.");
-			return;
+			return false;
 		}
 		Player targetPlayer = (Player) target;
 
@@ -46,5 +46,6 @@ public class SkillRevive extends TargettedSkill {
 				}
 			}
 		}
+		return true;
 	}
 }

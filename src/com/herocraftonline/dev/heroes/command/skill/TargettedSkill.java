@@ -21,7 +21,7 @@ public abstract class TargettedSkill extends ActiveSkill {
     }
 
     @Override
-    public void use(Hero hero, String[] args) {
+    public boolean use(Hero hero, String[] args) {
     	// Fetch the player from the server to make sure we have the latest info
     	Player player = plugin.getServer().getPlayer(hero.getPlayer().getName());
         LivingEntity target = null;
@@ -38,10 +38,10 @@ public abstract class TargettedSkill extends ActiveSkill {
         if (target == null) {
             target = player;
         }
-        use(hero, target, args);
+        return use(hero, target, args);
     }
 
-    public abstract void use(Hero hero, LivingEntity target, String[] args);
+    public abstract boolean use(Hero hero, LivingEntity target, String[] args);
 
     public int getMaxDistance() {
         return maxDistance;

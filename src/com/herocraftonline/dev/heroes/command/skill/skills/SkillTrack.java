@@ -21,10 +21,11 @@ public class SkillTrack extends TargettedSkill {
 	}
 
 	@Override
-	public void use(Hero hero, LivingEntity target, String[] args) {
+	public boolean use(Hero hero, LivingEntity target, String[] args) {
 		Location location = target.getLocation();
 		Player player = hero.getPlayer();
 		plugin.getMessager().send(player, "Location: $1", location.toString());
 		player.setCompassTarget(location);
+		return true;
 	}
 }

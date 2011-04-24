@@ -7,32 +7,28 @@ import org.bukkit.entity.Player;
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.skill.TargettedSkill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
-import com.herocraftonline.dev.heroes.util.Properties;
 
 public class SkillBandages extends TargettedSkill {
 
-    public SkillBandages(Heroes plugin) {
-        super(plugin);
-        name = "Bandage";
-        description = "Skill - Bandage";
-        usage = "/cast bandage";
-        minArgs = 0;
-        maxArgs = 0;
-        identifiers.add("cast bandage");
-    }
+	public SkillBandages(Heroes plugin) {
+		super(plugin);
+		name = "Bandage";
+		description = "Skill - Bandage";
+		usage = "/cast bandage";
+		minArgs = 0;
+		maxArgs = 0;
+		identifiers.add("cast bandage");
+	}
 
-    @Override
-    public void use(Hero hero, LivingEntity target, String[] args) {
-        Properties properties = plugin.getConfigManager().getProperties();
+	@Override
+	public boolean use(Hero hero, LivingEntity target, String[] args) {
+		Player player = hero.getPlayer();
+		if (!player.getItemInHand().equals(Material.PAPER)) {
+			return false;
+		}
 
-        Player player = hero.getPlayer();
-        if (!player.getItemInHand().equals(Material.PAPER)) {
-            return;
-        }
-
-        if (hero.getMana() >= Integer.parseInt(properties.skillInfo.get(getName() + "mana"))) {
-            target.setHealth(target.getHealth() + 4);
-        }
-    }
+		target.setHealth(target.getHealth() + 4);
+		return true;
+	}
 
 }

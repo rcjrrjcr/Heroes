@@ -18,7 +18,8 @@ public class SkillLayhands extends TargettedSkill {
     }
 
     @Override
-    public void use(Hero hero, LivingEntity target, String[] args) {
+    public boolean use(Hero hero, LivingEntity target, String[] args) {
         target.setHealth(20);
+        return true;
     }
 }

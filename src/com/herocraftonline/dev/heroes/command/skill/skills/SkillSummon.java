@@ -24,18 +24,19 @@ public class SkillSummon extends ActiveSkill {
 	}
 
 	@Override
-	public void use(Hero hero, String[] args) {
+	public boolean use(Hero hero, String[] args) {
 		Player player = hero.getPlayer();
 		CreatureType creatureType = CreatureType.fromName(args[0].toUpperCase());
 		if (creatureType != null && hero.getSummons().size() <= hero.getPlayerClass().getSummonMax()) {
 			Entity spawnedEntity = player.getWorld().spawnCreature(player.getLocation(), creatureType);
 			if (spawnedEntity instanceof Creature && spawnedEntity instanceof Ghast && spawnedEntity instanceof Slime) {
 				spawnedEntity.remove();
-				return;
+				return false;
 			}
 			hero.getSummons().put(spawnedEntity, creatureType);
 			plugin.getMessager().send(player, "You have succesfully summoned a " + creatureType.toString());
-
+			return true;
 		}
+		return false;
 	}
 }
