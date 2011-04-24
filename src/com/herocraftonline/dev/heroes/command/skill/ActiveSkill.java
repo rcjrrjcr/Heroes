@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
+import com.herocraftonline.dev.heroes.classes.SkillSettings;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 
 public abstract class ActiveSkill extends Skill {
@@ -25,18 +26,17 @@ public abstract class ActiveSkill extends Skill {
 				return;
 			}
 			HeroClass heroClass = hero.getPlayerClass();
-			Integer reqLevel = heroClass.getSkillLevelRequirements().get(this.name);
-			if (reqLevel == null) {
-				plugin.getMessager().send(player, "$1s cannot use $2.", heroClass.getName(), this.name);
+			if (!heroClass.hasSkill(name)) {
+				plugin.getMessager().send(player, "$1s cannot use $2.", heroClass.getName(), name);
 				return;
 			}
-			if (!meetsLevelRequirement(hero, reqLevel.intValue())) {
-				plugin.getMessager().send(player, "You are not high enough level to use $2.", this.name);
+			SkillSettings settings = heroClass.getSkillSettings(name);
+			if (!meetsLevelRequirement(hero, settings.LevelRequirement)) {
+				plugin.getMessager().send(player, "You are not high enough level to use $2.", name);
 				return;
 			}
-			Integer manaCost = heroClass.getSkillManaCosts().get(this.name);
-			if (manaCost.intValue() < hero.getMana()) {
-				plugin.getMessager().send(player, "You don't have enough mana to use $1.", this.name);
+			if (settings.ManaCost < hero.getMana()) {
+				plugin.getMessager().send(player, "You don't have enough mana to use $1.", name);
 				return;
 			}
 			use(hero, args);

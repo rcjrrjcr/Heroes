@@ -53,8 +53,7 @@ public class HeroClass {
     private Set<String> allowedArmor;
     private Set<String> allowedWeapons;
     private Set<ExperienceType> experienceSources;
-    private Map<String, Integer> skillLevelRequirements;
-    private Map<String, Integer> skillManaCosts;
+    private Map<String, SkillSettings> skills;
     private Set<HeroClass> specializations;
 
     public HeroClass() {
@@ -63,7 +62,7 @@ public class HeroClass {
         allowedWeapons = new HashSet<String>();
         experienceSources = new HashSet<ExperienceType>();
         specializations = new HashSet<HeroClass>();
-        skillLevelRequirements = new HashMap<String, Integer>();
+        skills = new HashMap<String, SkillSettings>();
         tameWolves = false;
         tameMax = 0;
         summonCreatures = false;
@@ -76,17 +75,15 @@ public class HeroClass {
     }
     
     public boolean hasSkill(String name) {
-    	return skillLevelRequirements.containsKey(name);
+    	return skills.containsKey(name);
     }
     
-    public void addSkill(String name, int requiredLevel, int manaCost) {
-    	skillLevelRequirements.put(name, requiredLevel);
-    	skillManaCosts.put(name, manaCost);
+    public void addSkill(String name, int requiredLevel, int manaCost, int cooldown) {
+    	skills.put(name, new SkillSettings(requiredLevel, manaCost, cooldown));
     }
     
     public void removeSkill(String name) {
-    	skillLevelRequirements.remove(name);
-    	skillManaCosts.remove(name);
+    	skills.remove(name);
     }
 
     @Override
@@ -162,13 +159,9 @@ public class HeroClass {
     public void setSpecializations(Set<HeroClass> specializations) {
         this.specializations = specializations;
     }
-
-    public Map<String, Integer> getSkillLevelRequirements() {
-        return skillLevelRequirements;
-    }
-
-    public void setSkillLevelRequirements(Map<String, Integer> skillLevelRequirements) {
-        this.skillLevelRequirements = skillLevelRequirements;
+    
+    public SkillSettings getSkillSettings(String name) {
+    	return skills.get(name);
     }
 
     public Set<ExperienceType> getExperienceSources() {
@@ -194,13 +187,5 @@ public class HeroClass {
     public void setSummonMax(int summonMax) {
         this.summonMax = summonMax;
     }
-
-	public void setSkillManaCosts(Map<String, Integer> skillManaCosts) {
-		this.skillManaCosts = skillManaCosts;
-	}
-
-	public Map<String, Integer> getSkillManaCosts() {
-		return skillManaCosts;
-	}
 
 }

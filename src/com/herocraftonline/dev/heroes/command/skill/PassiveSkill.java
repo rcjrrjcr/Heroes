@@ -11,6 +11,7 @@ import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.api.ClassChangeEvent;
 import com.herocraftonline.dev.heroes.api.LevelEvent;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
+import com.herocraftonline.dev.heroes.classes.SkillSettings;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 
 public abstract class PassiveSkill extends Skill {
@@ -48,8 +49,8 @@ public abstract class PassiveSkill extends Skill {
 					return;
 				}
 				HeroClass heroClass = hero.getPlayerClass();
-				Integer reqLevel = heroClass.getSkillLevelRequirements().get(name);
-				if (reqLevel == null || !meetsLevelRequirement(hero, reqLevel.intValue())) {
+				SkillSettings settings = heroClass.getSkillSettings(name);
+				if (settings == null || !meetsLevelRequirement(hero, settings.LevelRequirement)) {
 					unapply(hero);
 				} else {
 					apply(hero);

@@ -116,7 +116,8 @@ public class ClassManager {
                 try {
                 	int reqLevel = config.getInt("classes." + className + ".permitted-skill." + skill + ".level", 1);
                 	int manaCost = config.getInt("classes." + className + ".permitted-skill." + skill + ".mana", 0);
-                    newClass.addSkill(skill, reqLevel, manaCost);
+                	int cooldown = config.getInt("classes." + className + ".permitted-skill." + skill + ".cooldown", 0);
+                    newClass.addSkill(skill, reqLevel, manaCost, cooldown);
                 } catch (IllegalArgumentException e) {
                     plugin.log(Level.WARNING, "Invalid skill (" + skill + ") defined for " + className + ". Skipping this skill.");
                 }

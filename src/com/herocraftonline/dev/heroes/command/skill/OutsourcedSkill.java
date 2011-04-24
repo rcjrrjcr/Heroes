@@ -12,6 +12,7 @@ import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.api.ClassChangeEvent;
 import com.herocraftonline.dev.heroes.api.LevelEvent;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
+import com.herocraftonline.dev.heroes.classes.SkillSettings;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 
 public abstract class OutsourcedSkill extends Skill {
@@ -21,7 +22,7 @@ public abstract class OutsourcedSkill extends Skill {
 	public OutsourcedSkill(Heroes plugin) {
 		super(plugin);
 
-		plugin.getServer().getPluginManager().registerEvent(Type.CUSTOM_EVENT, new SkillCustomListener(), Priority.Normal, plugin);
+		registerEvent(Type.CUSTOM_EVENT, new SkillCustomListener(), Priority.Normal);
 	}
 
 	public class SkillCustomListener extends CustomEventListener {
@@ -45,8 +46,8 @@ public abstract class OutsourcedSkill extends Skill {
 			HeroClass heroClass = hero.getPlayerClass();
 
 			String world = player.getWorld().getName();
-			Integer reqLevel = heroClass.getSkillLevelRequirements().get(name);
-			if (reqLevel != null && meetsLevelRequirement(hero, reqLevel.intValue())) {
+			SkillSettings settings = heroClass.getSkillSettings(name);
+			if (settings != null && meetsLevelRequirement(hero, settings.LevelRequirement)) {
 				Heroes.Permissions.addUserPermission(world, player.getName(), permission);
 			} else {
 				Heroes.Permissions.removeUserPermission(world, player.getName(), permission);
