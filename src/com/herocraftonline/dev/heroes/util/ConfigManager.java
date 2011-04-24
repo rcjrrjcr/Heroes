@@ -43,7 +43,6 @@ public class ConfigManager {
             checkForConfig(primaryConfigFile);
             checkForConfig(classConfigFile);
             checkForConfig(expConfigFile);
-            checkForConfig(skillConfigFile);
 
             Configuration primaryConfig = new Configuration(primaryConfigFile);
             primaryConfig.load();
@@ -198,7 +197,7 @@ public class ConfigManager {
     
     private void addNodeToConfig(Configuration config, ConfigurationNode node, String path) {
         for (String key : node.getKeys(null)) {
-            config.setProperty(path + ".key", node.getProperty(key));
+            config.setProperty(path + "." + key, node.getProperty(key));
         }
     }
 
