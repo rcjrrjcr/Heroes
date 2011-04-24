@@ -35,12 +35,12 @@ public class SkillBandages extends TargettedSkill {
 
         playerSchedulers.put(tPlayer, plugin.getServer().getScheduler().scheduleAsyncRepeatingTask(plugin, new Runnable() {
             public int timesRan = 0;
-            public int id = playerSchedulers.get(tPlayer);
+
             @Override
             public void run() {
                 if (timesRan == 10) {
-                    playerSchedulers.remove(id);
-                    plugin.getServer().getScheduler().cancelTask(id);
+                    playerSchedulers.remove(tPlayer);
+                    plugin.getServer().getScheduler().cancelTask(playerSchedulers.get(tPlayer));
                 } else {
                     timesRan++;
                     tPlayer.setHealth(tPlayer.getHealth() + 1);
