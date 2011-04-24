@@ -18,7 +18,7 @@ public class SkillBladegrasp extends ActiveSkill {
 
     @Override
     public boolean use(Hero hero, String[] args) {
-    	hero.getEffects().put(name, System.currentTimeMillis() + 60000.0);
-    	return true;
+        hero.getEffects().put(name, System.currentTimeMillis() + 60000.0);
+        return true;
     }
 }

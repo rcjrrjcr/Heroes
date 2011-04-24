@@ -68,22 +68,22 @@ public class HeroClass {
         summonCreatures = false;
         summonMax = 0;
     }
-    
+
     public HeroClass(String name) {
         this();
         this.name = name;
     }
-    
+
     public boolean hasSkill(String name) {
-    	return skills.containsKey(name);
+        return skills.containsKey(name);
     }
-    
+
     public void addSkill(String name, int requiredLevel, int manaCost, int cooldown) {
-    	skills.put(name, new SkillSettings(requiredLevel, manaCost, cooldown));
+        skills.put(name, new SkillSettings(requiredLevel, manaCost, cooldown));
     }
-    
+
     public void removeSkill(String name) {
-    	skills.remove(name);
+        skills.remove(name);
     }
 
     @Override
@@ -159,9 +159,9 @@ public class HeroClass {
     public void setSpecializations(Set<HeroClass> specializations) {
         this.specializations = specializations;
     }
-    
+
     public SkillSettings getSkillSettings(String name) {
-    	return skills.get(name);
+        return skills.get(name);
     }
 
     public Set<ExperienceType> getExperienceSources() {

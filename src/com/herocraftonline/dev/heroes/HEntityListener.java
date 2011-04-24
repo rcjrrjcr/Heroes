@@ -105,11 +105,11 @@ public class HEntityListener extends EntityListener {
                         if (plugin.getHeroManager().getHero(p).getParty().getMembers().contains((Player) defender)) {
                             event.setCancelled(true);
                             return;
-                        }else if(d.getEffects().containsKey("Invuln")){
-                            if(d.getEffects().get("Invuln") > System.currentTimeMillis()){
+                        } else if (d.getEffects().containsKey("Invuln")) {
+                            if (d.getEffects().get("Invuln") > System.currentTimeMillis()) {
                                 event.setCancelled(true);
                                 return;
-                            }else{
+                            } else {
                                 return;
                             }
                         }

@@ -13,7 +13,7 @@ import com.herocraftonline.dev.heroes.command.skill.ActiveSkill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 
 public class SkillOne extends ActiveSkill {
-	
+
     public SkillOne(Heroes plugin) {
         super(plugin);
         name = "One";
@@ -44,7 +44,7 @@ public class SkillOne extends ActiveSkill {
                 if (effects.get(name) > System.currentTimeMillis()) {
                     player.setVelocity(player.getLocation().getDirection().multiply(1.3).setY(0));
                 } else {
-                	effects.remove(name);
+                    effects.remove(name);
                 }
             }
         }

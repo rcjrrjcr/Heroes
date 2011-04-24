@@ -18,7 +18,7 @@ public class SkillTame extends ActiveSkill {
 
     @Override
     public boolean use(Hero hero, String[] args) {
-    	return true;
+        return true;
     }
 
 }

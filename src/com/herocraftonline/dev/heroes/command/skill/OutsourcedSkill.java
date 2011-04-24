@@ -17,44 +17,44 @@ import com.herocraftonline.dev.heroes.persistence.Hero;
 
 public abstract class OutsourcedSkill extends Skill {
 
-	protected String permission;
+    protected String permission;
 
-	public OutsourcedSkill(Heroes plugin) {
-		super(plugin);
+    public OutsourcedSkill(Heroes plugin) {
+        super(plugin);
 
-		registerEvent(Type.CUSTOM_EVENT, new SkillCustomListener(), Priority.Normal);
-	}
+        registerEvent(Type.CUSTOM_EVENT, new SkillCustomListener(), Priority.Normal);
+    }
 
-	public class SkillCustomListener extends CustomEventListener {
+    public class SkillCustomListener extends CustomEventListener {
 
-		@Override
-		public void onCustomEvent(Event event) {
-			if (event instanceof ClassChangeEvent) {
-				tryLearningSkill(((ClassChangeEvent) event).getPlayer());
-			} else if (event instanceof LevelEvent) {
-				tryLearningSkill(((LevelEvent) event).getPlayer());
-			}
-		}
+        @Override
+        public void onCustomEvent(Event event) {
+            if (event instanceof ClassChangeEvent) {
+                tryLearningSkill(((ClassChangeEvent) event).getPlayer());
+            } else if (event instanceof LevelEvent) {
+                tryLearningSkill(((LevelEvent) event).getPlayer());
+            }
+        }
 
-		private void tryLearningSkill(Player player) {
-			if (Heroes.Permissions == null) {
-				plugin.log(Level.WARNING, "Attempt to use an OutsourcedSkill (" + name + ") failed - Permissions not found.");
-				return;
-			}
+        private void tryLearningSkill(Player player) {
+            if (Heroes.Permissions == null) {
+                plugin.log(Level.WARNING, "Attempt to use an OutsourcedSkill (" + name + ") failed - Permissions not found.");
+                return;
+            }
 
-			Hero hero = plugin.getHeroManager().getHero(player);
-			HeroClass heroClass = hero.getPlayerClass();
+            Hero hero = plugin.getHeroManager().getHero(player);
+            HeroClass heroClass = hero.getPlayerClass();
 
-			String world = player.getWorld().getName();
-			SkillSettings settings = heroClass.getSkillSettings(name);
-			if (settings != null && meetsLevelRequirement(hero, settings.LevelRequirement)) {
-				Heroes.Permissions.addUserPermission(world, player.getName(), permission);
-			} else {
-				Heroes.Permissions.removeUserPermission(world, player.getName(), permission);
-			}
-			Heroes.Permissions.save(world);
-		}
+            String world = player.getWorld().getName();
+            SkillSettings settings = heroClass.getSkillSettings(name);
+            if (settings != null && meetsLevelRequirement(hero, settings.LevelRequirement)) {
+                Heroes.Permissions.addUserPermission(world, player.getName(), permission);
+            } else {
+                Heroes.Permissions.removeUserPermission(world, player.getName(), permission);
+            }
+            Heroes.Permissions.save(world);
+        }
 
-	}
+    }
 
 }

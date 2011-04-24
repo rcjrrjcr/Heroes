@@ -16,38 +16,38 @@ import com.herocraftonline.dev.heroes.persistence.Hero;
 
 public class SkillSmoke extends ActiveSkill {
 
-	public SkillSmoke(Heroes plugin) {
-		super(plugin);
-		name = "Smoke";
-		description = "Skill - smoke";
-		usage = "/smoke";
-		minArgs = 0;
-		maxArgs = 0;
-		identifiers.add("smoke");
+    public SkillSmoke(Heroes plugin) {
+        super(plugin);
+        name = "Smoke";
+        description = "Skill - smoke";
+        usage = "/smoke";
+        minArgs = 0;
+        maxArgs = 0;
+        identifiers.add("smoke");
 
-		registerEvent(Type.ENTITY_DAMAGE, new SkillEntityListener(), Priority.Normal);
-	}
+        registerEvent(Type.ENTITY_DAMAGE, new SkillEntityListener(), Priority.Normal);
+    }
 
-	@Override
-	public boolean use(Hero hero, String[] args) {
-		CraftPlayer craftPlayer = (CraftPlayer) hero.getPlayer();
-		craftPlayer.getHandle().netServerHandler.a(new Packet29DestroyEntity(craftPlayer.getEntityId()));
-		hero.getEffects().put(getName(), System.currentTimeMillis() + 10000.0);
-		return true;
-	}
+    @Override
+    public boolean use(Hero hero, String[] args) {
+        CraftPlayer craftPlayer = (CraftPlayer) hero.getPlayer();
+        craftPlayer.getHandle().netServerHandler.a(new Packet29DestroyEntity(craftPlayer.getEntityId()));
+        hero.getEffects().put(getName(), System.currentTimeMillis() + 10000.0);
+        return true;
+    }
 
-	public class SkillEntityListener extends EntityListener {
+    public class SkillEntityListener extends EntityListener {
 
-		@Override
-		public void onEntityDamage(EntityDamageEvent event) {
-			if (event.getEntity() instanceof Player) {
-				Player player = (Player) event.getEntity();
-				Hero hero = plugin.getHeroManager().getHero(player);
-				CraftPlayer craftPlayer = (CraftPlayer) player;
-				if (hero.getEffects().containsKey(getName())) {
-					craftPlayer.getHandle().netServerHandler.a(new Packet20NamedEntitySpawn());
-				}
-			}
-		}
-	}
+        @Override
+        public void onEntityDamage(EntityDamageEvent event) {
+            if (event.getEntity() instanceof Player) {
+                Player player = (Player) event.getEntity();
+                Hero hero = plugin.getHeroManager().getHero(player);
+                CraftPlayer craftPlayer = (CraftPlayer) player;
+                if (hero.getEffects().containsKey(getName())) {
+                    craftPlayer.getHandle().netServerHandler.a(new Packet20NamedEntitySpawn());
+                }
+            }
+        }
+    }
 }

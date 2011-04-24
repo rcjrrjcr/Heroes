@@ -22,8 +22,8 @@ public abstract class TargettedSkill extends ActiveSkill {
 
     @Override
     public boolean use(Hero hero, String[] args) {
-    	// Fetch the player from the server to make sure we have the latest info
-    	Player player = plugin.getServer().getPlayer(hero.getPlayer().getName());
+        // Fetch the player from the server to make sure we have the latest info
+        Player player = plugin.getServer().getPlayer(hero.getPlayer().getName());
         LivingEntity target = null;
         if (args.length > 0) {
             target = plugin.getServer().getPlayer(args[0]);

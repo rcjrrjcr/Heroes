@@ -31,7 +31,7 @@ public class InventoryChangeEvent extends Event implements Cancellable {
     }
 
     public ItemStack getSlot() {
-        if(this.slot!=null){
+        if (this.slot != null) {
             return this.slot;
         } else {
             return new ItemStack(0);
@@ -39,7 +39,7 @@ public class InventoryChangeEvent extends Event implements Cancellable {
     }
 
     public ItemStack getCursor() {
-        if(this.cursor!=null){
+        if (this.cursor != null) {
             return this.cursor;
         } else {
             return new ItemStack(0);

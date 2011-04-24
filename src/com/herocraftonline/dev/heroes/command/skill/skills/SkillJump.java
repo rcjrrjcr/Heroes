@@ -22,7 +22,7 @@ public class SkillJump extends ActiveSkill {
 
     @Override
     public boolean use(Hero hero, String[] args) {
-    	Player player = hero.getPlayer();
+        Player player = hero.getPlayer();
         Vector velocity = player.getVelocity();
         player.setVelocity(velocity.setY((velocity.getY() * 2)));
         return true;
