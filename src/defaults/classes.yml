@@ -4,5 +4,9 @@ classes:
         summon-max: 0
         permitted-armor: [LEATHER, DIAMOND_CHESTPLATE, GOLD_BOOTS]
         permitted-weapon: [WOOD, GOLD, DIAMOND_PICKAXE, IRON_AXE, IRON_SPADE]
-        permitted-skills: [JUMP]
+        permitted-skills:
+            Jump:
+                level: 1
+                mana: 25
+                cooldown: 30000
         experience-sources: [KILLING]
