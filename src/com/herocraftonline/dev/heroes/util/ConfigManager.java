@@ -10,6 +10,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.CreatureType;
 import org.bukkit.util.config.Configuration;
+import org.bukkit.util.config.ConfigurationNode;
 
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.classes.ClassManager;
@@ -169,11 +170,12 @@ public class ConfigManager {
         config.load();
         for (BaseCommand baseCommand : plugin.getCommandManager().getCommands()) {
             if (baseCommand instanceof Skill) {
-                Skill baseSkill = (Skill) baseCommand;
-                if (!baseSkill.getConfig().isEmpty()) {
-                    for (String conf : baseSkill.getConfig().keySet()) {
-                        getProperties().skillInfo.put(baseSkill.getName() + conf, config.getString(baseSkill.getName() + "." + conf));
-                    }
+                Skill skill = (Skill) baseCommand;
+                ConfigurationNode node = config.getNode(skill.getName());
+                if (node != null) {
+                    skill.setConfig(node);
+                } else {
+                    skill.setConfig(Configuration.getEmptyNode());
                 }
             }
         }
@@ -182,20 +184,22 @@ public class ConfigManager {
     private void generateSkills(Configuration config) {
         for (BaseCommand baseCommand : plugin.getCommandManager().getCommands()) {
             if (baseCommand instanceof Skill) {
-                Skill baseSkill = (Skill) baseCommand;
-                if (config.getString(baseSkill.getName()) == null) {
-                    if (!baseSkill.getConfig().isEmpty()) {
-                        config.setProperty(baseSkill.getName(), "");
-                        for (String conf : baseSkill.getConfig().keySet()) {
-                            config.setProperty(baseSkill.getName() + "." + conf, baseSkill.getConfig().get(conf));
-                        }
-                    }
+                Skill skill = (Skill) baseCommand;
+                ConfigurationNode node = config.getNode(skill.getName());
+                if (node == null) {
+                    addNodeToConfig(config, skill.getDefaultConfig(), skill.getName());
                 }
             }
 
         }
         config.save();
         loadSkills(config);
+    }
+    
+    private void addNodeToConfig(Configuration config, ConfigurationNode node, String path) {
+        for (String key : node.getKeys(null)) {
+            config.setProperty(path + ".key", node.getProperty(key));
+        }
     }
 
     public Properties getProperties() {

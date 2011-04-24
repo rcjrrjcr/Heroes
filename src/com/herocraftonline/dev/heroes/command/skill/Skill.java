@@ -1,12 +1,13 @@
 package com.herocraftonline.dev.heroes.command.skill;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import org.bukkit.Material;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event.Type;
 import org.bukkit.event.Listener;
+import org.bukkit.util.config.Configuration;
+import org.bukkit.util.config.ConfigurationNode;
 
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.BaseCommand;
@@ -14,7 +15,7 @@ import com.herocraftonline.dev.heroes.persistence.Hero;
 
 public abstract class Skill extends BaseCommand {
 
-    protected Map<String, String> config = new HashMap<String, String>();
+    protected ConfigurationNode config;
     protected HashMap<Material, Integer> cost = new HashMap<Material, Integer>();
 
     public Skill(Heroes plugin) {
@@ -28,16 +29,20 @@ public abstract class Skill extends BaseCommand {
     protected boolean meetsLevelRequirement(Hero hero, int reqLevel) {
         return reqLevel < plugin.getConfigManager().getProperties().getLevel(hero.getExperience());
     }
+    
+    public ConfigurationNode getDefaultConfig() {
+        return Configuration.getEmptyNode();
+    }
 
     public HashMap<Material, Integer> getCost() {
         return cost;
     }
 
-    public Map<String, String> getConfig() {
+    public ConfigurationNode getConfig() {
         return config;
     }
 
-    public void setConfig(Map<String, String> config) {
+    public void setConfig(ConfigurationNode config) {
         this.config = config;
     }
 

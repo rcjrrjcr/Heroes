@@ -11,6 +11,8 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityListener;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.util.config.Configuration;
+import org.bukkit.util.config.ConfigurationNode;
 
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.skill.ActiveSkill;
@@ -36,6 +38,13 @@ public class SkillBlackjack extends ActiveSkill {
         hero.getEffects().put(name, System.currentTimeMillis() + 60000.0);
         return true;
     }
+    
+    @Override
+    public ConfigurationNode getDefaultConfig() {
+        ConfigurationNode node = Configuration.getEmptyNode();
+        node.setProperty("stun-duration", 5.0);
+        return node;
+    }
 
     public class SkillEntityListener extends EntityListener {
 
@@ -49,7 +58,7 @@ public class SkillBlackjack extends ActiveSkill {
                     Hero defendingHero = plugin.getHeroManager().getHero((Player) defendingEntity);
                     Map<String, Double> effects = attackingHero.getEffects();
                     if (effects.containsKey(name)) {
-                        defendingHero.getEffects().put("stunned", System.currentTimeMillis() + Double.parseDouble(config.get("stun-duration")));
+                        defendingHero.getEffects().put("stunned", System.currentTimeMillis() + config.getDouble("stun-duration", 5.0));
                     }
                 }
             }
