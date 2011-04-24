@@ -40,8 +40,7 @@ public class SkillBandages extends TargettedSkill {
                 @Override
                 public void run() {
                     if (timesRan == 10) {
-                        int id = playerSchedulers.get(tPlayer);
-                        playerSchedulers.remove(tPlayer);
+                        int id = playerSchedulers.remove(tPlayer);
                         plugin.getServer().getScheduler().cancelTask(id);
                     } else {
                         timesRan++;
