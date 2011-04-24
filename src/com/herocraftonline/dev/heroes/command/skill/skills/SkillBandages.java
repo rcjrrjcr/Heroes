@@ -40,8 +40,9 @@ public class SkillBandages extends TargettedSkill {
                 @Override
                 public void run() {
                     if (timesRan == 10) {
+                        int id = playerSchedulers.get(tPlayer);
                         playerSchedulers.remove(tPlayer);
-                        plugin.getServer().getScheduler().cancelTask(playerSchedulers.get(tPlayer));
+                        plugin.getServer().getScheduler().cancelTask(id);
                     } else {
                         timesRan++;
                         tPlayer.setHealth(tPlayer.getHealth() + 1);
@@ -51,5 +52,6 @@ public class SkillBandages extends TargettedSkill {
 
             return true;
         }
+        return false;
     }
 }
