@@ -1,4 +1,4 @@
-<project name="Heroes" default="jar-main">
+<project name="Heroes" default="jar-main" basedir=".">
   <property name="dir.bin" value="bin" />
     <property name="dir.dist" value="build" />
     <property name="dir.bin.skills" value="com/herocraftonline/dev/heroes/command/skill/skills" />
@@ -12,13 +12,14 @@
 
     <target name="build">
         <mkdir dir="${dir.dist}" />
+        <mkdir dir="${dir.dist}/${dir.dist.skills}" />
         <mkdir dir="${dir.bin}" />
+        <mkdir dir="${dir.bin}/${dir.dist.skills}" />
         <javac srcdir="src" destdir="bin" />
         <antcall target="jar-main" />
     </target>
 
     <target name="jar-main" depends="jar-skills">
-        <mkdir dir="${dir.dist}" />
         <jar destfile="${dir.dist}/${ant.project.name}.jar" basedir="${dir.bin}" excludes="${dir.bin.skills}/*.class">
             <manifest>
                 <attribute name="Class-Path" value="${dir.dist.skills}/" />
@@ -27,7 +28,6 @@
     </target>
 
     <target name="jar-skills">
-        <mkdir dir="${dir.dist}/${dir.dist.skills}" />
         <foreach target="jar-skill" param="files">
             <fileset dir="${dir.bin}/${dir.bin.skills}" includes="Skill*.class" excludes="Skill*$*.class" />
         </foreach>
