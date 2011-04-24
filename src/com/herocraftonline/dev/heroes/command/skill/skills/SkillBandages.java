@@ -29,7 +29,7 @@ public class SkillBandages extends TargettedSkill {
         Player player = hero.getPlayer();
         final Player tPlayer = (Player) target;
         if (!player.getItemInHand().equals(Material.PAPER)) {
-            plugin.getMessager().send(player, "You need paper to preform this");
+            plugin.getMessager().send(player, "You need paper to perform this");
             return false;
         }
 
