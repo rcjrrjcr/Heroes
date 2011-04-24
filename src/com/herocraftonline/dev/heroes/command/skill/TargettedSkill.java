@@ -10,8 +10,9 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
 import com.herocraftonline.dev.heroes.Heroes;
+import com.herocraftonline.dev.heroes.persistence.Hero;
 
-public abstract class TargettedSkill extends Skill {
+public abstract class TargettedSkill extends ActiveSkill {
 
     protected int maxDistance;
 
@@ -20,7 +21,9 @@ public abstract class TargettedSkill extends Skill {
     }
 
     @Override
-    public void use(Player player, String[] args) {
+    public void use(Hero hero, String[] args) {
+    	// Fetch the player from the server to make sure we have the latest info
+    	Player player = plugin.getServer().getPlayer(hero.getPlayer().getName());
         LivingEntity target = null;
         if (args.length > 0) {
             target = plugin.getServer().getPlayer(args[0]);

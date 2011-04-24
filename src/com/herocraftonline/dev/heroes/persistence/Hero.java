@@ -22,7 +22,7 @@ public class Hero {
     protected List<String> masteries;
     protected Map<String, Long> cooldowns;
     protected Map<Entity, CreatureType> summons;
-    protected Map<String, Long> effects;
+    protected Map<String, Double> effects;
     protected Map<Material, String[]> binds;
     protected HeroParty party;
     protected Map<String, HeroParty> invites;
@@ -40,7 +40,7 @@ public class Hero {
         this.binds = new HashMap<Material, String[]>();
         this.party = null;
         this.invites = new HashMap<String, HeroParty>();
-        this.effects = new HashMap<String, Long>();
+        this.effects = new HashMap<String, Double>();
     }
 
     public void addItem(String item) {
@@ -99,7 +99,7 @@ public class Hero {
         return summons;
     }
 
-    public Map<String, Long> getEffects() {
+    public Map<String, Double> getEffects() {
         return effects;
     }
 

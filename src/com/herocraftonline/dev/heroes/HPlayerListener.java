@@ -14,8 +14,6 @@ import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import com.herocraftonline.dev.heroes.command.BaseCommand;
-import com.herocraftonline.dev.heroes.command.skill.Skill;
 import com.herocraftonline.dev.heroes.inventory.HNetServerHandler;
 import com.herocraftonline.dev.heroes.persistence.HeroManager;
 
@@ -61,14 +59,7 @@ public class HPlayerListener extends PlayerListener {
         if (plugin.getHeroManager().getHero(p).getBinds().containsKey(event.getMaterial())) {
             if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
                 String[] args = plugin.getHeroManager().getHero(p).getBinds().get(event.getMaterial());
-                for (BaseCommand baseCommand : plugin.getCommandManager().getCommands()) {
-                    if (baseCommand instanceof Skill) {
-                        Skill skillCommand = (Skill) baseCommand;
-                        if (skillCommand.getName().equalsIgnoreCase(args[0])) {
-                            skillCommand.use(p, Arrays.copyOf(args, 1));
-                        }
-                    }
-                }
+                plugin.onCommand(p, null, args[0], Arrays.copyOf(args, 1));
             }
         }
     }

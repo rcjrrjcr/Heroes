@@ -111,20 +111,16 @@ public class ClassManager {
                 }
             }
 
-            List<String> skillNames = config.getStringList("classes." + className + ".permitted-skill", null);
-            Set<String> skills = new HashSet<String>();
+            List<String> skillNames = config.getKeys("classes." + className + ".permitted-skill");
             for (String skill : skillNames) {
                 try {
-                    ;
-                    boolean added = skills.add(skill);
-                    if (!added) {
-                        plugin.log(Level.WARNING, "Duplicate skill (" + weapon + ") defined for " + className + ".");
-                    }
+                	int reqLevel = config.getInt("classes." + className + ".permitted-skill." + skill + ".level", 1);
+                	int manaCost = config.getInt("classes." + className + ".permitted-skill." + skill + ".mana", 0);
+                    newClass.addSkill(skill, reqLevel, manaCost);
                 } catch (IllegalArgumentException e) {
                     plugin.log(Level.WARNING, "Invalid skill (" + skill + ") defined for " + className + ". Skipping this skill.");
                 }
             }
-            newClass.setSkills(skills);
 
             List<String> experienceNames = config.getStringList("classes." + className + ".experience-sources", null);
             Set<ExperienceType> experienceSources = new HashSet<ExperienceType>();
