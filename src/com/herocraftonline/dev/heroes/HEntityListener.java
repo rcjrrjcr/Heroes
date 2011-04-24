@@ -44,6 +44,8 @@ public class HEntityListener extends EntityListener {
                     int addedExp = 0;
                     // If the dying entity is a Player
                     if (defender instanceof Player) {
+                        Hero heroDefender = plugin.getHeroManager().getHero((Player) defender);
+                        heroDefender.setExperience((int) (heroDefender.getExperience() * 0.95));
                         addedExp = plugin.getConfigManager().getProperties().playerKillingExp;
                         KillExperienceEvent pvpEvent = new KillExperienceEvent(attacker, defender, addedExp);
                         plugin.getServer().getPluginManager().callEvent(pvpEvent);
