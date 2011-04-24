@@ -13,6 +13,7 @@
     <target name="build">
         <mkdir dir="${dir.dist}" />
         <mkdir dir="${dir.bin}" />
+        <javac srcdir="src" destdir="bin" />
         <antcall target="jar-main" />
     </target>
 
