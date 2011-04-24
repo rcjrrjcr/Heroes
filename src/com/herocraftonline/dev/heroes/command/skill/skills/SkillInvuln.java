@@ -1,5 +1,13 @@
 package com.herocraftonline.dev.heroes.command.skill.skills;
 
+import java.util.Map;
+
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityListener;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
+
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.skill.ActiveSkill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
@@ -22,4 +30,20 @@ public class SkillInvuln extends ActiveSkill {
         return true;
     }
 
+    
+public class SkillEntityListener extends EntityListener {
+        
+        @Override
+        public void onEntityDamage(EntityDamageEvent event) {
+            Entity defender = event.getEntity();
+            if (defender instanceof Player) {
+                Player player = (Player) defender;
+                Map<String, Double> effects = plugin.getHeroManager().getHero(player).getEffects();
+                if (effects.containsKey(name) && effects.get(name) < System.currentTimeMillis()) {
+                    event.setCancelled(true);
+                }
+            }
+        }
+        
+    }
 }
