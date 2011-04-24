@@ -11,7 +11,7 @@ import com.herocraftonline.dev.heroes.command.skill.TargettedSkill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 
 public class SkillBandages extends TargettedSkill {
-    public HashMap<Player, Integer> playerSchedulars = new HashMap<Player, Integer>();
+    public HashMap<Player, Integer> playerSchedulers = new HashMap<Player, Integer>();
 
     public SkillBandages(Heroes plugin) {
         super(plugin);
@@ -38,7 +38,7 @@ public class SkillBandages extends TargettedSkill {
             @Override
             public void run() {
                 if (timesRan == 10) {
-                    playerSchedulars.remove(tPlayer);
+                    playerSchedulers.remove(tPlayer);
                     plugin.getServer().getScheduler().cancelTask(playerSchedulars.get(tPlayer));
                 } else {
                     timesRan++;
