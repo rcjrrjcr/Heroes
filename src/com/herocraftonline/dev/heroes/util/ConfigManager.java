@@ -98,6 +98,7 @@ public class ConfigManager {
         plugin.getConfigManager().getProperties().maxExp = config.getInt(root + "maxExperience", 90000);
         plugin.getConfigManager().getProperties().maxLevel = config.getInt(root + "maxLevel", 99);
         plugin.getConfigManager().getProperties().classSwitchLevel = config.getInt(root + "classSwitchLevel", 20);
+        plugin.getConfigManager().getProperties().expLoss = config.getDouble(root + "expLoss", 0.95);
     }
 
     private void loadDefaultConfig(Configuration config) {

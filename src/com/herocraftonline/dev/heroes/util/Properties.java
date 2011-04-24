@@ -28,6 +28,7 @@ public class Properties {
     public int maxLevel;
     public int[] levels;
     public int classSwitchLevel;
+    public double expLoss;
     // Experience//
     public int playerKillingExp = 0;
     public HashMap<CreatureType, Integer> creatureKillingExp = new HashMap<CreatureType, Integer>();
