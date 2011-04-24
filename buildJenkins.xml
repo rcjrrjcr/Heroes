@@ -1,0 +1,46 @@
+<project name="Heroes" default="jar-main">
+  <property name="dir.bin" value="bin" />
+    <property name="dir.dist" value="build" />
+    <property name="dir.bin.skills" value="com/herocraftonline/dev/heroes/command/skill/skills" />
+    <property name="dir.dist.skills" value="Heroes/externals" />
+    
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties">
+        <classpath>
+            <pathelement location="/tc-ant/ant-contrib-1.0b3.jar" />
+        </classpath>
+    </taskdef>
+
+    <target name="build">
+        <mkdir dir="${dir.dist}" />
+        <mkdir dir="${dir.bin}" />
+        <antcall target="jar-main" />
+    </target>
+
+    <target name="jar-main" depends="jar-skills">
+        <mkdir dir="${dir.dist}" />
+        <jar destfile="${dir.dist}/${ant.project.name}.jar" basedir="${dir.bin}" excludes="${dir.bin.skills}/*.class">
+            <manifest>
+                <attribute name="Class-Path" value="${dir.dist.skills}/" />
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="jar-skills">
+        <mkdir dir="${dir.dist}/${dir.dist.skills}" />
+        <foreach target="jar-skill" param="files">
+            <fileset dir="${dir.bin}/${dir.bin.skills}" includes="Skill*.class" excludes="Skill*$*.class" />
+        </foreach>
+        <delete file="${dir.bin}/skill.info" />
+    </target>
+
+    <target name="jar-skill">
+        <basename file="${files}" suffix=".class" property="basename" />
+        <echo message="${basename}" />
+        <echo file="${dir.bin}/skill.info" message="main-class: com.herocraftonline.dev.heroes.command.skill.skills.${basename}" />
+        <jar jarfile="${dir.dist}/${dir.dist.skills}/${basename}.jar" basedir="${dir.bin}" includes="${dir.bin.skills}/${basename}*.class skill.info">
+            <manifest>
+                <attribute name="Class-Path" value="../../Heroes.jar" />
+            </manifest>
+        </jar>
+    </target>
+</project>
