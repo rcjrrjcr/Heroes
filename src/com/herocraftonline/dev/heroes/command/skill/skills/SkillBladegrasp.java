@@ -4,6 +4,8 @@ import java.util.Map;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event.Priority;
+import org.bukkit.event.Event.Type;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityListener;
@@ -22,6 +24,8 @@ public class SkillBladegrasp extends ActiveSkill {
         minArgs = 0;
         maxArgs = 0;
         identifiers.add("bladegrasp");
+        
+        registerEvent(Type.ENTITY_DAMAGE, new SkillEntityListener(), Priority.Normal);
     }
 
     @Override
