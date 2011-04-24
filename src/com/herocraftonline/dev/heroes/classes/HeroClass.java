@@ -75,6 +75,10 @@ public class HeroClass {
         this.name = name;
     }
     
+    public boolean hasSkill(String name) {
+    	return skillLevelRequirements.containsKey(name);
+    }
+    
     public void addSkill(String name, int requiredLevel, int manaCost) {
     	skillLevelRequirements.put(name, requiredLevel);
     	skillManaCosts.put(name, manaCost);
