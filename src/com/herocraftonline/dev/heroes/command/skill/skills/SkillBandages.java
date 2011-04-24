@@ -12,6 +12,7 @@ import com.herocraftonline.dev.heroes.persistence.Hero;
 
 public class SkillBandages extends TargettedSkill {
     public HashMap<Player, Integer> playerSchedulars = new HashMap<Player, Integer>();
+
     public SkillBandages(Heroes plugin) {
         super(plugin);
         name = "Bandage";
@@ -33,17 +34,18 @@ public class SkillBandages extends TargettedSkill {
 
         playerSchedulars.put(tPlayer, plugin.getServer().getScheduler().scheduleAsyncRepeatingTask(plugin, new Runnable() {
             public int timesRan = 0;
-            
+
             @Override
             public void run() {
-                if(timesRan == 10){
+                if (timesRan == 10) {
+                    playerSchedulars.remove(tPlayer);
                     plugin.getServer().getScheduler().cancelTask(playerSchedulars.get(tPlayer));
-                }else{
+                } else {
                     timesRan++;
                     tPlayer.setHealth(tPlayer.getHealth() + 1);
                 }
             }
-        },20L, 20L));
+        }, 20L, 20L));
 
         return true;
     }
