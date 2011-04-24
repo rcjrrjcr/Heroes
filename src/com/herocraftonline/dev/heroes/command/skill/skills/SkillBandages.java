@@ -1,5 +1,7 @@
 package com.herocraftonline.dev.heroes.command.skill.skills;
 
+import java.util.HashMap;
+
 import org.bukkit.Material;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -9,7 +11,7 @@ import com.herocraftonline.dev.heroes.command.skill.TargettedSkill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 
 public class SkillBandages extends TargettedSkill {
-
+    public HashMap<Player, Integer> playerSchedulars = new HashMap<Player, Integer>();
     public SkillBandages(Heroes plugin) {
         super(plugin);
         name = "Bandage";
@@ -18,17 +20,31 @@ public class SkillBandages extends TargettedSkill {
         minArgs = 0;
         maxArgs = 0;
         identifiers.add("cast bandage");
+
     }
 
     @Override
     public boolean use(Hero hero, LivingEntity target, String[] args) {
         Player player = hero.getPlayer();
+        final Player tPlayer = (Player) target;
         if (!player.getItemInHand().equals(Material.PAPER)) {
             return false;
         }
 
-        target.setHealth(target.getHealth() + 4);
+        playerSchedulars.put(tPlayer, plugin.getServer().getScheduler().scheduleAsyncRepeatingTask(plugin, new Runnable() {
+            public int timesRan = 0;
+            
+            @Override
+            public void run() {
+                if(timesRan == 10){
+                    plugin.getServer().getScheduler().cancelTask(playerSchedulars.get(tPlayer));
+                }else{
+                    timesRan++;
+                    tPlayer.setHealth(tPlayer.getHealth() + 1);
+                }
+            }
+        },20L, 20L));
+
         return true;
     }
-
 }
