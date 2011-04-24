@@ -1,11 +1,10 @@
 package com.herocraftonline.dev.heroes.command.skill.skills;
 
-import org.bukkit.entity.Player;
-
 import com.herocraftonline.dev.heroes.Heroes;
-import com.herocraftonline.dev.heroes.command.skill.Skill;
+import com.herocraftonline.dev.heroes.command.skill.ActiveSkill;
+import com.herocraftonline.dev.heroes.persistence.Hero;
 
-public class SkillTame extends Skill {
+public class SkillTame extends ActiveSkill {
 
     // TODO: Register this command in Heroes
     public SkillTame(Heroes plugin) {
@@ -19,7 +18,7 @@ public class SkillTame extends Skill {
     }
 
     @Override
-    public void use(Player user, String[] args) {
+    public void use(Hero hero, String[] args) {
 
     }
 
