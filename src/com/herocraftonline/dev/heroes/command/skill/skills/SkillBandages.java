@@ -29,17 +29,18 @@ public class SkillBandages extends TargettedSkill {
         Player player = hero.getPlayer();
         final Player tPlayer = (Player) target;
         if (!player.getItemInHand().equals(Material.PAPER)) {
+            plugin.getMessager().send(player, "You need paper to preform this");
             return false;
         }
 
-        playerSchedulars.put(tPlayer, plugin.getServer().getScheduler().scheduleAsyncRepeatingTask(plugin, new Runnable() {
+        playerSchedulers.put(tPlayer, plugin.getServer().getScheduler().scheduleAsyncRepeatingTask(plugin, new Runnable() {
             public int timesRan = 0;
 
             @Override
             public void run() {
                 if (timesRan == 10) {
                     playerSchedulers.remove(tPlayer);
-                    plugin.getServer().getScheduler().cancelTask(playerSchedulars.get(tPlayer));
+                    plugin.getServer().getScheduler().cancelTask(playerSchedulers.get(tPlayer));
                 } else {
                     timesRan++;
                     tPlayer.setHealth(tPlayer.getHealth() + 1);
