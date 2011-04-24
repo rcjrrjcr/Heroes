@@ -6,6 +6,9 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Ghast;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Slime;
+import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.EntityListener;
+import org.bukkit.event.entity.EntityTargetEvent;
 
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.skill.ActiveSkill;
@@ -38,5 +41,32 @@ public class SkillSummon extends ActiveSkill {
 			return true;
 		}
 		return false;
+	}
+	
+	public class SkillEntityListener extends EntityListener {
+		
+		public void onEntityTarget(EntityTargetEvent event) {
+	        if (event.getTarget() instanceof Player) {
+	            for (Hero hero : plugin.getHeroManager().getHeroes()) {
+	                if (hero.getSummons().containsKey(event.getEntity())) {
+	                    if (hero.getPlayer() == event.getTarget()) {
+	                        event.setCancelled(true);
+	                    }
+	                }
+	            }
+	        }
+	    }
+		
+		@Override
+	    public void onEntityDeath(EntityDeathEvent event) {
+	        Entity defender = event.getEntity();
+	        for (Hero hero : plugin.getHeroManager().getHeroes()) {
+	            if (hero.getSummons().containsKey(defender)) {
+	                hero.getSummons().remove(defender);
+	            }
+	        }
+
+	    }
+		
 	}
 }
