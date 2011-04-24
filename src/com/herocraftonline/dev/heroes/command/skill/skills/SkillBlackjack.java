@@ -28,7 +28,7 @@ public class SkillBlackjack extends ActiveSkill {
         minArgs = 0;
         maxArgs = 0;
         identifiers.add("blackjack");
-        
+
         registerEvent(Type.ENTITY_DAMAGE, new SkillEntityListener(), Priority.Normal);
         registerEvent(Type.PLAYER_MOVE, new SkillPlayerListener(), Priority.Normal);
     }
@@ -38,7 +38,7 @@ public class SkillBlackjack extends ActiveSkill {
         hero.getEffects().put(name, System.currentTimeMillis() + 60000.0);
         return true;
     }
-    
+
     @Override
     public ConfigurationNode getDefaultConfig() {
         ConfigurationNode node = Configuration.getEmptyNode();

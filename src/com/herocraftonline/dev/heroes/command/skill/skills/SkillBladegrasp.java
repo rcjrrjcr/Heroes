@@ -24,7 +24,7 @@ public class SkillBladegrasp extends ActiveSkill {
         minArgs = 0;
         maxArgs = 0;
         identifiers.add("bladegrasp");
-        
+
         registerEvent(Type.ENTITY_DAMAGE, new SkillEntityListener(), Priority.Normal);
     }
 
@@ -33,9 +33,9 @@ public class SkillBladegrasp extends ActiveSkill {
         hero.getEffects().put(name, System.currentTimeMillis() + 60000.0);
         return true;
     }
-    
+
     public class SkillEntityListener extends EntityListener {
-        
+
         @Override
         public void onEntityDamage(EntityDamageEvent event) {
             Entity defender = event.getEntity();
@@ -50,6 +50,6 @@ public class SkillBladegrasp extends ActiveSkill {
                 }
             }
         }
-        
+
     }
 }

@@ -29,7 +29,7 @@ public abstract class Skill extends BaseCommand {
     protected boolean meetsLevelRequirement(Hero hero, int reqLevel) {
         return reqLevel < plugin.getConfigManager().getProperties().getLevel(hero.getExperience());
     }
-    
+
     public ConfigurationNode getDefaultConfig() {
         return Configuration.getEmptyNode();
     }

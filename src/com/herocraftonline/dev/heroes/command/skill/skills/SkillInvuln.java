@@ -29,9 +29,8 @@ public class SkillInvuln extends ActiveSkill {
         return true;
     }
 
-    
-public class SkillEntityListener extends EntityListener {
-        
+    public class SkillEntityListener extends EntityListener {
+
         @Override
         public void onEntityDamage(EntityDamageEvent event) {
             Entity defender = event.getEntity();
@@ -43,6 +42,6 @@ public class SkillEntityListener extends EntityListener {
                 }
             }
         }
-        
+
     }
 }
