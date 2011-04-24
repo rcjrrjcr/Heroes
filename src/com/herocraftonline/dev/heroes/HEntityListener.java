@@ -100,17 +100,9 @@ public class HEntityListener extends EntityListener {
                     attacker = subEvent.getDamager();
                     if (attacker instanceof Player && defender instanceof Player) {
                         Player p = (Player) attacker;
-                        Hero d = plugin.getHeroManager().getHero((Player) defender);
                         if (plugin.getHeroManager().getHero(p).getParty().getMembers().contains((Player) defender)) {
                             event.setCancelled(true);
                             return;
-                        } else if (d.getEffects().containsKey("Invuln")) {
-                            if (d.getEffects().get("Invuln") > System.currentTimeMillis()) {
-                                event.setCancelled(true);
-                                return;
-                            } else {
-                                return;
-                            }
                         }
                     }
                 }
