@@ -11,7 +11,8 @@ public class HeroClass {
         LEATHER,
         IRON,
         GOLD,
-        DIAMOND
+        DIAMOND,
+        CHAINMAIL
     }
 
     public static enum ArmorItems {
@@ -27,14 +28,15 @@ public class HeroClass {
         IRON,
         GOLD,
         DIAMOND
-    }
+        }
 
     public static enum WeaponItems {
         PICKAXE,
         AXE,
         HOE,
         SPADE,
-        SWORD
+        SWORD,
+        BOW
     }
 
     public static enum ExperienceType {
