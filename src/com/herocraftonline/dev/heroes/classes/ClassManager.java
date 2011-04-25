@@ -86,6 +86,11 @@ public class ClassManager {
 
             List<String> weapon = config.getStringList("classes." + className + ".permitted-weapon", defaultType);
             for (String w : weapon) {
+                // A BOW has no ItemType so we just add it straight away.
+                if(w.equalsIgnoreCase("BOW")){
+                    newClass.addAllowedWeapon("BOW");
+                    continue;
+                }
                 // If it's a generic type like 'DIAMOND' or 'LEATHER' we add all the possible entries.
                 if (!(w.contains("_"))) {
                     try {

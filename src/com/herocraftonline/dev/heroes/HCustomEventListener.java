@@ -57,19 +57,21 @@ public class HCustomEventListener extends CustomEventListener {
             if (slotNumber >= 36 && slotNumber <= 44) {
                 // Slots 36->44 are the Hotbar Slots.
                 String item = cursor.getType().toString();
-                // If it doesn't contain a '_' then it definitely isn't a Weapon.
-                if (!(item.contains("_"))) {
+                // If it doesn't contain a '_' and it isn't a Bow then it definitely isn't a Weapon.
+                if (!(item.contains("_")) && !(item.equalsIgnoreCase("BOW"))) {
                     return;
                 }
                 // Perform a check to see if what we have is a Weapon.
-                @SuppressWarnings("unused")
-                WeaponItems itemCheck = null;
-                try {
-                    // Get the value of the item.
-                    itemCheck = WeaponItems.valueOf(item.substring(item.indexOf("_") + 1, item.length()));
-                } catch (IllegalArgumentException e1) {
-                    // If it isn't a Weapon then we exit out here.
-                    return;
+                if (!(item.equalsIgnoreCase("BOW"))) {
+                    @SuppressWarnings("unused")
+                    WeaponItems itemCheck = null;
+                    try {
+                        // Get the value of the item.
+                        itemCheck = WeaponItems.valueOf(item.substring(item.indexOf("_") + 1, item.length()));
+                    } catch (IllegalArgumentException e1) {
+                        // If it isn't a Weapon then we exit out here.
+                        return;
+                    }
                 }
                 // Check if the Players HeroClass allows this WEAPON to be equipped.
                 if (!(clazz.getAllowedWeapons().contains(item))) {

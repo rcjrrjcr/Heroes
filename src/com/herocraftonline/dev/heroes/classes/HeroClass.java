@@ -28,15 +28,14 @@ public class HeroClass {
         IRON,
         GOLD,
         DIAMOND
-        }
+    }
 
     public static enum WeaponItems {
         PICKAXE,
         AXE,
         HOE,
         SPADE,
-        SWORD,
-        BOW
+        SWORD
     }
 
     public static enum ExperienceType {
