@@ -10,10 +10,10 @@ public class SkillTame extends ActiveSkill {
         super(plugin);
         name = "Tame";
         description = "Skill - Tame";
-        usage = "/tame";
+        usage = "/skill tame";
         minArgs = 1;
         maxArgs = 1;
-        identifiers.add("tame");
+        identifiers.add("skill tame");
     }
 
     @Override

@@ -14,14 +14,15 @@ public class SkillJump extends ActiveSkill {
         super(plugin);
         name = "Jump";
         description = "Skill - Jump";
-        usage = "/jump";
+        usage = "/skill jump";
         minArgs = 0;
         maxArgs = 0;
-        identifiers.add("jump");
+        identifiers.add("skill jump");
     }
 
     @Override
     public boolean use(Hero hero, String[] args) {
+        // TODO: this doesn't do what we want - it assumes the player is mid-jump
         Player player = hero.getPlayer();
         Vector velocity = player.getVelocity();
         player.setVelocity(velocity.setY((velocity.getY() * 2)));

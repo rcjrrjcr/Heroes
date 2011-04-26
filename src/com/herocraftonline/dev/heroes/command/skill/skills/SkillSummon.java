@@ -20,10 +20,10 @@ public class SkillSummon extends ActiveSkill {
         super(plugin);
         name = "Summon";
         description = "Skill - Summon";
-        usage = "/summon <monster>";
+        usage = "/skill summon <monster>";
         minArgs = 1;
         maxArgs = 1;
-        identifiers.add("summon");
+        identifiers.add("skill summon");
     }
 
     @Override

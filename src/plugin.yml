@@ -17,3 +17,6 @@ commands:
   one:
     description: Heroes command
     usage: /p <message>
+  skill:
+    description: Heroes command
+    usage: /skill <skill>

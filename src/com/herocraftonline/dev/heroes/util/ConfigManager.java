@@ -23,7 +23,7 @@ public class ConfigManager {
     protected File classConfigFile;
     protected File expConfigFile;
     protected File skillConfigFile;
-    protected Properties propertiesFile = new Properties();
+    protected Properties properties = new Properties();
 
     public ConfigManager(Heroes plugin) {
         this.plugin = plugin;
@@ -93,36 +93,37 @@ public class ConfigManager {
 
     private void loadLevelConfig(Configuration config) {
         String root = "leveling.";
-        plugin.getConfigManager().getProperties().power = config.getDouble(root + "power", 1.03);
-        plugin.getConfigManager().getProperties().baseExp = config.getInt(root + "baseExperience", 100);
-        plugin.getConfigManager().getProperties().maxExp = config.getInt(root + "maxExperience", 90000);
-        plugin.getConfigManager().getProperties().maxLevel = config.getInt(root + "maxLevel", 99);
-        plugin.getConfigManager().getProperties().classSwitchLevel = config.getInt(root + "classSwitchLevel", 20);
-        plugin.getConfigManager().getProperties().expLoss = config.getDouble(root + "expLoss", 0.95);
+        properties.power = config.getDouble(root + "power", 1.03);
+        properties.baseExp = config.getInt(root + "baseExperience", 100);
+        properties.maxExp = config.getInt(root + "maxExperience", 90000);
+        properties.maxLevel = config.getInt(root + "maxLevel", 99);
+        properties.classSwitchLevel = config.getInt(root + "classSwitchLevel", 20);
+        properties.expLoss = config.getDouble(root + "expLoss", 0.95);
+        properties.calcExp();
     }
 
     private void loadDefaultConfig(Configuration config) {
         String root = "default.";
-        plugin.getConfigManager().getProperties().defClass = config.getString(root + "class");
-        plugin.getConfigManager().getProperties().defLevel = config.getInt(root + "level", 1);
+        properties.defClass = config.getString(root + "class");
+        properties.defLevel = config.getInt(root + "level", 1);
     }
 
     private void loadProperties(Configuration config) {
         String root = "properties.";
-        plugin.getConfigManager().getProperties().iConomy = config.getBoolean(root + "iConomy", false);
-        plugin.getConfigManager().getProperties().cColor = ChatColor.valueOf(config.getString(root + "color", "WHITE"));
-        plugin.getConfigManager().getProperties().swapcost = config.getInt(root + "swapcost", 0);
-        plugin.getConfigManager().getProperties().debug = config.getBoolean(root + "debug", false);
+        properties.iConomy = config.getBoolean(root + "iConomy", false);
+        properties.cColor = ChatColor.valueOf(config.getString(root + "color", "WHITE"));
+        properties.swapcost = config.getInt(root + "swapcost", 0);
+        properties.debug = config.getBoolean(root + "debug", false);
     }
 
     private void loadPersistence(Configuration config) {
         String root = "data.";
-        plugin.getConfigManager().getProperties().host = config.getString(root + "host", "localhost");
-        plugin.getConfigManager().getProperties().port = config.getString(root + "port", "3306");
-        plugin.getConfigManager().getProperties().database = config.getString(root + "database", "heroes");
-        plugin.getConfigManager().getProperties().username = config.getString(root + "username", "root");
-        plugin.getConfigManager().getProperties().password = config.getString(root + "password", "");
-        plugin.getConfigManager().getProperties().method = config.getString(root + "method", "sqlite");
+        properties.host = config.getString(root + "host", "localhost");
+        properties.port = config.getString(root + "port", "3306");
+        properties.database = config.getString(root + "database", "heroes");
+        properties.username = config.getString(root + "username", "root");
+        properties.password = config.getString(root + "password", "");
+        properties.method = config.getString(root + "method", "sqlite");
     }
 
     private void loadExperience(Configuration config) {
@@ -131,10 +132,10 @@ public class ConfigManager {
             try {
                 int exp = config.getInt(root + "." + item, 0);
                 if (item.equals("player")) {
-                    plugin.getConfigManager().getProperties().playerKillingExp = exp;
+                    properties.playerKillingExp = exp;
                 } else {
                     CreatureType type = CreatureType.valueOf(item.toUpperCase());
-                    plugin.getConfigManager().getProperties().creatureKillingExp.put(type, exp);
+                    properties.creatureKillingExp.put(type, exp);
                 }
             } catch (IllegalArgumentException e) {
                 plugin.log(Level.WARNING, "Invalid creature type (" + item + ") found in experience.yml.");
@@ -147,7 +148,7 @@ public class ConfigManager {
             Material type = Material.matchMaterial(item);
 
             if (type != null) {
-                plugin.getConfigManager().getProperties().miningExp.put(type, exp);
+                properties.miningExp.put(type, exp);
             } else {
                 plugin.log(Level.WARNING, "Invalid material type (" + item + ") found in experience.yml.");
             }
@@ -159,7 +160,7 @@ public class ConfigManager {
             Material type = Material.matchMaterial(item);
 
             if (type != null) {
-                plugin.getConfigManager().getProperties().loggingExp.put(type, exp);
+                properties.loggingExp.put(type, exp);
             } else {
                 plugin.log(Level.WARNING, "Invalid material type (" + item + ") found in experience.yml.");
             }
@@ -203,6 +204,6 @@ public class ConfigManager {
     }
 
     public Properties getProperties() {
-        return propertiesFile;
+        return properties;
     }
 }

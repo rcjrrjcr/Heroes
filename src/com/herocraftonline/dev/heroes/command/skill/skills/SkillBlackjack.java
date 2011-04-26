@@ -24,10 +24,10 @@ public class SkillBlackjack extends ActiveSkill {
         super(plugin);
         name = "Blackjack";
         description = "Skill - blackjack";
-        usage = "/blackjack";
+        usage = "/skill blackjack";
         minArgs = 0;
         maxArgs = 0;
-        identifiers.add("blackjack");
+        identifiers.add("skill blackjack");
 
         registerEvent(Type.ENTITY_DAMAGE, new SkillEntityListener(), Priority.Normal);
         registerEvent(Type.PLAYER_MOVE, new SkillPlayerListener(), Priority.Normal);

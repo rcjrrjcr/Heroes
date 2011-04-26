@@ -18,10 +18,10 @@ public class SkillIronFist extends PassiveSkill {
         super(plugin);
         name = "Iron Fist";
         description = "Skill - Iron Fist";
-        usage = "/ironfist";
+        usage = "/skill ironfist";
         minArgs = 0;
         maxArgs = 0;
-        identifiers.add("ironfist");
+        identifiers.add("skill ironfist");
 
         registerEvent(Type.ENTITY_DAMAGE, new SkillPlayerListener(), Priority.Normal);
     }

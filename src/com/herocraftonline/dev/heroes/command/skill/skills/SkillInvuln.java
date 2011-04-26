@@ -17,10 +17,10 @@ public class SkillInvuln extends ActiveSkill {
         super(plugin);
         name = "Invuln";
         description = "Skill - Invuln";
-        usage = "/invuln";
+        usage = "/skill invuln";
         minArgs = 0;
         maxArgs = 0;
-        identifiers.add("invuln");
+        identifiers.add("skill invuln");
     }
 
     @Override

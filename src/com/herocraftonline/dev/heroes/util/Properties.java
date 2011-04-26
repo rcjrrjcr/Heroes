@@ -79,7 +79,7 @@ public class Properties {
         int n = 0;
         for (Integer i : levels) {
             if (!(exp >= i)) {
-                return n;
+                return n + 1;
             }
             n++;
         }

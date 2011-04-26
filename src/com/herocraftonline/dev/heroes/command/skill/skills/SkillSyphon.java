@@ -13,10 +13,10 @@ public class SkillSyphon extends TargettedSkill {
         super(plugin);
         name = "Syphon";
         description = "Skill - Syphon";
-        usage = "/syphon";
+        usage = "/skill syphon";
         minArgs = 1;
         maxArgs = 2;
-        identifiers.add("syphon");
+        identifiers.add("skill syphon");
     }
 
     @Override
