@@ -16,6 +16,7 @@ import org.bukkit.event.entity.EntityListener;
 import com.herocraftonline.dev.heroes.api.KillExperienceEvent;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.classes.HeroClass.ExperienceType;
+import com.herocraftonline.dev.heroes.party.HeroParty;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 
 public class HEntityListener extends EntityListener {
@@ -102,7 +103,11 @@ public class HEntityListener extends EntityListener {
                     attacker = subEvent.getDamager();
                     if (attacker instanceof Player && defender instanceof Player) {
                         Player p = (Player) attacker;
-                        if (plugin.getHeroManager().getHero(p).getParty().getMembers().contains((Player) defender)) {
+                        HeroParty party = plugin.getHeroManager().getHero(p).getParty();
+                        if (party == null) {
+                            return;
+                        }
+                        if (party.getMembers().contains(defender)) {
                             event.setCancelled(true);
                             return;
                         }
