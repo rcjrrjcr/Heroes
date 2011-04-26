@@ -28,7 +28,6 @@ import com.herocraftonline.dev.heroes.command.CommandManager;
 import com.herocraftonline.dev.heroes.command.SkillLoader;
 import com.herocraftonline.dev.heroes.command.commands.ConfigReloadCommand;
 import com.herocraftonline.dev.heroes.command.commands.HelpCommand;
-import com.herocraftonline.dev.heroes.command.commands.LevelInformationCommand;
 import com.herocraftonline.dev.heroes.command.commands.PartyAcceptCommand;
 import com.herocraftonline.dev.heroes.command.commands.PartyChatCommand;
 import com.herocraftonline.dev.heroes.command.commands.PartyCreateCommand;
@@ -36,7 +35,7 @@ import com.herocraftonline.dev.heroes.command.commands.PartyInviteCommand;
 import com.herocraftonline.dev.heroes.command.commands.RecoverItemsCommand;
 import com.herocraftonline.dev.heroes.command.commands.SelectProfessionCommand;
 import com.herocraftonline.dev.heroes.command.commands.SelectSpecialtyCommand;
-import com.herocraftonline.dev.heroes.command.commands.SkillInformationCommand;
+import com.herocraftonline.dev.heroes.command.commands.SkillCommand;
 import com.herocraftonline.dev.heroes.command.commands.UpdateCommand;
 import com.herocraftonline.dev.heroes.command.skill.Skill;
 import com.herocraftonline.dev.heroes.inventory.HNetServerHandler;
@@ -195,18 +194,17 @@ public class Heroes extends JavaPlugin {
     private void registerCommands() {
         // Page 1
         commandManager.addCommand(new HelpCommand(this));
+        commandManager.addCommand(new SkillCommand(this));
         commandManager.addCommand(new SelectProfessionCommand(this));
         commandManager.addCommand(new SelectSpecialtyCommand(this));
         commandManager.addCommand(new PartyAcceptCommand(this));
         commandManager.addCommand(new PartyCreateCommand(this));
         commandManager.addCommand(new PartyInviteCommand(this));
         commandManager.addCommand(new PartyChatCommand(this));
-        commandManager.addCommand(new SkillInformationCommand(this));
         // Page 2
-        commandManager.addCommand(new LevelInformationCommand(this));
-        commandManager.addCommand(new RecoverItemsCommand(this));
-        commandManager.addCommand(new ConfigReloadCommand(this));
         commandManager.addCommand(new UpdateCommand(this));
+        commandManager.addCommand(new ConfigReloadCommand(this));
+        commandManager.addCommand(new RecoverItemsCommand(this));
     }
 
     /**
@@ -371,7 +369,7 @@ public class Heroes extends JavaPlugin {
             }
 
             if (!(hc.getAllowedWeapons().contains(item))) {
-                if (!(moveItem(p, i, item))) {
+                if(!(moveItem(p,i,item))){
                     this.getMessager().send(p, "$1 has been removed from your Inventory", item);
                     count++;
                 }
@@ -383,7 +381,7 @@ public class Heroes extends JavaPlugin {
         }
     }
 
-    public boolean moveItem(Player p, int slot, String item) {
+    public boolean moveItem(Player p, int slot, String item){
         PlayerInventory inv = p.getInventory();
         Hero h = this.getHeroManager().getHero(p);
         int empty = firstEmpty(p);
