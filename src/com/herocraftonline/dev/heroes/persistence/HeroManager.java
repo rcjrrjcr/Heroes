@@ -109,8 +109,16 @@ public class HeroManager {
     public Hero getHero(Player player) {
         for (Hero hero : heroes) {
             if (hero.getPlayer() == null) {
+                heroes.remove(hero); // Seeing as it's null we might as well remove it.
                 continue;
             }
+            if (player.getName().equalsIgnoreCase(hero.getPlayer().getName())) {
+                return hero;
+            }
+        }
+        // If it gets to this stage then clearly the HeroManager doesn't have it so we create it...
+        loadHeroFile(player);
+        for (Hero hero : heroes) {
             if (player.getName().equalsIgnoreCase(hero.getPlayer().getName())) {
                 return hero;
             }
