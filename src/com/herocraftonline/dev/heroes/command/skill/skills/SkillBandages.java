@@ -21,13 +21,12 @@ public class SkillBandages extends TargettedSkill {
         minArgs = 0;
         maxArgs = 0;
         identifiers.add("cast bandage");
-
     }
 
     @Override
     public boolean use(Hero hero, LivingEntity target, String[] args) {
         Player player = hero.getPlayer();
-        if(target instanceof Player){
+        if (target instanceof Player) {
             final Player tPlayer = (Player) target;
             if (!player.getItemInHand().equals(Material.PAPER)) {
                 plugin.getMessager().send(player, "You need paper to perform this");
