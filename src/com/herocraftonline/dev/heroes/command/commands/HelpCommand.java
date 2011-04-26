@@ -30,6 +30,7 @@ public class HelpCommand extends BaseCommand {
         identifiers.add("heroes");
         identifiers.add("heroes help");
         identifiers.add("h");
+        identifiers.add("h help");
     }
 
     @Override

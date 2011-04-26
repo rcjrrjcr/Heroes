@@ -6,8 +6,12 @@ authors: [DThielke, Rigby, RightLegRed]
 description: Experience, leveling and class system for Minecraft developed by the Herocraft coding team.
 commands:
   heroes:
+    aliases: ['h']
     description: Heroes commands
     usage: /heroes <command>
+  hrecover:
+    description: Heroes Recover Items command
+    usage: <command>
   summon:
     description: Heroes commands
     usage: /summon <monster>
