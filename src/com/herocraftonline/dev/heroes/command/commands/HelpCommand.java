@@ -24,13 +24,11 @@ public class HelpCommand extends BaseCommand {
         super(plugin);
         name = "Help";
         description = "Displays the help menu";
-        usage = "§e/heroes help §8[page#]";
+        usage = "/hero help [page#]";
         minArgs = 0;
         maxArgs = 1;
-        identifiers.add("heroes");
-        identifiers.add("heroes help");
-        identifiers.add("h");
-        identifiers.add("h help");
+        identifiers.add("hero");
+        identifiers.add("hero help");
     }
 
     @Override
@@ -61,7 +59,7 @@ public class HelpCommand extends BaseCommand {
         if (page >= numPages || page < 0) {
             page = 0;
         }
-        sender.sendMessage("§c-----[ " + "§fHeroes Help <" + (page + 1) + "/" + numPages + ">§c ]-----");
+        sender.sendMessage("ï¿½c-----[ " + "ï¿½fHeroes Help <" + (page + 1) + "/" + numPages + ">ï¿½c ]-----");
         int start = page * CMDS_PER_PAGE;
         int end = start + CMDS_PER_PAGE;
         if (end > commands.size()) {
@@ -69,10 +67,10 @@ public class HelpCommand extends BaseCommand {
         }
         for (int c = start; c < end; c++) {
             BaseCommand cmd = commands.get(c);
-            sender.sendMessage("  §a" + cmd.getUsage());
+            sender.sendMessage("  ï¿½a" + cmd.getUsage());
         }
 
-        sender.sendMessage("§cFor more info on a particular command, type '/<command> ?'");
+        sender.sendMessage("ï¿½cFor more info on a particular command, type '/<command> ?'");
     }
 
 }

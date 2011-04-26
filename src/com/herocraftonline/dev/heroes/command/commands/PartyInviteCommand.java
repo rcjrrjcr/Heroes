@@ -14,10 +14,10 @@ public class PartyInviteCommand extends BaseCommand {
         super(plugin);
         name = "PartyInvite";
         description = "Invite a player to the party";
-        usage = "/heroes party invite <player>";
+        usage = "/hero party invite <player>";
         minArgs = 1;
         maxArgs = 1;
-        identifiers.add("heroes party invite");
+        identifiers.add("hero party invite");
     }
 
     @Override

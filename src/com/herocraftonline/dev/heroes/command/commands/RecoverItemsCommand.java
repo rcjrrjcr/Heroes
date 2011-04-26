@@ -18,12 +18,10 @@ public class RecoverItemsCommand extends BaseCommand {
         super(plugin);
         name = "RecoverItems";
         description = "Recover removed items";
-        usage = "/hrecover";
+        usage = "/hero recoveritems";
         minArgs = 0;
         maxArgs = 0;
-        identifiers.add("heroes recoveritems");
-        identifiers.add("h recoveritems");
-        identifiers.add("hrecover");
+        identifiers.add("hero recoveritems");
     }
 
     @Override
