@@ -13,10 +13,10 @@ public class PartyInfoCommand extends BaseCommand {
         super(plugin);
         name = "Party Info";
         description = "Display party information";
-        usage = "/heroes party info";
+        usage = "/hero party info";
         minArgs = 1;
         maxArgs = 1;
-        identifiers.add("heroes party info");
+        identifiers.add("hero party info");
     }
 
     @Override

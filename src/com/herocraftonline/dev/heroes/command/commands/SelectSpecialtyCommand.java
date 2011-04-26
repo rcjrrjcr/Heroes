@@ -18,10 +18,10 @@ public class SelectSpecialtyCommand extends BaseCommand {
         super(plugin);
         name = "Select Specialty";
         description = "Allows you to advance from a primary class to it's specialty";
-        usage = "/heroes specialty §9<type>";
+        usage = "/hero specialty §9<type>";
         minArgs = 1;
         maxArgs = 1;
-        identifiers.add("heroes specialty");
+        identifiers.add("hero specialty");
     }
 
     @Override

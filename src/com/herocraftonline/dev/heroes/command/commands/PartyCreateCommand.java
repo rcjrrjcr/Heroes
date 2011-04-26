@@ -14,10 +14,10 @@ public class PartyCreateCommand extends BaseCommand {
         super(plugin);
         name = "PartyCreate";
         description = "Creates a party";
-        usage = "/heroes party create <name>";
+        usage = "/hero party create <name>";
         minArgs = 1;
         maxArgs = 1;
-        identifiers.add("heroes party create");
+        identifiers.add("hero party create");
     }
 
     @Override

@@ -12,7 +12,7 @@ public class PartyChatCommand extends BaseCommand {
         super(plugin);
         name = "Party Chat Command";
         description = "Sends a message to the whole party";
-        usage = "/heroes admin reload";
+        usage = "/p <message>";
         minArgs = 1;
         maxArgs = 100000;
         identifiers.add("p");

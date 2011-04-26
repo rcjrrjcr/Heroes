@@ -14,10 +14,10 @@ public class UpdateCommand extends BaseCommand {
         super(plugin);
         name = "Update";
         description = "Updates the plugin";
-        usage = "/heroes admin update";
+        usage = "/hero admin update";
         minArgs = 0;
         maxArgs = 0;
-        identifiers.add("heroes admin update");
+        identifiers.add("hero admin update");
     }
 
     @Override

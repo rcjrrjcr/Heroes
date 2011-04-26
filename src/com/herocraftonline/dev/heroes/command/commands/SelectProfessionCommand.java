@@ -16,10 +16,10 @@ public class SelectProfessionCommand extends BaseCommand {
         super(plugin);
         name = "Select Profession";
         description = "Selects a new profession";
-        usage = "/heroes profession §9<type>";
+        usage = "/hero profession §9<type>";
         minArgs = 1;
         maxArgs = 1;
-        identifiers.add("heroes profession");
+        identifiers.add("hero profession");
     }
 
     @Override

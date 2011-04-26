@@ -13,10 +13,10 @@ public class PartyLeaveCommand extends BaseCommand {
         super(plugin);
         name = "Party Leave";
         description = "Leaves a party";
-        usage = "/heroes party leave";
+        usage = "/hero party leave";
         minArgs = 0;
         maxArgs = 0;
-        identifiers.add("heroes party leave");
+        identifiers.add("hero party leave");
     }
 
     @Override
