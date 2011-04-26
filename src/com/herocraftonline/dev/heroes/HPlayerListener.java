@@ -4,8 +4,10 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerListener;
+import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import com.herocraftonline.dev.heroes.persistence.Hero;
@@ -32,6 +34,22 @@ public class HPlayerListener extends PlayerListener {
         heroManager.loadHeroFile(player);
         plugin.swapNetServerHandler(player);
         plugin.inventoryCheck(player);
+    }
+
+    @Override
+    public void onItemHeldChange(PlayerItemHeldEvent event) {
+        plugin.inventoryCheck(event.getPlayer());
+    }
+
+    @Override
+    public void onPlayerPickupItem(PlayerPickupItemEvent event) {
+        final Player player = event.getPlayer();
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+            @Override
+            public void run() {
+                plugin.inventoryCheck(player);
+            }
+        });
     }
 
     @Override

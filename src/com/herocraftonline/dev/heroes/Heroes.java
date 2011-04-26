@@ -177,6 +177,8 @@ public class Heroes extends JavaPlugin {
         pluginManager.registerEvent(Type.PLAYER_QUIT, playerListener, Priority.Normal, this);
         pluginManager.registerEvent(Type.PLAYER_JOIN, playerListener, Priority.Normal, this);
         pluginManager.registerEvent(Type.PLAYER_INTERACT, playerListener, Priority.Normal, this);
+        pluginManager.registerEvent(Type.PLAYER_ITEM_HELD, playerListener, Priority.Normal, this);
+        pluginManager.registerEvent(Type.PLAYER_PICKUP_ITEM, playerListener, Priority.Normal, this);
 
         pluginManager.registerEvent(Type.ENTITY_DAMAGE, entityListener, Priority.Normal, this);
         pluginManager.registerEvent(Type.ENTITY_DEATH, entityListener, Priority.Normal, this);
@@ -373,6 +375,8 @@ public class Heroes extends JavaPlugin {
                 if (!(moveItem(p, i, item))) {
                     this.getMessager().send(p, "$1 has been removed from your Inventory", item);
                     count++;
+                } else {
+                    this.getMessager().send(p, "You are not trained to use a $1", item);
                 }
             }
         }
