@@ -35,6 +35,7 @@ import com.herocraftonline.dev.heroes.command.commands.PartyInviteCommand;
 import com.herocraftonline.dev.heroes.command.commands.RecoverItemsCommand;
 import com.herocraftonline.dev.heroes.command.commands.SelectProfessionCommand;
 import com.herocraftonline.dev.heroes.command.commands.SelectSpecialtyCommand;
+import com.herocraftonline.dev.heroes.command.commands.SkillCommand;
 import com.herocraftonline.dev.heroes.command.commands.UpdateCommand;
 import com.herocraftonline.dev.heroes.command.skill.Skill;
 import com.herocraftonline.dev.heroes.inventory.HNetServerHandler;
@@ -193,7 +194,7 @@ public class Heroes extends JavaPlugin {
     private void registerCommands() {
         // Page 1
         commandManager.addCommand(new HelpCommand(this));
-        commandManager.addCommand(new UpdateCommand(this));
+        commandManager.addCommand(new SkillCommand(this));
         commandManager.addCommand(new SelectProfessionCommand(this));
         commandManager.addCommand(new SelectSpecialtyCommand(this));
         commandManager.addCommand(new PartyAcceptCommand(this));
@@ -201,6 +202,7 @@ public class Heroes extends JavaPlugin {
         commandManager.addCommand(new PartyInviteCommand(this));
         commandManager.addCommand(new PartyChatCommand(this));
         // Page 2
+        commandManager.addCommand(new UpdateCommand(this));
         commandManager.addCommand(new ConfigReloadCommand(this));
         commandManager.addCommand(new RecoverItemsCommand(this));
     }
