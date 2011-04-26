@@ -76,15 +76,15 @@ public class HeroClass {
     }
 
     public boolean hasSkill(String name) {
-        return skills.containsKey(name);
+        return skills.containsKey(name.toLowerCase());
     }
 
     public void addSkill(String name, int requiredLevel, int manaCost, int cooldown) {
-        skills.put(name, new SkillSettings(requiredLevel, manaCost, cooldown));
+        skills.put(name.toLowerCase(), new SkillSettings(requiredLevel, manaCost, cooldown));
     }
 
     public void removeSkill(String name) {
-        skills.remove(name);
+        skills.remove(name.toLowerCase());
     }
 
     @Override
@@ -162,7 +162,7 @@ public class HeroClass {
     }
 
     public SkillSettings getSkillSettings(String name) {
-        return skills.get(name);
+        return skills.get(name.toLowerCase());
     }
 
     public Set<ExperienceType> getExperienceSources() {

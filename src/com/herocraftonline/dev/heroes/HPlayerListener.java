@@ -1,7 +1,6 @@
 package com.herocraftonline.dev.heroes;
 
-import java.util.Arrays;
-
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -10,6 +9,7 @@ import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+import com.herocraftonline.dev.heroes.persistence.Hero;
 import com.herocraftonline.dev.heroes.persistence.HeroManager;
 
 public class HPlayerListener extends PlayerListener {
@@ -43,10 +43,12 @@ public class HPlayerListener extends PlayerListener {
     @Override
     public void onPlayerInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
-        if (plugin.getHeroManager().getHero(player).getBinds().containsKey(event.getMaterial())) {
+        Material material = player.getItemInHand().getType();
+        Hero hero = plugin.getHeroManager().getHero(player);
+        if (hero.getBinds().containsKey(material)) {
             if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-                String[] args = plugin.getHeroManager().getHero(player).getBinds().get(event.getMaterial());
-                plugin.onCommand(player, null, args[0], Arrays.copyOf(args, 1));
+                String[] args = hero.getBinds().get(material);
+                plugin.onCommand(player, null, "skill", args);
             }
         }
     }

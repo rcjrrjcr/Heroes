@@ -23,3 +23,6 @@ commands:
     aliases: ['level','lvl']
     description: Display Hero level information
     usage: /<command>
+  assign:
+    description: Binds a skill to an item
+    usage: /<command> <skill> 

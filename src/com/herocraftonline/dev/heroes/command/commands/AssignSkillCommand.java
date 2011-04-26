@@ -1,13 +1,13 @@
 package com.herocraftonline.dev.heroes.command.commands;
 
-import java.util.Arrays;
-
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.herocraftonline.dev.heroes.Heroes;
+import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.command.BaseCommand;
+import com.herocraftonline.dev.heroes.persistence.Hero;
 
 public class AssignSkillCommand extends BaseCommand {
 
@@ -16,7 +16,7 @@ public class AssignSkillCommand extends BaseCommand {
         name = "AssignSkill";
         description = "Assigns a skill to an item";
         usage = "/assign <spell>";
-        minArgs = 1;
+        minArgs = 0;
         maxArgs = 1000;
         identifiers.add("assign");
     }
@@ -24,24 +24,20 @@ public class AssignSkillCommand extends BaseCommand {
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (sender instanceof Player) {
-            if (args[1] != null) {
-                if (plugin.getHeroManager().getHero((Player) sender).getPlayerClass().hasSkill(args[0])) {
-                    plugin.getHeroManager().getHero((Player) sender).bind(Material.getMaterial(args[0]), Arrays.copyOf(args, 1));
-                    Player player = (Player) sender;
-                    if (args.length > 0) {
-                        if (plugin.getHeroManager().getHero(player).getPlayerClass().hasSkill(args[0])) {
-                            plugin.getHeroManager().getHero(player).bind(Material.getMaterial(args[0]), Arrays.copyOf(args, 1));
-                            plugin.getMessager().send(sender, "That has been assigned as your skill", (String[]) null);
-                        } else {
-                            plugin.getMessager().send(sender, "That skill does not exist for your class", (String[]) null);
-                        }
-                    } else {
-                        plugin.getHeroManager().getHero(player).unbind(Material.getMaterial(args[0]));
-                        plugin.getMessager().send(sender, "Your equipped item is no longer bound to a skill.", (String[]) null);
-                    }
+            Player player = (Player) sender;
+            Hero hero = plugin.getHeroManager().getHero(player);
+            HeroClass heroClass = hero.getPlayerClass();
+            Material material = player.getItemInHand().getType();
+            if (args.length > 0) {
+                if (heroClass.hasSkill(args[0])) {
+                    hero.bind(material, args);
+                    plugin.getMessager().send(sender, "That has been assigned as your skill");
                 } else {
-                    plugin.getHeroManager().getHero((Player) sender).bind(Material.getMaterial(args[0]), null);
+                    plugin.getMessager().send(sender, "That skill does not exist for your class");
                 }
+            } else {
+                hero.unbind(material);
+                plugin.getMessager().send(sender, "Your equipped item is no longer bound to a skill.");
             }
         }
     }

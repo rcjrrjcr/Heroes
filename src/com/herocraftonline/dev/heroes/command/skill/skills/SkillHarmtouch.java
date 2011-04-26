@@ -44,8 +44,7 @@ public class SkillHarmtouch extends TargettedSkill {
         if (damageEntityEvent.isCancelled()) {
             return false;
         }
-        int newHealth = target.getHealth() - damage;
-        target.setHealth(newHealth < 0 ? 0 : newHealth);
+        target.damage(damage);
         return true;
     }
 
