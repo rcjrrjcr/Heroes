@@ -34,6 +34,7 @@ public class HeroManager {
 
     /**
      * Load the given Players Data file.
+     * 
      * @param player
      */
     public void loadHeroFile(Player player) {
@@ -71,18 +72,20 @@ public class HeroManager {
 
     /**
      * Save the given Players Data to a file.
-     * @param p
+     * 
+     * @param player
      */
-    public void saveHeroFile(Player p) {
-        File playerFile = new File(playerFolder, p.getName() + ".yml");
+    public void saveHeroFile(Player player) {
+        File playerFile = new File(playerFolder, player.getName() + ".yml");
         Configuration playerConfig = new Configuration(playerFile);
         // Save the players stuff
-        playerConfig.setProperty("class", getHero(p).getPlayerClass().toString());
-        playerConfig.setProperty("experience", getHero(p).getExperience());
-        playerConfig.setProperty("mana", getHero(p).getMana());
-        playerConfig.setProperty("masteries", getHero(p).getMasteries());
-        playerConfig.setProperty("itemrecovery", getHero(p).getItems());
+        playerConfig.setProperty("class", getHero(player).getPlayerClass().toString());
+        playerConfig.setProperty("experience", getHero(player).getExperience());
+        playerConfig.setProperty("mana", getHero(player).getMana());
+        playerConfig.setProperty("masteries", getHero(player).getMasteries());
+        playerConfig.setProperty("itemrecovery", getHero(player).getItems());
         playerConfig.save();
+        plugin.log(Level.INFO, "Saved hero: " + player.getName());
     }
 
     public boolean createNewHero(Player player) {
@@ -105,6 +108,9 @@ public class HeroManager {
 
     public Hero getHero(Player player) {
         for (Hero hero : heroes) {
+            if (hero.getPlayer() == null) {
+                continue;
+            }
             if (player.getName().equalsIgnoreCase(hero.getPlayer().getName())) {
                 return hero;
             }
