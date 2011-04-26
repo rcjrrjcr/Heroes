@@ -17,10 +17,10 @@ public class SkillBandages extends TargettedSkill {
         super(plugin);
         name = "Bandage";
         description = "Skill - Bandage";
-        usage = "/cast bandage";
+        usage = "/skill bandage";
         minArgs = 0;
         maxArgs = 0;
-        identifiers.add("cast bandage");
+        identifiers.add("skill bandage");
     }
 
     @Override

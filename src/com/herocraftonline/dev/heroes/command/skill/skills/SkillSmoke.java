@@ -20,10 +20,10 @@ public class SkillSmoke extends ActiveSkill {
         super(plugin);
         name = "Smoke";
         description = "Skill - smoke";
-        usage = "/smoke";
+        usage = "/skill smoke";
         minArgs = 0;
         maxArgs = 0;
-        identifiers.add("smoke");
+        identifiers.add("skill smoke");
 
         registerEvent(Type.ENTITY_DAMAGE, new SkillEntityListener(), Priority.Normal);
     }

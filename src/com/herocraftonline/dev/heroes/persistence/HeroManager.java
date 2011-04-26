@@ -59,7 +59,7 @@ public class HeroManager {
             int exp = playerConfig.getInt("experience", 0);
 
             // Create a New Hero
-            Hero playerHero = new Hero(player, playerClass, exp, mana, masteries, itemRecovery);
+            Hero playerHero = new Hero(plugin, player, playerClass, exp, mana, masteries, itemRecovery);
             // Add the Hero to the Set.
             addHero(playerHero);
         } else {
@@ -88,7 +88,7 @@ public class HeroManager {
     public boolean createNewHero(Player player) {
         plugin.getServer().getPluginManager().callEvent(new NewPlayerEvent(player));
         // Add a new Hero with the default setup.
-        return addHero(new Hero(player, plugin.getClassManager().getDefaultClass(), 0, 0, new ArrayList<String>(), new ArrayList<String>()));
+        return addHero(new Hero(plugin, player, plugin.getClassManager().getDefaultClass(), 0, 0, new ArrayList<String>(), new ArrayList<String>()));
     }
 
     public boolean addHero(Hero hero) {

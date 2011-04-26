@@ -20,10 +20,10 @@ public class SkillBladegrasp extends ActiveSkill {
         super(plugin);
         name = "Bladegrasp";
         description = "Skill - Bladegrasp";
-        usage = "/bladegrasp";
+        usage = "/skill bladegrasp";
         minArgs = 0;
         maxArgs = 0;
-        identifiers.add("bladegrasp");
+        identifiers.add("skill bladegrasp");
 
         registerEvent(Type.ENTITY_DAMAGE, new SkillEntityListener(), Priority.Normal);
     }

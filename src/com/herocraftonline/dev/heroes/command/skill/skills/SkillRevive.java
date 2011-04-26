@@ -15,10 +15,10 @@ public class SkillRevive extends TargettedSkill {
         super(plugin);
         name = "Revive";
         description = "Skill - Revive";
-        usage = "/revive";
+        usage = "/skill revive";
         minArgs = 1;
         maxArgs = 1;
-        identifiers.add("revive");
+        identifiers.add("skill revive");
     }
 
     @Override

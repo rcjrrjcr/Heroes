@@ -22,10 +22,10 @@ public class SkillFireball extends ActiveSkill {
         super(plugin);
         name = "Fireball";
         description = "Skill - Fireball";
-        usage = "/fireball";
+        usage = "/skill fireball";
         minArgs = 0;
         maxArgs = 0;
-        identifiers.add("fireball");
+        identifiers.add("skill fireball");
     }
 
     @Override

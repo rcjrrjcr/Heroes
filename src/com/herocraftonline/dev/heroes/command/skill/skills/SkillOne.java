@@ -18,10 +18,10 @@ public class SkillOne extends ActiveSkill {
         super(plugin);
         name = "One";
         description = "Skill - one";
-        usage = "/one";
+        usage = "/skill one";
         minArgs = 0;
         maxArgs = 0;
-        identifiers.add("one");
+        identifiers.add("skill one");
 
         registerEvent(Type.PLAYER_MOVE, new SkillPlayerListener(), Priority.Normal);
     }

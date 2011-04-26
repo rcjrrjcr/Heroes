@@ -11,10 +11,10 @@ public class SkillLayhands extends TargettedSkill {
         super(plugin);
         name = "Layhands";
         description = "Skill - Layhands";
-        usage = "/layhands <player>";
+        usage = "/skill layhands <player>";
         minArgs = 1;
         maxArgs = 1;
-        identifiers.add("layhands");
+        identifiers.add("skill layhands");
     }
 
     @Override

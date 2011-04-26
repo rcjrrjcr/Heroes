@@ -14,10 +14,10 @@ public class SkillTrack extends TargettedSkill {
         super(plugin);
         name = "Track";
         description = "Skill - Track";
-        usage = "/track <player>";
+        usage = "/skill track <player>";
         minArgs = 1;
         maxArgs = 1;
-        identifiers.add("track");
+        identifiers.add("skill track");
     }
 
     @Override

@@ -32,10 +32,10 @@ public abstract class ActiveSkill extends Skill {
             }
             SkillSettings settings = heroClass.getSkillSettings(name);
             if (!meetsLevelRequirement(hero, settings.LevelRequirement)) {
-                plugin.getMessager().send(player, "You are not high enough level to use $2.", name);
+                plugin.getMessager().send(player, "You must be level $1 to use $2.", String.valueOf(settings.LevelRequirement), name);
                 return;
             }
-            if (settings.ManaCost < hero.getMana()) {
+            if (settings.ManaCost > hero.getMana()) {
                 plugin.getMessager().send(player, "You don't have enough mana to use $1.", name);
                 return;
             }
