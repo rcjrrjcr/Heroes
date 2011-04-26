@@ -94,6 +94,7 @@ public class HEntityListener extends EntityListener {
         Entity defender = event.getEntity();
         if (defender instanceof LivingEntity) {
             if (((LivingEntity) defender).getHealth() - event.getDamage() <= 0) {
+                // Grab the Attacker regardless of the Event.
                 Entity attacker = null;
                 if (event instanceof EntityDamageByProjectileEvent) {
                     EntityDamageByProjectileEvent subEvent = (EntityDamageByProjectileEvent) event;
@@ -101,18 +102,16 @@ public class HEntityListener extends EntityListener {
                 } else if (event instanceof EntityDamageByEntityEvent) {
                     EntityDamageByEntityEvent subEvent = (EntityDamageByEntityEvent) event;
                     attacker = subEvent.getDamager();
-                    if (attacker instanceof Player && defender instanceof Player) {
-                        Player p = (Player) attacker;
-                        HeroParty party = plugin.getHeroManager().getHero(p).getParty();
-                        if (party == null) {
-                            return;
-                        }
-                        if (party.getMembers().contains(defender)) {
-                            event.setCancelled(true);
-                            return;
-                        }
+                }
+                // Check if the Attacker is in the Defenders Party.
+                if (attacker instanceof Player && defender instanceof Player) {
+                    HeroParty party = plugin.getHeroManager().getHero((Player) attacker).getParty();
+                    if (party != null && party.getMembers().contains(defender)) {
+                        event.setCancelled(true);
+                        return;
                     }
                 }
+                // If it's a legitimate attack then we add it to the Kills list.
                 if (attacker != null && attacker instanceof Player) {
                     kills.put(defender, (Player) attacker);
                 } else {
