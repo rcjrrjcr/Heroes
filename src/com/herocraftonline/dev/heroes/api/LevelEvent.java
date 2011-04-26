@@ -6,26 +6,22 @@ import org.bukkit.entity.Player;
 public class LevelEvent extends ExperienceGainEvent {
     protected Player player;
     protected int experience;
-    protected int toLevel;
-    protected int fromLevel;
+    protected int newLevel;
+    protected int previousLevel;
 
-    public LevelEvent(Player player, int exp, int toLevel, int fromLevel) {
+    public LevelEvent(Player player, int exp, int newLevel, int previousLevel) {
         super(player, exp);
         this.experience = exp;
-        this.toLevel = toLevel;
-        this.fromLevel = fromLevel;
+        this.newLevel = newLevel;
+        this.previousLevel = previousLevel;
     }
 
-    public int getToLevel() {
-        return toLevel;
+    public int getNewLevel() {
+        return newLevel;
     }
 
-    public void setToLevel(int toLevel) {
-        this.toLevel = toLevel;
-    }
-
-    public int getFromLevel() {
-        return fromLevel;
+    public int getPreviousLevel() {
+        return previousLevel;
     }
 
     public Player getPlayer() {
@@ -35,9 +31,4 @@ public class LevelEvent extends ExperienceGainEvent {
     public int getExperience() {
         return experience;
     }
-
-    public void setExperience(int experience) {
-        this.experience = experience;
-    }
-
 }

@@ -13,7 +13,8 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityListener;
 
-import com.herocraftonline.dev.heroes.api.KillExperienceEvent;
+import com.herocraftonline.dev.heroes.api.ExperienceGainEvent;
+import com.herocraftonline.dev.heroes.api.LevelEvent;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.classes.HeroClass.ExperienceType;
 import com.herocraftonline.dev.heroes.party.HeroParty;
@@ -32,6 +33,7 @@ public class HEntityListener extends EntityListener {
     public void onEntityDeath(EntityDeathEvent event) {
         Entity defender = event.getEntity();
         Player attacker = kills.get(defender);
+        kills.remove(defender);
         if (attacker != null) {
             // Get the Hero representing the player
             Hero hero = plugin.getHeroManager().getHero(attacker);
@@ -45,14 +47,11 @@ public class HEntityListener extends EntityListener {
                     int addedExp = 0;
                     // If the dying entity is a Player
                     if (defender instanceof Player) {
+                        addedExp = plugin.getConfigManager().getProperties().playerKillingExp;
+                        
+                        // Incur 5% experience loss to dying player
                         Hero heroDefender = plugin.getHeroManager().getHero((Player) defender);
                         heroDefender.setExperience((int) (heroDefender.getExperience() * 0.95));
-                        addedExp = plugin.getConfigManager().getProperties().playerKillingExp;
-                        KillExperienceEvent pvpEvent = new KillExperienceEvent(attacker, defender, addedExp);
-                        plugin.getServer().getPluginManager().callEvent(pvpEvent);
-                        if (!pvpEvent.isCancelled()) {
-                            addedExp = pvpEvent.getExp();
-                        }
                     } else {
                         // Get the dying entity's CreatureType
                         CreatureType type = null;
@@ -68,25 +67,36 @@ public class HEntityListener extends EntityListener {
                         }
                         if (type != null) {
                             addedExp = plugin.getConfigManager().getProperties().creatureKillingExp.get(type);
-                            KillExperienceEvent pveEvent = new KillExperienceEvent(attacker, defender, addedExp);
-                            plugin.getServer().getPluginManager().callEvent(pveEvent);
-                            if (!pveEvent.isCancelled()) {
-                                addedExp = pveEvent.getExp();
-                            }
                         }
                     }
-                    // Add the experience to the player
+                    // Fire the experience gain event
                     int exp = hero.getExperience();
+                    int currentLevel = plugin.getConfigManager().getProperties().getLevel(exp + addedExp);
+                    int newLevel = plugin.getConfigManager().getProperties().getLevel(exp + addedExp);
+                    ExperienceGainEvent expEvent;
+                    if (newLevel == currentLevel) {
+                        expEvent = new ExperienceGainEvent(attacker, addedExp);
+                    } else {
+                        expEvent = new LevelEvent(attacker, addedExp, newLevel, currentLevel);
+                    }
+                    plugin.getServer().getPluginManager().callEvent(expEvent);
+                    if (expEvent.isCancelled()) {
+                        return;
+                    }
+                    addedExp = expEvent.getExp();
+                    
                     // Only perform an experience update if we're actually
                     // adding or subtracting from their experience.
                     if (addedExp != 0) {
                         hero.setExperience(exp + addedExp);
-                        plugin.getMessager().send(attacker, "$1: $2 Exp (+$3)", playerClass.getName(), String.valueOf(exp), String.valueOf(addedExp));
+                        plugin.getMessager().send(attacker, "$1: Gained $2 Exp", playerClass.getName(), String.valueOf(addedExp));
+                        if (newLevel != currentLevel) {
+                            plugin.getMessager().send(attacker, "You leveled up! (Lvl $1 $2)", String.valueOf(newLevel), playerClass.getName());
+                        }
                     }
                 }
             }
         }
-        kills.remove(defender);
     }
 
     @Override

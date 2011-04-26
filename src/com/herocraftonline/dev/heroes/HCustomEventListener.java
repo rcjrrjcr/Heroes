@@ -43,7 +43,7 @@ public class HCustomEventListener extends CustomEventListener {
             Hero hero = plugin.getHeroManager().getHero(p);
             HeroClass clazz = hero.getPlayerClass();
 
-            if(e.getSlotType()==InventorySlotType.ARMOR){
+            if (e.getSlotType() == InventorySlotType.ARMOR) {
                 String item = cursor.getType().toString();
                 if (!(clazz.getAllowedArmor().contains(item))) {
                     plugin.getMessager().send(p, "You cannot equip that armor - $1", item);
@@ -51,7 +51,7 @@ public class HCustomEventListener extends CustomEventListener {
                     return;
                 }
             }
-            if(e.getSlotType()==InventorySlotType.QUICKBAR){
+            if (e.getSlotType() == InventorySlotType.QUICKBAR) {
                 String item = cursor.getType().toString();
                 // If it doesn't contain a '_' and it isn't a Bow then it definitely isn't a Weapon.
                 if (!(item.contains("_")) && !(item.equalsIgnoreCase("BOW"))) {

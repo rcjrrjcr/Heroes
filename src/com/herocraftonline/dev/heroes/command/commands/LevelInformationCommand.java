@@ -33,17 +33,17 @@ public class LevelInformationCommand extends BaseCommand {
             int level = prop.getLevel(exp);
             int next = prop.levels[level + 1];
 
-            sender.sendMessage("§c-----[ " + "§fYour Level Information§c ]-----");
+            sender.sendMessage("Â§c-----[ " + "Â§fYour Level InformationÂ§c ]-----");
 
-            sender.sendMessage("  §aClass : " + h.getPlayerClass().getName());
-            sender.sendMessage("  §aLevel : " + level);
-            sender.sendMessage("  §aExp : " + exp);
-            sender.sendMessage("  §aNext Level : " + level + 1);
-            sender.sendMessage("  §aExp to Go: " + (next - exp));
+            sender.sendMessage("  Â§aClass : " + h.getPlayerClass().getName());
+            sender.sendMessage("  Â§aLevel : " + level);
+            sender.sendMessage("  Â§aExp : " + exp);
+            sender.sendMessage("  Â§aNext Level : " + level + 1);
+            sender.sendMessage("  Â§aExp to Go: " + (next - exp));
 
             // Possible exp progress bar to come, but this will do for now.
             // String expBar = "";
-            // sender.sendMessage("  §aExp Progress: " + );
+            // sender.sendMessage("  ï¿½aExp Progress: " + );
         }
     }
 }
