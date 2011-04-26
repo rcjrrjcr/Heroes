@@ -5,9 +5,13 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.craftbukkit.CraftServer;
+import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event.Type;
@@ -23,6 +27,7 @@ import com.herocraftonline.dev.heroes.classes.HeroClass.WeaponItems;
 import com.herocraftonline.dev.heroes.command.CommandManager;
 import com.herocraftonline.dev.heroes.command.SkillLoader;
 import com.herocraftonline.dev.heroes.command.commands.ConfigReloadCommand;
+import com.herocraftonline.dev.heroes.command.commands.HelpCommand;
 import com.herocraftonline.dev.heroes.command.commands.PartyAcceptCommand;
 import com.herocraftonline.dev.heroes.command.commands.PartyChatCommand;
 import com.herocraftonline.dev.heroes.command.commands.PartyCreateCommand;
@@ -32,6 +37,7 @@ import com.herocraftonline.dev.heroes.command.commands.SelectProfessionCommand;
 import com.herocraftonline.dev.heroes.command.commands.SelectSpecialtyCommand;
 import com.herocraftonline.dev.heroes.command.commands.UpdateCommand;
 import com.herocraftonline.dev.heroes.command.skill.Skill;
+import com.herocraftonline.dev.heroes.inventory.HNetServerHandler;
 import com.herocraftonline.dev.heroes.party.PartyManager;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 import com.herocraftonline.dev.heroes.persistence.HeroManager;
@@ -136,6 +142,7 @@ public class Heroes extends JavaPlugin {
 
         for (Player player : getServer().getOnlinePlayers()) {
             heroManager.loadHeroFile(player);
+            swapNetServerHandler(player);
             inventoryCheck(player);
         }
     }
@@ -185,14 +192,16 @@ public class Heroes extends JavaPlugin {
      */
     private void registerCommands() {
         // Page 1
+        commandManager.addCommand(new HelpCommand(this));
         commandManager.addCommand(new UpdateCommand(this));
         commandManager.addCommand(new SelectProfessionCommand(this));
-        commandManager.addCommand(new ConfigReloadCommand(this));
         commandManager.addCommand(new SelectSpecialtyCommand(this));
         commandManager.addCommand(new PartyAcceptCommand(this));
         commandManager.addCommand(new PartyCreateCommand(this));
         commandManager.addCommand(new PartyInviteCommand(this));
         commandManager.addCommand(new PartyChatCommand(this));
+        // Page 2
+        commandManager.addCommand(new ConfigReloadCommand(this));
         commandManager.addCommand(new RecoverItemsCommand(this));
     }
 
@@ -308,55 +317,58 @@ public class Heroes extends JavaPlugin {
         Hero h = this.heroManager.getHero(p);
         HeroClass hc = h.getPlayerClass();
         int count = 0;
+        String item;
         if ((inv.getHelmet() != null) && (inv.getHelmet().getTypeId() != 0)) {
             if (!(hc.getAllowedArmor().contains(inv.getHelmet().getType()))) {
-                h.addItem(inv.getHelmet().getType().toString());
+                item = inv.getHelmet().getType().toString();
+                h.addItem(item);
+                this.getMessager().send(p, "$1 has been removed from your Inventory", item);
                 inv.setHelmet(null);
                 count++;
             }
         }
         if ((inv.getChestplate() != null) && (inv.getChestplate().getTypeId() != 0)) {
             if (!(hc.getAllowedArmor().contains(inv.getChestplate().getType()))) {
-                h.addItem(inv.getChestplate().getType().toString());
+                item = inv.getChestplate().getType().toString();
+                h.addItem(item);
+                this.getMessager().send(p, "$1 has been removed from your Inventory", item);
                 inv.setChestplate(null);
                 count++;
             }
         }
         if ((inv.getLeggings() != null) && (inv.getLeggings().getTypeId() != 0)) {
             if (!(hc.getAllowedArmor().contains(inv.getLeggings().getType()))) {
-                h.addItem(inv.getLeggings().getType().toString());
+                item = inv.getLeggings().getType().toString();
+                h.addItem(item);
+                this.getMessager().send(p, "$1 has been removed from your Inventory", item);
                 inv.setLeggings(null);
                 count++;
             }
         }
         if ((inv.getBoots() != null) && (inv.getBoots().getTypeId() != 0)) {
             if (!(hc.getAllowedArmor().contains(inv.getBoots().getType()))) {
-                h.addItem(inv.getBoots().getType().toString());
+                item = inv.getBoots().getType().toString();
+                h.addItem(item);
+                this.getMessager().send(p, "$1 has been removed from your Inventory", item);
                 inv.setBoots(null);
                 count++;
             }
         }
         for (int i = 0; i < 8; i++) {
-            String item = inv.getItem(i).getType().toString();
+            item = inv.getItem(i).getType().toString();
 
             // Perform a check to see if what we have is a Weapon.
-            @SuppressWarnings("unused")
-            WeaponItems itemCheck = null;
-            try {
-                itemCheck = WeaponItems.valueOf(item.substring(item.indexOf("_") + 1, item.length()));
-            } catch (IllegalArgumentException e1) {
-                continue;
+            if (!(item.equalsIgnoreCase("BOW"))) {
+                try {
+                    WeaponItems.valueOf(item.substring(item.indexOf("_") + 1, item.length()));
+                } catch (IllegalArgumentException e1) {
+                    continue;
+                }
             }
 
             if (!(hc.getAllowedWeapons().contains(item))) {
-                int slot = firstEmpty(p);
-                if (slot == -1) {
-                    h.addItem(item);
-                    inv.setItem(i, null);
-                    count++;
-                } else {
-                    inv.setItem(slot, new ItemStack(Material.valueOf(item), 1));
-                    inv.setItem(i, null);
+                if(!(moveItem(p,i,item))){
+                    this.getMessager().send(p, "$1 has been removed from your Inventory", item);
                     count++;
                 }
             }
@@ -364,6 +376,21 @@ public class Heroes extends JavaPlugin {
         if (count > 0) {
             getMessager().send(p, "$1 have been removed from your inventory.", count + " Items");
             getMessager().send(p, "Please make space in your inventory then type '$1'", "/heroes recoveritems");
+        }
+    }
+
+    public boolean moveItem(Player p, int slot, String item){
+        PlayerInventory inv = p.getInventory();
+        Hero h = this.getHeroManager().getHero(p);
+        int empty = firstEmpty(p);
+        if (empty == -1) {
+            h.addItem(item);
+            inv.setItem(slot, null);
+            return false;
+        } else {
+            inv.setItem(empty, new ItemStack(Material.valueOf(item), 1));
+            inv.setItem(slot, null);
+            return true;
         }
     }
 
@@ -400,5 +427,17 @@ public class Heroes extends JavaPlugin {
 
     public PartyManager getPartyManager() {
         return partyManager;
+    }
+
+    public void swapNetServerHandler(Player player) {
+        CraftPlayer craftPlayer = (CraftPlayer) player;
+        CraftServer server = (CraftServer) Bukkit.getServer();
+
+        if (!(craftPlayer.getHandle().netServerHandler instanceof HNetServerHandler)) {
+            Location loc = player.getLocation();
+            HNetServerHandler handler = new HNetServerHandler(server.getHandle().server, craftPlayer.getHandle().netServerHandler.networkManager, craftPlayer.getHandle());
+            handler.a(loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
+            craftPlayer.getHandle().netServerHandler = handler;
+        }
     }
 }

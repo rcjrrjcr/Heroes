@@ -1,5 +1,6 @@
 package com.herocraftonline.dev.heroes.inventory;
 
+import org.bukkit.craftbukkit.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
@@ -13,17 +14,23 @@ public class InventoryChangeEvent extends Event implements Cancellable {
     protected Player player;
     protected int slotNumber;
     protected boolean cancelled = false;
+    protected InventorySlotType type;
 
-    public InventoryChangeEvent(Player player, ItemStack slot, ItemStack cursor, int slotNumber) {
+    public InventoryChangeEvent(Player player, InventorySlotType type, CraftItemStack slot, CraftItemStack cursor, int slotNumber) {
         super("InventoryChangeEvent");
         this.player = player;
         this.slot = slot;
         this.cursor = cursor;
         this.slotNumber = slotNumber;
+        this.type = type;
     }
 
     public Player getPlayer() {
         return player;
+    }
+
+    public InventorySlotType getSlotType() {
+        return type;
     }
 
     public int getSlotNumber() {
