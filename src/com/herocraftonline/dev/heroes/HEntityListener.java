@@ -71,7 +71,7 @@ public class HEntityListener extends EntityListener {
                     }
                     // Fire the experience gain event
                     int exp = hero.getExperience();
-                    int currentLevel = plugin.getConfigManager().getProperties().getLevel(exp + addedExp);
+                    int currentLevel = plugin.getConfigManager().getProperties().getLevel(exp);
                     int newLevel = plugin.getConfigManager().getProperties().getLevel(exp + addedExp);
                     ExperienceGainEvent expEvent;
                     if (newLevel == currentLevel) {

@@ -38,7 +38,7 @@ public class LevelInformationCommand extends BaseCommand {
             sender.sendMessage("  §aClass : " + h.getPlayerClass().getName());
             sender.sendMessage("  §aLevel : " + level);
             sender.sendMessage("  §aExp : " + exp);
-            sender.sendMessage("  §aNext Level : " + level + 1);
+            sender.sendMessage("  §aNext Level : " + (level + 1));
             sender.sendMessage("  §aExp to Go: " + (next - exp));
 
             // Possible exp progress bar to come, but this will do for now.
