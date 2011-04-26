@@ -94,7 +94,6 @@ public class ConfigManager {
     private void loadLevelConfig(Configuration config) {
         String root = "leveling.";
         properties.power = config.getDouble(root + "power", 1.03);
-        properties.baseExp = config.getInt(root + "baseExperience", 100);
         properties.maxExp = config.getInt(root + "maxExperience", 90000);
         properties.maxLevel = config.getInt(root + "maxLevel", 99);
         properties.classSwitchLevel = config.getInt(root + "classSwitchLevel", 20);

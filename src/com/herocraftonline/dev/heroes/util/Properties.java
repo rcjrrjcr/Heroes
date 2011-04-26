@@ -23,7 +23,6 @@ public class Properties {
 
     // Leveling//
     public double power;
-    public int baseExp;
     public int maxExp;
     public int maxLevel;
     public int[] levels;
@@ -34,19 +33,6 @@ public class Properties {
     public HashMap<CreatureType, Integer> creatureKillingExp = new HashMap<CreatureType, Integer>();
     public HashMap<Material, Integer> miningExp = new HashMap<Material, Integer>();
     public HashMap<Material, Integer> loggingExp = new HashMap<Material, Integer>();
-
-    // Skills //
-
-    public enum Skills {
-        BLACKJACK,
-        BLADEGRASP,
-        HARMTOUCH,
-        LAYHANDS,
-        SUMMON,
-        TAME,
-        TRACK,
-        JUMP
-    }
 
     public HashMap<String, String> skillInfo = new HashMap<String, String>();
     public HashMap<Player, Location> playerDeaths = new HashMap<Player, Location>();
@@ -64,9 +50,9 @@ public class Properties {
      */
     public void calcExp() {
         levels = new int[maxLevel];
-        double A = 2 * (maxExp - baseExp) * Math.pow(maxLevel - 1, (power * -1));
+        double A = 2 * maxExp * Math.pow(maxLevel - 1, (power * -1));
         for (int n = 0; n < maxLevel; n++) {
-            levels[n] = (int) (A / 2 * Math.pow(n, power) + baseExp);
+            levels[n] = (int) (A / 2 * Math.pow(n, power));
         }
     }
 
@@ -88,9 +74,5 @@ public class Properties {
     
     public int getExperience(int level) {
         return levels[level - 1];
-    }
-
-    public Skills[] getSkills() {
-        return Skills.values();
     }
 }
