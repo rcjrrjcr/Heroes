@@ -37,7 +37,6 @@ public class HeroManager {
      * @param player
      */
     public void loadHeroFile(Player player) {
-        plugin.log(Level.INFO, "load hero");
         File playerFile = new File(playerFolder, player.getName() + ".yml"); // Setup our Players Data File.
         // Check if it already exists, if so we load the data.
         if (playerFile.exists()) {
@@ -62,10 +61,11 @@ public class HeroManager {
             Hero playerHero = new Hero(plugin, player, playerClass, exp, mana, masteries, itemRecovery);
             // Add the Hero to the Set.
             addHero(playerHero);
+            plugin.log(Level.INFO, "Loaded hero: " + player.getName());
         } else {
-            plugin.log(Level.INFO, "create hero");
             // Create a New Hero with the Default Setup.
             createNewHero(player);
+            plugin.log(Level.INFO, "Created hero: " + player.getName());
         }
     }
 

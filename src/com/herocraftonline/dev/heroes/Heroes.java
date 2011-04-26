@@ -108,14 +108,6 @@ public class Heroes extends JavaPlugin {
         // Setup the Property for Levels * Exp
         getConfigManager().getProperties().calcExp();
 
-        // Call our function to register the events Heroes needs.
-        registerEvents();
-        // Call our function to setup Heroes Commands.
-        registerCommands();
-
-        // Perform the Permissions check.
-        setupPermissions();
-
         // Start mana regen
         getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
             @Override
@@ -147,6 +139,14 @@ public class Heroes extends JavaPlugin {
             swapNetServerHandler(player);
             inventoryCheck(player);
         }
+
+        // Call our function to register the events Heroes needs.
+        registerEvents();
+        // Call our function to setup Heroes Commands.
+        registerCommands();
+
+        // Perform the Permissions check.
+        setupPermissions();
     }
 
     /**
@@ -174,7 +174,6 @@ public class Heroes extends JavaPlugin {
      */
     private void registerEvents() {
         PluginManager pluginManager = getServer().getPluginManager();
-        pluginManager.registerEvent(Type.PLAYER_LOGIN, playerListener, Priority.Normal, this);
         pluginManager.registerEvent(Type.PLAYER_QUIT, playerListener, Priority.Normal, this);
         pluginManager.registerEvent(Type.PLAYER_JOIN, playerListener, Priority.Normal, this);
         pluginManager.registerEvent(Type.PLAYER_INTERACT, playerListener, Priority.Normal, this);
@@ -371,7 +370,7 @@ public class Heroes extends JavaPlugin {
             }
 
             if (!(hc.getAllowedWeapons().contains(item))) {
-                if(!(moveItem(p,i,item))){
+                if (!(moveItem(p, i, item))) {
                     this.getMessager().send(p, "$1 has been removed from your Inventory", item);
                     count++;
                 }
@@ -383,7 +382,7 @@ public class Heroes extends JavaPlugin {
         }
     }
 
-    public boolean moveItem(Player p, int slot, String item){
+    public boolean moveItem(Player p, int slot, String item) {
         PlayerInventory inv = p.getInventory();
         Hero h = this.getHeroManager().getHero(p);
         int empty = firstEmpty(p);
@@ -400,6 +399,7 @@ public class Heroes extends JavaPlugin {
 
     /**
      * Grab the first empty INVENTORY SLOT, skips the Hotbar.
+     * 
      * @param p
      * @return
      */

@@ -6,7 +6,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerListener;
-import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import com.herocraftonline.dev.heroes.persistence.Hero;
@@ -20,13 +19,6 @@ public class HPlayerListener extends PlayerListener {
     }
 
     @Override
-    public void onPlayerLogin(PlayerLoginEvent event) {
-        Player player = event.getPlayer();
-        HeroManager heroManager = plugin.getHeroManager();
-        heroManager.loadHeroFile(player);
-    }
-
-    @Override
     public void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
         HeroManager heroManager = plugin.getHeroManager();
@@ -36,8 +28,10 @@ public class HPlayerListener extends PlayerListener {
     @Override
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        this.plugin.swapNetServerHandler(player);
-        this.plugin.inventoryCheck(player);
+        HeroManager heroManager = plugin.getHeroManager();
+        heroManager.loadHeroFile(player);
+        plugin.swapNetServerHandler(player);
+        plugin.inventoryCheck(player);
     }
 
     @Override
