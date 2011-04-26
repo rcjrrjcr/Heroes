@@ -64,7 +64,7 @@ public class Properties {
      */
     public void calcExp() {
         levels = new int[maxLevel];
-        double A = 2 * (maxExp - baseExp) * Math.pow(maxLevel, (power * -1));
+        double A = 2 * (maxExp - baseExp) * Math.pow(maxLevel - 1, (power * -1));
         for (int n = 0; n < maxLevel; n++) {
             levels[n] = (int) (A / 2 * Math.pow(n, power) + baseExp);
         }
@@ -75,15 +75,19 @@ public class Properties {
      * @param exp
      * @return
      */
-    public int getLevel(Integer exp) {
+    public int getLevel(int exp) {
         int n = 0;
-        for (Integer i : levels) {
+        for (int i : levels) {
             if (!(exp >= i)) {
-                return n + 1;
+                return n;
             }
             n++;
         }
         return -1;
+    }
+    
+    public int getExperience(int level) {
+        return levels[level - 1];
     }
 
     public Skills[] getSkills() {

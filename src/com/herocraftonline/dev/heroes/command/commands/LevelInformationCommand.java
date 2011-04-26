@@ -28,10 +28,11 @@ public class LevelInformationCommand extends BaseCommand {
         if (sender instanceof Player) {
             Player p = (Player) sender;
             Hero h = plugin.getHeroManager().getHero(p);
-            int exp = h.getExperience();
             Properties prop = this.plugin.getConfigManager().getProperties();
+            int exp = h.getExperience();
             int level = prop.getLevel(exp);
-            int next = prop.levels[level + 1];
+            int current = prop.getExperience(level);
+            int next = prop.getExperience(level + 1);
 
             sender.sendMessage("§c-----[ " + "§fYour Level Information§c ]-----");
 
@@ -41,9 +42,17 @@ public class LevelInformationCommand extends BaseCommand {
             sender.sendMessage("  §aNext Level : " + (level + 1));
             sender.sendMessage("  §aExp to Go: " + (next - exp));
 
-            // Possible exp progress bar to come, but this will do for now.
-            // String expBar = "";
-            // sender.sendMessage("  �aExp Progress: " + );
+            String expBar = "[§2";
+            int progress = (int)((double) (exp - current) / (next - current) * 92);
+            for (int i = 0; i < progress; i++) {
+                expBar += "|";
+            }
+            expBar += "§4";
+            for (int i = 0; i < 92 - progress; i++) {
+                expBar += "|";
+            }
+            expBar += "§f]";
+            sender.sendMessage(expBar);
         }
     }
 }
