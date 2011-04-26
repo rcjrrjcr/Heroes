@@ -324,8 +324,8 @@ public class Heroes extends JavaPlugin {
         int count = 0;
         String item;
         if ((inv.getHelmet() != null) && (inv.getHelmet().getTypeId() != 0)) {
-            if (!(hc.getAllowedArmor().contains(inv.getHelmet().getType()))) {
-                item = inv.getHelmet().getType().toString();
+            item = inv.getHelmet().getType().toString();
+            if (!(hc.getAllowedArmor().contains(item))) {
                 h.addItem(item);
                 this.getMessager().send(p, "$1 has been removed from your Inventory", item);
                 inv.setHelmet(null);
@@ -333,8 +333,8 @@ public class Heroes extends JavaPlugin {
             }
         }
         if ((inv.getChestplate() != null) && (inv.getChestplate().getTypeId() != 0)) {
-            if (!(hc.getAllowedArmor().contains(inv.getChestplate().getType()))) {
-                item = inv.getChestplate().getType().toString();
+            item = inv.getChestplate().getType().toString();
+            if (!(hc.getAllowedArmor().contains(item))) {
                 h.addItem(item);
                 this.getMessager().send(p, "$1 has been removed from your Inventory", item);
                 inv.setChestplate(null);
@@ -342,8 +342,8 @@ public class Heroes extends JavaPlugin {
             }
         }
         if ((inv.getLeggings() != null) && (inv.getLeggings().getTypeId() != 0)) {
-            if (!(hc.getAllowedArmor().contains(inv.getLeggings().getType()))) {
-                item = inv.getLeggings().getType().toString();
+            item = inv.getLeggings().getType().toString();
+            if (!(hc.getAllowedArmor().contains(item))) {
                 h.addItem(item);
                 this.getMessager().send(p, "$1 has been removed from your Inventory", item);
                 inv.setLeggings(null);
@@ -351,8 +351,8 @@ public class Heroes extends JavaPlugin {
             }
         }
         if ((inv.getBoots() != null) && (inv.getBoots().getTypeId() != 0)) {
-            if (!(hc.getAllowedArmor().contains(inv.getBoots().getType()))) {
-                item = inv.getBoots().getType().toString();
+            item = inv.getBoots().getType().toString();
+            if (!(hc.getAllowedArmor().contains(item))) {
                 h.addItem(item);
                 this.getMessager().send(p, "$1 has been removed from your Inventory", item);
                 inv.setBoots(null);

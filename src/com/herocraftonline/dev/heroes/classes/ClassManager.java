@@ -58,6 +58,9 @@ public class ClassManager {
             List<String> defaultType = new ArrayList<String>();
             defaultType.add("DIAMOND");
 
+            StringBuilder aLimits = new StringBuilder();
+            StringBuilder wLimits = new StringBuilder();
+
             List<String> armor = config.getStringList("classes." + className + ".permitted-armor", defaultType);
             for (String a : armor) {
                 // If it's a generic type like 'DIAMOND' or 'LEATHER' we add all the possible entries.
@@ -65,9 +68,13 @@ public class ClassManager {
                     try {
                         ArmorType aType = ArmorType.valueOf(a);
                         newClass.addAllowedArmor(aType + "_HELMET");
+                        aLimits.append(" " + aType + "_HELMET");
                         newClass.addAllowedArmor(aType + "_CHESTPLATE");
+                        aLimits.append(" " + aType + "_CHESTPLATE");
                         newClass.addAllowedArmor(aType + "_LEGGINGS");
+                        aLimits.append(" " + aType + "_LEGGINGS");
                         newClass.addAllowedArmor(aType + "_BOOTS");
+                        aLimits.append(" " + aType + "_BOOTS");
                     } catch (IllegalArgumentException e) {
                         plugin.log(Level.WARNING, "Invalid armor type (" + a + ") defined for " + className);
                     }
@@ -78,6 +85,7 @@ public class ClassManager {
                         ArmorType aType = ArmorType.valueOf(type);
                         ArmorItems aItem = ArmorItems.valueOf(item);
                         newClass.addAllowedArmor(aType + "_" + aItem);
+                        aLimits.append(" " + aType + "_" + aItem);
                     } catch (IllegalArgumentException e) {
                         plugin.log(Level.WARNING, "Invalid armor type (" + type + "_" + item + ") defined for " + className);
                     }
@@ -89,6 +97,7 @@ public class ClassManager {
                 // A BOW has no ItemType so we just add it straight away.
                 if(w.equalsIgnoreCase("BOW")){
                     newClass.addAllowedWeapon("BOW");
+                    wLimits.append(" BOW");
                     continue;
                 }
                 // If it's a generic type like 'DIAMOND' or 'LEATHER' we add all the possible entries.
@@ -96,10 +105,15 @@ public class ClassManager {
                     try {
                         WeaponType wType = WeaponType.valueOf(w);
                         newClass.addAllowedWeapon(wType + "_PICKAXE");
+                        wLimits.append(" " + wType + "_PICKAXE");
                         newClass.addAllowedWeapon(wType + "_AXE");
+                        wLimits.append(" " + wType + "_AXE");
                         newClass.addAllowedWeapon(wType + "_HOE");
+                        wLimits.append(" " + wType + "_HOE");
                         newClass.addAllowedWeapon(wType + "_SPADE");
+                        wLimits.append(" " + wType + "_SPADE");
                         newClass.addAllowedWeapon(wType + "_SWORD");
+                        wLimits.append(" " + wType + "_SWORD");
                     } catch (IllegalArgumentException e) {
                         plugin.log(Level.WARNING, "Invalid weapon type (" + w + ") defined for " + className);
                     }
@@ -110,11 +124,15 @@ public class ClassManager {
                         WeaponType wType = WeaponType.valueOf(type);
                         WeaponItems wItem = WeaponItems.valueOf(item);
                         newClass.addAllowedWeapon(wType + "_" + wItem);
+                        wLimits.append(" - " + wType + "_" + wItem);
                     } catch (IllegalArgumentException e) {
                         plugin.log(Level.WARNING, "Invalid weapon type (" + type + "_" + item + ") defined for " + className);
                     }
                 }
+
             }
+            plugin.debugLog(Level.INFO, "Allowed Weapons - " + wLimits.toString());
+            plugin.debugLog(Level.INFO, "Allowed Armor - " + aLimits.toString());
 
             List<String> skillNames = config.getKeys("classes." + className + ".permitted-skills");
             for (String skill : skillNames) {
