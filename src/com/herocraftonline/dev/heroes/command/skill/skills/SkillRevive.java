@@ -36,13 +36,11 @@ public class SkillRevive extends TargettedSkill {
             double dx = player.getLocation().getX() - loc.getX();
             double dz = player.getLocation().getZ() - loc.getZ();
             double distance = Math.sqrt(dx * dx + dz * dz);
-            if (hero.getParty().getMembers().contains(targetPlayer)) {
-                if (distance < 50) {
-                    if (targetPlayer.isDead()) {
-                        player.sendMessage("That player is still dead");
-                    } else {
-                        targetPlayer.teleport(loc);
-                    }
+            if (distance < 50) {
+                if (targetPlayer.isDead()) {
+                    player.sendMessage("That player is still dead");
+                } else {
+                    targetPlayer.teleport(loc);
                 }
             }
         }
