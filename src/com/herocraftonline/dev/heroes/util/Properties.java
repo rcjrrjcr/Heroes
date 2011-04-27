@@ -71,7 +71,7 @@ public class Properties {
         }
         return -1;
     }
-    
+
     public int getExperience(int level) {
         return levels[level - 1];
     }

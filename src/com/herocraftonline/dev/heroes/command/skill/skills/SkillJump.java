@@ -22,10 +22,8 @@ public class SkillJump extends ActiveSkill {
 
     @Override
     public boolean use(Hero hero, String[] args) {
-        // TODO: this doesn't do what we want - it assumes the player is mid-jump
         Player player = hero.getPlayer();
-        Vector velocity = player.getVelocity();
-        player.setVelocity(velocity.setY((velocity.getY() * 2)));
+        player.getLocation().getDirection().multiply(10);
         return true;
     }
 }

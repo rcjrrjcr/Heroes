@@ -30,7 +30,7 @@ public class SkillHarmtouch extends TargettedSkill {
         node.setProperty("damage", 10);
         return node;
     }
-    
+
     @Override
     public boolean use(Hero hero, LivingEntity target, String[] args) {
         Player player = hero.getPlayer();

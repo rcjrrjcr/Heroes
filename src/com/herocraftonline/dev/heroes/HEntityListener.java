@@ -48,7 +48,7 @@ public class HEntityListener extends EntityListener {
                     // If the dying entity is a Player
                     if (defender instanceof Player) {
                         addedExp = plugin.getConfigManager().getProperties().playerKillingExp;
-                        
+
                         // Incur 5% experience loss to dying player
                         Hero heroDefender = plugin.getHeroManager().getHero((Player) defender);
                         heroDefender.setExperience((int) (heroDefender.getExperience() * 0.95));
@@ -84,7 +84,7 @@ public class HEntityListener extends EntityListener {
                         return;
                     }
                     addedExp = expEvent.getExp();
-                    
+
                     // Only perform an experience update if we're actually
                     // adding or subtracting from their experience.
                     if (addedExp != 0) {

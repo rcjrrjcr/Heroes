@@ -96,7 +96,7 @@ public class ClassManager {
             List<String> weapon = config.getStringList("classes." + className + ".permitted-weapon", defaultType);
             for (String w : weapon) {
                 // A BOW has no ItemType so we just add it straight away.
-                if(w.equalsIgnoreCase("BOW")){
+                if (w.equalsIgnoreCase("BOW")) {
                     newClass.addAllowedWeapon("BOW");
                     wLimits.append(" BOW");
                     continue;
@@ -152,7 +152,7 @@ public class ClassManager {
                     try {
                         int reqLevel = config.getInt("classes." + className + ".permission-skills." + skill + ".level", 1);
                         newClass.addSkill(skill, reqLevel, 0, 0);
-                        
+
                         String usage = config.getString("classes." + className + ".permission-skills." + skill + ".usage", "");
                         String[] permissions = config.getStringList("classes." + className + ".permission-skills." + skill + ".permissions", null).toArray(new String[0]);
                         OutsourcedSkill oSkill = new OutsourcedSkill(plugin, skill, permissions, usage);
