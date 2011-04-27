@@ -5,8 +5,13 @@ classes:
         permitted-armor: [LEATHER, DIAMOND_CHESTPLATE, GOLD_BOOTS]
         permitted-weapon: [WOOD, GOLD, DIAMOND_PICKAXE, IRON_AXE, IRON_SPADE]
         permitted-skills:
-            Jump:
+            Harmtouch:
                 level: 1
                 mana: 25
                 cooldown: 30000
+        permission-skills:
+            Sneak:
+                level: 1
+                usage: '/sneak'
+                permissions: ['herosneak.sneak']
         experience-sources: [KILLING]
