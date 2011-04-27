@@ -44,7 +44,7 @@ public class SkillHarmtouch extends TargettedSkill {
         if (damageEntityEvent.isCancelled()) {
             return false;
         }
-        target.damage(damage);
+        target.damage(damage, player);
         return true;
     }
 

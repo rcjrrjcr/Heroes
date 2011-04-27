@@ -11,7 +11,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.config.Configuration;
 
 import com.herocraftonline.dev.heroes.Heroes;
-import com.herocraftonline.dev.heroes.api.NewPlayerEvent;
+import com.herocraftonline.dev.heroes.api.HeroLoadEvent;
+import com.herocraftonline.dev.heroes.api.NewHeroEvent;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
 
 /**
@@ -68,6 +69,7 @@ public class HeroManager {
             createNewHero(player);
             plugin.log(Level.INFO, "Created hero: " + player.getName());
         }
+        plugin.getServer().getPluginManager().callEvent(new HeroLoadEvent(getHero(player)));
     }
 
     /**
@@ -89,9 +91,9 @@ public class HeroManager {
     }
 
     public boolean createNewHero(Player player) {
-        plugin.getServer().getPluginManager().callEvent(new NewPlayerEvent(player));
-        // Add a new Hero with the default setup.
-        return addHero(new Hero(plugin, player, plugin.getClassManager().getDefaultClass(), 0, 0, new ArrayList<String>(), new ArrayList<String>()));
+        Hero hero = new Hero(plugin, player, plugin.getClassManager().getDefaultClass(), 0, 0, new ArrayList<String>(), new ArrayList<String>());
+        plugin.getServer().getPluginManager().callEvent(new NewHeroEvent(hero));
+        return addHero(hero);
     }
 
     public boolean addHero(Hero hero) {

@@ -4,11 +4,13 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.herocraftonline.dev.heroes.Heroes;
+import com.herocraftonline.dev.heroes.api.ClassChangeEvent;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.command.BaseCommand;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 import com.herocraftonline.dev.heroes.persistence.HeroManager;
 import com.nijiko.coelho.iConomy.iConomy;
+import com.nijiko.coelho.iConomy.system.Account;
 
 public class SelectProfessionCommand extends BaseCommand {
 
@@ -33,6 +35,8 @@ public class SelectProfessionCommand extends BaseCommand {
                     Hero hero = heroManager.getHero(player);
                     if (hero.getPlayerClass().equals(plugin.getClassManager().getDefaultClass())) {
                         hero.setPlayerClass(profession);
+                        ClassChangeEvent event = new ClassChangeEvent(hero.getPlayer(), profession);
+                        plugin.getServer().getPluginManager().callEvent(event);
                     } else {
                         changeClass(hero, profession);
                     }
@@ -49,12 +53,20 @@ public class SelectProfessionCommand extends BaseCommand {
     public void changeClass(Hero hero, HeroClass newClass) {
         if (plugin.getConfigManager().getProperties().iConomy == true) {
             String playerName = hero.getPlayer().getName();
-            if (iConomy.getBank().getAccount(playerName).hasOver(plugin.getConfigManager().getProperties().swapcost)) {
-                iConomy.getBank().getAccount(playerName).add(plugin.getConfigManager().getProperties().swapcost * -1);
+            Account account = iConomy.getBank().getAccount(playerName);
+            int swapcost = plugin.getConfigManager().getProperties().swapcost;
+            if (account.hasEnough(swapcost)) {
+                account.subtract(swapcost);
+                hero.setPlayerClass(newClass);
+                ClassChangeEvent event = new ClassChangeEvent(hero.getPlayer(), newClass);
+                plugin.getServer().getPluginManager().callEvent(event);
+            } else {
+                plugin.getMessager().send(hero.getPlayer(), "Sorry, you don't have enough money!");
             }
-            hero.setPlayerClass(newClass);
         } else {
             hero.setPlayerClass(newClass);
+            ClassChangeEvent event = new ClassChangeEvent(hero.getPlayer(), newClass);
+            plugin.getServer().getPluginManager().callEvent(event);
         }
     }
 }

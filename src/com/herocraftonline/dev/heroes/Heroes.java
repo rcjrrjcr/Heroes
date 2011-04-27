@@ -24,6 +24,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.herocraftonline.dev.heroes.classes.ClassManager;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.classes.HeroClass.WeaponItems;
+import com.herocraftonline.dev.heroes.command.BaseCommand;
 import com.herocraftonline.dev.heroes.command.CommandManager;
 import com.herocraftonline.dev.heroes.command.SkillLoader;
 import com.herocraftonline.dev.heroes.command.commands.AssignSkillCommand;
@@ -38,6 +39,7 @@ import com.herocraftonline.dev.heroes.command.commands.RecoverItemsCommand;
 import com.herocraftonline.dev.heroes.command.commands.SelectProfessionCommand;
 import com.herocraftonline.dev.heroes.command.commands.SelectSpecialtyCommand;
 import com.herocraftonline.dev.heroes.command.commands.SkillCommand;
+import com.herocraftonline.dev.heroes.command.skill.OutsourcedSkill;
 import com.herocraftonline.dev.heroes.command.skill.Skill;
 import com.herocraftonline.dev.heroes.inventory.HNetServerHandler;
 import com.herocraftonline.dev.heroes.party.PartyManager;
@@ -157,6 +159,14 @@ public class Heroes extends JavaPlugin {
         if (Heroes.Permissions == null) {
             if (test != null) {
                 Heroes.Permissions = ((Permissions) test).getHandler();
+                log(Level.INFO, "Permissions found.");
+                for (Player player : getServer().getOnlinePlayers()) {
+                    for (BaseCommand cmd : commandManager.getCommands()) {
+                        if (cmd instanceof OutsourcedSkill) {
+                            ((OutsourcedSkill) cmd).tryLearningSkill(player);
+                        }
+                    }
+                }
             }
         }
     }

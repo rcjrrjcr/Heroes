@@ -2,6 +2,7 @@ package com.herocraftonline.dev.heroes.command.skill;
 
 import java.util.logging.Level;
 
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.CustomEventListener;
 import org.bukkit.event.Event;
@@ -10,19 +11,51 @@ import org.bukkit.event.Event.Type;
 
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.api.ClassChangeEvent;
+import com.herocraftonline.dev.heroes.api.HeroLoadEvent;
 import com.herocraftonline.dev.heroes.api.LevelEvent;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.classes.SkillSettings;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 
-public abstract class OutsourcedSkill extends Skill {
+public class OutsourcedSkill extends Skill {
 
-    protected String permission;
+    protected String[] permissions;
 
-    public OutsourcedSkill(Heroes plugin) {
+    public OutsourcedSkill(Heroes plugin, String name, String[] permissions, String usage) {
         super(plugin);
-
+        this.name = name;
+        this.permissions = permissions;
+        this.usage = usage;
+        this.minArgs = 0;
+        this.maxArgs = 0;
         registerEvent(Type.CUSTOM_EVENT, new SkillCustomListener(), Priority.Normal);
+    }
+
+    public void tryLearningSkill(Player player) {
+        if (Heroes.Permissions == null) {
+            plugin.log(Level.WARNING, "Attempt to use an OutsourcedSkill (" + name + ") failed - Permissions not found.");
+            return;
+        }
+
+        Hero hero = plugin.getHeroManager().getHero(player);
+        HeroClass heroClass = hero.getPlayerClass();
+
+        String world = player.getWorld().getName();
+        SkillSettings settings = heroClass.getSkillSettings(name);
+        if (settings != null && meetsLevelRequirement(hero, settings.LevelRequirement)) {
+            for (String permission : permissions) {
+                if (!Heroes.Permissions.has(player, permission)) {
+                    Heroes.Permissions.addUserPermission(world, player.getName(), permission);
+                }
+            }
+        } else {
+            for (String permission : permissions) {
+                if (Heroes.Permissions.has(player, permission)) {
+                    Heroes.Permissions.removeUserPermission(world, player.getName(), permission);
+                }
+            }
+        }
+        Heroes.Permissions.save(world);
     }
 
     public class SkillCustomListener extends CustomEventListener {
@@ -33,28 +66,14 @@ public abstract class OutsourcedSkill extends Skill {
                 tryLearningSkill(((ClassChangeEvent) event).getPlayer());
             } else if (event instanceof LevelEvent) {
                 tryLearningSkill(((LevelEvent) event).getPlayer());
+            } else if (event instanceof HeroLoadEvent) {
+                tryLearningSkill(((HeroLoadEvent) event).getHero().getPlayer());
             }
-        }
-
-        private void tryLearningSkill(Player player) {
-            if (Heroes.Permissions == null) {
-                plugin.log(Level.WARNING, "Attempt to use an OutsourcedSkill (" + name + ") failed - Permissions not found.");
-                return;
-            }
-
-            Hero hero = plugin.getHeroManager().getHero(player);
-            HeroClass heroClass = hero.getPlayerClass();
-
-            String world = player.getWorld().getName();
-            SkillSettings settings = heroClass.getSkillSettings(name);
-            if (settings != null && meetsLevelRequirement(hero, settings.LevelRequirement)) {
-                Heroes.Permissions.addUserPermission(world, player.getName(), permission);
-            } else {
-                Heroes.Permissions.removeUserPermission(world, player.getName(), permission);
-            }
-            Heroes.Permissions.save(world);
         }
 
     }
+
+    @Override
+    public void execute(CommandSender sender, String[] args) {}
 
 }

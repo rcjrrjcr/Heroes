@@ -8,6 +8,7 @@ import com.herocraftonline.dev.heroes.classes.HeroClass;
 public class ClassChangeEvent extends CustomPlayerEvent {
 
     protected HeroClass playerClass;
+    protected final boolean cancelled = false;
 
     public ClassChangeEvent(Player player, HeroClass playerClass) {
         super(player);

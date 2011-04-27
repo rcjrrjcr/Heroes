@@ -15,6 +15,7 @@ import com.herocraftonline.dev.heroes.classes.HeroClass.ArmorType;
 import com.herocraftonline.dev.heroes.classes.HeroClass.ExperienceType;
 import com.herocraftonline.dev.heroes.classes.HeroClass.WeaponItems;
 import com.herocraftonline.dev.heroes.classes.HeroClass.WeaponType;
+import com.herocraftonline.dev.heroes.command.skill.OutsourcedSkill;
 
 public class ClassManager {
 
@@ -143,6 +144,22 @@ public class ClassManager {
                     newClass.addSkill(skill, reqLevel, manaCost, cooldown);
                 } catch (IllegalArgumentException e) {
                     plugin.log(Level.WARNING, "Invalid skill (" + skill + ") defined for " + className + ". Skipping this skill.");
+                }
+            }
+            List<String> permissionSkillNames = config.getKeys("classes." + className + ".permission-skills");
+            if (permissionSkillNames != null) {
+                for (String skill : permissionSkillNames) {
+                    try {
+                        int reqLevel = config.getInt("classes." + className + ".permission-skills." + skill + ".level", 1);
+                        newClass.addSkill(skill, reqLevel, 0, 0);
+                        
+                        String usage = config.getString("classes." + className + ".permission-skills." + skill + ".usage", "");
+                        String[] permissions = config.getStringList("classes." + className + ".permission-skills." + skill + ".permissions", null).toArray(new String[0]);
+                        OutsourcedSkill oSkill = new OutsourcedSkill(plugin, skill, permissions, usage);
+                        plugin.getCommandManager().addCommand(oSkill);
+                    } catch (IllegalArgumentException e) {
+                        plugin.log(Level.WARNING, "Invalid permission skill (" + skill + ") defined for " + className + ". Skipping this skill.");
+                    }
                 }
             }
 
