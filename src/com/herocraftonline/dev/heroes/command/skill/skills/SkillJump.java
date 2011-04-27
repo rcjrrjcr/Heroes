@@ -23,7 +23,7 @@ public class SkillJump extends ActiveSkill {
     @Override
     public boolean use(Hero hero, String[] args) {
         Player player = hero.getPlayer();
-        player.getLocation().getDirection().multiply(10);
+        player.getLocation().getDirection().setY(1).multiply(10);
         return true;
     }
 }
