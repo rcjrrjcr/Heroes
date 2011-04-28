@@ -45,7 +45,8 @@ public abstract class ActiveSkill extends Skill {
             if (cooldown > 0) {
                 Long timeUsed = cooldowns.get(name);
                 if (timeUsed != null && (time < (timeUsed + cooldown))) {
-                    plugin.getMessager().send(hero.getPlayer(), "Sorry, $1 is still on cooldown!", name);
+                    long remaining = (timeUsed + cooldown) - time;
+                    plugin.getMessager().send(hero.getPlayer(), "Sorry, $1 still has $2 seconds left on cooldown!", name, Long.toString(remaining/1000));
                     return;
                 }
             }
