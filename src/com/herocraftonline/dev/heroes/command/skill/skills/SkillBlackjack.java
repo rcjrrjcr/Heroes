@@ -59,6 +59,7 @@ public class SkillBlackjack extends ActiveSkill {
                     Map<String, Double> effects = attackingHero.getEffects();
                     if (effects.containsKey(name)) {
                         defendingHero.getEffects().put("stunned", System.currentTimeMillis() + config.getDouble("stun-duration", 5.0));
+                        notifyNearbyPlayers(attackingHero.getPlayer().getLocation().toVector(), "$1 stunned $3!", attackingHero.getPlayer().getName(), defendingHero.getPlayer().getName());
                     }
                 }
             }
