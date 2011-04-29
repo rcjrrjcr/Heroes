@@ -7,7 +7,6 @@ import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.CraftServer;
@@ -336,7 +335,7 @@ public class Heroes extends JavaPlugin {
         if ((inv.getHelmet() != null) && (inv.getHelmet().getTypeId() != 0)) {
             item = inv.getHelmet().getType().toString();
             if (!(hc.getAllowedArmor().contains(item))) {
-                h.addItem(item);
+                h.addItem(inv.getHelmet());
                 this.getMessager().send(p, "$1 has been removed from your Inventory", item);
                 inv.setHelmet(null);
                 count++;
@@ -345,7 +344,7 @@ public class Heroes extends JavaPlugin {
         if ((inv.getChestplate() != null) && (inv.getChestplate().getTypeId() != 0)) {
             item = inv.getChestplate().getType().toString();
             if (!(hc.getAllowedArmor().contains(item))) {
-                h.addItem(item);
+                h.addItem(inv.getChestplate());
                 this.getMessager().send(p, "$1 has been removed from your Inventory", item);
                 inv.setChestplate(null);
                 count++;
@@ -354,7 +353,7 @@ public class Heroes extends JavaPlugin {
         if ((inv.getLeggings() != null) && (inv.getLeggings().getTypeId() != 0)) {
             item = inv.getLeggings().getType().toString();
             if (!(hc.getAllowedArmor().contains(item))) {
-                h.addItem(item);
+                h.addItem(inv.getLeggings());
                 this.getMessager().send(p, "$1 has been removed from your Inventory", item);
                 inv.setLeggings(null);
                 count++;
@@ -363,30 +362,31 @@ public class Heroes extends JavaPlugin {
         if ((inv.getBoots() != null) && (inv.getBoots().getTypeId() != 0)) {
             item = inv.getBoots().getType().toString();
             if (!(hc.getAllowedArmor().contains(item))) {
-                h.addItem(item);
+                h.addItem(inv.getBoots());
                 this.getMessager().send(p, "$1 has been removed from your Inventory", item);
                 inv.setBoots(null);
                 count++;
             }
         }
         for (int i = 0; i < 8; i++) {
-            item = inv.getItem(i).getType().toString();
+            ItemStack itemStack = inv.getItem(i);
+            String itemType = itemStack.getType().toString();
 
             // Perform a check to see if what we have is a Weapon.
-            if (!(item.equalsIgnoreCase("BOW"))) {
+            if (!(itemType.equalsIgnoreCase("BOW"))) {
                 try {
-                    WeaponItems.valueOf(item.substring(item.indexOf("_") + 1, item.length()));
+                    WeaponItems.valueOf(itemType.substring(itemType.indexOf("_") + 1, itemType.length()));
                 } catch (IllegalArgumentException e1) {
                     continue;
                 }
             }
 
-            if (!(hc.getAllowedWeapons().contains(item))) {
-                if (!(moveItem(p, i, item))) {
-                    this.getMessager().send(p, "$1 has been removed from your Inventory", item);
+            if (!(hc.getAllowedWeapons().contains(itemType))) {
+                if (!(moveItem(p, i, itemStack))) {
+                    this.getMessager().send(p, "$1 has been removed from your Inventory", itemType);
                     count++;
                 } else {
-                    this.getMessager().send(p, "You are not trained to use a $1", item);
+                    this.getMessager().send(p, "You are not trained to use a $1", itemType);
                 }
             }
         }
@@ -396,7 +396,7 @@ public class Heroes extends JavaPlugin {
         }
     }
 
-    public boolean moveItem(Player p, int slot, String item) {
+    public boolean moveItem(Player p, int slot, ItemStack item) {
         PlayerInventory inv = p.getInventory();
         Hero h = this.getHeroManager().getHero(p);
         int empty = firstEmpty(p);
@@ -405,7 +405,7 @@ public class Heroes extends JavaPlugin {
             inv.setItem(slot, null);
             return false;
         } else {
-            inv.setItem(empty, new ItemStack(Material.valueOf(item), 1));
+            inv.setItem(empty, item);
             inv.setItem(slot, null);
             return true;
         }
