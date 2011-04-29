@@ -5,14 +5,18 @@ import java.util.HashMap;
 import org.bukkit.Material;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.util.config.Configuration;
+import org.bukkit.util.config.ConfigurationNode;
 
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.skill.TargettedSkill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 
 public class SkillBandages extends TargettedSkill {
-    public HashMap<Player, Integer> playerSchedulers = new HashMap<Player, Integer>();
-
+    
+    protected HashMap<Player, Integer> playerSchedulers = new HashMap<Player, Integer>();
+    protected int tickHealth;
+    
     public SkillBandages(Heroes plugin) {
         super(plugin);
         name = "Bandage";
@@ -22,6 +26,13 @@ public class SkillBandages extends TargettedSkill {
         maxArgs = 0;
         identifiers.add("skill bandage");
     }
+    
+    @Override
+    public ConfigurationNode getDefaultConfig() {
+        ConfigurationNode node = Configuration.getEmptyNode();
+        node.setProperty("tick-health", 1);
+        return node;
+    }
 
     @Override
     public boolean use(Hero hero, LivingEntity target, String[] args) {
@@ -29,10 +40,11 @@ public class SkillBandages extends TargettedSkill {
         if (target instanceof Player) {
             final Player tPlayer = (Player) target;
             if (!player.getItemInHand().equals(Material.PAPER)) {
-                plugin.getMessager().send(player, "You need paper to perform this");
+                plugin.getMessager().send(player, "You need paper to perform this.");
                 return false;
             }
 
+            tickHealth = config.getInt("tick-health", 1);
             playerSchedulers.put(tPlayer, plugin.getServer().getScheduler().scheduleAsyncRepeatingTask(plugin, new Runnable() {
                 public int timesRan = 0;
 
@@ -43,7 +55,7 @@ public class SkillBandages extends TargettedSkill {
                         plugin.getServer().getScheduler().cancelTask(id);
                     } else {
                         timesRan++;
-                        tPlayer.setHealth(tPlayer.getHealth() + 1);
+                        tPlayer.setHealth(tPlayer.getHealth() + tickHealth);
                     }
                 }
             }, 20L, 20L));
