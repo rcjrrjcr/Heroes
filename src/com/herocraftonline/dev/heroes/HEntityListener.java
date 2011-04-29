@@ -23,7 +23,7 @@ import com.herocraftonline.dev.heroes.persistence.Hero;
 public class HEntityListener extends EntityListener {
 
     private final Heroes plugin;
-    private HashMap<Entity, Player> kills = new HashMap<Entity, Player>();
+    private HashMap<Integer, Player> kills = new HashMap<Integer, Player>();
 
     public HEntityListener(Heroes plugin) {
         this.plugin = plugin;
@@ -32,7 +32,7 @@ public class HEntityListener extends EntityListener {
     @Override
     public void onEntityDeath(EntityDeathEvent event) {
         Entity defender = event.getEntity();
-        Player attacker = kills.get(defender);
+        Player attacker = kills.get(defender.getEntityId());
         kills.remove(defender);
         if (attacker != null) {
             // Get the Hero representing the player
@@ -123,9 +123,9 @@ public class HEntityListener extends EntityListener {
                 }
                 // If it's a legitimate attack then we add it to the Kills list.
                 if (attacker != null && attacker instanceof Player) {
-                    kills.put(defender, (Player) attacker);
+                    kills.put(defender.getEntityId(), (Player) attacker);
                 } else {
-                    kills.remove(defender);
+                    kills.remove(defender.getEntityId());
                 }
             }
         }
