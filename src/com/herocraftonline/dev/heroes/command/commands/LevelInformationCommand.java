@@ -47,7 +47,7 @@ public class LevelInformationCommand extends BaseCommand {
     }
     
     private String createExperienceBar(int exp, int currentLevelExp, int nextLevelExp) {
-        String expBar = "[§2";
+        String expBar = "§c[§2";
         int progress = (int) ((double) (exp - currentLevelExp) / (nextLevelExp - currentLevelExp) * 92);
         for (int i = 0; i < progress; i++) {
             expBar += "|";
@@ -56,12 +56,12 @@ public class LevelInformationCommand extends BaseCommand {
         for (int i = 0; i < 92 - progress; i++) {
             expBar += "|";
         }
-        expBar += "§f]";
+        expBar += "§c]";
         return expBar;
     }
     
     private String createManaBar(int mana) {
-        String manaBar = "[§9";
+        String manaBar = "§c[§9";
         int progress = (int) (mana / 100.0 * 92);
         for (int i = 0; i < progress; i++) {
             manaBar += "|";
@@ -70,7 +70,7 @@ public class LevelInformationCommand extends BaseCommand {
         for (int i = 0; i < 92 - progress; i++) {
             manaBar += "|";
         }
-        manaBar += "§f]";
+        manaBar += "§c]";
         return manaBar;
     }
 }
