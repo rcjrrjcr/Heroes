@@ -115,6 +115,7 @@ public class HEntityListener extends EntityListener {
                             if (newLevel >= prop.maxLevel) {
                                 hero.setExperience(prop.getExperience(prop.maxLevel));
                                 hero.getMasteries().add(playerClass.getName());
+                                plugin.getMessager().broadcast(plugin, "$1 has become a master $2!", attacker.getName(), playerClass.getName());
                             }
                         }
                     }
