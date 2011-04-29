@@ -30,6 +30,7 @@ public class SkillJump extends ActiveSkill {
         float multiplier = (90f + pitch) / 40f;
         Vector v = player.getVelocity().setY(1).add(player.getLocation().getDirection().setY(0).normalize().multiply(multiplier));
         player.setVelocity(v);
+        player.setFallDistance(-5f);
         return true;
     }
 }

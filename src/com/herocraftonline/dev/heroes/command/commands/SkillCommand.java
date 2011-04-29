@@ -49,7 +49,7 @@ public class SkillCommand extends BaseCommand {
         for (BaseCommand command : sortCommands) {
             if (command instanceof Skill) {
                 Skill skill = (Skill) command;
-                if (heroClass.hasSkill(skill.getName())) {
+                if (heroClass.hasSkill(skill.getName()) && !skills.contains(skill)) {
                     skills.add(skill);
                 }
             }
