@@ -32,20 +32,24 @@ public class LevelInformationCommand extends BaseCommand {
             int exp = hero.getExperience();
             int level = prop.getLevel(exp);
             int current = prop.getExperience(level);
-            int next = prop.getExperience(level + 1);
 
             sender.sendMessage("§c-----[ " + "§fYour Level Information§c ]-----");
 
             sender.sendMessage("  §aClass : " + hero.getPlayerClass().getName());
             sender.sendMessage("  §aLevel : " + level);
             sender.sendMessage("  §aExp : " + exp);
-            sender.sendMessage("  §aNext Level : " + (level + 1));
-            sender.sendMessage("  §aExp to Go: " + (next - exp));
-            sender.sendMessage(createExperienceBar(exp, current, next));
+            if (level != prop.maxLevel) {
+                int next = prop.getExperience(level + 1);
+                sender.sendMessage("  §aNext Level : " + (level + 1));
+                sender.sendMessage("  §aExp to Go: " + (next - exp));
+                sender.sendMessage(createExperienceBar(exp, current, next));
+            } else {
+                sender.sendMessage("  §aMASTERED!");
+            }
             sender.sendMessage(createManaBar(hero.getMana()));
         }
     }
-    
+
     private String createExperienceBar(int exp, int currentLevelExp, int nextLevelExp) {
         String expBar = "§c[§2";
         int progress = (int) ((double) (exp - currentLevelExp) / (nextLevelExp - currentLevelExp) * 92);
@@ -59,7 +63,7 @@ public class LevelInformationCommand extends BaseCommand {
         expBar += "§c]";
         return expBar;
     }
-    
+
     private String createManaBar(int mana) {
         String manaBar = "§c[§9";
         int progress = (int) (mana / 100.0 * 92);

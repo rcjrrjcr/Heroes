@@ -61,12 +61,10 @@ public class Properties {
      * @return
      */
     public int getLevel(int exp) {
-        int n = 0;
-        for (int i : levels) {
-            if (!(exp >= i)) {
-                return n;
+        for (int i = maxLevel - 1; i >= 0; i--) {
+            if (exp >= levels[i]) {
+                return i + 1;
             }
-            n++;
         }
         return -1;
     }
