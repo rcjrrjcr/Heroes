@@ -10,7 +10,9 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event.Type;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityListener;
 import org.bukkit.util.config.Configuration;
 import org.bukkit.util.config.ConfigurationNode;
@@ -50,7 +52,14 @@ public class SkillPiggify extends TargettedSkill {
             plugin.getMessager().send(player, "You need a target.");
             return false;
         }
-
+        
+        // Throw a dummy damage event to make it obey PvP restricting plugins
+        EntityDamageEvent event = new EntityDamageByEntityEvent(player, target, DamageCause.ENTITY_ATTACK, 0);
+        plugin.getServer().getPluginManager().callEvent(event);
+        if (event.isCancelled()) {
+            return false;
+        }
+        
         Entity pig = target.getWorld().spawnCreature(target.getLocation(), CreatureType.PIG);
         pig.setPassenger(target);
         pigs.add(pig);
