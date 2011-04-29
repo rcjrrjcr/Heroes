@@ -59,7 +59,8 @@ public class SkillBandages extends TargettedSkill {
                     }
                 }
             }, 20L, 20L));
-
+            
+            notifyNearbyPlayers(player.getLocation().toVector(), "$1 is bandaging $2.", player.getName(), tPlayer.getName());
             return true;
         }
         return false;
