@@ -26,33 +26,51 @@ public class LevelInformationCommand extends BaseCommand {
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (sender instanceof Player) {
-            Player p = (Player) sender;
-            Hero h = plugin.getHeroManager().getHero(p);
+            Player player = (Player) sender;
+            Hero hero = plugin.getHeroManager().getHero(player);
             Properties prop = this.plugin.getConfigManager().getProperties();
-            int exp = h.getExperience();
+            int exp = hero.getExperience();
             int level = prop.getLevel(exp);
             int current = prop.getExperience(level);
             int next = prop.getExperience(level + 1);
 
             sender.sendMessage("§c-----[ " + "§fYour Level Information§c ]-----");
 
-            sender.sendMessage("  §aClass : " + h.getPlayerClass().getName());
+            sender.sendMessage("  §aClass : " + hero.getPlayerClass().getName());
             sender.sendMessage("  §aLevel : " + level);
             sender.sendMessage("  §aExp : " + exp);
             sender.sendMessage("  §aNext Level : " + (level + 1));
             sender.sendMessage("  §aExp to Go: " + (next - exp));
-
-            String expBar = "[§2";
-            int progress = (int) ((double) (exp - current) / (next - current) * 92);
-            for (int i = 0; i < progress; i++) {
-                expBar += "|";
-            }
-            expBar += "§4";
-            for (int i = 0; i < 92 - progress; i++) {
-                expBar += "|";
-            }
-            expBar += "§f]";
-            sender.sendMessage(expBar);
+            sender.sendMessage(createExperienceBar(exp, current, next));
+            sender.sendMessage(createManaBar(hero.getMana()));
         }
+    }
+    
+    private String createExperienceBar(int exp, int currentLevelExp, int nextLevelExp) {
+        String expBar = "[§2";
+        int progress = (int) ((double) (exp - currentLevelExp) / (nextLevelExp - currentLevelExp) * 92);
+        for (int i = 0; i < progress; i++) {
+            expBar += "|";
+        }
+        expBar += "§4";
+        for (int i = 0; i < 92 - progress; i++) {
+            expBar += "|";
+        }
+        expBar += "§f]";
+        return expBar;
+    }
+    
+    private String createManaBar(int mana) {
+        String manaBar = "[§9";
+        int progress = (int) (mana / 100.0 * 92);
+        for (int i = 0; i < progress; i++) {
+            manaBar += "|";
+        }
+        manaBar += "§4";
+        for (int i = 0; i < 92 - progress; i++) {
+            manaBar += "|";
+        }
+        manaBar += "§f]";
+        return manaBar;
     }
 }

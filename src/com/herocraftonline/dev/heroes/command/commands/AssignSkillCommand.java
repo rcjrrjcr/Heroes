@@ -31,9 +31,9 @@ public class AssignSkillCommand extends BaseCommand {
             if (args.length > 0) {
                 if (heroClass.hasSkill(args[0])) {
                     hero.bind(material, args);
-                    plugin.getMessager().send(sender, "That has been assigned as your skill");
+                    plugin.getMessager().send(sender, "That has been assigned as your skill.");
                 } else {
-                    plugin.getMessager().send(sender, "That skill does not exist for your class");
+                    plugin.getMessager().send(sender, "That skill does not exist for your class.");
                 }
             } else {
                 hero.unbind(material);
