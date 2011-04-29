@@ -1,47 +1,47 @@
 package com.herocraftonline.dev.heroes.command.commands;
 
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.BaseCommand;
-import com.herocraftonline.dev.heroes.party.HeroParty;
+import com.herocraftonline.dev.heroes.persistence.Hero;
 
 public class PartyInviteCommand extends BaseCommand {
 
     public PartyInviteCommand(Heroes plugin) {
         super(plugin);
-        name = "PartyInvite";
-        description = "Invite a player to the party";
-        usage = "/hero party invite <player>";
+        name = "Party Invite";
+        description = "Invite a player to your party";
+        usage = "/party invite <player>";
         minArgs = 1;
         maxArgs = 1;
-        identifiers.add("hero party invite");
+        identifiers.add("party invite");
     }
 
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (sender instanceof Player) {
-            if (!Heroes.Permissions.has((Player) sender, "heroes.party.invite")) {
-                sender.sendMessage(ChatColor.RED + "You don't have permission to do this");
+            Player p = (Player) sender;
+            Hero pHero = plugin.getHeroManager().getHero(p);
 
+            if (pHero.getParty() == null) {
+                plugin.getMessager().send(sender, "To invite someone to a party, you need to be in a party", (String) null);
+                return;
+            }
+
+            if (pHero.getParty().getLeader() != p) {
+                plugin.getMessager().send(sender, "To invite someone to a party, you need to be the party leader", (String) null);
                 return;
             }
 
             if (plugin.getServer().getPlayer(args[0]) != null) {
-                return;
+                Player invitee = plugin.getServer().getPlayer(args[0]);
+                Hero inviteeHero = plugin.getHeroManager().getHero(invitee);
+                inviteeHero.getInvites().put(p, pHero.getParty());
+                sender.sendMessage("§aThat player has been invited to the party");
+                invitee.sendMessage("§a" + p.getName() + " has invited you their party.");
             }
-
-            if (plugin.getHeroManager().getHero((Player) sender).getParty() == null) {
-                return;
-            }
-
-            Player player = plugin.getServer().getPlayer(args[0]);
-            HeroParty newParty = plugin.getHeroManager().getHero((Player) sender).getParty();
-            plugin.getHeroManager().getHero(player).getInvites().put(newParty.getName(), newParty);
-            player.sendMessage(ChatColor.RED + ((Player) sender).getName() + " has invited you to " + newParty.getName());
         }
     }
-
 }

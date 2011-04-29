@@ -24,8 +24,8 @@ public abstract class Skill extends BaseCommand {
     public Skill(Heroes plugin) {
         super(plugin);
     }
-    
-    protected void notifyNearbyPlayers(Vector source, String message, String ... args) {
+
+    protected void notifyNearbyPlayers(Vector source, String message, String... args) {
         Player[] players = plugin.getServer().getOnlinePlayers();
         for (Player player : players) {
             Location playerLocation = player.getLocation();

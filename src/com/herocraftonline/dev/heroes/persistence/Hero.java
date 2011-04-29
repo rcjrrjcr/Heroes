@@ -28,7 +28,7 @@ public class Hero {
     protected Map<String, Double> effects;
     protected Map<Material, String[]> binds;
     protected HeroParty party;
-    protected Map<String, HeroParty> invites;
+    protected Map<Player, HeroParty> invites;
     protected List<ItemStack> itemRecovery;
 
     public Hero(Heroes plugin, Player player, HeroClass playerClass, int experience, int mana, List<String> masteries, List<ItemStack> itemRecovery) {
@@ -43,7 +43,7 @@ public class Hero {
         this.summons = new HashMap<Entity, CreatureType>();
         this.binds = new HashMap<Material, String[]>();
         this.party = null;
-        this.invites = new HashMap<String, HeroParty>();
+        this.invites = new HashMap<Player, HeroParty>();
         this.effects = new HashMap<String, Double>();
     }
 
@@ -133,7 +133,7 @@ public class Hero {
         this.party = party;
     }
 
-    public Map<String, HeroParty> getInvites() {
+    public Map<Player, HeroParty> getInvites() {
         return invites;
     }
 

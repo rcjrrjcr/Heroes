@@ -103,7 +103,7 @@ public class HeroManager {
         playerConfig.setProperty("mana", getHero(player).getMana());
         playerConfig.setProperty("masteries", getHero(player).getMasteries());
         playerConfig.removeProperty("itemrecovery"); // Just a precaution, we'll remove any values before resaving the list.
-        for(ItemStack item : getHero(player).getItems()){
+        for (ItemStack item : getHero(player).getItems()) {
             String durability = Short.toString(item.getDurability());
             playerConfig.setProperty("itemrecovery." + item, durability);
         }

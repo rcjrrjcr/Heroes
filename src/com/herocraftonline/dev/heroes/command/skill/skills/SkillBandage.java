@@ -13,10 +13,10 @@ import com.herocraftonline.dev.heroes.command.skill.TargettedSkill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 
 public class SkillBandage extends TargettedSkill {
-    
+
     protected HashMap<Player, Integer> playerSchedulers = new HashMap<Player, Integer>();
     protected int tickHealth;
-    
+
     public SkillBandage(Heroes plugin) {
         super(plugin);
         name = "Bandage";
@@ -26,7 +26,7 @@ public class SkillBandage extends TargettedSkill {
         maxArgs = 0;
         identifiers.add("skill bandage");
     }
-    
+
     @Override
     public ConfigurationNode getDefaultConfig() {
         ConfigurationNode node = Configuration.getEmptyNode();
@@ -59,7 +59,7 @@ public class SkillBandage extends TargettedSkill {
                     }
                 }
             }, 20L, 20L));
-            
+
             notifyNearbyPlayers(player.getLocation().toVector(), "$1 is bandaging $2.", player.getName(), tPlayer.getName());
             return true;
         }

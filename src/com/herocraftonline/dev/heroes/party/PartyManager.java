@@ -18,10 +18,6 @@ public class PartyManager {
         this.parties = new HashSet<HeroParty>();
     }
 
-    public HeroParty createHeroParty(Player leader, String name) {
-        return new HeroParty(leader, name);
-    }
-
     public void addHeroParty(HeroParty party) {
         parties.add(party);
     }
@@ -33,15 +29,6 @@ public class PartyManager {
     public HeroParty getHeroParty(Player owner) {
         for (HeroParty party : parties) {
             if (party.getLeader().equals(owner))
-                continue;
-            return party;
-        }
-        return null;
-    }
-
-    public HeroParty getHeroParty(String name) {
-        for (HeroParty party : parties) {
-            if (party.getName().equals(name))
                 continue;
             return party;
         }

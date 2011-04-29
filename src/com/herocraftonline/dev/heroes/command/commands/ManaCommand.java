@@ -28,7 +28,7 @@ public class ManaCommand extends BaseCommand {
             player.sendMessage("§9Mana: §f" + mana + " " + createManaBar(mana));
         }
     }
-    
+
     private String createManaBar(int mana) {
         String manaBar = "§c[§9";
         int progress = (int) (mana / 100.0 * 92);
