@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.config.Configuration;
 
 import com.herocraftonline.dev.heroes.Heroes;
@@ -55,9 +57,24 @@ public class HeroManager {
 
             // Grab the Data we need.
             List<String> masteries = playerConfig.getStringList("masteries", new ArrayList<String>());
-            List<String> itemRecovery = playerConfig.getStringList("itemrecovery", new ArrayList<String>());
             int mana = playerConfig.getInt("mana", 0);
             int exp = playerConfig.getInt("experience", 0);
+
+            // Lets sort out any items we need to recover.
+            List<ItemStack> itemRecovery = new ArrayList<ItemStack>();
+            List<String> itemKeys = playerConfig.getKeys("itemrecovery");
+            if (itemKeys != null && itemKeys.size() > 0) {
+                for (String item : itemKeys) {
+                    try {
+                        Short durability = Short.valueOf(playerConfig.getString("itemrecovery." + item, "0"));
+                        Material type = Material.valueOf(item);
+                        itemRecovery.add(new ItemStack(type, 1, durability));
+                    } catch (IllegalArgumentException e) {
+                        this.plugin.debugLog(Level.WARNING, "Either '" + item + "' doesn't exist or the durability is of an incorrect value!");
+                        continue;
+                    }
+                }
+            }
 
             // Create a New Hero
             Hero playerHero = new Hero(plugin, player, playerClass, exp, mana, masteries, itemRecovery);
@@ -85,13 +102,17 @@ public class HeroManager {
         playerConfig.setProperty("experience", getHero(player).getExperience());
         playerConfig.setProperty("mana", getHero(player).getMana());
         playerConfig.setProperty("masteries", getHero(player).getMasteries());
-        playerConfig.setProperty("itemrecovery", getHero(player).getItems());
+        playerConfig.removeProperty("itemrecovery"); // Just a precaution, we'll remove any values before resaving the list.
+        for(ItemStack item : getHero(player).getItems()){
+            String durability = Short.toString(item.getDurability());
+            playerConfig.setProperty("itemrecovery." + item, durability);
+        }
         playerConfig.save();
         plugin.log(Level.INFO, "Saved hero: " + player.getName());
     }
 
     public boolean createNewHero(Player player) {
-        Hero hero = new Hero(plugin, player, plugin.getClassManager().getDefaultClass(), 0, 0, new ArrayList<String>(), new ArrayList<String>());
+        Hero hero = new Hero(plugin, player, plugin.getClassManager().getDefaultClass(), 0, 0, new ArrayList<String>(), new ArrayList<ItemStack>());
         plugin.getServer().getPluginManager().callEvent(new NewHeroEvent(hero));
         return addHero(hero);
     }

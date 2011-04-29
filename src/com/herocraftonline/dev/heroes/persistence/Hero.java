@@ -9,6 +9,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.CreatureType;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
@@ -28,9 +29,9 @@ public class Hero {
     protected Map<Material, String[]> binds;
     protected HeroParty party;
     protected Map<String, HeroParty> invites;
-    protected List<String> itemRecovery;
+    protected List<ItemStack> itemRecovery;
 
-    public Hero(Heroes plugin, Player player, HeroClass playerClass, int experience, int mana, List<String> masteries, List<String> itemRecovery) {
+    public Hero(Heroes plugin, Player player, HeroClass playerClass, int experience, int mana, List<String> masteries, List<ItemStack> itemRecovery) {
         this.plugin = plugin;
         this.player = player;
         this.playerClass = playerClass;
@@ -46,15 +47,15 @@ public class Hero {
         this.effects = new HashMap<String, Double>();
     }
 
-    public void addItem(String item) {
+    public void addItem(ItemStack item) {
         this.itemRecovery.add(item);
     }
 
-    public void setItems(List<String> items) {
+    public void setItems(List<ItemStack> items) {
         this.itemRecovery = items;
     }
 
-    public List<String> getItems() {
+    public List<ItemStack> getItems() {
         return this.itemRecovery;
     }
 

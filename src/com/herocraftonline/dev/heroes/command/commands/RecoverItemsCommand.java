@@ -30,8 +30,8 @@ public class RecoverItemsCommand extends BaseCommand {
             Player p = (Player) sender;
             Hero h = this.plugin.getHeroManager().getHero(p);
 
-            List<String> items = h.getItems();
-            List<String> newItems = new ArrayList<String>();
+            List<ItemStack> items = h.getItems();
+            List<ItemStack> newItems = new ArrayList<ItemStack>();
 
             if (!(items.size() > 0)) {
                 this.plugin.getMessager().send(p, "You have no items to recover");
@@ -39,7 +39,7 @@ public class RecoverItemsCommand extends BaseCommand {
 
             for (int i = 0; i < items.size(); i++) {
                 int slot = this.plugin.firstEmpty(p);
-                Material material = Material.valueOf(items.get(i));
+                Material material = items.get(i).getType();
                 if (slot == -1) {
                     newItems.add(items.get(i));
                     continue;
