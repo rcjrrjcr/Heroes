@@ -19,6 +19,7 @@ import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.classes.HeroClass.ExperienceType;
 import com.herocraftonline.dev.heroes.party.HeroParty;
 import com.herocraftonline.dev.heroes.persistence.Hero;
+import com.herocraftonline.dev.heroes.util.Properties;
 
 public class HEntityListener extends EntityListener {
 
@@ -44,14 +45,26 @@ public class HEntityListener extends EntityListener {
             // If the player gains experience from killing
             if (expSources.contains(ExperienceType.KILLING)) {
                 if (defender instanceof LivingEntity) {
+                    Properties prop = plugin.getConfigManager().getProperties();
                     int addedExp = 0;
                     // If the dying entity is a Player
                     if (defender instanceof Player) {
-                        addedExp = plugin.getConfigManager().getProperties().playerKillingExp;
+                        addedExp = prop.playerKillingExp;
 
                         // Incur 5% experience loss to dying player
+                        // 5% of the next level's experience requirement
+                        // Experience loss can't reduce level
                         Hero heroDefender = plugin.getHeroManager().getHero((Player) defender);
-                        heroDefender.setExperience((int) (heroDefender.getExperience() * 0.95));
+                        int exp = heroDefender.getExperience();
+                        int level = prop.getLevel(exp);
+                        int currentLevelExp = prop.getExperience(level);
+                        int nextLevelExp = prop.getExperience(level + 1);
+                        int expLoss = (int)((nextLevelExp - currentLevelExp) * 0.05);
+                        if (exp - expLoss < currentLevelExp) {
+                            expLoss = exp - currentLevelExp;
+                        }
+                        heroDefender.setExperience(exp - expLoss);
+                        plugin.getMessager().send(heroDefender.getPlayer(), "You have lost " + expLoss + " exp for dying in PvP.");
                     } else {
                         // Get the dying entity's CreatureType
                         CreatureType type = null;
@@ -63,16 +76,21 @@ public class HEntityListener extends EntityListener {
                                     break;
                                 }
                             }
-                        } catch (IllegalArgumentException e) {
-                        }
+                        } catch (IllegalArgumentException e) {}
                         if (type != null) {
-                            addedExp = plugin.getConfigManager().getProperties().creatureKillingExp.get(type);
+                            addedExp = prop.creatureKillingExp.get(type);
                         }
                     }
                     // Fire the experience gain event
                     int exp = hero.getExperience();
-                    int currentLevel = plugin.getConfigManager().getProperties().getLevel(exp);
-                    int newLevel = plugin.getConfigManager().getProperties().getLevel(exp + addedExp);
+                    int currentLevel = prop.getLevel(exp);
+                    int newLevel = prop.getLevel(exp + addedExp);
+                    
+                    // If they're at max level, we don't add experience
+                    if (currentLevel == prop.classSwitchLevel) {
+                        return;
+                    }
+                    
                     ExperienceGainEvent expEvent;
                     if (newLevel == currentLevel) {
                         expEvent = new ExperienceGainEvent(attacker, addedExp);
@@ -92,6 +110,12 @@ public class HEntityListener extends EntityListener {
                         plugin.getMessager().send(attacker, "$1: Gained $2 Exp", playerClass.getName(), String.valueOf(addedExp));
                         if (newLevel != currentLevel) {
                             plugin.getMessager().send(attacker, "You leveled up! (Lvl $1 $2)", String.valueOf(newLevel), playerClass.getName());
+                            if (playerClass.isPrimary()) {
+                                if (newLevel >= prop.classSwitchLevel) {
+                                    hero.setExperience(prop.getExperience(prop.classSwitchLevel));
+                                    hero.getMasteries().add(playerClass.getName());
+                                }
+                            }
                         }
                     }
                 }
