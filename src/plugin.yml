@@ -12,7 +12,8 @@ commands:
   hrecover:
     description: Heroes Recover Items command
     usage: /<command>
-  p:
+  party:
+    aliases: ['p']
     description: Heroes command
     usage: /<command> <message>
   skill:

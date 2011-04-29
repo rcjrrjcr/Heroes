@@ -34,10 +34,10 @@ public class SkillPiggify extends TargettedSkill {
         maxArgs = 1;
         identifiers.add("skill piggify");
         maxDistance = 20;
-        
+
         registerEvent(Type.ENTITY_DAMAGE, new SkillEntityListener(), Priority.Normal);
     }
-    
+
     @Override
     public ConfigurationNode getDefaultConfig() {
         ConfigurationNode node = Configuration.getEmptyNode();
@@ -52,14 +52,14 @@ public class SkillPiggify extends TargettedSkill {
             plugin.getMessager().send(player, "You need a target.");
             return false;
         }
-        
+
         // Throw a dummy damage event to make it obey PvP restricting plugins
         EntityDamageEvent event = new EntityDamageByEntityEvent(player, target, DamageCause.ENTITY_ATTACK, 0);
         plugin.getServer().getPluginManager().callEvent(event);
         if (event.isCancelled()) {
             return false;
         }
-        
+
         Entity pig = target.getWorld().spawnCreature(target.getLocation(), CreatureType.PIG);
         pig.setPassenger(target);
         pigs.add(pig);
@@ -69,22 +69,22 @@ public class SkillPiggify extends TargettedSkill {
                 pigs.get(0).remove();
                 pigs.remove(0);
             }
-        }, (long)(config.getInt("duration", 10000) * 0.02));
-        
+        }, (long) (config.getInt("duration", 10000) * 0.02));
+
         String targetName = (target instanceof Player) ? ((Player) target).getName() : target.getClass().getSimpleName().substring(5);
         notifyNearbyPlayers(player.getLocation().toVector(), "$1 used $2 on $3!", player.getName(), name, targetName);
         return true;
     }
-    
+
     public class SkillEntityListener extends EntityListener {
-        
+
         public void onEntityDamage(EntityDamageEvent event) {
             Entity entity = event.getEntity();
             if (pigs.contains(entity)) {
                 event.setCancelled(true);
             }
         }
-        
+
     }
 
 }

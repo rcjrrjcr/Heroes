@@ -49,6 +49,7 @@ public class HEntityListener extends EntityListener {
                     int addedExp = 0;
                     // If the dying entity is a Player
                     if (defender instanceof Player) {
+                        prop.playerDeaths.put((Player) defender, defender.getLocation());
                         addedExp = prop.playerKillingExp;
 
                         // Incur 5% experience loss to dying player
@@ -76,7 +77,8 @@ public class HEntityListener extends EntityListener {
                                     break;
                                 }
                             }
-                        } catch (IllegalArgumentException e) {}
+                        } catch (IllegalArgumentException e) {
+                        }
                         if (type != null) {
                             addedExp = prop.creatureKillingExp.get(type);
                         }

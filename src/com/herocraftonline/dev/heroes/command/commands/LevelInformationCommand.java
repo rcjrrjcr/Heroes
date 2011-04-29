@@ -45,7 +45,7 @@ public class LevelInformationCommand extends BaseCommand {
             sender.sendMessage(createManaBar(hero.getMana()));
         }
     }
-    
+
     private String createExperienceBar(int exp, int currentLevelExp, int nextLevelExp) {
         String expBar = "§c[§2";
         int progress = (int) ((double) (exp - currentLevelExp) / (nextLevelExp - currentLevelExp) * 92);
@@ -59,7 +59,7 @@ public class LevelInformationCommand extends BaseCommand {
         expBar += "§c]";
         return expBar;
     }
-    
+
     private String createManaBar(int mana) {
         String manaBar = "§c[§9";
         int progress = (int) (mana / 100.0 * 92);

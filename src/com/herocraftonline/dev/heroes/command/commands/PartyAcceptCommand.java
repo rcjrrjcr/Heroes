@@ -1,43 +1,35 @@
 package com.herocraftonline.dev.heroes.command.commands;
 
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.BaseCommand;
+import com.herocraftonline.dev.heroes.persistence.Hero;
 
 public class PartyAcceptCommand extends BaseCommand {
 
     public PartyAcceptCommand(Heroes plugin) {
         super(plugin);
-        name = "PartyAccept";
-        description = "Respond to the invite for a party";
-        usage = "/hero party accept <player>";
+        name = "Party Accept";
+        description = "Accept a players party invite";
+        usage = "/party accept <player>";
         minArgs = 1;
         maxArgs = 1;
-        identifiers.add("hero party accept");
+        identifiers.add("party accept");
     }
 
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (sender instanceof Player) {
-            if (!Heroes.Permissions.has((Player) sender, "heroes.party.accept")) {
-                sender.sendMessage(ChatColor.RED + "You don't have permission to do this");
+            Player p = (Player) sender;
+            Hero pHero = plugin.getHeroManager().getHero(p);
 
-                return;
-            }
-
-            if (plugin.getServer().getPlayer(args[0]) != null) {
-                return;
-            }
-
-            if (plugin.getHeroManager().getHero((Player) sender).getInvites().containsKey(args[0])) {
-                plugin.getHeroManager().getHero((Player) sender).setParty(plugin.getHeroManager().getHero((Player) sender).getParty());
-                plugin.getPartyManager().dispatchMessage(plugin.getHeroManager().getHero((Player) sender).getParty(), ChatColor.RED + ((Player) sender).getName() + " Has joined the party!");
-                plugin.getHeroManager().getHero((Player) sender).getInvites().remove(args[0]);
+            if (pHero.getInvites().containsKey(args[0])) {
+                pHero.setParty(pHero.getInvites().get(args[0]));
+                pHero.getInvites().remove(args[0]);
             } else {
-                sender.sendMessage(ChatColor.RED + "Sorry, that party hasn't invited you");
+                sender.sendMessage("§aSorry, you don't have an invite from that player");
             }
         }
     }

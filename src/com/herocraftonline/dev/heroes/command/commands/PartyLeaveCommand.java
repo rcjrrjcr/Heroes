@@ -1,31 +1,43 @@
 package com.herocraftonline.dev.heroes.command.commands;
 
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.BaseCommand;
+import com.herocraftonline.dev.heroes.persistence.Hero;
 
 public class PartyLeaveCommand extends BaseCommand {
 
     public PartyLeaveCommand(Heroes plugin) {
         super(plugin);
         name = "Party Leave";
-        description = "Leaves a party";
-        usage = "/hero party leave";
+        description = "Party leave command";
+        usage = "/party leave";
         minArgs = 0;
         maxArgs = 0;
-        identifiers.add("hero party leave");
+        identifiers.add("party leave");
     }
 
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (sender instanceof Player) {
-
             Player p = (Player) sender;
-            plugin.getPartyManager().dispatchMessage(plugin.getHeroManager().getHero(p).getParty(), ChatColor.BLUE + p.getName() + ChatColor.RED + " has left the party");
-            plugin.getHeroManager().getHero(p).setParty(null);
+            Hero pHero = plugin.getHeroManager().getHero(p);
+
+            plugin.getMessager().send(sender, "You now have no party", (String) null);
+            if (pHero.getParty() != null) {
+                if (pHero.getParty().getLeader() == p) {
+                    plugin.getMessager().send(sender, "You now have no party", (String) null);
+                    for (Player player : pHero.getParty().getMembers()) {
+                        plugin.getHeroManager().getHero(player).setParty(null);
+                        plugin.getMessager().send(sender, "Your party has been disbanded", (String) null);
+                    }
+                } else {
+                    pHero.setParty(null);
+                    plugin.getMessager().send(sender, "You now have no party", (String) null);
+                }
+            }
         }
     }
 

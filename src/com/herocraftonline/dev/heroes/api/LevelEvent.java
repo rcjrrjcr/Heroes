@@ -4,7 +4,7 @@ import org.bukkit.entity.Player;
 
 @SuppressWarnings("serial")
 public class LevelEvent extends ExperienceGainEvent {
-    
+
     protected int experience;
     protected int newLevel;
     protected int previousLevel;

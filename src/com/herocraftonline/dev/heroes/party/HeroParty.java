@@ -12,14 +12,14 @@ public class HeroParty {
     protected boolean exp;
     protected Player leader;
     protected int level;
-    protected String name;
+    protected int index;
 
-    public HeroParty(Player leader, String name) {
+    public HeroParty(Player leader, int index) {
         this.leader = leader;
         this.members = new HashMap<Player, Integer>();
         this.pvp = false;
         this.exp = false;
-        this.name = name;
+        this.index = index;
     }
 
     public Set<Player> getMembers() {
@@ -34,8 +34,12 @@ public class HeroParty {
         return level;
     }
 
-    public String getName() {
-        return name;
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
     }
 
     public void addMember(Player member, int permissions) {
@@ -54,10 +58,6 @@ public class HeroParty {
         this.level = level;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public boolean getPvp() {
         return pvp;
     }
@@ -73,5 +73,4 @@ public class HeroParty {
     public void setExp(boolean exp) {
         this.exp = exp;
     }
-
 }
