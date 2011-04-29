@@ -32,17 +32,21 @@ public class SelectSpecialtyCommand extends BaseCommand {
             ClassManager classManager = plugin.getClassManager();
             Hero hero = heroManager.getHero(player);
             HeroClass playerClass = hero.getPlayerClass();
-            if (playerClass.isPrimary() && prop.getLevel(hero.getExperience()) > prop.classSwitchLevel) {
-                HeroClass subClass = classManager.getClass(args[0]);
-                if (subClass != null) {
-                    if (subClass.getParent() == playerClass) {
-                        hero.setPlayerClass(subClass);
-                        plugin.getMessager().send(player, "Well done $1!", subClass.getName());
+            if (playerClass.isPrimary()) {
+                if (prop.getLevel(hero.getExperience()) >= prop.classSwitchLevel) {
+                    HeroClass subClass = classManager.getClass(args[0]);
+                    if (subClass != null) {
+                        if (subClass.getParent() == playerClass) {
+                            hero.setPlayerClass(subClass);
+                            plugin.getMessager().send(player, "Well done $1!", subClass.getName());
+                        } else {
+                            plugin.getMessager().send(player, "Sorry, that specialty doesn't belong to $1.", playerClass.getName());
+                        }
                     } else {
-                        plugin.getMessager().send(player, "Sorry, that specialty doesn't belong to $1.", playerClass.getName());
+                        plugin.getMessager().send(player, "Sorry, that isn't a specialty!");
                     }
                 } else {
-                    plugin.getMessager().send(player, "Sorry, that isn't a specialty!");
+                    plugin.getMessager().send(player, "You must master your profession before choosing a specialty.");
                 }
             } else {
                 plugin.getMessager().send(player, "You have already selected a specialty!");
