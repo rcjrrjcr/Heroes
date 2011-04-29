@@ -12,12 +12,12 @@ import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.skill.TargettedSkill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 
-public class SkillBandages extends TargettedSkill {
+public class SkillBandage extends TargettedSkill {
     
     protected HashMap<Player, Integer> playerSchedulers = new HashMap<Player, Integer>();
     protected int tickHealth;
     
-    public SkillBandages(Heroes plugin) {
+    public SkillBandage(Heroes plugin) {
         super(plugin);
         name = "Bandage";
         description = "Skill - Bandage";
