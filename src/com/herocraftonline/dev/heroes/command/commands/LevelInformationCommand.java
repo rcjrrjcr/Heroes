@@ -43,7 +43,7 @@ public class LevelInformationCommand extends BaseCommand {
             sender.sendMessage("  §aExp to Go: " + (next - exp));
 
             String expBar = "[§2";
-            int progress = (int)((double) (exp - current) / (next - current) * 92);
+            int progress = (int) ((double) (exp - current) / (next - current) * 92);
             for (int i = 0; i < progress; i++) {
                 expBar += "|";
             }

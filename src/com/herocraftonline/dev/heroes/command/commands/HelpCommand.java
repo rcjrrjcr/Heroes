@@ -45,8 +45,8 @@ public class HelpCommand extends BaseCommand {
         List<BaseCommand> commands = new ArrayList<BaseCommand>();
 
         // Filter out Skills from the command list.
-        for(BaseCommand command : sortCommands) {
-            if(!(command instanceof Skill)){
+        for (BaseCommand command : sortCommands) {
+            if (!(command instanceof Skill)) {
                 commands.add(command);
             }
         }

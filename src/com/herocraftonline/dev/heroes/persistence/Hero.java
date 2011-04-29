@@ -9,14 +9,14 @@ import org.bukkit.Material;
 import org.bukkit.entity.CreatureType;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
 
+import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.party.HeroParty;
 
 public class Hero {
 
-    protected final JavaPlugin plugin;
+    protected final Heroes plugin;
     protected Player player;
     protected HeroClass playerClass;
     protected int experience;
@@ -30,7 +30,7 @@ public class Hero {
     protected Map<String, HeroParty> invites;
     protected List<String> itemRecovery;
 
-    public Hero(JavaPlugin plugin, Player player, HeroClass playerClass, int experience, int mana, List<String> masteries, List<String> itemRecovery) {
+    public Hero(Heroes plugin, Player player, HeroClass playerClass, int experience, int mana, List<String> masteries, List<String> itemRecovery) {
         this.plugin = plugin;
         this.player = player;
         this.playerClass = playerClass;
@@ -84,6 +84,8 @@ public class Hero {
 
     public void setPlayerClass(HeroClass playerClass) {
         this.playerClass = playerClass;
+        // Check the Players inventory now that they have changed class.
+        this.plugin.inventoryCheck(getPlayer());
     }
 
     public void setExperience(int experience) {

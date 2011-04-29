@@ -1,7 +1,6 @@
 package com.herocraftonline.dev.heroes.command.skill.skills;
 
 import org.bukkit.entity.Player;
-import org.bukkit.util.Vector;
 
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.skill.ActiveSkill;
@@ -22,10 +21,8 @@ public class SkillJump extends ActiveSkill {
 
     @Override
     public boolean use(Hero hero, String[] args) {
-        // TODO: this doesn't do what we want - it assumes the player is mid-jump
         Player player = hero.getPlayer();
-        Vector velocity = player.getVelocity();
-        player.setVelocity(velocity.setY((velocity.getY() * 2)));
+        player.getLocation().getDirection().setY(1).multiply(10);
         return true;
     }
 }
