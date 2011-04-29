@@ -1,6 +1,7 @@
 package com.herocraftonline.dev.heroes.command.skill.skills;
 
 import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
 
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.skill.ActiveSkill;
@@ -22,7 +23,13 @@ public class SkillJump extends ActiveSkill {
     @Override
     public boolean use(Hero hero, String[] args) {
         Player player = hero.getPlayer();
-        player.getLocation().getDirection().setY(1).multiply(10);
+        float pitch = player.getEyeLocation().getPitch();
+        if (pitch > 0) {
+            pitch = -pitch;
+        }
+        float multiplier = (90f + pitch) / 40f;
+        Vector v = player.getVelocity().setY(1).add(player.getLocation().getDirection().setY(0).normalize().multiply(multiplier));
+        player.setVelocity(v);
         return true;
     }
 }
