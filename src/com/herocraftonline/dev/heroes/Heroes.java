@@ -30,6 +30,7 @@ import com.herocraftonline.dev.heroes.command.commands.AssignSkillCommand;
 import com.herocraftonline.dev.heroes.command.commands.ConfigReloadCommand;
 import com.herocraftonline.dev.heroes.command.commands.HelpCommand;
 import com.herocraftonline.dev.heroes.command.commands.LevelInformationCommand;
+import com.herocraftonline.dev.heroes.command.commands.ManaCommand;
 import com.herocraftonline.dev.heroes.command.commands.PartyAcceptCommand;
 import com.herocraftonline.dev.heroes.command.commands.PartyChatCommand;
 import com.herocraftonline.dev.heroes.command.commands.PartyCreateCommand;
@@ -217,6 +218,7 @@ public class Heroes extends JavaPlugin {
         commandManager.addCommand(new ConfigReloadCommand(this));
         commandManager.addCommand(new SkillCommand(this));
         commandManager.addCommand(new LevelInformationCommand(this));
+        commandManager.addCommand(new ManaCommand(this));
     }
 
     /**

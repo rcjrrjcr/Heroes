@@ -26,3 +26,6 @@ commands:
   assign:
     description: Binds a skill to an item
     usage: /<command> <skill> 
+  mana:
+    description: Displays the hero's current mana
+    usage: /<command>
