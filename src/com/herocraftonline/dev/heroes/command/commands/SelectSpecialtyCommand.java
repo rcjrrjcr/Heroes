@@ -33,12 +33,17 @@ public class SelectSpecialtyCommand extends BaseCommand {
             Hero hero = heroManager.getHero(player);
             HeroClass playerClass = hero.getPlayerClass();
             if (playerClass.isPrimary()) {
-                if (prop.getLevel(hero.getExperience()) >= prop.classSwitchLevel) {
-                    HeroClass subClass = classManager.getClass(args[0]);
-                    if (subClass != null) {
-                        if (subClass.getParent() == playerClass) {
-                            hero.setPlayerClass(subClass);
-                            plugin.getMessager().send(player, "Well done $1!", subClass.getName());
+                if (prop.getLevel(hero.getExperience()) >= prop.maxLevel) {
+                    HeroClass specialty = classManager.getClass(args[0]);
+                    if (specialty != null) {
+                        if (specialty.getParent() == playerClass) {
+                            hero.setPlayerClass(specialty);
+                            if (hero.getMasteries().contains(specialty.getName())) {
+                                hero.setExperience(prop.getExperience(prop.maxLevel));
+                            } else {
+                                hero.setExperience(0);
+                            }
+                            plugin.getMessager().send(player, "Well done $1!", specialty.getName());
                         } else {
                             plugin.getMessager().send(player, "Sorry, that specialty doesn't belong to $1.", playerClass.getName());
                         }

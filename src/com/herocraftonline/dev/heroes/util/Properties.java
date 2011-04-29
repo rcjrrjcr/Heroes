@@ -26,7 +26,6 @@ public class Properties {
     public int maxExp;
     public int maxLevel;
     public int[] levels;
-    public int classSwitchLevel;
     public double expLoss;
     // Experience//
     public int playerKillingExp = 0;
@@ -43,7 +42,7 @@ public class Properties {
     public boolean iConomy;
     public ChatColor cColor;
     public String prefix;
-    public int swapcost;
+    public int swapCost;
 
     /**
      * Generate experience for the level ArrayList<Integer>

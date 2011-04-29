@@ -59,7 +59,7 @@ public class HEntityListener extends EntityListener {
                         int level = prop.getLevel(exp);
                         int currentLevelExp = prop.getExperience(level);
                         int nextLevelExp = prop.getExperience(level + 1);
-                        int expLoss = (int)((nextLevelExp - currentLevelExp) * 0.05);
+                        int expLoss = (int) ((nextLevelExp - currentLevelExp) * 0.05);
                         if (exp - expLoss < currentLevelExp) {
                             expLoss = exp - currentLevelExp;
                         }
@@ -85,12 +85,12 @@ public class HEntityListener extends EntityListener {
                     int exp = hero.getExperience();
                     int currentLevel = prop.getLevel(exp);
                     int newLevel = prop.getLevel(exp + addedExp);
-                    
+
                     // If they're at max level, we don't add experience
-                    if (currentLevel == prop.classSwitchLevel) {
+                    if (currentLevel == prop.maxLevel) {
                         return;
                     }
-                    
+
                     ExperienceGainEvent expEvent;
                     if (newLevel == currentLevel) {
                         expEvent = new ExperienceGainEvent(attacker, addedExp);
@@ -110,11 +110,9 @@ public class HEntityListener extends EntityListener {
                         plugin.getMessager().send(attacker, "$1: Gained $2 Exp", playerClass.getName(), String.valueOf(addedExp));
                         if (newLevel != currentLevel) {
                             plugin.getMessager().send(attacker, "You leveled up! (Lvl $1 $2)", String.valueOf(newLevel), playerClass.getName());
-                            if (playerClass.isPrimary()) {
-                                if (newLevel >= prop.classSwitchLevel) {
-                                    hero.setExperience(prop.getExperience(prop.classSwitchLevel));
-                                    hero.getMasteries().add(playerClass.getName());
-                                }
+                            if (newLevel >= prop.maxLevel) {
+                                hero.setExperience(prop.getExperience(prop.maxLevel));
+                                hero.getMasteries().add(playerClass.getName());
                             }
                         }
                     }

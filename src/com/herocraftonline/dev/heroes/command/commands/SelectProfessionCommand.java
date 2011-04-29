@@ -9,6 +9,7 @@ import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.command.BaseCommand;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 import com.herocraftonline.dev.heroes.persistence.HeroManager;
+import com.herocraftonline.dev.heroes.util.Properties;
 import com.nijiko.coelho.iConomy.iConomy;
 import com.nijiko.coelho.iConomy.system.Account;
 
@@ -31,14 +32,18 @@ public class SelectProfessionCommand extends BaseCommand {
             HeroClass profession = plugin.getClassManager().getClass(args[0]);
             if (profession != null) {
                 if (profession.isPrimary()) {
+                    Properties prop = plugin.getConfigManager().getProperties();
                     HeroManager heroManager = plugin.getHeroManager();
                     Hero hero = heroManager.getHero(player);
                     if (hero.getPlayerClass().equals(plugin.getClassManager().getDefaultClass())) {
-                        hero.setPlayerClass(profession);
-                        ClassChangeEvent event = new ClassChangeEvent(hero.getPlayer(), profession);
-                        plugin.getServer().getPluginManager().callEvent(event);
+                        changeClass(hero, profession, 0);
                     } else {
-                        changeClass(hero, profession);
+                        changeClass(hero, profession, prop.swapCost);
+                    }
+                    if (hero.getMasteries().contains(profession.getName())) {
+                        hero.setExperience(prop.getExperience(prop.maxLevel));
+                    } else {
+                        hero.setExperience(0);
                     }
                     plugin.getMessager().send(player, "Welcome to the path of the $1!", profession.getName());
                 } else {
@@ -50,13 +55,12 @@ public class SelectProfessionCommand extends BaseCommand {
         }
     }
 
-    public void changeClass(Hero hero, HeroClass newClass) {
+    public void changeClass(Hero hero, HeroClass newClass, int cost) {
         if (plugin.getConfigManager().getProperties().iConomy == true) {
             String playerName = hero.getPlayer().getName();
             Account account = iConomy.getBank().getAccount(playerName);
-            int swapcost = plugin.getConfigManager().getProperties().swapcost;
-            if (account.hasEnough(swapcost)) {
-                account.subtract(swapcost);
+            if (account.hasEnough(cost)) {
+                account.subtract(cost);
                 hero.setPlayerClass(newClass);
                 ClassChangeEvent event = new ClassChangeEvent(hero.getPlayer(), newClass);
                 plugin.getServer().getPluginManager().callEvent(event);
