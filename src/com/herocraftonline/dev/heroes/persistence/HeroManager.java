@@ -127,7 +127,7 @@ public class HeroManager {
         playerConfig.removeProperty("itemrecovery"); // Just a precaution, we'll remove any values before resaving the list.
         for (ItemStack item : getHero(player).getItems()) {
             String durability = Short.toString(item.getDurability());
-            playerConfig.setProperty("itemrecovery." + item, durability);
+            playerConfig.setProperty("itemrecovery." + item.getType().toString(), durability);
         }
 
         playerConfig.removeProperty("binds"); // Just a precaution.
