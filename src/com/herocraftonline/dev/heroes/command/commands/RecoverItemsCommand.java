@@ -3,7 +3,6 @@ package com.herocraftonline.dev.heroes.command.commands;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -24,6 +23,7 @@ public class RecoverItemsCommand extends BaseCommand {
         minArgs = 0;
         maxArgs = 0;
         identifiers.add("hero recoveritems");
+        identifiers.add("hrecover");
     }
 
     @Override
@@ -41,13 +41,12 @@ public class RecoverItemsCommand extends BaseCommand {
 
             for (int i = 0; i < items.size(); i++) {
                 int slot = this.plugin.firstEmpty(p);
-                Material material = items.get(i).getType();
                 if (slot == -1) {
                     newItems.add(items.get(i));
                     continue;
                 }
-                p.getInventory().setItem(slot, new ItemStack(material, 1));
-                Messaging.send(p, "Recovered Item $1 - $2", "#" + (i + 1), MaterialUtil.getFriendlyName(material));
+                p.getInventory().setItem(slot, items.get(i));
+                Messaging.send(p, "Recovered Item $1 - $2", "#" + (i + 1), MaterialUtil.getFriendlyName(items.get(i).getType()));
             }
 
             if (newItems.size() > 0) {
