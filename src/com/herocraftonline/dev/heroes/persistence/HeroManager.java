@@ -59,7 +59,7 @@ public class HeroManager {
             List<String> masteries = playerConfig.getStringList("masteries", new ArrayList<String>());
             int mana = playerConfig.getInt("mana", 0);
             int exp = playerConfig.getInt("experience", 0);
-            boolean verbose = playerConfig.getBoolean("verbose", false);
+            boolean verbose = playerConfig.getBoolean("verbose", true);
 
             // Lets sort out any items we need to recover.
             List<ItemStack> itemRecovery = new ArrayList<ItemStack>();
