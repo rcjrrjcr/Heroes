@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.persistence.Hero;
+import com.herocraftonline.dev.heroes.util.Messaging;
 
 public abstract class TargettedSkill extends ActiveSkill {
 
@@ -26,6 +27,10 @@ public abstract class TargettedSkill extends ActiveSkill {
         LivingEntity target = null;
         if (args.length > 0) {
             target = plugin.getServer().getPlayer(args[0]);
+            if (target.getLocation().toVector().distance(player.getLocation().toVector()) > maxDistance) {
+                Messaging.send(player, "Target is too far away.");
+                return false;
+            }
         }
         if (target == null) {
             target = getPlayerTarget(player, maxDistance);

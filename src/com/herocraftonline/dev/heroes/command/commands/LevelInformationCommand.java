@@ -34,7 +34,6 @@ public class LevelInformationCommand extends BaseCommand {
             int current = prop.getExperience(level);
 
             sender.sendMessage("§c-----[ " + "§fYour Level Information§c ]-----");
-
             sender.sendMessage("  §aClass : " + hero.getPlayerClass().getName());
             sender.sendMessage("  §aLevel : " + level);
             sender.sendMessage("  §aExp : " + exp);

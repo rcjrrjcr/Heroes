@@ -36,6 +36,27 @@ public class HEntityListener extends EntityListener {
         Entity defender = event.getEntity();
         Player attacker = kills.get(defender.getEntityId());
         kills.remove(defender);
+
+        Properties prop = plugin.getConfigManager().getProperties();
+        if (defender instanceof Player) {
+            // Incur 5% experience loss to dying player
+            // 5% of the next level's experience requirement
+            // Experience loss can't reduce level
+            Hero heroDefender = plugin.getHeroManager().getHero((Player) defender);
+            int exp = heroDefender.getExperience();
+            int level = prop.getLevel(exp);
+            if (level < prop.maxLevel) {
+                int currentLevelExp = prop.getExperience(level);
+                int nextLevelExp = prop.getExperience(level + 1);
+                int expLoss = (int) ((nextLevelExp - currentLevelExp) * 0.05);
+                if (exp - expLoss < currentLevelExp) {
+                    expLoss = exp - currentLevelExp;
+                }
+                heroDefender.setExperience(exp - expLoss);
+                Messaging.send(heroDefender.getPlayer(), "You have lost " + expLoss + " exp for dying.");
+            }
+        }
+
         if (attacker != null) {
             // Get the Hero representing the player
             Hero hero = plugin.getHeroManager().getHero(attacker);
@@ -46,27 +67,11 @@ public class HEntityListener extends EntityListener {
             // If the player gains experience from killing
             if (expSources.contains(ExperienceType.KILLING)) {
                 if (defender instanceof LivingEntity) {
-                    Properties prop = plugin.getConfigManager().getProperties();
                     int addedExp = 0;
                     // If the dying entity is a Player
                     if (defender instanceof Player) {
                         prop.playerDeaths.put((Player) defender, defender.getLocation());
                         addedExp = prop.playerKillingExp;
-
-                        // Incur 5% experience loss to dying player
-                        // 5% of the next level's experience requirement
-                        // Experience loss can't reduce level
-                        Hero heroDefender = plugin.getHeroManager().getHero((Player) defender);
-                        int exp = heroDefender.getExperience();
-                        int level = prop.getLevel(exp);
-                        int currentLevelExp = prop.getExperience(level);
-                        int nextLevelExp = prop.getExperience(level + 1);
-                        int expLoss = (int) ((nextLevelExp - currentLevelExp) * 0.05);
-                        if (exp - expLoss < currentLevelExp) {
-                            expLoss = exp - currentLevelExp;
-                        }
-                        heroDefender.setExperience(exp - expLoss);
-                        Messaging.send(heroDefender.getPlayer(), "You have lost " + expLoss + " exp for dying in PvP.");
                     } else {
                         // Get the dying entity's CreatureType
                         CreatureType type = null;

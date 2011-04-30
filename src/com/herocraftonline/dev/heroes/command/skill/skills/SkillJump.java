@@ -24,11 +24,15 @@ public class SkillJump extends ActiveSkill {
     public boolean use(Hero hero, String[] args) {
         Player player = hero.getPlayer();
         float pitch = player.getEyeLocation().getPitch();
+        int jumpForwards = 1;
+        if (pitch > 45) {
+            jumpForwards = -1;
+        }
         if (pitch > 0) {
             pitch = -pitch;
         }
         float multiplier = (90f + pitch) / 40f;
-        Vector v = player.getVelocity().setY(1).add(player.getLocation().getDirection().setY(0).normalize().multiply(multiplier));
+        Vector v = player.getVelocity().setY(1).add(player.getLocation().getDirection().setY(0).normalize().multiply(multiplier * jumpForwards));
         player.setVelocity(v);
         player.setFallDistance(-5f);
         return true;

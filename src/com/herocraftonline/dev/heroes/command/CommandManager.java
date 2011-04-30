@@ -57,6 +57,12 @@ public class CommandManager {
     }
 
     public void addCommand(BaseCommand command) {
+        String name = command.getName();
+        for (BaseCommand cmd : commands) {
+            if (cmd.getName().equalsIgnoreCase(name)) {
+                return;
+            }
+        }
         commands.add(command);
     }
 
