@@ -26,7 +26,7 @@ import com.herocraftonline.dev.heroes.classes.HeroClass.WeaponItems;
 import com.herocraftonline.dev.heroes.command.BaseCommand;
 import com.herocraftonline.dev.heroes.command.CommandManager;
 import com.herocraftonline.dev.heroes.command.SkillLoader;
-import com.herocraftonline.dev.heroes.command.commands.AssignSkillCommand;
+import com.herocraftonline.dev.heroes.command.commands.BindSkillCommand;
 import com.herocraftonline.dev.heroes.command.commands.ConfigReloadCommand;
 import com.herocraftonline.dev.heroes.command.commands.HelpCommand;
 import com.herocraftonline.dev.heroes.command.commands.LevelInformationCommand;
@@ -215,7 +215,7 @@ public class Heroes extends JavaPlugin {
         commandManager.addCommand(new PartyInviteCommand(this));
         commandManager.addCommand(new PartyChatCommand(this));
         // Page 2
-        commandManager.addCommand(new AssignSkillCommand(this));
+        commandManager.addCommand(new BindSkillCommand(this));
         commandManager.addCommand(new ConfigReloadCommand(this));
         commandManager.addCommand(new SkillCommand(this));
         commandManager.addCommand(new LevelInformationCommand(this));
