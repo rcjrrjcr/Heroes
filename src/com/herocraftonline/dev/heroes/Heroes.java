@@ -47,6 +47,7 @@ import com.herocraftonline.dev.heroes.persistence.Hero;
 import com.herocraftonline.dev.heroes.persistence.HeroManager;
 import com.herocraftonline.dev.heroes.util.ConfigManager;
 import com.herocraftonline.dev.heroes.util.DebugLog;
+import com.herocraftonline.dev.heroes.util.MaterialUtil;
 import com.herocraftonline.dev.heroes.util.Messaging;
 import com.nijiko.coelho.iConomy.iConomy;
 import com.nijiko.permissions.PermissionHandler;
@@ -338,7 +339,7 @@ public class Heroes extends JavaPlugin {
             item = inv.getHelmet().getType().toString();
             if (!(hc.getAllowedArmor().contains(item))) {
                 h.addItem(inv.getHelmet());
-                this.getMessager().send(p, "$1 has been removed from your Inventory", item);
+                this.getMessager().send(p, "$1 has been removed from your Inventory", MaterialUtil.getFriendlyName(item));
                 inv.setHelmet(null);
                 count++;
             }
@@ -347,7 +348,7 @@ public class Heroes extends JavaPlugin {
             item = inv.getChestplate().getType().toString();
             if (!(hc.getAllowedArmor().contains(item))) {
                 h.addItem(inv.getChestplate());
-                this.getMessager().send(p, "$1 has been removed from your Inventory", item);
+                this.getMessager().send(p, "$1 has been removed from your Inventory", MaterialUtil.getFriendlyName(item));
                 inv.setChestplate(null);
                 count++;
             }
@@ -356,7 +357,7 @@ public class Heroes extends JavaPlugin {
             item = inv.getLeggings().getType().toString();
             if (!(hc.getAllowedArmor().contains(item))) {
                 h.addItem(inv.getLeggings());
-                this.getMessager().send(p, "$1 has been removed from your Inventory", item);
+                this.getMessager().send(p, "$1 has been removed from your Inventory", MaterialUtil.getFriendlyName(item));
                 inv.setLeggings(null);
                 count++;
             }
@@ -365,7 +366,7 @@ public class Heroes extends JavaPlugin {
             item = inv.getBoots().getType().toString();
             if (!(hc.getAllowedArmor().contains(item))) {
                 h.addItem(inv.getBoots());
-                this.getMessager().send(p, "$1 has been removed from your Inventory", item);
+                this.getMessager().send(p, "$1 has been removed from your Inventory", MaterialUtil.getFriendlyName(item));
                 inv.setBoots(null);
                 count++;
             }
@@ -385,10 +386,10 @@ public class Heroes extends JavaPlugin {
 
             if (!(hc.getAllowedWeapons().contains(itemType))) {
                 if (!(moveItem(p, i, itemStack))) {
-                    this.getMessager().send(p, "$1 has been removed from your Inventory", itemType);
+                    this.getMessager().send(p, "$1 has been removed from your Inventory", MaterialUtil.getFriendlyName(itemType));
                     count++;
                 } else {
-                    this.getMessager().send(p, "You are not trained to use a $1", itemType);
+                    this.getMessager().send(p, "You are not trained to use a $1", MaterialUtil.getFriendlyName(itemType));
                 }
             }
         }
