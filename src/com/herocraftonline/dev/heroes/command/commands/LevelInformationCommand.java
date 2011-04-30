@@ -4,10 +4,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.herocraftonline.dev.heroes.Heroes;
-import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.command.BaseCommand;
 import com.herocraftonline.dev.heroes.persistence.Hero;
-import com.herocraftonline.dev.heroes.util.MaterialUtil;
 import com.herocraftonline.dev.heroes.util.Messaging;
 import com.herocraftonline.dev.heroes.util.Properties;
 
@@ -47,19 +45,6 @@ public class LevelInformationCommand extends BaseCommand {
             } else {
                 sender.sendMessage("  §aMASTERED!");
             }
-            HeroClass heroClass = hero.getPlayerClass();
-            String armor = "  §aAllowed Armor: ";
-            for (String type : heroClass.getAllowedArmor()) {
-                armor += type + ", ";
-            }
-            armor = armor.substring(0, armor.length() - 1);
-            sender.sendMessage(armor);
-            String weapons = "  §aAllowed Weapons: ";
-            for (String type : heroClass.getAllowedWeapons()) {
-                weapons += MaterialUtil.getFriendlyName(type) + ", ";
-            }
-            weapons = weapons.substring(0, weapons.length() - 1);
-            sender.sendMessage(weapons);
             sender.sendMessage(Messaging.createManaBar(hero.getMana()));
         }
     }
