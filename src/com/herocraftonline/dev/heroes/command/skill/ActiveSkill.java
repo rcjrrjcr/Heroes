@@ -36,7 +36,7 @@ public abstract class ActiveSkill extends Skill {
                 return;
             }
             if (settings.ManaCost > hero.getMana()) {
-                plugin.getMessager().send(player, "You don't have enough mana to use $1.", name);
+                plugin.getMessager().send(player, "Not enough mana!");
                 return;
             }
             Map<String, Long> cooldowns = hero.getCooldowns();

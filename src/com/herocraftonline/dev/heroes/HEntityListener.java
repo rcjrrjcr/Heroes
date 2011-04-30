@@ -77,8 +77,7 @@ public class HEntityListener extends EntityListener {
                                     break;
                                 }
                             }
-                        } catch (IllegalArgumentException e) {
-                        }
+                        } catch (IllegalArgumentException e) {}
                         if (type != null) {
                             addedExp = prop.creatureKillingExp.get(type);
                         }
@@ -109,7 +108,9 @@ public class HEntityListener extends EntityListener {
                     // adding or subtracting from their experience.
                     if (addedExp != 0) {
                         hero.setExperience(exp + addedExp);
-                        plugin.getMessager().send(attacker, "$1: Gained $2 Exp", playerClass.getName(), String.valueOf(addedExp));
+                        if (hero.isVerbose()) {
+                            plugin.getMessager().send(attacker, "$1: Gained $2 Exp", playerClass.getName(), String.valueOf(addedExp));
+                        }
                         if (newLevel != currentLevel) {
                             plugin.getMessager().send(attacker, "You leveled up! (Lvl $1 $2)", String.valueOf(newLevel), playerClass.getName());
                             if (newLevel >= prop.maxLevel) {

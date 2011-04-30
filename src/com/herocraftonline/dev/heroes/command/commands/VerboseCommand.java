@@ -6,18 +6,17 @@ import org.bukkit.entity.Player;
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.BaseCommand;
 import com.herocraftonline.dev.heroes.persistence.Hero;
-import com.herocraftonline.dev.heroes.util.Messaging;
 
-public class ManaCommand extends BaseCommand {
+public class VerboseCommand extends BaseCommand {
 
-    public ManaCommand(Heroes plugin) {
+    public VerboseCommand(Heroes plugin) {
         super(plugin);
-        name = "Mana";
-        description = "Displays your current mana";
-        usage = "/mana";
+        name = "Verbose";
+        description = "Toggles display of mana and exp gains";
+        usage = "/hero verbose";
         minArgs = 0;
         maxArgs = 0;
-        identifiers.add("mana");
+        identifiers.add("hero verbose");
     }
 
     @Override
@@ -25,8 +24,14 @@ public class ManaCommand extends BaseCommand {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             Hero hero = plugin.getHeroManager().getHero(player);
-            int mana = hero.getMana();
-            player.sendMessage("§9Mana: §f" + mana + " " + Messaging.createManaBar(mana));
+            boolean verbose = hero.isVerbose();
+            verbose = !verbose;
+            hero.setVerbose(verbose);
+            if (verbose) {
+                plugin.getMessager().send(player, "Now displaying mana and exp gains.");
+            } else {
+                plugin.getMessager().send(player, "No longer displaying mana and exp gains.");
+            }
         }
     }
 

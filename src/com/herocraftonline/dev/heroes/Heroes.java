@@ -115,11 +115,15 @@ public class Heroes extends JavaPlugin {
             @Override
             public void run() {
                 for (Hero hero : getHeroManager().getHeroes()) {
-                    if (hero.getMana() < 100) {
-                        if (hero.getMana() > 95) {
+                    int mana = hero.getMana();
+                    if (mana < 100) {
+                        if (mana > 95) {
                             hero.setMana(100);
                         } else {
-                            hero.setMana(hero.getMana() + 5);
+                            hero.setMana(mana + 5);
+                            if (hero.isVerbose()) {
+                                messaging.send(hero.getPlayer(), Messaging.createManaBar(mana + 5));
+                            }
                         }
                     }
                 }

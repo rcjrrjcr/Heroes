@@ -22,6 +22,7 @@ public class Hero {
     protected HeroClass playerClass;
     protected int experience;
     protected int mana;
+    protected boolean verbose;
     protected List<String> masteries;
     protected Map<String, Long> cooldowns;
     protected Map<Entity, CreatureType> summons;
@@ -31,7 +32,7 @@ public class Hero {
     protected Map<Player, HeroParty> invites;
     protected List<ItemStack> itemRecovery;
 
-    public Hero(Heroes plugin, Player player, HeroClass playerClass, int experience, int mana, List<String> masteries, List<ItemStack> itemRecovery) {
+    public Hero(Heroes plugin, Player player, HeroClass playerClass, int experience, int mana, boolean verbose, List<String> masteries, List<ItemStack> itemRecovery) {
         this.plugin = plugin;
         this.player = player;
         this.playerClass = playerClass;
@@ -45,6 +46,7 @@ public class Hero {
         this.party = null;
         this.invites = new HashMap<Player, HeroParty>();
         this.effects = new HashMap<String, Double>();
+        this.verbose = verbose;
     }
 
     public void addItem(ItemStack item) {
@@ -144,5 +146,13 @@ public class Hero {
         } else {
             return false;
         }
+    }
+
+    public boolean isVerbose() {
+        return verbose;
+    }
+
+    public void setVerbose(boolean verbose) {
+        this.verbose = verbose;
     }
 }

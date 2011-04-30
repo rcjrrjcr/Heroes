@@ -24,4 +24,18 @@ public class Messaging {
         return msg;
     }
 
+    public static String createManaBar(int mana) {
+        String manaBar = "§c[§9";
+        int progress = (int) (mana / 100.0 * 92);
+        for (int i = 0; i < progress; i++) {
+            manaBar += "|";
+        }
+        manaBar += "§4";
+        for (int i = 0; i < 92 - progress; i++) {
+            manaBar += "|";
+        }
+        manaBar += "§c]";
+        return manaBar;
+    }
+
 }
