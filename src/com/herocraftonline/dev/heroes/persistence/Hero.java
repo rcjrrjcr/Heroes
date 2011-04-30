@@ -32,7 +32,7 @@ public class Hero {
     protected Map<Player, HeroParty> invites;
     protected List<ItemStack> itemRecovery;
 
-    public Hero(Heroes plugin, Player player, HeroClass playerClass, int experience, int mana, boolean verbose, List<String> masteries, List<ItemStack> itemRecovery) {
+    public Hero(Heroes plugin, Player player, HeroClass playerClass, int experience, int mana, boolean verbose, List<String> masteries, List<ItemStack> itemRecovery, Map<Material, String[]> binds) {
         this.plugin = plugin;
         this.player = player;
         this.playerClass = playerClass;
@@ -42,7 +42,7 @@ public class Hero {
         this.itemRecovery = itemRecovery;
         this.cooldowns = new HashMap<String, Long>();
         this.summons = new HashMap<Entity, CreatureType>();
-        this.binds = new HashMap<Material, String[]>();
+        this.binds = binds;
         this.party = null;
         this.invites = new HashMap<Player, HeroParty>();
         this.effects = new HashMap<String, Double>();
