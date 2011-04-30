@@ -4,7 +4,7 @@ import org.bukkit.command.CommandSender;
 
 import com.herocraftonline.dev.heroes.Heroes;
 
-public class Messaging {
+public final class Messaging {
 
     public static void send(CommandSender player, String msg, String... params) {
         player.sendMessage(parameterizeMessage(msg, params));
