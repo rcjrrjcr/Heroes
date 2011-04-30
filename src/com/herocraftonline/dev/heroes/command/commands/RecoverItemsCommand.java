@@ -11,6 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.BaseCommand;
 import com.herocraftonline.dev.heroes.persistence.Hero;
+import com.herocraftonline.dev.heroes.util.MaterialUtil;
 import com.herocraftonline.dev.heroes.util.Messaging;
 
 public class RecoverItemsCommand extends BaseCommand {
@@ -46,7 +47,7 @@ public class RecoverItemsCommand extends BaseCommand {
                     continue;
                 }
                 p.getInventory().setItem(slot, new ItemStack(material, 1));
-                Messaging.send(p, "Recovered Item $1 - $2", "#" + (i + 1), material.toString());
+                Messaging.send(p, "Recovered Item $1 - $2", "#" + (i + 1), MaterialUtil.getFriendlyName(material));
             }
 
             if (newItems.size() > 0) {
