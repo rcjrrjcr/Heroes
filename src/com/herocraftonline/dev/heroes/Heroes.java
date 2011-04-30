@@ -26,6 +26,7 @@ import com.herocraftonline.dev.heroes.classes.HeroClass.WeaponItems;
 import com.herocraftonline.dev.heroes.command.BaseCommand;
 import com.herocraftonline.dev.heroes.command.CommandManager;
 import com.herocraftonline.dev.heroes.command.SkillLoader;
+import com.herocraftonline.dev.heroes.command.commands.ArmorCommand;
 import com.herocraftonline.dev.heroes.command.commands.BindSkillCommand;
 import com.herocraftonline.dev.heroes.command.commands.ConfigReloadCommand;
 import com.herocraftonline.dev.heroes.command.commands.HelpCommand;
@@ -39,6 +40,7 @@ import com.herocraftonline.dev.heroes.command.commands.RecoverItemsCommand;
 import com.herocraftonline.dev.heroes.command.commands.SelectProfessionCommand;
 import com.herocraftonline.dev.heroes.command.commands.SelectSpecialtyCommand;
 import com.herocraftonline.dev.heroes.command.commands.SkillCommand;
+import com.herocraftonline.dev.heroes.command.commands.ToolsCommand;
 import com.herocraftonline.dev.heroes.command.commands.VerboseCommand;
 import com.herocraftonline.dev.heroes.command.skill.OutsourcedSkill;
 import com.herocraftonline.dev.heroes.command.skill.Skill;
@@ -223,6 +225,8 @@ public class Heroes extends JavaPlugin {
         commandManager.addCommand(new LevelInformationCommand(this));
         commandManager.addCommand(new ManaCommand(this));
         commandManager.addCommand(new VerboseCommand(this));
+        commandManager.addCommand(new ArmorCommand(this));
+        commandManager.addCommand(new ToolsCommand(this));
     }
 
     /**
