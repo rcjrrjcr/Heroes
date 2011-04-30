@@ -13,6 +13,7 @@ import org.bukkit.event.entity.EntityTargetEvent;
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.skill.ActiveSkill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
+import com.herocraftonline.dev.heroes.util.Messaging;
 
 public class SkillSummon extends ActiveSkill {
 
@@ -38,7 +39,7 @@ public class SkillSummon extends ActiveSkill {
             }
             hero.getSummons().put(spawnedEntity, creatureType);
             notifyNearbyPlayers(player.getLocation().toVector(), "$1 summoned a $2!", player.getName(), creatureType.toString());
-            plugin.getMessager().send(player, "You have succesfully summoned a " + creatureType.toString());
+            Messaging.send(player, "You have succesfully summoned a " + creatureType.toString());
             return true;
         }
         return false;

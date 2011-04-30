@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.BaseCommand;
 import com.herocraftonline.dev.heroes.persistence.Hero;
+import com.herocraftonline.dev.heroes.util.Messaging;
 
 public class PartyLeaveCommand extends BaseCommand {
 
@@ -25,17 +26,17 @@ public class PartyLeaveCommand extends BaseCommand {
             Player p = (Player) sender;
             Hero pHero = plugin.getHeroManager().getHero(p);
 
-            plugin.getMessager().send(sender, "You now have no party", (String) null);
+            Messaging.send(sender, "You now have no party", (String) null);
             if (pHero.getParty() != null) {
                 if (pHero.getParty().getLeader() == p) {
-                    plugin.getMessager().send(sender, "You now have no party", (String) null);
+                    Messaging.send(sender, "You now have no party", (String) null);
                     for (Player player : pHero.getParty().getMembers()) {
                         plugin.getHeroManager().getHero(player).setParty(null);
-                        plugin.getMessager().send(sender, "Your party has been disbanded", (String) null);
+                        Messaging.send(sender, "Your party has been disbanded", (String) null);
                     }
                 } else {
                     pHero.setParty(null);
-                    plugin.getMessager().send(sender, "You now have no party", (String) null);
+                    Messaging.send(sender, "You now have no party", (String) null);
                 }
             }
         }

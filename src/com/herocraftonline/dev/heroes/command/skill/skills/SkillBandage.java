@@ -11,6 +11,7 @@ import org.bukkit.util.config.ConfigurationNode;
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.skill.TargettedSkill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
+import com.herocraftonline.dev.heroes.util.Messaging;
 
 public class SkillBandage extends TargettedSkill {
 
@@ -40,7 +41,7 @@ public class SkillBandage extends TargettedSkill {
         if (target instanceof Player) {
             final Player tPlayer = (Player) target;
             if (!player.getItemInHand().equals(Material.PAPER)) {
-                plugin.getMessager().send(player, "You need paper to perform this.");
+                Messaging.send(player, "You need paper to perform this.");
                 return false;
             }
 

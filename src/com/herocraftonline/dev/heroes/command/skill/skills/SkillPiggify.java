@@ -20,6 +20,7 @@ import org.bukkit.util.config.ConfigurationNode;
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.skill.TargettedSkill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
+import com.herocraftonline.dev.heroes.util.Messaging;
 
 public class SkillPiggify extends TargettedSkill {
 
@@ -49,7 +50,7 @@ public class SkillPiggify extends TargettedSkill {
     public boolean use(Hero hero, LivingEntity target, String[] args) {
         Player player = hero.getPlayer();
         if (target == player) {
-            plugin.getMessager().send(player, "You need a target.");
+            Messaging.send(player, "You need a target.");
             return false;
         }
 

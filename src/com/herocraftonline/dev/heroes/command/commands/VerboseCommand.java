@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.BaseCommand;
 import com.herocraftonline.dev.heroes.persistence.Hero;
+import com.herocraftonline.dev.heroes.util.Messaging;
 
 public class VerboseCommand extends BaseCommand {
 
@@ -28,9 +29,9 @@ public class VerboseCommand extends BaseCommand {
             verbose = !verbose;
             hero.setVerbose(verbose);
             if (verbose) {
-                plugin.getMessager().send(player, "Now displaying mana and exp gains.");
+                Messaging.send(player, "Now displaying mana and exp gains.");
             } else {
-                plugin.getMessager().send(player, "No longer displaying mana and exp gains.");
+                Messaging.send(player, "No longer displaying mana and exp gains.");
             }
         }
     }

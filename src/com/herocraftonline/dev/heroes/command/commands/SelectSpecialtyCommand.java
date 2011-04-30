@@ -9,6 +9,7 @@ import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.command.BaseCommand;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 import com.herocraftonline.dev.heroes.persistence.HeroManager;
+import com.herocraftonline.dev.heroes.util.Messaging;
 import com.herocraftonline.dev.heroes.util.Properties;
 
 public class SelectSpecialtyCommand extends BaseCommand {
@@ -43,18 +44,18 @@ public class SelectSpecialtyCommand extends BaseCommand {
                             } else {
                                 hero.setExperience(0);
                             }
-                            plugin.getMessager().send(player, "Well done $1!", specialty.getName());
+                            Messaging.send(player, "Well done $1!", specialty.getName());
                         } else {
-                            plugin.getMessager().send(player, "Sorry, that specialty doesn't belong to $1.", playerClass.getName());
+                            Messaging.send(player, "Sorry, that specialty doesn't belong to $1.", playerClass.getName());
                         }
                     } else {
-                        plugin.getMessager().send(player, "Sorry, that isn't a specialty!");
+                        Messaging.send(player, "Sorry, that isn't a specialty!");
                     }
                 } else {
-                    plugin.getMessager().send(player, "You must master your profession before choosing a specialty.");
+                    Messaging.send(player, "You must master your profession before choosing a specialty.");
                 }
             } else {
-                plugin.getMessager().send(player, "You have already selected a specialty!");
+                Messaging.send(player, "You have already selected a specialty!");
             }
         }
     }

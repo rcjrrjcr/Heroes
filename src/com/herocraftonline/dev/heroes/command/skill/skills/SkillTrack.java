@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.skill.TargettedSkill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
+import com.herocraftonline.dev.heroes.util.Messaging;
 
 public class SkillTrack extends TargettedSkill {
 
@@ -24,7 +25,7 @@ public class SkillTrack extends TargettedSkill {
     public boolean use(Hero hero, LivingEntity target, String[] args) {
         Location location = target.getLocation();
         Player player = hero.getPlayer();
-        plugin.getMessager().send(player, "Location: $1", location.toString());
+        Messaging.send(player, "Location: $1", location.toString());
         player.setCompassTarget(location);
         return true;
     }

@@ -11,6 +11,7 @@ import com.herocraftonline.dev.heroes.api.BlockBreakExperienceEvent;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.classes.HeroClass.ExperienceType;
 import com.herocraftonline.dev.heroes.persistence.Hero;
+import com.herocraftonline.dev.heroes.util.Messaging;
 
 public class HBlockListener extends BlockListener {
 
@@ -54,7 +55,7 @@ public class HBlockListener extends BlockListener {
 
             if (addedExp != 0) {
                 hero.setExperience(exp + addedExp);
-                plugin.getMessager().send(player, "$1: $2 Exp (+$3)", playerClass.getName(), String.valueOf(exp), String.valueOf(addedExp));
+                Messaging.send(player, "$1: $2 Exp (+$3)", playerClass.getName(), String.valueOf(exp), String.valueOf(addedExp));
             }
         }
     }

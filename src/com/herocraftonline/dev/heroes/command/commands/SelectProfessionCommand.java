@@ -9,6 +9,7 @@ import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.command.BaseCommand;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 import com.herocraftonline.dev.heroes.persistence.HeroManager;
+import com.herocraftonline.dev.heroes.util.Messaging;
 import com.herocraftonline.dev.heroes.util.Properties;
 import com.nijiko.coelho.iConomy.iConomy;
 import com.nijiko.coelho.iConomy.system.Account;
@@ -45,12 +46,12 @@ public class SelectProfessionCommand extends BaseCommand {
                     } else {
                         hero.setExperience(0);
                     }
-                    plugin.getMessager().send(player, "Welcome to the path of the $1!", profession.getName());
+                    Messaging.send(player, "Welcome to the path of the $1!", profession.getName());
                 } else {
-                    plugin.getMessager().send(player, "Sorry, $1 isn't a profession!", profession.getName());
+                    Messaging.send(player, "Sorry, $1 isn't a profession!", profession.getName());
                 }
             } else {
-                plugin.getMessager().send(player, "Sorry, that isn't a profession!");
+                Messaging.send(player, "Sorry, that isn't a profession!");
             }
         }
     }
@@ -65,7 +66,7 @@ public class SelectProfessionCommand extends BaseCommand {
                 ClassChangeEvent event = new ClassChangeEvent(hero.getPlayer(), newClass);
                 plugin.getServer().getPluginManager().callEvent(event);
             } else {
-                plugin.getMessager().send(hero.getPlayer(), "Sorry, you don't have enough money!");
+                Messaging.send(hero.getPlayer(), "Sorry, you don't have enough money!");
             }
         } else {
             hero.setPlayerClass(newClass);

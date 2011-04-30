@@ -9,6 +9,7 @@ import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.classes.SkillSettings;
 import com.herocraftonline.dev.heroes.persistence.Hero;
+import com.herocraftonline.dev.heroes.util.Messaging;
 
 public abstract class ActiveSkill extends Skill {
 
@@ -22,21 +23,21 @@ public abstract class ActiveSkill extends Skill {
             Player player = (Player) sender;
             Hero hero = plugin.getHeroManager().getHero(player);
             if (hero == null) {
-                plugin.getMessager().send(player, "You are not a hero.");
+                Messaging.send(player, "You are not a hero.");
                 return;
             }
             HeroClass heroClass = hero.getPlayerClass();
             if (!heroClass.hasSkill(name)) {
-                plugin.getMessager().send(player, "$1s cannot use $2.", heroClass.getName(), name);
+                Messaging.send(player, "$1s cannot use $2.", heroClass.getName(), name);
                 return;
             }
             SkillSettings settings = heroClass.getSkillSettings(name);
             if (!meetsLevelRequirement(hero, settings.LevelRequirement)) {
-                plugin.getMessager().send(player, "You must be level $1 to use $2.", String.valueOf(settings.LevelRequirement), name);
+                Messaging.send(player, "You must be level $1 to use $2.", String.valueOf(settings.LevelRequirement), name);
                 return;
             }
             if (settings.ManaCost > hero.getMana()) {
-                plugin.getMessager().send(player, "Not enough mana!");
+                Messaging.send(player, "Not enough mana!");
                 return;
             }
             Map<String, Long> cooldowns = hero.getCooldowns();
@@ -47,7 +48,7 @@ public abstract class ActiveSkill extends Skill {
                 if (timeUsed != null) {
                     if (time < (timeUsed + cooldown)) {
                         long remaining = (timeUsed + cooldown) - time;
-                        plugin.getMessager().send(hero.getPlayer(), "Sorry, $1 still has $2 seconds left on cooldown!", name, Long.toString(remaining / 1000));
+                        Messaging.send(hero.getPlayer(), "Sorry, $1 still has $2 seconds left on cooldown!", name, Long.toString(remaining / 1000));
                         return;
                     }
                 }

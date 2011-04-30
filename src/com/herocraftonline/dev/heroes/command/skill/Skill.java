@@ -15,6 +15,7 @@ import org.bukkit.util.config.ConfigurationNode;
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.BaseCommand;
 import com.herocraftonline.dev.heroes.persistence.Hero;
+import com.herocraftonline.dev.heroes.util.Messaging;
 
 public abstract class Skill extends BaseCommand {
 
@@ -30,7 +31,7 @@ public abstract class Skill extends BaseCommand {
         for (Player player : players) {
             Location playerLocation = player.getLocation();
             if (playerLocation.toVector().distance(source) < 30) {
-                plugin.getMessager().send(player, message, args);
+                Messaging.send(player, message, args);
             }
         }
     }

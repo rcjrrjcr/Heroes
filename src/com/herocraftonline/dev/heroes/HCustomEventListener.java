@@ -12,6 +12,7 @@ import com.herocraftonline.dev.heroes.inventory.InventoryChangeEvent;
 import com.herocraftonline.dev.heroes.inventory.InventoryCloseEvent;
 import com.herocraftonline.dev.heroes.inventory.InventorySlotType;
 import com.herocraftonline.dev.heroes.persistence.Hero;
+import com.herocraftonline.dev.heroes.util.Messaging;
 
 public class HCustomEventListener extends CustomEventListener {
     protected Heroes plugin;
@@ -46,7 +47,7 @@ public class HCustomEventListener extends CustomEventListener {
             if (e.getSlotType() == InventorySlotType.ARMOR) {
                 String item = cursor.getType().toString();
                 if (!(clazz.getAllowedArmor().contains(item))) {
-                    plugin.getMessager().send(p, "You cannot equip that armor - $1", item);
+                    Messaging.send(p, "You cannot equip that armor - $1", item);
                     e.setCancelled(true);
                     return;
                 }
@@ -69,7 +70,7 @@ public class HCustomEventListener extends CustomEventListener {
                 }
                 // Check if the Players HeroClass allows this WEAPON to be equipped.
                 if (!(clazz.getAllowedWeapons().contains(item))) {
-                    plugin.getMessager().send(p, "You cannot equip that item - $1", item);
+                    Messaging.send(p, "You cannot equip that item - $1", item);
                     e.setCancelled(true);
                     return;
                 }

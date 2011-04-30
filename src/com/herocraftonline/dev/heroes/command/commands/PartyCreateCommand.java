@@ -8,6 +8,7 @@ import com.herocraftonline.dev.heroes.command.BaseCommand;
 import com.herocraftonline.dev.heroes.party.HeroParty;
 import com.herocraftonline.dev.heroes.party.PartyManager;
 import com.herocraftonline.dev.heroes.persistence.Hero;
+import com.herocraftonline.dev.heroes.util.Messaging;
 
 public class PartyCreateCommand extends BaseCommand {
 
@@ -27,7 +28,7 @@ public class PartyCreateCommand extends BaseCommand {
             Player p = (Player) sender;
             Hero pHero = plugin.getHeroManager().getHero(p);
             if (pHero.getParty() != null) {
-                plugin.getMessager().send(sender, "You need to leave the party your in first", (String) null);
+                Messaging.send(sender, "You need to leave the party your in first", (String) null);
                 return;
             }
 

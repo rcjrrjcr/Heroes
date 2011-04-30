@@ -8,6 +8,7 @@ import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.command.BaseCommand;
 import com.herocraftonline.dev.heroes.persistence.Hero;
+import com.herocraftonline.dev.heroes.util.Messaging;
 
 public class AssignSkillCommand extends BaseCommand {
 
@@ -31,13 +32,13 @@ public class AssignSkillCommand extends BaseCommand {
             if (args.length > 0) {
                 if (heroClass.hasSkill(args[0])) {
                     hero.bind(material, args);
-                    plugin.getMessager().send(sender, "That has been assigned as your skill.");
+                    Messaging.send(sender, "That has been assigned as your skill.");
                 } else {
-                    plugin.getMessager().send(sender, "That skill does not exist for your class.");
+                    Messaging.send(sender, "That skill does not exist for your class.");
                 }
             } else {
                 hero.unbind(material);
-                plugin.getMessager().send(sender, "Your equipped item is no longer bound to a skill.");
+                Messaging.send(sender, "Your equipped item is no longer bound to a skill.");
             }
         }
     }

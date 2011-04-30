@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.BaseCommand;
 import com.herocraftonline.dev.heroes.persistence.Hero;
+import com.herocraftonline.dev.heroes.util.Messaging;
 import com.herocraftonline.dev.heroes.util.Properties;
 
 public class LevelInformationCommand extends BaseCommand {
@@ -14,11 +15,10 @@ public class LevelInformationCommand extends BaseCommand {
         super(plugin);
         name = "LevelInformation";
         description = "Player Level information";
-        usage = "/hlevel";
+        usage = "/lvl OR /level OR /hero level";
         minArgs = 0;
         maxArgs = 0;
-        identifiers.add("heroes level");
-        identifiers.add("hlevel");
+        identifiers.add("hero level");
         identifiers.add("level");
         identifiers.add("lvl");
     }
@@ -46,7 +46,7 @@ public class LevelInformationCommand extends BaseCommand {
             } else {
                 sender.sendMessage("  §aMASTERED!");
             }
-            sender.sendMessage(createManaBar(hero.getMana()));
+            sender.sendMessage(Messaging.createManaBar(hero.getMana()));
         }
     }
 
@@ -63,18 +63,5 @@ public class LevelInformationCommand extends BaseCommand {
         expBar += "§c]";
         return expBar;
     }
-
-    private String createManaBar(int mana) {
-        String manaBar = "§c[§9";
-        int progress = (int) (mana / 100.0 * 92);
-        for (int i = 0; i < progress; i++) {
-            manaBar += "|";
-        }
-        manaBar += "§4";
-        for (int i = 0; i < 92 - progress; i++) {
-            manaBar += "|";
-        }
-        manaBar += "§c]";
-        return manaBar;
-    }
+    
 }

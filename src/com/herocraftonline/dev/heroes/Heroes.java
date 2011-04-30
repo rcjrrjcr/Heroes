@@ -81,9 +81,6 @@ public class Heroes extends JavaPlugin {
     private HeroManager heroManager;
     private PartyManager partyManager;
 
-    // Messaging
-    private Messaging messaging = new Messaging();
-
     // Variable for the Permissions plugin handler.
     public static PermissionHandler Permissions;
 
@@ -122,7 +119,7 @@ public class Heroes extends JavaPlugin {
                         } else {
                             hero.setMana(mana + 5);
                             if (hero.isVerbose()) {
-                                messaging.send(hero.getPlayer(), Messaging.createManaBar(mana + 5));
+                                Messaging.send(hero.getPlayer(), Messaging.createManaBar(mana + 5));
                             }
                         }
                     }
@@ -342,7 +339,7 @@ public class Heroes extends JavaPlugin {
             item = inv.getHelmet().getType().toString();
             if (!(hc.getAllowedArmor().contains(item))) {
                 h.addItem(inv.getHelmet());
-                this.getMessager().send(p, "$1 has been removed from your Inventory", item);
+                Messaging.send(p, "$1 has been removed from your Inventory", item);
                 inv.setHelmet(null);
                 count++;
             }
@@ -351,7 +348,7 @@ public class Heroes extends JavaPlugin {
             item = inv.getChestplate().getType().toString();
             if (!(hc.getAllowedArmor().contains(item))) {
                 h.addItem(inv.getChestplate());
-                this.getMessager().send(p, "$1 has been removed from your Inventory", item);
+                Messaging.send(p, "$1 has been removed from your Inventory", item);
                 inv.setChestplate(null);
                 count++;
             }
@@ -360,7 +357,7 @@ public class Heroes extends JavaPlugin {
             item = inv.getLeggings().getType().toString();
             if (!(hc.getAllowedArmor().contains(item))) {
                 h.addItem(inv.getLeggings());
-                this.getMessager().send(p, "$1 has been removed from your Inventory", item);
+                Messaging.send(p, "$1 has been removed from your Inventory", item);
                 inv.setLeggings(null);
                 count++;
             }
@@ -369,7 +366,7 @@ public class Heroes extends JavaPlugin {
             item = inv.getBoots().getType().toString();
             if (!(hc.getAllowedArmor().contains(item))) {
                 h.addItem(inv.getBoots());
-                this.getMessager().send(p, "$1 has been removed from your Inventory", item);
+                Messaging.send(p, "$1 has been removed from your Inventory", item);
                 inv.setBoots(null);
                 count++;
             }
@@ -389,16 +386,16 @@ public class Heroes extends JavaPlugin {
 
             if (!(hc.getAllowedWeapons().contains(itemType))) {
                 if (!(moveItem(p, i, itemStack))) {
-                    this.getMessager().send(p, "$1 has been removed from your Inventory", itemType);
+                    Messaging.send(p, "$1 has been removed from your Inventory", itemType);
                     count++;
                 } else {
-                    this.getMessager().send(p, "You are not trained to use a $1", itemType);
+                    Messaging.send(p, "You are not trained to use a $1", itemType);
                 }
             }
         }
         if (count > 0) {
-            getMessager().send(p, "$1 have been removed from your inventory.", count + " Items");
-            getMessager().send(p, "Please make space in your inventory then type '$1'", "/heroes recoveritems");
+            Messaging.send(p, "$1 have been removed from your inventory.", count + " Items");
+            Messaging.send(p, "Please make space in your inventory then type '$1'", "/heroes recoveritems");
         }
     }
 
@@ -439,10 +436,6 @@ public class Heroes extends JavaPlugin {
 
     public ConfigManager getConfigManager() {
         return configManager;
-    }
-
-    public Messaging getMessager() {
-        return messaging;
     }
 
     public CommandManager getCommandManager() {

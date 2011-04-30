@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.BaseCommand;
 import com.herocraftonline.dev.heroes.persistence.Hero;
+import com.herocraftonline.dev.heroes.util.Messaging;
 
 public class PartyInviteCommand extends BaseCommand {
 
@@ -26,12 +27,12 @@ public class PartyInviteCommand extends BaseCommand {
             Hero pHero = plugin.getHeroManager().getHero(p);
 
             if (pHero.getParty() == null) {
-                plugin.getMessager().send(sender, "To invite someone to a party, you need to be in a party", (String) null);
+                Messaging.send(sender, "To invite someone to a party, you need to be in a party", (String) null);
                 return;
             }
 
             if (pHero.getParty().getLeader() != p) {
-                plugin.getMessager().send(sender, "To invite someone to a party, you need to be the party leader", (String) null);
+                Messaging.send(sender, "To invite someone to a party, you need to be the party leader", (String) null);
                 return;
             }
 

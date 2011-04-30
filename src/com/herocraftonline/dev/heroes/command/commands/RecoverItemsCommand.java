@@ -11,6 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.BaseCommand;
 import com.herocraftonline.dev.heroes.persistence.Hero;
+import com.herocraftonline.dev.heroes.util.Messaging;
 
 public class RecoverItemsCommand extends BaseCommand {
 
@@ -34,7 +35,7 @@ public class RecoverItemsCommand extends BaseCommand {
             List<ItemStack> newItems = new ArrayList<ItemStack>();
 
             if (!(items.size() > 0)) {
-                this.plugin.getMessager().send(p, "You have no items to recover");
+                Messaging.send(p, "You have no items to recover");
             }
 
             for (int i = 0; i < items.size(); i++) {
@@ -45,11 +46,11 @@ public class RecoverItemsCommand extends BaseCommand {
                     continue;
                 }
                 p.getInventory().setItem(slot, new ItemStack(material, 1));
-                this.plugin.getMessager().send(p, "Recovered Item $1 - $2", "#" + (i + 1), material.toString());
+                Messaging.send(p, "Recovered Item $1 - $2", "#" + (i + 1), material.toString());
             }
 
             if (newItems.size() > 0) {
-                this.plugin.getMessager().send(p, "You have $1 left to recover.", newItems.size() + " Items");
+                Messaging.send(p, "You have $1 left to recover.", newItems.size() + " Items");
             }
             h.setItems(newItems);
         }

@@ -19,6 +19,7 @@ import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.classes.HeroClass.ExperienceType;
 import com.herocraftonline.dev.heroes.party.HeroParty;
 import com.herocraftonline.dev.heroes.persistence.Hero;
+import com.herocraftonline.dev.heroes.util.Messaging;
 import com.herocraftonline.dev.heroes.util.Properties;
 
 public class HEntityListener extends EntityListener {
@@ -65,7 +66,7 @@ public class HEntityListener extends EntityListener {
                             expLoss = exp - currentLevelExp;
                         }
                         heroDefender.setExperience(exp - expLoss);
-                        plugin.getMessager().send(heroDefender.getPlayer(), "You have lost " + expLoss + " exp for dying in PvP.");
+                        Messaging.send(heroDefender.getPlayer(), "You have lost " + expLoss + " exp for dying in PvP.");
                     } else {
                         // Get the dying entity's CreatureType
                         CreatureType type = null;
@@ -109,14 +110,14 @@ public class HEntityListener extends EntityListener {
                     if (addedExp != 0) {
                         hero.setExperience(exp + addedExp);
                         if (hero.isVerbose()) {
-                            plugin.getMessager().send(attacker, "$1: Gained $2 Exp", playerClass.getName(), String.valueOf(addedExp));
+                            Messaging.send(attacker, "$1: Gained $2 Exp", playerClass.getName(), String.valueOf(addedExp));
                         }
                         if (newLevel != currentLevel) {
-                            plugin.getMessager().send(attacker, "You leveled up! (Lvl $1 $2)", String.valueOf(newLevel), playerClass.getName());
+                            Messaging.send(attacker, "You leveled up! (Lvl $1 $2)", String.valueOf(newLevel), playerClass.getName());
                             if (newLevel >= prop.maxLevel) {
                                 hero.setExperience(prop.getExperience(prop.maxLevel));
                                 hero.getMasteries().add(playerClass.getName());
-                                plugin.getMessager().broadcast(plugin, "$1 has become a master $2!", attacker.getName(), playerClass.getName());
+                                Messaging.broadcast(plugin, "$1 has become a master $2!", attacker.getName(), playerClass.getName());
                             }
                         }
                     }
