@@ -36,7 +36,7 @@ public class HEntityListener extends EntityListener {
         Entity defender = event.getEntity();
         Player attacker = kills.get(defender.getEntityId());
         kills.remove(defender);
-        
+
         Properties prop = plugin.getConfigManager().getProperties();
         if (defender instanceof Player) {
             // Incur 5% experience loss to dying player
@@ -45,16 +45,18 @@ public class HEntityListener extends EntityListener {
             Hero heroDefender = plugin.getHeroManager().getHero((Player) defender);
             int exp = heroDefender.getExperience();
             int level = prop.getLevel(exp);
-            int currentLevelExp = prop.getExperience(level);
-            int nextLevelExp = prop.getExperience(level + 1);
-            int expLoss = (int) ((nextLevelExp - currentLevelExp) * 0.05);
-            if (exp - expLoss < currentLevelExp) {
-                expLoss = exp - currentLevelExp;
+            if (level < prop.maxLevel) {
+                int currentLevelExp = prop.getExperience(level);
+                int nextLevelExp = prop.getExperience(level + 1);
+                int expLoss = (int) ((nextLevelExp - currentLevelExp) * 0.05);
+                if (exp - expLoss < currentLevelExp) {
+                    expLoss = exp - currentLevelExp;
+                }
+                heroDefender.setExperience(exp - expLoss);
+                Messaging.send(heroDefender.getPlayer(), "You have lost " + expLoss + " exp for dying.");
             }
-            heroDefender.setExperience(exp - expLoss);
-            Messaging.send(heroDefender.getPlayer(), "You have lost " + expLoss + " exp for dying.");
         }
-        
+
         if (attacker != null) {
             // Get the Hero representing the player
             Hero hero = plugin.getHeroManager().getHero(attacker);
