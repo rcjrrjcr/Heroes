@@ -1,11 +1,11 @@
 leveling:
     power: 1.5
     maxExperience: 90000
-    maxLevel: 99
+    maxLevel: 20
     classSwitchLevel: 20
     expLoss: 0.95
 properties:
     iConomy: false
-    swapcost: 10
+    swapCost: 10
     prefix: 'Heroes:'
     color: 'RED'
