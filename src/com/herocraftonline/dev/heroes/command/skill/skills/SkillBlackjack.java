@@ -8,7 +8,9 @@ import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event.Type;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityListener;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.util.config.Configuration;
@@ -19,6 +21,9 @@ import com.herocraftonline.dev.heroes.command.skill.ActiveSkill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 
 public class SkillBlackjack extends ActiveSkill {
+    
+    private PlayerListener playerListener = new SkillPlayerListener();
+    private EntityListener entityListener = new SkillEntityListener();
 
     public SkillBlackjack(Heroes plugin) {
         super(plugin);
@@ -29,8 +34,9 @@ public class SkillBlackjack extends ActiveSkill {
         maxArgs = 0;
         identifiers.add("skill blackjack");
 
-        registerEvent(Type.ENTITY_DAMAGE, new SkillEntityListener(), Priority.Normal);
-        registerEvent(Type.PLAYER_MOVE, new SkillPlayerListener(), Priority.Normal);
+        registerEvent(Type.ENTITY_DAMAGE, entityListener, Priority.Normal);
+        registerEvent(Type.PLAYER_MOVE, playerListener, Priority.Normal);
+        registerEvent(Type.PLAYER_INTERACT, playerListener, Priority.Normal);
     }
 
     @Override
@@ -51,15 +57,18 @@ public class SkillBlackjack extends ActiveSkill {
         public void onEntityDamage(EntityDamageEvent event) {
             if (event instanceof EntityDamageByEntityEvent) {
                 EntityDamageByEntityEvent subEvent = (EntityDamageByEntityEvent) event;
-                Entity attackingEntity = subEvent.getDamager();
-                Entity defendingEntity = subEvent.getEntity();
-                if (attackingEntity instanceof Player && defendingEntity instanceof Player) {
-                    Hero attackingHero = plugin.getHeroManager().getHero((Player) attackingEntity);
-                    Hero defendingHero = plugin.getHeroManager().getHero((Player) defendingEntity);
-                    Map<String, Double> effects = attackingHero.getEffects();
-                    if (effects.containsKey(name)) {
-                        defendingHero.getEffects().put("stunned", System.currentTimeMillis() + config.getDouble("stun-duration", 5.0));
-                        notifyNearbyPlayers(attackingHero.getPlayer().getLocation().toVector(), "$1 stunned $3!", attackingHero.getPlayer().getName(), defendingHero.getPlayer().getName());
+                if (subEvent.getCause() == DamageCause.ENTITY_ATTACK) {
+                    Entity attackingEntity = subEvent.getDamager();
+                    Entity defendingEntity = subEvent.getEntity();
+                    if (attackingEntity instanceof Player && defendingEntity instanceof Player) {
+                        Hero attackingHero = plugin.getHeroManager().getHero((Player) attackingEntity);
+                        Hero defendingHero = plugin.getHeroManager().getHero((Player) defendingEntity);
+                        Map<String, Double> effects = attackingHero.getEffects();
+                        if (effects.containsKey(name)) {
+                            effects.remove(name);
+                            defendingHero.getEffects().put("stunned", System.currentTimeMillis() + config.getDouble("stun-duration", 5.0));
+                            notifyNearbyPlayers(attackingHero.getPlayer().getLocation().toVector(), "$1 stunned $2!", attackingHero.getPlayer().getName(), defendingHero.getPlayer().getName());
+                        }
                     }
                 }
             }
@@ -70,6 +79,19 @@ public class SkillBlackjack extends ActiveSkill {
     public class SkillPlayerListener extends PlayerListener {
 
         public void onPlayerMove(PlayerMoveEvent event) {
+            Player player = event.getPlayer();
+            Hero hero = plugin.getHeroManager().getHero(player);
+            Map<String, Double> effects = hero.getEffects();
+            if (effects.containsKey("stunned")) {
+                if (effects.get("stunned") > System.currentTimeMillis()) {
+                    event.setCancelled(true);
+                } else {
+                    effects.remove("stunned");
+                }
+            }
+        }
+        
+        public void onPlayerInteract(PlayerInteractEvent event) {
             Player player = event.getPlayer();
             Hero hero = plugin.getHeroManager().getHero(player);
             Map<String, Double> effects = hero.getEffects();
