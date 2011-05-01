@@ -1,13 +1,17 @@
 package com.herocraftonline.dev.heroes.command.skill;
 
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.util.BlockIterator;
+import org.bukkit.util.Vector;
 
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.persistence.Hero;
@@ -27,8 +31,16 @@ public abstract class TargettedSkill extends ActiveSkill {
         LivingEntity target = null;
         if (args.length > 0) {
             target = plugin.getServer().getPlayer(args[0]);
+            if (target == null) {
+                Messaging.send(player, "Target not found.");
+                return false;
+            }
             if (target.getLocation().toVector().distance(player.getLocation().toVector()) > maxDistance) {
                 Messaging.send(player, "Target is too far away.");
+                return false;
+            }
+            if (!inLineOfSight(player, (Player) target)) {
+                Messaging.send(player, "Sorry, target is not in your line of sight!");
                 return false;
             }
         }
@@ -55,9 +67,9 @@ public abstract class TargettedSkill extends ActiveSkill {
      * Returns the first LivingEntity in the line of sight of a Player.
      * 
      * @param player
-     *        the player being checked
+     *            the player being checked
      * @param maxDistance
-     *        the maximum distance to search for a target
+     *            the maximum distance to search for a target
      * @return the player's target or null if no target is found
      */
     public static LivingEntity getPlayerTarget(Player player, int maxDistance) {
@@ -78,6 +90,24 @@ public abstract class TargettedSkill extends ActiveSkill {
             }
         }
         return null;
+    }
+
+    public static boolean inLineOfSight(Player a, Player b) {
+        Location aLoc = a.getEyeLocation();
+        Location bLoc = b.getEyeLocation();
+        int distance = Location.locToBlock(aLoc.toVector().distance(bLoc.toVector())) - 1;
+        if (distance > 120) {
+            return false;
+        }
+        Vector ab = new Vector(bLoc.getX() - aLoc.getX(), bLoc.getY() - aLoc.getY(), bLoc.getZ() - aLoc.getZ());
+        Iterator<Block> iterator = new BlockIterator(a.getWorld(), aLoc.toVector(), ab, 0, distance + 1);
+        while (iterator.hasNext()) {
+            Block block = iterator.next();
+            if (block.getType() != Material.AIR) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }

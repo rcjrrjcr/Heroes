@@ -61,7 +61,7 @@ public class SkillPiggify extends TargettedSkill {
             return false;
         }
 
-        Entity pig = target.getWorld().spawnCreature(target.getLocation(), CreatureType.PIG);
+        Entity pig = target.getWorld().spawnCreature(target.getLocation(), CreatureType.GHAST);
         pig.setPassenger(target);
         pigs.add(pig);
         plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, new Runnable() {

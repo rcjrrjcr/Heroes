@@ -39,6 +39,7 @@ public class SkillHarmtouch extends TargettedSkill {
             Messaging.send(player, "Sorry, you can't target yourself!");
             return false;
         }
+
         int damage = config.getInt("damage", 10);
         EntityDamageByEntityEvent damageEntityEvent = new EntityDamageByEntityEvent(player, target, DamageCause.CUSTOM, damage);
         plugin.getServer().getPluginManager().callEvent(damageEntityEvent);
