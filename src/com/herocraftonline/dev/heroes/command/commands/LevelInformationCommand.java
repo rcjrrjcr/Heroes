@@ -62,5 +62,5 @@ public class LevelInformationCommand extends BaseCommand {
         expBar += "§c]";
         return expBar;
     }
-    
+
 }

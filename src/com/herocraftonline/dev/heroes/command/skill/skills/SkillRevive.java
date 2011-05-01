@@ -12,7 +12,7 @@ import com.herocraftonline.dev.heroes.persistence.Hero;
 
 public class SkillRevive extends TargettedSkill {
     public HashMap<Player, Location> deaths = new HashMap<Player, Location>();
-    
+
     public SkillRevive(Heroes plugin) {
         super(plugin);
         name = "Revive";
@@ -30,7 +30,7 @@ public class SkillRevive extends TargettedSkill {
             player.sendMessage("You must target a player.");
             return false;
         }
-        
+
         Player targetPlayer = (Player) target;
         if (deaths.containsKey(targetPlayer)) {
             Location loc = deaths.get(targetPlayer);

@@ -86,7 +86,7 @@ public class HeroManager {
                     try {
                         Material item = Material.valueOf(material);
                         String bind = playerConfig.getString("binds." + material, "");
-                        if(bind.length()>0){
+                        if (bind.length() > 0) {
                             binds.put(item, bind.split(" "));
                         }
                     } catch (IllegalArgumentException e) {
@@ -146,7 +146,7 @@ public class HeroManager {
     }
 
     public boolean createNewHero(Player player) {
-        Hero hero = new Hero(plugin, player, plugin.getClassManager().getDefaultClass(), 0, 0, false, new ArrayList<String>(), new ArrayList<ItemStack>(), new HashMap<Material,String[]>());
+        Hero hero = new Hero(plugin, player, plugin.getClassManager().getDefaultClass(), 0, 0, false, new ArrayList<String>(), new ArrayList<ItemStack>(), new HashMap<Material, String[]>());
         plugin.getServer().getPluginManager().callEvent(new NewHeroEvent(hero));
         return addHero(hero);
     }

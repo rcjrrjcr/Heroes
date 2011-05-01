@@ -40,7 +40,7 @@ public class HNetServerHandler extends NetServerHandler {
         Bukkit.getServer().getPluginManager().callEvent(new InventoryCloseEvent((Player) this.player.getBukkitEntity()));
     }
 
-    @SuppressWarnings({ "deprecation", "unchecked", "rawtypes" })
+    @SuppressWarnings({"deprecation", "unchecked", "rawtypes"})
     @Override
     public void a(Packet102WindowClick packet102windowclick) {
         if (this.player.activeContainer.f == packet102windowclick.a && this.player.activeContainer.c(this.player)) {
@@ -168,6 +168,7 @@ public class HNetServerHandler extends NetServerHandler {
 
                 this.player.a(this.player.activeContainer, arraylist);
             }
+            
         }
     }
 }

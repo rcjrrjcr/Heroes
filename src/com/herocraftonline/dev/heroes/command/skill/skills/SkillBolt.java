@@ -4,6 +4,9 @@ import java.util.List;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.skill.TargettedSkill;
@@ -24,8 +27,16 @@ public class SkillBolt extends TargettedSkill {
 
     @Override
     public boolean use(Hero hero, LivingEntity target, String[] args) {
-        List<Entity> entityList = target.getNearbyEntities(10,10,10);
-        for(Entity n : entityList){
+        Player player = hero.getPlayer();
+        int damage = 0;
+        EntityDamageByEntityEvent damageEntityEvent = new EntityDamageByEntityEvent(player, target, DamageCause.CUSTOM, damage);
+        plugin.getServer().getPluginManager().callEvent(damageEntityEvent);
+        if (damageEntityEvent.isCancelled()) {
+            return false;
+        }
+
+        List<Entity> entityList = target.getNearbyEntities(10, 10, 10);
+        for (Entity n : entityList) {
             target.getWorld().strikeLightning(n.getLocation());
         }
         target.getWorld().strikeLightning(target.getLocation());

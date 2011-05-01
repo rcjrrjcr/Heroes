@@ -34,7 +34,7 @@ public class SkillSmoke extends ActiveSkill {
     public boolean use(Hero hero, String[] args) {
         CraftPlayer craftPlayer = (CraftPlayer) hero.getPlayer();
         // Tell all the logged in Clients to Destroy the Entity - Appears Invisible.
-        for(Player player : Bukkit.getServer().getOnlinePlayers()){
+        for (Player player : Bukkit.getServer().getOnlinePlayers()) {
             CraftPlayer hostilePlayer = (CraftPlayer) player;
             hostilePlayer.getHandle().netServerHandler.sendPacket(new Packet29DestroyEntity(craftPlayer.getEntityId()));
         }
@@ -51,11 +51,10 @@ public class SkillSmoke extends ActiveSkill {
                 CraftPlayer craftPlayer = (CraftPlayer) player;
                 EntityHuman entity = craftPlayer.getHandle();
                 if (hero.getEffects().containsKey(getName())) {
-                    for(Player p : Bukkit.getServer().getOnlinePlayers()){
+                    for (Player p : Bukkit.getServer().getOnlinePlayers()) {
                         // Skip this Packet if it's the Player using the skill, otherwise they will see two of themselves.
-                        if(p.getName().equalsIgnoreCase(player.getName())){
+                        if (p.getName().equalsIgnoreCase(player.getName()))
                             continue;
-                        }
                         CraftPlayer hostilePlayer = (CraftPlayer) p;
                         hostilePlayer.getHandle().netServerHandler.sendPacket(new Packet20NamedEntitySpawn(entity));
                     }

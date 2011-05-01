@@ -31,7 +31,7 @@ public class ToolsCommand extends BaseCommand {
             HeroClass heroClass = hero.getPlayerClass();
 
             Set<String> allTools = heroClass.getAllowedWeapons();
-            String[] categories = { "Sword", "Spade", "Pickaxe", "Axe" , "Hoe" };
+            String[] categories = { "Sword", "Spade", "Pickaxe", "Axe", "Hoe" };
             String[] categorizedTools = new String[categories.length];
 
             for (String tool : allTools) {
@@ -45,13 +45,13 @@ public class ToolsCommand extends BaseCommand {
                     }
                 }
             }
-            
+
             for (int i = 0; i < categories.length; i++) {
                 if (!categorizedTools[i].isEmpty()) {
                     categorizedTools[i] = categorizedTools[i].substring(0, categorizedTools[i].length() - 2);
                 }
             }
-            
+
             sender.sendMessage("§c--------[ §fAllowed Tools§c ]--------");
             for (int i = 0; i < categories.length; i++) {
                 player.sendMessage("  §a" + categories[i] + ": §f" + categorizedTools[i]);
