@@ -2,8 +2,10 @@ package com.herocraftonline.dev.heroes.persistence;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 
@@ -59,7 +61,7 @@ public class HeroManager {
             List<String> masteries = playerConfig.getStringList("masteries", new ArrayList<String>());
             int mana = playerConfig.getInt("mana", 0);
             int exp = playerConfig.getInt("experience", 0);
-            boolean verbose = playerConfig.getBoolean("verbose", false);
+            boolean verbose = playerConfig.getBoolean("verbose", true);
 
             // Lets sort out any items we need to recover.
             List<ItemStack> itemRecovery = new ArrayList<ItemStack>();
@@ -77,8 +79,25 @@ public class HeroManager {
                 }
             }
 
+            Map<Material, String[]> binds = new HashMap<Material, String[]>();
+            List<String> bindKeys = playerConfig.getKeys("binds");
+            if (bindKeys != null && bindKeys.size() > 0) {
+                for (String material : bindKeys) {
+                    try {
+                        Material item = Material.valueOf(material);
+                        String bind = playerConfig.getString("binds." + material, "");
+                        if (bind.length() > 0) {
+                            binds.put(item, bind.split(" "));
+                        }
+                    } catch (IllegalArgumentException e) {
+                        this.plugin.debugLog(Level.WARNING, material + " isn't a valid Item to bind a Skill to.");
+                        continue;
+                    }
+                }
+            }
+
             // Create a New Hero
-            Hero playerHero = new Hero(plugin, player, playerClass, exp, mana, verbose, masteries, itemRecovery);
+            Hero playerHero = new Hero(plugin, player, playerClass, exp, mana, verbose, masteries, itemRecovery, binds);
             // Add the Hero to the Set.
             addHero(playerHero);
             plugin.log(Level.INFO, "Loaded hero: " + player.getName());
@@ -104,17 +123,30 @@ public class HeroManager {
         playerConfig.setProperty("mana", getHero(player).getMana());
         playerConfig.setProperty("verbose", getHero(player).isVerbose());
         playerConfig.setProperty("masteries", getHero(player).getMasteries());
+
         playerConfig.removeProperty("itemrecovery"); // Just a precaution, we'll remove any values before resaving the list.
         for (ItemStack item : getHero(player).getItems()) {
             String durability = Short.toString(item.getDurability());
-            playerConfig.setProperty("itemrecovery." + item, durability);
+            playerConfig.setProperty("itemrecovery." + item.getType().toString(), durability);
         }
+
+        playerConfig.removeProperty("binds"); // Just a precaution.
+        Map<Material, String[]> binds = getHero(player).getBinds();
+        for (Material material : binds.keySet()) {
+            String[] bindArgs = binds.get(material);
+            StringBuilder bind = new StringBuilder();
+            for (String arg : bindArgs) {
+                bind.append(arg).append(" ");
+            }
+            playerConfig.setProperty("binds." + material.toString(), bind.toString().substring(0, bind.toString().length() - 1));
+        }
+
         playerConfig.save();
         plugin.log(Level.INFO, "Saved hero: " + player.getName());
     }
 
     public boolean createNewHero(Player player) {
-        Hero hero = new Hero(plugin, player, plugin.getClassManager().getDefaultClass(), 0, 0, false, new ArrayList<String>(), new ArrayList<ItemStack>());
+        Hero hero = new Hero(plugin, player, plugin.getClassManager().getDefaultClass(), 0, 0, false, new ArrayList<String>(), new ArrayList<ItemStack>(), new HashMap<Material, String[]>());
         plugin.getServer().getPluginManager().callEvent(new NewHeroEvent(hero));
         return addHero(hero);
     }

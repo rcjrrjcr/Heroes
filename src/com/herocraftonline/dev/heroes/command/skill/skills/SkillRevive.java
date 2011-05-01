@@ -1,5 +1,7 @@
 package com.herocraftonline.dev.heroes.command.skill.skills;
 
+import java.util.HashMap;
+
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -7,9 +9,9 @@ import org.bukkit.entity.Player;
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.skill.TargettedSkill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
-import com.herocraftonline.dev.heroes.util.Properties;
 
 public class SkillRevive extends TargettedSkill {
+    public HashMap<Player, Location> deaths = new HashMap<Player, Location>();
 
     public SkillRevive(Heroes plugin) {
         super(plugin);
@@ -28,11 +30,10 @@ public class SkillRevive extends TargettedSkill {
             player.sendMessage("You must target a player.");
             return false;
         }
-        Player targetPlayer = (Player) target;
 
-        Properties prop = plugin.getConfigManager().getProperties();
-        if (prop.playerDeaths.containsKey(targetPlayer)) {
-            Location loc = prop.playerDeaths.get(targetPlayer);
+        Player targetPlayer = (Player) target;
+        if (deaths.containsKey(targetPlayer)) {
+            Location loc = deaths.get(targetPlayer);
             double dx = player.getLocation().getX() - loc.getX();
             double dz = player.getLocation().getZ() - loc.getZ();
             double distance = Math.sqrt(dx * dx + dz * dz);

@@ -45,13 +45,13 @@ public class ArmorCommand extends BaseCommand {
                     }
                 }
             }
-            
+
             for (int i = 0; i < categories.length; i++) {
                 if (!categorizedArmors[i].isEmpty()) {
                     categorizedArmors[i] = categorizedArmors[i].substring(0, categorizedArmors[i].length() - 2);
                 }
             }
-            
+
             sender.sendMessage("§c--------[ §fAllowed Armor§c ]--------");
             for (int i = 0; i < categories.length; i++) {
                 player.sendMessage("  §a" + categories[i] + ": §f" + categorizedArmors[i]);
