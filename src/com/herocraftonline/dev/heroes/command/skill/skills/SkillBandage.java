@@ -29,7 +29,7 @@ public class SkillBandage extends TargettedSkill {
         maxArgs = 0;
         identifiers.add("skill bandage");
     }
-    
+
     @Override
     public void init() {
         maxDistance = config.getInt("max-distance", 5);
@@ -82,12 +82,15 @@ public class SkillBandage extends TargettedSkill {
         @Override
         public void run() {
             int health = target.getHealth();
-            if (timesRan == ticks && health == 20) {
+            if (target == null || timesRan == ticks || health == 20) {
                 int id = playerSchedulers.remove(target.getEntityId());
                 plugin.getServer().getScheduler().cancelTask(id);
             } else {
                 timesRan++;
-                target.setHealth(health + tickHealth);
+                target = plugin.getServer().getPlayer(target.getName());
+                if (target != null) {
+                    target.setHealth(health + tickHealth);
+                }
             }
         }
     }
