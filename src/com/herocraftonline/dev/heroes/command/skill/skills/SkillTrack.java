@@ -3,6 +3,8 @@ package com.herocraftonline.dev.heroes.command.skill.skills;
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.util.config.Configuration;
+import org.bukkit.util.config.ConfigurationNode;
 
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.skill.TargettedSkill;
@@ -19,6 +21,18 @@ public class SkillTrack extends TargettedSkill {
         minArgs = 1;
         maxArgs = 1;
         identifiers.add("skill track");
+    }
+    
+    @Override
+    public void init() {
+        maxDistance = config.getInt("max-distance", 10000);
+    }
+
+    @Override
+    public ConfigurationNode getDefaultConfig() {
+        ConfigurationNode node = Configuration.getEmptyNode();
+        node.setProperty("max-distance", 10000);
+        return node;
     }
 
     @Override
