@@ -82,14 +82,16 @@ public class SkillBandage extends TargettedSkill {
         @Override
         public void run() {
             int health = target.getHealth();
-            if (target == null || timesRan == ticks || health == 20) {
+            if (target == null || timesRan == ticks || health >= 20) {
                 int id = playerSchedulers.remove(target.getEntityId());
                 plugin.getServer().getScheduler().cancelTask(id);
             } else {
                 timesRan++;
                 target = plugin.getServer().getPlayer(target.getName());
                 if (target != null) {
-                    target.setHealth(health + tickHealth);
+                    int newHealth = health + tickHealth;
+                    newHealth = newHealth > 20 ? 20 : newHealth; 
+                    target.setHealth(newHealth);
                 }
             }
         }

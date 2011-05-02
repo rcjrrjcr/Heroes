@@ -36,7 +36,6 @@ public class OutsourcedSkill extends Skill {
 
         Hero hero = plugin.getHeroManager().getHero(player);
         HeroClass heroClass = hero.getPlayerClass();
-
         
         String world = player.getWorld().getName();
         String playerName = player.getName();
@@ -51,7 +50,6 @@ public class OutsourcedSkill extends Skill {
             for (String permission : permissions) {
                 if (Heroes.Permissions.has(player, permission)) {
                     Heroes.Permissions.removeUserPermission(world, playerName, permission);
-                    
                 }
             }
         }
