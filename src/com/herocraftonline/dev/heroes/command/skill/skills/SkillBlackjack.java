@@ -2,6 +2,7 @@ package com.herocraftonline.dev.heroes.command.skill.skills;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -23,10 +24,11 @@ import com.herocraftonline.dev.heroes.command.skill.ActiveSkill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 
 public class SkillBlackjack extends ActiveSkill {
-    
+
     private PlayerListener playerListener = new SkillPlayerListener();
     private EntityListener entityListener = new SkillEntityListener();
     private Map<Integer, Long> stunnedEntities = new HashMap<Integer, Long>();
+    private Random random = new Random();
 
     public SkillBlackjack(Heroes plugin) {
         super(plugin);
@@ -45,7 +47,10 @@ public class SkillBlackjack extends ActiveSkill {
 
     @Override
     public boolean use(Hero hero, String[] args) {
+        int duration = config.getInt("effect-duration", 10000);
         hero.getEffects().put(name, System.currentTimeMillis() + 60000.0);
+        notifyNearbyPlayers(hero.getPlayer().getLocation().toVector(), "$1 gained $2!", hero.getPlayer().getName(), name);
+        plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, new EffectRemover(hero), (long) (duration * 0.02));
         return true;
     }
 
@@ -53,9 +58,11 @@ public class SkillBlackjack extends ActiveSkill {
     public ConfigurationNode getDefaultConfig() {
         ConfigurationNode node = Configuration.getEmptyNode();
         node.setProperty("stun-duration", 5000);
+        node.setProperty("stun-chance", 0.20);
+        node.setProperty("effect-duration", 10000);
         return node;
     }
-    
+
     private boolean checkStunned(Entity entity) {
         int id = entity.getEntityId();
         if (stunnedEntities.containsKey(id)) {
@@ -77,26 +84,28 @@ public class SkillBlackjack extends ActiveSkill {
                 if (subEvent.getCause() == DamageCause.ENTITY_ATTACK) {
                     Entity attackingEntity = subEvent.getDamager();
                     Entity defendingEntity = subEvent.getEntity();
-                    
+
                     if (checkStunned(attackingEntity)) {
                         event.setCancelled(true);
                         return;
                     }
-                    
+
                     if (attackingEntity instanceof Player) {
                         Hero attackingHero = plugin.getHeroManager().getHero((Player) attackingEntity);
                         Map<String, Double> effects = attackingHero.getEffects();
                         if (effects.containsKey(name)) {
-                            effects.remove(name);
-                            stunnedEntities.put(defendingEntity.getEntityId(), System.currentTimeMillis() + config.getInt("stun-duration", 5000));
-                            String targetName = (defendingEntity instanceof Player) ? ((Player) defendingEntity).getName() : defendingEntity.getClass().getSimpleName().substring(5);
-                            notifyNearbyPlayers(attackingHero.getPlayer().getLocation().toVector(), "$1 stunned $2!", attackingHero.getPlayer().getName(), targetName);
+                            double chance = config.getDouble("stun-chance", 0.20);
+                            if (random.nextDouble() < chance) {
+                                stunnedEntities.put(defendingEntity.getEntityId(), System.currentTimeMillis() + config.getInt("stun-duration", 5000));
+                                String targetName = (defendingEntity instanceof Player) ? ((Player) defendingEntity).getName() : defendingEntity.getClass().getSimpleName().substring(5);
+                                notifyNearbyPlayers(attackingHero.getPlayer().getLocation().toVector(), "$1 stunned $2!", attackingHero.getPlayer().getName(), targetName);
+                            }
                         }
                     }
                 }
             }
         }
-        
+
         public void onEntityTarget(EntityTargetEvent event) {
             if (checkStunned(event.getEntity())) {
                 event.setCancelled(true);
@@ -111,15 +120,31 @@ public class SkillBlackjack extends ActiveSkill {
             if (checkStunned(event.getPlayer())) {
                 event.setCancelled(true);
                 event.getPlayer().teleport(event.getFrom());
-                //event.getPlayer().setVelocity(event.getPlayer().getVelocity().setX(0).setZ(0)); <-- can be used for hamstring ability
+                // event.getPlayer().setVelocity(event.getPlayer().getVelocity().setX(0).setZ(0)); <-- can be used for hamstring ability
             }
         }
-        
+
         public void onPlayerInteract(PlayerInteractEvent event) {
             if (checkStunned(event.getPlayer())) {
                 event.setCancelled(true);
             }
         }
 
+    }
+
+    private class EffectRemover implements Runnable {
+        private Hero hero;
+
+        public EffectRemover(Hero hero) {
+            this.hero = hero;
+        }
+
+        @Override
+        public void run() {
+            Double time = hero.getEffects().remove(name);
+            if (time != null) {
+                notifyNearbyPlayers(hero.getPlayer().getLocation().toVector(), "$1 loses $2!", hero.getPlayer().getName(), name);
+            }
+        }
     }
 }

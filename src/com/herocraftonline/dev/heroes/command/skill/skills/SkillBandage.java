@@ -66,4 +66,18 @@ public class SkillBandage extends TargettedSkill {
         }
         return false;
     }
+    
+    private class BandageTask implements Runnable {
+        private Player target;
+        
+        
+        public BandageTask(Player target) {
+            this.target = target;
+        }
+        
+        @Override
+        public void run() {
+            
+        }
+    }
 }
