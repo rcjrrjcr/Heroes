@@ -25,7 +25,7 @@ public class SkillBolt extends TargettedSkill {
         maxArgs = 1;
         identifiers.add("skill bolt");
     }
-    
+
     @Override
     public void init() {
         maxDistance = config.getInt("max-distance", 20);
@@ -50,7 +50,11 @@ public class SkillBolt extends TargettedSkill {
 
         List<Entity> entityList = target.getNearbyEntities(10, 10, 10);
         for (Entity n : entityList) {
-            target.getWorld().strikeLightning(n.getLocation());
+            if (n instanceof LivingEntity) {
+                if (n != player) {
+                    target.getWorld().strikeLightning(n.getLocation());
+                }
+            }
         }
         target.getWorld().strikeLightning(target.getLocation());
         return false;
