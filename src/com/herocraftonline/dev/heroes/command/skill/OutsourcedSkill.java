@@ -45,20 +45,17 @@ public class OutsourcedSkill extends Skill {
             for (String permission : permissions) {
                 if (!Heroes.Permissions.has(player, permission)) {
                     Heroes.Permissions.addUserPermission(world, playerName, permission);
-                    Heroes.Permissions.removeCachedItem(world, playerName, permission);
                 }
             }
         } else {
             for (String permission : permissions) {
                 if (Heroes.Permissions.has(player, permission)) {
                     Heroes.Permissions.removeUserPermission(world, playerName, permission);
-                    Heroes.Permissions.removeCachedItem(world, playerName, permission);
                     
                 }
             }
         }
         Heroes.Permissions.save(world);
-        Heroes.Permissions.reload(world);
     }
 
     public class SkillCustomListener extends CustomEventListener {
