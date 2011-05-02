@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.bukkit.Material;
 import org.bukkit.entity.CreatureType;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -24,7 +25,7 @@ import com.herocraftonline.dev.heroes.util.Messaging;
 
 public class SkillPiggify extends TargettedSkill {
 
-    private List<Entity> pigs = Collections.synchronizedList(new LinkedList<Entity>());
+    private List<Entity> creatures = Collections.synchronizedList(new LinkedList<Entity>());
 
     public SkillPiggify(Heroes plugin) {
         super(plugin);
@@ -54,7 +55,7 @@ public class SkillPiggify extends TargettedSkill {
     @Override
     public boolean use(Hero hero, LivingEntity target, String[] args) {
         Player player = hero.getPlayer();
-        if (target == player || pigs.contains(target)) {
+        if (target == player || creatures.contains(target)) {
             Messaging.send(player, "You need a target.");
             return false;
         }
@@ -66,14 +67,19 @@ public class SkillPiggify extends TargettedSkill {
             return false;
         }
 
-        Entity pig = target.getWorld().spawnCreature(target.getLocation(), CreatureType.GHAST);
-        pig.setPassenger(target);
-        pigs.add(pig);
+        CreatureType type = CreatureType.PIG;
+        if (target.getLocation().getBlock().getType() == Material.WATER) {
+            type = CreatureType.SQUID;
+        }
+        
+        Entity creature = target.getWorld().spawnCreature(target.getLocation(), type);
+        creature.setPassenger(target);
+        creatures.add(creature);
         plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, new Runnable() {
             @Override
             public void run() {
-                pigs.get(0).remove();
-                pigs.remove(0);
+                creatures.get(0).remove();
+                creatures.remove(0);
             }
         }, (long) (config.getInt("duration", 10000) * 0.02));
 
@@ -86,7 +92,7 @@ public class SkillPiggify extends TargettedSkill {
 
         public void onEntityDamage(EntityDamageEvent event) {
             Entity entity = event.getEntity();
-            if (pigs.contains(entity)) {
+            if (creatures.contains(entity)) {
                 event.setCancelled(true);
             }
         }
