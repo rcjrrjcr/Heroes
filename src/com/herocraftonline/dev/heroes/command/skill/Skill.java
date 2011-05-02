@@ -31,6 +31,17 @@ public abstract class Skill extends BaseCommand {
         for (Player player : players) {
             Location playerLocation = player.getLocation();
             if (playerLocation.toVector().distance(source) < 30) {
+                String playerName = player.getName();
+                for (int i = 0; i < args.length; i++) {
+                    if (args[i].equals(playerName)) {
+                        if (message.startsWith("$1") && i == 0) {
+                            args[i] = "You";
+                        } else {
+                            args[i] = "you";
+                        }
+                        break;
+                    }
+                }
                 Messaging.send(player, message, args);
             }
         }
