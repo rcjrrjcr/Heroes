@@ -25,7 +25,10 @@ public class SkillInvuln extends ActiveSkill {
 
     @Override
     public boolean use(Hero hero, String[] args) {
+        Player player = hero.getPlayer();
         hero.getEffects().put(name, System.currentTimeMillis() + 10000.0);
+        
+        notifyNearbyPlayers(player.getLocation().toVector(), "$1 used $2!", player.getName(), name);
         return true;
     }
 
@@ -37,7 +40,7 @@ public class SkillInvuln extends ActiveSkill {
             if (defender instanceof Player) {
                 Player player = (Player) defender;
                 Map<String, Double> effects = plugin.getHeroManager().getHero(player).getEffects();
-                if (effects.containsKey(name) && effects.get(name) < System.currentTimeMillis()) {
+                if (effects.containsKey(name) && effects.get(name) > System.currentTimeMillis()) {
                     event.setCancelled(true);
                 }
             }
