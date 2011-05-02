@@ -25,6 +25,8 @@ public abstract class Skill extends BaseCommand {
     public Skill(Heroes plugin) {
         super(plugin);
     }
+    
+    public void init() {}
 
     protected void notifyNearbyPlayers(Vector source, String message, String... args) {
         Player[] players = plugin.getServer().getOnlinePlayers();
@@ -32,17 +34,18 @@ public abstract class Skill extends BaseCommand {
             Location playerLocation = player.getLocation();
             if (playerLocation.toVector().distance(source) < 30) {
                 String playerName = player.getName();
-                for (int i = 0; i < args.length; i++) {
-                    if (args[i].equals(playerName)) {
+                String[] modArgs = args.clone();
+                for (int i = 0; i < modArgs.length; i++) {
+                    if (modArgs[i].equals(playerName)) {
                         if (message.startsWith("$1") && i == 0) {
-                            args[i] = "You";
+                            modArgs[i] = "You";
                         } else {
-                            args[i] = "you";
+                            modArgs[i] = "you";
                         }
                         break;
                     }
                 }
-                Messaging.send(player, message, args);
+                Messaging.send(player, message, modArgs);
             }
         }
     }

@@ -22,13 +22,18 @@ public class SkillHarmtouch extends TargettedSkill {
         minArgs = 0;
         maxArgs = 1;
         identifiers.add("skill harmtouch");
-        maxDistance = 15;
+    }
+    
+    @Override
+    public void init() {
+        maxDistance = config.getInt("max-distance", 15);
     }
 
     @Override
     public ConfigurationNode getDefaultConfig() {
         ConfigurationNode node = Configuration.getEmptyNode();
         node.setProperty("damage", 10);
+        node.setProperty("max-distance", 15);
         return node;
     }
 

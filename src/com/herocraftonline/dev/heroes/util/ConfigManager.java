@@ -176,6 +176,7 @@ public class ConfigManager {
                 } else {
                     skill.setConfig(Configuration.getEmptyNode());
                 }
+                skill.init();
             }
         }
     }

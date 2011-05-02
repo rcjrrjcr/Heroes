@@ -34,14 +34,19 @@ public class SkillPiggify extends TargettedSkill {
         minArgs = 0;
         maxArgs = 1;
         identifiers.add("skill piggify");
-        maxDistance = 20;
 
         registerEvent(Type.ENTITY_DAMAGE, new SkillEntityListener(), Priority.Normal);
+    }
+    
+    @Override
+    public void init() {
+        maxDistance = config.getInt("max-distance", 20);
     }
 
     @Override
     public ConfigurationNode getDefaultConfig() {
         ConfigurationNode node = Configuration.getEmptyNode();
+        node.setProperty("max-distance", 20);
         node.setProperty("duration", 10000);
         return node;
     }
@@ -49,7 +54,7 @@ public class SkillPiggify extends TargettedSkill {
     @Override
     public boolean use(Hero hero, LivingEntity target, String[] args) {
         Player player = hero.getPlayer();
-        if (target == player) {
+        if (target == player || pigs.contains(target)) {
             Messaging.send(player, "You need a target.");
             return false;
         }

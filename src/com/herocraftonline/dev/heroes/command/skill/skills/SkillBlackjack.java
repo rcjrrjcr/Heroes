@@ -147,4 +147,5 @@ public class SkillBlackjack extends ActiveSkill {
             }
         }
     }
+
 }

@@ -28,12 +28,17 @@ public class SkillBandage extends TargettedSkill {
         minArgs = 0;
         maxArgs = 0;
         identifiers.add("skill bandage");
-        maxDistance = 5;
+    }
+    
+    @Override
+    public void init() {
+        maxDistance = config.getInt("max-distance", 5);
     }
 
     @Override
     public ConfigurationNode getDefaultConfig() {
         ConfigurationNode node = Configuration.getEmptyNode();
+        node.setProperty("max-distance", 5);
         node.setProperty("tick-health", 1);
         node.setProperty("ticks", 10);
         return node;

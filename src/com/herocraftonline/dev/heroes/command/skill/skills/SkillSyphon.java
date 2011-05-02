@@ -2,6 +2,8 @@ package com.herocraftonline.dev.heroes.command.skill.skills;
 
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.util.config.Configuration;
+import org.bukkit.util.config.ConfigurationNode;
 
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.skill.TargettedSkill;
@@ -17,6 +19,18 @@ public class SkillSyphon extends TargettedSkill {
         minArgs = 1;
         maxArgs = 2;
         identifiers.add("skill syphon");
+    }
+    
+    @Override
+    public void init() {
+        maxDistance = config.getInt("max-distance", 15);
+    }
+
+    @Override
+    public ConfigurationNode getDefaultConfig() {
+        ConfigurationNode node = Configuration.getEmptyNode();
+        node.setProperty("max-distance", 15);
+        return node;
     }
 
     @Override
