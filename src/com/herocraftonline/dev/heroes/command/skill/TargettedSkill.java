@@ -93,6 +93,10 @@ public abstract class TargettedSkill extends ActiveSkill {
     }
 
     public static boolean inLineOfSight(Player a, Player b) {
+        if (a == b) {
+            return true;
+        }
+        
         Location aLoc = a.getEyeLocation();
         Location bLoc = b.getEyeLocation();
         int distance = Location.locToBlock(aLoc.toVector().distance(bLoc.toVector())) - 1;

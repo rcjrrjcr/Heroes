@@ -1,7 +1,5 @@
 package com.herocraftonline.dev.heroes.command.skill;
 
-import java.util.logging.Level;
-
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.CustomEventListener;
@@ -33,13 +31,13 @@ public class OutsourcedSkill extends Skill {
 
     public void tryLearningSkill(Player player) {
         if (Heroes.Permissions == null) {
-            plugin.log(Level.WARNING, "Attempt to use an OutsourcedSkill (" + name + ") failed - Permissions not found.");
             return;
         }
 
         Hero hero = plugin.getHeroManager().getHero(player);
         HeroClass heroClass = hero.getPlayerClass();
 
+        
         String world = player.getWorld().getName();
         SkillSettings settings = heroClass.getSkillSettings(name);
         if (settings != null && meetsLevelRequirement(hero, settings.LevelRequirement)) {
