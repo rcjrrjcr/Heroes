@@ -52,6 +52,11 @@ public class ChooseCommand extends BaseCommand {
                 Messaging.send(player, "Sorry, that specialty doesn't belong to $1.", currentClass.getName());
                 return;
             }
+            
+            if (!hero.getMasteries().contains(currentClass.getName())) {
+                Messaging.send(player, "You must master $1 before specializing!", currentClass.getName());
+                return;
+            }
         }
 
         int cost = currentClass == plugin.getClassManager().getDefaultClass() ? 0 : prop.swapCost;
