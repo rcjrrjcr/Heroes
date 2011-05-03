@@ -97,6 +97,8 @@ public class ConfigManager {
         properties.maxExp = config.getInt(root + "maxExperience", 90000);
         properties.maxLevel = config.getInt(root + "maxLevel", 20);
         properties.expLoss = config.getDouble(root + "expLoss", 0.95);
+        properties.blockTrackingDuration = config.getInt(root + "block-tracking-duration", 10 * 60 * 1000);
+        properties.maxTrackedBlocks = config.getInt(root + "max-tracked-blocks", 1000);
         properties.calcExp();
     }
 
@@ -112,8 +114,6 @@ public class ConfigManager {
         properties.cColor = ChatColor.valueOf(config.getString(root + "color", "WHITE"));
         properties.swapCost = config.getInt(root + "swapcost", 0);
         properties.debug = config.getBoolean(root + "debug", false);
-        properties.blockTrackingDuration = config.getInt(root + "block-tracking-duration", 10 * 60 * 1000);
-        properties.maxTrackedBlocks = config.getInt(root + "max-tracked-blocks", 1000);
     }
 
     private void loadPersistence(Configuration config) {
