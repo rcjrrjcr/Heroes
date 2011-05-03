@@ -28,6 +28,8 @@ public class Properties {
     public int[] levels;
     public double expLoss;
     // Experience//
+    public int blockTrackingDuration;
+    public int maxTrackedBlocks;
     public int playerKillingExp = 0;
     public HashMap<CreatureType, Integer> creatureKillingExp = new HashMap<CreatureType, Integer>();
     public HashMap<Material, Integer> miningExp = new HashMap<Material, Integer>();
