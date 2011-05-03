@@ -382,8 +382,8 @@ public class Heroes extends JavaPlugin {
         if (count > 0) {
             Messaging.send(p, "$1 have been removed from your inventory.", count + " Items");
             Messaging.send(p, "Please make space in your inventory then type '$1'", "/heroes recoveritems");
+            p.updateInventory();
         }
-        p.updateInventory();
     }
 
     public boolean moveItem(Player p, int slot, ItemStack item) {
