@@ -35,7 +35,7 @@ public class HEntityListener extends EntityListener {
     public void onEntityDeath(EntityDeathEvent event) {
         Entity defender = event.getEntity();
         Player attacker = kills.get(defender.getEntityId());
-        kills.remove(defender);
+        kills.remove(defender.getEntityId());
 
         Properties prop = plugin.getConfigManager().getProperties();
         if (defender instanceof Player) {
