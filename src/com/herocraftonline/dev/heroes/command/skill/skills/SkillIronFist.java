@@ -28,7 +28,11 @@ public class SkillIronFist extends PassiveSkill {
 
     public class SkillPlayerListener extends EntityListener {
 
-        public void onPlayerMove(EntityDamageEvent event) {
+        @Override
+        public void onEntityDamage(EntityDamageEvent event) {
+            if (event.isCancelled()) {
+                return;
+            }
             if (event instanceof EntityDamageByEntityEvent) {
                 EntityDamageByEntityEvent subEvent = (EntityDamageByEntityEvent) event;
                 if (subEvent.getDamager() instanceof Player) {
