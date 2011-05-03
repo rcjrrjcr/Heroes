@@ -43,7 +43,7 @@ public class SkillCommand extends BaseCommand {
 
         List<BaseCommand> sortCommands = plugin.getCommandManager().getCommands();
         List<Skill> skills = new ArrayList<Skill>();
-        HeroClass heroClass = plugin.getHeroManager().getHero(player).getPlayerClass();
+        HeroClass heroClass = plugin.getHeroManager().getHero(player).getHeroClass();
 
         // Filter out Skills from the command list.
         for (BaseCommand command : sortCommands) {

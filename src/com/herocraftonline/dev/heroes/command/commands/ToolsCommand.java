@@ -28,7 +28,7 @@ public class ToolsCommand extends BaseCommand {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             Hero hero = plugin.getHeroManager().getHero(player);
-            HeroClass heroClass = hero.getPlayerClass();
+            HeroClass heroClass = hero.getHeroClass();
 
             Set<String> allTools = heroClass.getAllowedWeapons();
             String[] categories = { "Sword", "Spade", "Pickaxe", "Axe", "Hoe" };

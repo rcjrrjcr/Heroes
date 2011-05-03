@@ -38,15 +38,15 @@ public class SelectProfessionCommand extends BaseCommand {
                     Properties prop = plugin.getConfigManager().getProperties();
                     HeroManager heroManager = plugin.getHeroManager();
                     Hero hero = heroManager.getHero(player);
-                    if (hero.getPlayerClass().equals(plugin.getClassManager().getDefaultClass())) {
+                    if (hero.getHeroClass().equals(plugin.getClassManager().getDefaultClass())) {
                         changeClass(hero, profession, 0);
                     } else {
                         changeClass(hero, profession, prop.swapCost);
                     }
                     if (hero.getMasteries().contains(profession.getName())) {
-                        hero.setExperience(prop.getExperience(prop.maxLevel));
+                        hero.setExp(prop.getExperience(prop.maxLevel));
                     } else {
-                        hero.setExperience(0);
+                        hero.setExp(0);
                     }
                     Messaging.send(player, "Welcome to the path of the $1!", profession.getName());
                 } else {
@@ -64,15 +64,15 @@ public class SelectProfessionCommand extends BaseCommand {
             Account account = iConomy.getBank().getAccount(playerName);
             if (account.hasEnough(cost)) {
                 account.subtract(cost);
-                hero.setPlayerClass(newClass);
-                ClassChangeEvent event = new ClassChangeEvent(hero.getPlayer(), newClass);
+                hero.setHeroClass(newClass);
+                ClassChangeEvent event = new ClassChangeEvent(hero, hero.getHeroClass(), newClass);
                 plugin.getServer().getPluginManager().callEvent(event);
             } else {
                 Messaging.send(hero.getPlayer(), "Sorry, you don't have enough money!");
             }
         } else {
-            hero.setPlayerClass(newClass);
-            ClassChangeEvent event = new ClassChangeEvent(hero.getPlayer(), newClass);
+            hero.setHeroClass(newClass);
+            ClassChangeEvent event = new ClassChangeEvent(hero, hero.getHeroClass(), newClass);
             plugin.getServer().getPluginManager().callEvent(event);
         }
     }

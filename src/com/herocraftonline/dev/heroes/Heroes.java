@@ -170,7 +170,7 @@ public class Heroes extends JavaPlugin {
                 for (Player player : getServer().getOnlinePlayers()) {
                     for (BaseCommand cmd : commandManager.getCommands()) {
                         if (cmd instanceof OutsourcedSkill) {
-                            ((OutsourcedSkill) cmd).tryLearningSkill(player);
+                            ((OutsourcedSkill) cmd).tryLearningSkill(heroManager.getHero(player));
                         }
                     }
                 }
@@ -205,7 +205,7 @@ public class Heroes extends JavaPlugin {
         pluginManager.registerEvent(Type.BLOCK_PLACE, blockListener, Priority.Monitor, this);
 
         pluginManager.registerEvent(Type.PLUGIN_ENABLE, pluginListener, Priority.Monitor, this);
-        pluginManager.registerEvent(Type.CUSTOM_EVENT, customListener, Priority.Normal, this);
+        pluginManager.registerEvent(Type.CUSTOM_EVENT, customListener, Priority.Monitor, this);
     }
 
     /**
@@ -342,7 +342,7 @@ public class Heroes extends JavaPlugin {
     public void inventoryCheck(Player p) {
         PlayerInventory inv = p.getInventory();
         Hero h = this.heroManager.getHero(p);
-        HeroClass hc = h.getPlayerClass();
+        HeroClass hc = h.getHeroClass();
         int count = 0;
         String item;
         if ((inv.getHelmet() != null) && (inv.getHelmet().getTypeId() != 0)) {

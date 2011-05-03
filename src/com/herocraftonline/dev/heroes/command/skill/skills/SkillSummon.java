@@ -31,7 +31,7 @@ public class SkillSummon extends ActiveSkill {
     public boolean use(Hero hero, String[] args) {
         Player player = hero.getPlayer();
         CreatureType creatureType = CreatureType.fromName(args[0].toUpperCase());
-        if (creatureType != null && hero.getSummons().size() <= hero.getPlayerClass().getSummonMax()) {
+        if (creatureType != null && hero.getSummons().size() <= hero.getHeroClass().getSummonMax()) {
             Entity spawnedEntity = player.getWorld().spawnCreature(player.getLocation(), creatureType);
             if (spawnedEntity instanceof Creature && spawnedEntity instanceof Ghast && spawnedEntity instanceof Slime) {
                 spawnedEntity.remove();

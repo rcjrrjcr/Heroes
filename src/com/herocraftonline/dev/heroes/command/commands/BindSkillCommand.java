@@ -28,7 +28,7 @@ public class BindSkillCommand extends BaseCommand {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             Hero hero = plugin.getHeroManager().getHero(player);
-            HeroClass heroClass = hero.getPlayerClass();
+            HeroClass heroClass = hero.getHeroClass();
             Material material = player.getItemInHand().getType();
             if (args.length > 0) {
                 if (heroClass.hasSkill(args[0])) {

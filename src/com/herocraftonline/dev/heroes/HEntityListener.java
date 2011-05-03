@@ -13,8 +13,6 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityListener;
 
-import com.herocraftonline.dev.heroes.api.ExperienceGainEvent;
-import com.herocraftonline.dev.heroes.api.LevelEvent;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.classes.HeroClass.ExperienceType;
 import com.herocraftonline.dev.heroes.party.HeroParty;
@@ -43,7 +41,7 @@ public class HEntityListener extends EntityListener {
             // 5% of the next level's experience requirement
             // Experience loss can't reduce level
             Hero heroDefender = plugin.getHeroManager().getHero((Player) defender);
-            int exp = heroDefender.getExperience();
+            int exp = heroDefender.getExp();
             int level = prop.getLevel(exp);
             if (level < prop.maxLevel) {
                 int currentLevelExp = prop.getExperience(level);
@@ -52,7 +50,7 @@ public class HEntityListener extends EntityListener {
                 if (exp - expLoss < currentLevelExp) {
                     expLoss = exp - currentLevelExp;
                 }
-                heroDefender.setExperience(exp - expLoss);
+                heroDefender.setExp(exp - expLoss);
                 Messaging.send(heroDefender.getPlayer(), "You have lost " + expLoss + " exp for dying.");
             }
         }
@@ -61,7 +59,7 @@ public class HEntityListener extends EntityListener {
             // Get the Hero representing the player
             Hero hero = plugin.getHeroManager().getHero(attacker);
             // Get the player's class definition
-            HeroClass playerClass = hero.getPlayerClass();
+            HeroClass playerClass = hero.getHeroClass();
             // Get the sources of experience for the player's class
             Set<ExperienceType> expSources = playerClass.getExperienceSources();
             // If the player gains experience from killing
@@ -93,44 +91,8 @@ public class HEntityListener extends EntityListener {
                             addedExp = prop.creatureKillingExp.get(type);
                         }
                     }
-                    // Fire the experience gain event
-                    int exp = hero.getExperience();
-                    int currentLevel = prop.getLevel(exp);
-                    int newLevel = prop.getLevel(exp + addedExp);
-
-                    // If they're at max level, we don't add experience
-                    if (currentLevel == prop.maxLevel) {
-                        return;
-                    }
-
-                    ExperienceGainEvent expEvent;
-                    if (newLevel == currentLevel) {
-                        expEvent = new ExperienceGainEvent(attacker, addedExp);
-                    } else {
-                        expEvent = new LevelEvent(attacker, addedExp, newLevel, currentLevel);
-                    }
-                    plugin.getServer().getPluginManager().callEvent(expEvent);
-                    if (expEvent.isCancelled()) {
-                        return;
-                    }
-                    addedExp = expEvent.getExp();
-
-                    // Only perform an experience update if we're actually
-                    // adding or subtracting from their experience.
-                    if (addedExp != 0) {
-                        hero.setExperience(exp + addedExp);
-                        if (hero.isVerbose()) {
-                            Messaging.send(attacker, "$1: Gained $2 Exp", playerClass.getName(), String.valueOf(addedExp));
-                        }
-                        if (newLevel != currentLevel) {
-                            Messaging.send(attacker, "You leveled up! (Lvl $1 $2)", String.valueOf(newLevel), playerClass.getName());
-                            if (newLevel >= prop.maxLevel) {
-                                hero.setExperience(prop.getExperience(prop.maxLevel));
-                                hero.getMasteries().add(playerClass.getName());
-                                Messaging.broadcast(plugin, "$1 has become a master $2!", attacker.getName(), playerClass.getName());
-                            }
-                        }
-                    }
+                    
+                    hero.gainExp(addedExp, ExperienceType.KILLING);
                 }
             }
         }

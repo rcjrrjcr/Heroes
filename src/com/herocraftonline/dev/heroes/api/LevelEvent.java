@@ -1,30 +1,27 @@
 package com.herocraftonline.dev.heroes.api;
 
-import org.bukkit.entity.Player;
+import com.herocraftonline.dev.heroes.classes.HeroClass.ExperienceType;
+import com.herocraftonline.dev.heroes.persistence.Hero;
 
 @SuppressWarnings("serial")
 public class LevelEvent extends ExperienceGainEvent {
 
-    protected int experience;
-    protected int newLevel;
-    protected int previousLevel;
+    protected final int from;
+    protected final int to;
 
-    public LevelEvent(Player player, int exp, int newLevel, int previousLevel) {
-        super(player, exp);
-        this.experience = exp;
-        this.newLevel = newLevel;
-        this.previousLevel = previousLevel;
+    public LevelEvent(Hero hero, int expGain, int from, int to, ExperienceType source) {
+        super(hero, expGain, source);
+        this.expGain = expGain;
+        this.from = from;
+        this.to = to;
     }
 
-    public int getNewLevel() {
-        return newLevel;
+    public final int getTo() {
+        return from;
     }
 
-    public int getPreviousLevel() {
-        return previousLevel;
+    public final int getFrom() {
+        return to;
     }
-
-    public int getExperience() {
-        return experience;
-    }
+    
 }

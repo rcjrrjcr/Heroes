@@ -12,15 +12,20 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import com.herocraftonline.dev.heroes.Heroes;
+import com.herocraftonline.dev.heroes.api.ExperienceGainEvent;
+import com.herocraftonline.dev.heroes.api.LevelEvent;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
+import com.herocraftonline.dev.heroes.classes.HeroClass.ExperienceType;
 import com.herocraftonline.dev.heroes.party.HeroParty;
+import com.herocraftonline.dev.heroes.util.Messaging;
+import com.herocraftonline.dev.heroes.util.Properties;
 
 public class Hero {
 
     protected final Heroes plugin;
     protected Player player;
-    protected HeroClass playerClass;
-    protected int experience;
+    protected HeroClass heroClass;
+    protected int exp;
     protected int mana;
     protected boolean verbose;
     protected List<String> masteries;
@@ -32,11 +37,11 @@ public class Hero {
     protected Map<Player, HeroParty> invites;
     protected List<ItemStack> itemRecovery;
 
-    public Hero(Heroes plugin, Player player, HeroClass playerClass, int experience, int mana, boolean verbose, List<String> masteries, List<ItemStack> itemRecovery, Map<Material, String[]> binds) {
+    public Hero(Heroes plugin, Player player, HeroClass heroClass, int exp, int mana, boolean verbose, List<String> masteries, List<ItemStack> itemRecovery, Map<Material, String[]> binds) {
         this.plugin = plugin;
         this.player = player;
-        this.playerClass = playerClass;
-        this.experience = experience;
+        this.heroClass = heroClass;
+        this.exp = exp;
         this.mana = mana;
         this.masteries = masteries;
         this.itemRecovery = itemRecovery;
@@ -69,12 +74,12 @@ public class Hero {
         return player;
     }
 
-    public HeroClass getPlayerClass() {
-        return playerClass;
+    public HeroClass getHeroClass() {
+        return heroClass;
     }
 
-    public int getExperience() {
-        return experience;
+    public int getExp() {
+        return exp;
     }
 
     public int getMana() {
@@ -85,14 +90,64 @@ public class Hero {
         return masteries;
     }
 
-    public void setPlayerClass(HeroClass playerClass) {
-        this.playerClass = playerClass;
+    public void setHeroClass(HeroClass heroClass) {
+        this.heroClass = heroClass;
         // Check the Players inventory now that they have changed class.
         this.plugin.inventoryCheck(getPlayer());
     }
+    
+    public void gainExp(int expGain, ExperienceType source) {
+        Properties prop = plugin.getConfigManager().getProperties();
+        int currentLevel = prop.getLevel(exp);
+        int newLevel = prop.getLevel(exp + expGain);
 
-    public void setExperience(int experience) {
-        this.experience = experience;
+        // If they're at max level, we don't add experience
+        if (currentLevel == prop.maxLevel) {
+            return;
+        }
+
+        // add the experience
+        exp += expGain;
+        
+        // call event
+        ExperienceGainEvent expEvent;
+        if (newLevel == currentLevel) {
+            expEvent = new ExperienceGainEvent(this, expGain, source);
+        } else {
+            expEvent = new LevelEvent(this, expGain, currentLevel, newLevel, source);
+        }
+        plugin.getServer().getPluginManager().callEvent(expEvent);
+        if (expEvent.isCancelled()) {
+            // undo the experience gain
+            exp -= expGain;
+            return;
+        }
+        
+        // undo the previous gain to make sure we use the updated value
+        exp -= expGain;
+        expGain = expEvent.getExpGain();
+        
+        // add the updated experience
+        exp += expGain;
+
+        // notify the user
+        if (expGain != 0) {
+            if (verbose) {
+                Messaging.send(player, "$1: Gained $2 Exp", heroClass.getName(), String.valueOf(expGain));
+            }
+            if (newLevel != currentLevel) {
+                Messaging.send(player, "You leveled up! (Lvl $1 $2)", String.valueOf(newLevel), heroClass.getName());
+                if (newLevel >= prop.maxLevel) {
+                    exp = prop.getExperience(prop.maxLevel);
+                    masteries.add(heroClass.getName());
+                    Messaging.broadcast(plugin, "$1 has become a master $2!", player.getName(), heroClass.getName());
+                }
+            }
+        }
+    }
+
+    public void setExp(int exp) {
+        this.exp = exp;
     }
 
     public void setMana(int mana) {

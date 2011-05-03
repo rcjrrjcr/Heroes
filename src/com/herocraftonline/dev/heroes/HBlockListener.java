@@ -12,8 +12,6 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockListener;
 import org.bukkit.event.block.BlockPlaceEvent;
 
-import com.herocraftonline.dev.heroes.api.ExperienceGainEvent;
-import com.herocraftonline.dev.heroes.api.LevelEvent;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.classes.HeroClass.ExperienceType;
 import com.herocraftonline.dev.heroes.persistence.Hero;
@@ -99,7 +97,7 @@ public class HBlockListener extends BlockListener {
         // Get the Hero representing the player
         Hero hero = plugin.getHeroManager().getHero(player);
         // Get the player's class definition
-        HeroClass playerClass = hero.getPlayerClass();
+        HeroClass playerClass = hero.getHeroClass();
         // Get the sources of experience for the player's class
         Set<ExperienceType> expSources = playerClass.getExperienceSources();
         Properties prop = plugin.getConfigManager().getProperties();
@@ -118,11 +116,9 @@ public class HBlockListener extends BlockListener {
             }
         }
         
-        int exp = hero.getExperience();
-        int currentLevel = prop.getLevel(exp);
-        int newLevel = prop.getLevel(exp + addedExp);
+        placedBlocks.remove(block.getLocation());
         
-        if (addedExp != 0 && currentLevel != prop.maxLevel) {
+        if (addedExp != 0 && prop.getLevel(hero.getExp()) != prop.maxLevel) {
             if (wasBlockPlaced(block)) {
                 if (hero.isVerbose()) {
                     Messaging.send(player, "No experience gained - block placed too recently.");
@@ -130,41 +126,8 @@ public class HBlockListener extends BlockListener {
                 return;
             }
         }
-        placedBlocks.remove(block.getLocation());
-
-        // If they're at max level, we don't add experience
-        if (currentLevel == prop.maxLevel) {
-            return;
-        }
-
-        ExperienceGainEvent expEvent;
-        if (newLevel == currentLevel) {
-            expEvent = new ExperienceGainEvent(player, addedExp);
-        } else {
-            expEvent = new LevelEvent(player, addedExp, newLevel, currentLevel);
-        }
-        plugin.getServer().getPluginManager().callEvent(expEvent);
-        if (expEvent.isCancelled()) {
-            return;
-        }
-        addedExp = expEvent.getExp();
-
-        // Only perform an experience update if we're actually
-        // adding or subtracting from their experience.
-        if (addedExp != 0) {
-            hero.setExperience(exp + addedExp);
-            if (hero.isVerbose()) {
-                Messaging.send(player, "$1: Gained $2 Exp", playerClass.getName(), String.valueOf(addedExp));
-            }
-            if (newLevel != currentLevel) {
-                Messaging.send(player, "You leveled up! (Lvl $1 $2)", String.valueOf(newLevel), playerClass.getName());
-                if (newLevel >= prop.maxLevel) {
-                    hero.setExperience(prop.getExperience(prop.maxLevel));
-                    hero.getMasteries().add(playerClass.getName());
-                    Messaging.broadcast(plugin, "$1 has become a master $2!", player.getName(), playerClass.getName());
-                }
-            }
-        }
+        
+        hero.gainExp(addedExp, (block.getType() == Material.LOG) ? ExperienceType.LOGGING : ExperienceType.MINING);
     }
 
 }

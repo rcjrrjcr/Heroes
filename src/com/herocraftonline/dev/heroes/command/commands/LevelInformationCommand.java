@@ -29,12 +29,12 @@ public class LevelInformationCommand extends BaseCommand {
             Player player = (Player) sender;
             Hero hero = plugin.getHeroManager().getHero(player);
             Properties prop = this.plugin.getConfigManager().getProperties();
-            int exp = hero.getExperience();
+            int exp = hero.getExp();
             int level = prop.getLevel(exp);
             int current = prop.getExperience(level);
 
             sender.sendMessage("§c-----[ " + "§fYour Level Information§c ]-----");
-            sender.sendMessage("  §aClass : " + hero.getPlayerClass().getName());
+            sender.sendMessage("  §aClass : " + hero.getHeroClass().getName());
             sender.sendMessage("  §aLevel : " + level);
             sender.sendMessage("  §aExp : " + exp);
             if (level != prop.maxLevel) {

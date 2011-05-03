@@ -28,7 +28,7 @@ public class ArmorCommand extends BaseCommand {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             Hero hero = plugin.getHeroManager().getHero(player);
-            HeroClass heroClass = hero.getPlayerClass();
+            HeroClass heroClass = hero.getHeroClass();
 
             Set<String> allArmors = heroClass.getAllowedArmor();
             String[] categories = { "Helmet", "Chestplate", "Leggings", "Boots" };

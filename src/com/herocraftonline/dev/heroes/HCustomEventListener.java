@@ -43,7 +43,7 @@ public class HCustomEventListener extends CustomEventListener {
             }
 
             Hero hero = plugin.getHeroManager().getHero(p);
-            HeroClass clazz = hero.getPlayerClass();
+            HeroClass clazz = hero.getHeroClass();
 
             if (e.getSlotType() == InventorySlotType.ARMOR) {
                 String item = cursor.getType().toString();

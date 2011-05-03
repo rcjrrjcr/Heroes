@@ -29,33 +29,36 @@ public class OutsourcedSkill extends Skill {
         registerEvent(Type.CUSTOM_EVENT, new SkillCustomListener(), Priority.Normal);
     }
 
-    public void tryLearningSkill(Player player) {
+    public void tryLearningSkill(Hero hero) {
         if (Heroes.Permissions == null) {
             return;
         }
 
-        Hero hero = plugin.getHeroManager().getHero(player);
-        HeroClass heroClass = hero.getPlayerClass();
+        HeroClass heroClass = hero.getHeroClass();
+        Player player = hero.getPlayer();
 
         String world = player.getWorld().getName();
         String playerName = player.getName();
-        if (heroClass.hasSkill(name)) {
-            SkillSettings settings = heroClass.getSkillSettings(name);
-            if (settings != null && meetsLevelRequirement(hero, settings.LevelRequirement)) {
-                for (String permission : permissions) {
-                    if (!Heroes.Permissions.has(player, permission)) {
-                        Heroes.Permissions.addUserPermission(world, playerName, permission);
-                    }
-                }
-            } else {
-                for (String permission : permissions) {
-                    if (Heroes.Permissions.has(player, permission)) {
-                        Heroes.Permissions.removeUserPermission(world, playerName, permission);
-                    }
+        SkillSettings settings = heroClass.getSkillSettings(name);
+        System.out.println("  " + name + " (lvl " + settings.LevelRequirement + ")");
+        if (settings != null && meetsLevelRequirement(hero, settings.LevelRequirement)) {
+            for (String permission : permissions) {
+                System.out.println("    " + permission);
+                if (!Heroes.Permissions.has(player, permission)) {
+                    System.out.println("  adding perm " + permission);
+                    Heroes.Permissions.addUserPermission(world, playerName, permission);
                 }
             }
-            Heroes.Permissions.save(world);
+        } else {
+            for (String permission : permissions) {
+                System.out.println("    " + permission);
+                if (Heroes.Permissions.has(player, permission)) {
+                    System.out.println("  removing perm " + permission);
+                    Heroes.Permissions.removeUserPermission(world, playerName, permission);
+                }
+            }
         }
+        Heroes.Permissions.save(world);
     }
 
     public class SkillCustomListener extends CustomEventListener {
@@ -63,11 +66,14 @@ public class OutsourcedSkill extends Skill {
         @Override
         public void onCustomEvent(Event event) {
             if (event instanceof ClassChangeEvent) {
-                tryLearningSkill(((ClassChangeEvent) event).getPlayer());
+                ClassChangeEvent subEvent = (ClassChangeEvent) event;
+                tryLearningSkill(subEvent.getHero());
             } else if (event instanceof LevelEvent) {
-                tryLearningSkill(((LevelEvent) event).getPlayer());
+                LevelEvent subEvent = (LevelEvent) event;
+                tryLearningSkill(subEvent.getHero());
             } else if (event instanceof HeroLoadEvent) {
-                tryLearningSkill(((HeroLoadEvent) event).getHero().getPlayer());
+                HeroLoadEvent subEvent = (HeroLoadEvent) event;
+                tryLearningSkill(subEvent.getHero());
             }
         }
 

@@ -118,8 +118,8 @@ public class HeroManager {
         File playerFile = new File(playerFolder, player.getName() + ".yml");
         Configuration playerConfig = new Configuration(playerFile);
         // Save the players stuff
-        playerConfig.setProperty("class", getHero(player).getPlayerClass().toString());
-        playerConfig.setProperty("experience", getHero(player).getExperience());
+        playerConfig.setProperty("class", getHero(player).getHeroClass().toString());
+        playerConfig.setProperty("experience", getHero(player).getExp());
         playerConfig.setProperty("mana", getHero(player).getMana());
         playerConfig.setProperty("verbose", getHero(player).isVerbose());
         playerConfig.setProperty("masteries", getHero(player).getMasteries());
