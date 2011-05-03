@@ -48,7 +48,7 @@ public class HEntityListener extends EntityListener {
             if (level < prop.maxLevel) {
                 int currentLevelExp = prop.getExperience(level);
                 int nextLevelExp = prop.getExperience(level + 1);
-                int expLoss = (int) ((nextLevelExp - currentLevelExp) * 0.05);
+                int expLoss = (int) ((nextLevelExp - currentLevelExp) * prop.expLoss);
                 if (exp - expLoss < currentLevelExp) {
                     expLoss = exp - currentLevelExp;
                 }
