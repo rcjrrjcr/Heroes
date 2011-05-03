@@ -29,10 +29,6 @@ public class ClassChangeEvent extends Event implements Cancellable {
         return to;
     }
 
-    public void setTo(HeroClass to) {
-        this.to = to;
-    }
-
     public final HeroClass getFrom() {
         return from;
     }

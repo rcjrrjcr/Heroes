@@ -21,11 +21,8 @@ public class HPluginListener extends ServerListener {
 
         // Check if the name is iConomy.
         if (plugin.getDescription().getName().equals("iConomy")) {
-            // Check if we haven't already setup iConomy.
-            if (Heroes.getiConomy() == null) {
-                // Run the iConomy Setup.
-                this.plugin.setupiConomy();
-            }
+            // Run the iConomy Setup.
+            this.plugin.setupiConomy();
         }
 
         // Check if the name is Permissions.

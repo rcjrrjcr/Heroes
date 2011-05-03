@@ -53,12 +53,12 @@ public class ClassManager {
         Configuration config = new Configuration(file);
         config.load();
         List<String> classNames = config.getKeys("classes");
-        if(classNames==null){
+        if (classNames == null) {
             plugin.log(Level.WARNING, "You have no Classes defined in your setup!");
             return;
         }
         for (String className : classNames) {
-            HeroClass newClass = new HeroClass(className);
+            HeroClass newClass = new HeroClass(className.substring(0, 1).toUpperCase() + className.substring(1).toLowerCase());
 
             List<String> defaultType = new ArrayList<String>();
             defaultType.add("DIAMOND");
@@ -174,7 +174,7 @@ public class ClassManager {
 
             List<String> experienceNames = config.getStringList("classes." + className + ".experience-sources", null);
             Set<ExperienceType> experienceSources = new HashSet<ExperienceType>();
-            if(experienceNames!=null){
+            if (experienceNames != null) {
                 for (String experience : experienceNames) {
                     try {
                         boolean added = experienceSources.add(ExperienceType.valueOf(experience));

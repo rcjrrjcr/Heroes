@@ -37,8 +37,7 @@ import com.herocraftonline.dev.heroes.command.commands.PartyChatCommand;
 import com.herocraftonline.dev.heroes.command.commands.PartyCreateCommand;
 import com.herocraftonline.dev.heroes.command.commands.PartyInviteCommand;
 import com.herocraftonline.dev.heroes.command.commands.RecoverItemsCommand;
-import com.herocraftonline.dev.heroes.command.commands.SelectProfessionCommand;
-import com.herocraftonline.dev.heroes.command.commands.SelectSpecialtyCommand;
+import com.herocraftonline.dev.heroes.command.commands.ChooseCommand;
 import com.herocraftonline.dev.heroes.command.commands.SkillCommand;
 import com.herocraftonline.dev.heroes.command.commands.ToolsCommand;
 import com.herocraftonline.dev.heroes.command.commands.VerboseCommand;
@@ -87,11 +86,8 @@ public class Heroes extends JavaPlugin {
 
     // Variable for the Permissions plugin handler.
     public static PermissionHandler Permissions;
+    public static iConomy iConomy;
 
-    // Variable to contain whether Heroes will utilize iConomy or not.
-    private boolean useiConomy = false;
-    // Variable for the iConomy plugin handler.
-    private static iConomy iConomy = null;
     // Variable for mana regen
     private long regenrate = 100L;
 
@@ -215,8 +211,7 @@ public class Heroes extends JavaPlugin {
         // Page 1
         commandManager.addCommand(new HelpCommand(this));
         commandManager.addCommand(new RecoverItemsCommand(this));
-        commandManager.addCommand(new SelectProfessionCommand(this));
-        commandManager.addCommand(new SelectSpecialtyCommand(this));
+        commandManager.addCommand(new ChooseCommand(this));
         commandManager.addCommand(new PartyAcceptCommand(this));
         commandManager.addCommand(new PartyCreateCommand(this));
         commandManager.addCommand(new PartyInviteCommand(this));
@@ -233,16 +228,6 @@ public class Heroes extends JavaPlugin {
     }
 
     /**
-     * Return True/False as to whether iConomy should be used.
-     * 
-     * @return
-     */
-    public boolean checkiConomy() {
-        this.useiConomy = (iConomy != null); // Tbf this needs changing... even if iConomy is detected we only want to use it if its setup.
-        return this.useiConomy;
-    }
-
-    /**
      * Setup the iConomy plugin.
      * 
      * @param plugin
@@ -255,15 +240,6 @@ public class Heroes extends JavaPlugin {
                 Heroes.iConomy = (iConomy) test;
             }
         }
-    }
-
-    /**
-     * Return iConomy.
-     * 
-     * @return
-     */
-    public static iConomy getiConomy() {
-        return iConomy;
     }
 
     /**
