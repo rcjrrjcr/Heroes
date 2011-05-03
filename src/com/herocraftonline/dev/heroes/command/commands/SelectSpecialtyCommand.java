@@ -34,29 +34,25 @@ public class SelectSpecialtyCommand extends BaseCommand {
             ClassManager classManager = plugin.getClassManager();
             Hero hero = heroManager.getHero(player);
             HeroClass playerClass = hero.getHeroClass();
-            if (playerClass.isPrimary()) {
-                if (prop.getLevel(hero.getExp()) >= prop.maxLevel) {
-                    HeroClass specialty = classManager.getClass(args[0]);
-                    if (specialty != null) {
-                        if (specialty.getParent() == playerClass) {
-                            hero.setHeroClass(specialty);
-                            if (hero.getMasteries().contains(specialty.getName())) {
-                                hero.setExp(prop.getExperience(prop.maxLevel));
-                            } else {
-                                hero.setExp(0);
-                            }
-                            Messaging.send(player, "Well done $1!", specialty.getName());
+            if (prop.getLevel(hero.getExp()) >= prop.maxLevel) {
+                HeroClass specialty = classManager.getClass(args[0]);
+                if (specialty != null) {
+                    if (specialty.getParent() == playerClass) {
+                        hero.setHeroClass(specialty);
+                        if (hero.getMasteries().contains(specialty.getName())) {
+                            hero.setExp(prop.getExperience(prop.maxLevel));
                         } else {
-                            Messaging.send(player, "Sorry, that specialty doesn't belong to $1.", playerClass.getName());
+                            hero.setExp(0);
                         }
+                        Messaging.send(player, "Well done $1!", specialty.getName());
                     } else {
-                        Messaging.send(player, "Sorry, that isn't a specialty!");
+                        Messaging.send(player, "Sorry, that specialty doesn't belong to $1.", playerClass.getName());
                     }
                 } else {
-                    Messaging.send(player, "You must master your profession before choosing a specialty.");
+                    Messaging.send(player, "Sorry, that isn't a specialty!");
                 }
             } else {
-                Messaging.send(player, "You have already selected a specialty!");
+                Messaging.send(player, "You must master your profession before choosing a specialty.");
             }
         }
     }
