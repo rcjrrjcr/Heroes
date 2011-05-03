@@ -64,6 +64,16 @@ public class SkillBandage extends TargettedSkill {
             playerSchedulers.put(tPlayer.getEntityId(), plugin.getServer().getScheduler().scheduleAsyncRepeatingTask(plugin, new BandageTask(plugin, tPlayer), 20L, 20L));
 
             notifyNearbyPlayers(player.getLocation().toVector(), "$1 is bandaging $2.", player.getName(), tPlayer == player ? "himself" : tPlayer.getName());
+
+            // The following should consume 1 piece of Paper per cast.
+            int firstSlot = player.getInventory().first(Material.PAPER);
+            int num = player.getInventory().getItem(firstSlot).getAmount();
+            if (num == 1) {
+                player.getInventory().clear(firstSlot);
+            } else if (num > 1) {
+                player.getInventory().getItem(firstSlot).setAmount(num - 1);
+            }
+
             return true;
         }
         return false;
@@ -86,6 +96,11 @@ public class SkillBandage extends TargettedSkill {
                 health = target.getHealth();
             }
             if (target == null || timesRan == ticks || health >= 20) {
+                if(health>=20){
+                    notifyNearbyPlayers(target.getLocation().toVector(), "$1s has been healed to full health by their bandages.",target.getName());
+                } else {
+                    notifyNearbyPlayers(target.getLocation().toVector(), "$1s bandages have worn out.",target.getName());
+                }
                 int id = playerSchedulers.remove(target.getEntityId());
                 plugin.getServer().getScheduler().cancelTask(id);
             } else {
