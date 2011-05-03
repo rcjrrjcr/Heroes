@@ -41,6 +41,11 @@ public class ChooseCommand extends BaseCommand {
             Messaging.send(player, "Class not found.");
             return;
         }
+        
+        if (newClass == currentClass) {
+            Messaging.send(player, "Y U DO? AMNESIA? NO GOOD!");
+            return;
+        }
 
         if (!newClass.isPrimary()) {
             if (newClass.getParent() != currentClass) {
