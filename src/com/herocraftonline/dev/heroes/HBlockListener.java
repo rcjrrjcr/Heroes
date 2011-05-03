@@ -50,23 +50,23 @@ public class HBlockListener extends BlockListener {
         Material material = block.getType();
 
         switch (material) {
-        case COBBLESTONE:
-        case CLAY:
-        case DIRT:
-        case GOLD_ORE:
-        case GRASS:
-        case GRAVEL:
-        case IRON_ORE:
-        case NETHERRACK:
-        case SAND:
-        case SANDSTONE:
-        case OBSIDIAN:
-        case LOG:
-            Location loc = block.getLocation();
-            if (placedBlocks.containsKey(loc)) {
-                placedBlocks.remove(loc);
-            }
-            placedBlocks.put(loc, System.currentTimeMillis());
+            case COBBLESTONE:
+            case CLAY:
+            case DIRT:
+            case GOLD_ORE:
+            case GRASS:
+            case GRAVEL:
+            case IRON_ORE:
+            case NETHERRACK:
+            case SAND:
+            case SANDSTONE:
+            case OBSIDIAN:
+            case LOG:
+                Location loc = block.getLocation();
+                if (placedBlocks.containsKey(loc)) {
+                    placedBlocks.remove(loc);
+                }
+                placedBlocks.put(loc, System.currentTimeMillis());
         }
     }
 
