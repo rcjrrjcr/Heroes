@@ -40,20 +40,15 @@ public class OutsourcedSkill extends Skill {
         String world = player.getWorld().getName();
         String playerName = player.getName();
         SkillSettings settings = heroClass.getSkillSettings(name);
-        System.out.println("  " + name + " (lvl " + settings.LevelRequirement + ")");
         if (settings != null && meetsLevelRequirement(hero, settings.LevelRequirement)) {
             for (String permission : permissions) {
-                System.out.println("    " + permission);
                 if (!Heroes.Permissions.has(player, permission)) {
-                    System.out.println("  adding perm " + permission);
                     Heroes.Permissions.addUserPermission(world, playerName, permission);
                 }
             }
         } else {
             for (String permission : permissions) {
-                System.out.println("    " + permission);
                 if (Heroes.Permissions.has(player, permission)) {
-                    System.out.println("  removing perm " + permission);
                     Heroes.Permissions.removeUserPermission(world, playerName, permission);
                 }
                 Heroes.Permissions.removeCachedItem(world, playerName.toLowerCase(), permission);
