@@ -53,6 +53,10 @@ public class ClassManager {
         Configuration config = new Configuration(file);
         config.load();
         List<String> classNames = config.getKeys("classes");
+        if(classNames==null){
+            plugin.log(Level.WARNING, "You have no Classes defined in your setup!");
+            return;
+        }
         for (String className : classNames) {
             HeroClass newClass = new HeroClass(className);
 
@@ -136,16 +140,21 @@ public class ClassManager {
             plugin.debugLog(Level.INFO, "Allowed Armor - " + aLimits.toString());
 
             List<String> skillNames = config.getKeys("classes." + className + ".permitted-skills");
-            for (String skill : skillNames) {
-                try {
-                    int reqLevel = config.getInt("classes." + className + ".permitted-skills." + skill + ".level", 1);
-                    int manaCost = config.getInt("classes." + className + ".permitted-skills." + skill + ".mana", 0);
-                    int cooldown = config.getInt("classes." + className + ".permitted-skills." + skill + ".cooldown", 0);
-                    newClass.addSkill(skill, reqLevel, manaCost, cooldown);
-                } catch (IllegalArgumentException e) {
-                    plugin.log(Level.WARNING, "Invalid skill (" + skill + ") defined for " + className + ". Skipping this skill.");
+            if (skillNames != null) {
+                for (String skill : skillNames) {
+                    try {
+                        int reqLevel = config.getInt("classes." + className + ".permitted-skills." + skill + ".level", 1);
+                        int manaCost = config.getInt("classes." + className + ".permitted-skills." + skill + ".mana", 0);
+                        int cooldown = config.getInt("classes." + className + ".permitted-skills." + skill + ".cooldown", 0);
+                        newClass.addSkill(skill, reqLevel, manaCost, cooldown);
+                    } catch (IllegalArgumentException e) {
+                        plugin.log(Level.WARNING, "Invalid skill (" + skill + ") defined for " + className + ". Skipping this skill.");
+                    }
                 }
+            } else {
+                plugin.log(Level.WARNING, className + " has no Skills defined!");
             }
+
             List<String> permissionSkillNames = config.getKeys("classes." + className + ".permission-skills");
             if (permissionSkillNames != null) {
                 for (String skill : permissionSkillNames) {
@@ -165,14 +174,16 @@ public class ClassManager {
 
             List<String> experienceNames = config.getStringList("classes." + className + ".experience-sources", null);
             Set<ExperienceType> experienceSources = new HashSet<ExperienceType>();
-            for (String experience : experienceNames) {
-                try {
-                    boolean added = experienceSources.add(ExperienceType.valueOf(experience));
-                    if (!added) {
-                        plugin.log(Level.WARNING, "Duplicate experience source (" + experience + ") defined for " + className + ".");
+            if(experienceNames!=null){
+                for (String experience : experienceNames) {
+                    try {
+                        boolean added = experienceSources.add(ExperienceType.valueOf(experience));
+                        if (!added) {
+                            plugin.log(Level.WARNING, "Duplicate experience source (" + experience + ") defined for " + className + ".");
+                        }
+                    } catch (IllegalArgumentException e) {
+                        plugin.log(Level.WARNING, "Invalid experience source (" + experience + ") defined for " + className + ". Skipping this source.");
                     }
-                } catch (IllegalArgumentException e) {
-                    plugin.log(Level.WARNING, "Invalid experience source (" + experience + ") defined for " + className + ". Skipping this source.");
                 }
             }
             newClass.setExperienceSources(experienceSources);
