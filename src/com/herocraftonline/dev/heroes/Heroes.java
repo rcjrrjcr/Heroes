@@ -140,7 +140,7 @@ public class Heroes extends JavaPlugin {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
         blockListener.init();
 
         for (Player player : getServer().getOnlinePlayers()) {
@@ -197,8 +197,8 @@ public class Heroes extends JavaPlugin {
         pluginManager.registerEvent(Type.PLAYER_ITEM_HELD, playerListener, Priority.Normal, this);
         pluginManager.registerEvent(Type.PLAYER_PICKUP_ITEM, playerListener, Priority.Normal, this);
 
-        pluginManager.registerEvent(Type.ENTITY_DAMAGE, entityListener, Priority.Normal, this);
-        pluginManager.registerEvent(Type.ENTITY_DEATH, entityListener, Priority.Normal, this);
+        pluginManager.registerEvent(Type.ENTITY_DAMAGE, entityListener, Priority.Monitor, this);
+        pluginManager.registerEvent(Type.ENTITY_DEATH, entityListener, Priority.Monitor, this);
         pluginManager.registerEvent(Type.ENTITY_TARGET, entityListener, Priority.Normal, this);
 
         pluginManager.registerEvent(Type.BLOCK_BREAK, blockListener, Priority.Monitor, this);

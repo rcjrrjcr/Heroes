@@ -64,6 +64,9 @@ public class SkillBlackjack extends ActiveSkill {
     }
 
     private boolean checkStunned(Entity entity) {
+        if(entity==null){
+            return false;
+        }
         int id = entity.getEntityId();
         if (stunnedEntities.containsKey(id)) {
             if (stunnedEntities.get(id) > System.currentTimeMillis()) {
@@ -78,7 +81,11 @@ public class SkillBlackjack extends ActiveSkill {
 
     public class SkillEntityListener extends EntityListener {
 
+        @Override
         public void onEntityDamage(EntityDamageEvent event) {
+            if (event.isCancelled()) {
+                return;
+            }
             if (event instanceof EntityDamageByEntityEvent) {
                 EntityDamageByEntityEvent subEvent = (EntityDamageByEntityEvent) event;
                 if (subEvent.getCause() == DamageCause.ENTITY_ATTACK) {
@@ -106,6 +113,7 @@ public class SkillBlackjack extends ActiveSkill {
             }
         }
 
+        @Override
         public void onEntityTarget(EntityTargetEvent event) {
             if (checkStunned(event.getEntity())) {
                 event.setCancelled(true);
@@ -116,6 +124,7 @@ public class SkillBlackjack extends ActiveSkill {
 
     public class SkillPlayerListener extends PlayerListener {
 
+        @Override
         public void onPlayerMove(PlayerMoveEvent event) {
             if (checkStunned(event.getPlayer())) {
                 event.setCancelled(true);
@@ -124,6 +133,7 @@ public class SkillBlackjack extends ActiveSkill {
             }
         }
 
+        @Override
         public void onPlayerInteract(PlayerInteractEvent event) {
             if (checkStunned(event.getPlayer())) {
                 event.setCancelled(true);
