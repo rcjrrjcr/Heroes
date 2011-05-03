@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -25,10 +26,34 @@ public class HBlockListener extends BlockListener {
     public HBlockListener(Heroes plugin) {
         this.plugin = plugin;
     }
-    
+
     @Override
     public void onBlockPlace(BlockPlaceEvent event) {
-        
+        if (event.isCancelled()) {
+            return;
+        }
+
+        Block block = event.getBlock();
+        Material material = block.getType();
+
+        switch (material) {
+        case COBBLESTONE:
+        case CLAY:
+        case DIRT:
+        case GOLD_ORE:
+        case GRASS:
+        case GRAVEL:
+        case IRON_ORE:
+        case NETHERRACK:
+        case SAND:
+        case SANDSTONE:
+        case OBSIDIAN:
+        case LOG:
+            Location loc = block.getLocation();
+            if (!placedBlocks.contains(loc)) {
+                placedBlocks.add(loc);
+            }
+        }
     }
 
     @Override
@@ -36,7 +61,7 @@ public class HBlockListener extends BlockListener {
         if (event.isCancelled()) {
             return;
         }
-        
+
         Block block = event.getBlock();
         Player player = event.getPlayer();
 
