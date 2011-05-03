@@ -55,7 +55,9 @@ public class HBlockListener extends BlockListener {
 
             if (addedExp != 0) {
                 hero.setExperience(exp + addedExp);
-                Messaging.send(player, "$1: Gained $2 Exp", playerClass.getName(), String.valueOf(addedExp));
+                if (hero.isVerbose()) {
+                    Messaging.send(player, "$1: Gained $2 Exp", playerClass.getName(), String.valueOf(addedExp));
+                }
             }
         }
     }
