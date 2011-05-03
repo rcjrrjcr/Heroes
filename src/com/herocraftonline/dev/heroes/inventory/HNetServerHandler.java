@@ -206,7 +206,7 @@ public class HNetServerHandler extends NetServerHandler {
 
                 this.player.a(this.player.activeContainer, arraylist);
             }
-
+            p.updateInventory();
         }
     }
 }
