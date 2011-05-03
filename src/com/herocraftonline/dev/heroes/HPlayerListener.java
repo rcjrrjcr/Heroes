@@ -43,13 +43,7 @@ public class HPlayerListener extends PlayerListener {
 
     @Override
     public void onPlayerPickupItem(PlayerPickupItemEvent event) {
-        final Player player = event.getPlayer();
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                plugin.inventoryCheck(player);
-            }
-        });
+        plugin.inventoryCheck(event.getPlayer());
     }
 
     @Override
