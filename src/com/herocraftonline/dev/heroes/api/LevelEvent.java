@@ -23,5 +23,5 @@ public class LevelEvent extends ExperienceGainEvent {
     public final int getFrom() {
         return to;
     }
-    
+
 }

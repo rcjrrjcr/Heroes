@@ -20,7 +20,7 @@ public class ClassChangeEvent extends Event implements Cancellable {
         this.from = from;
         this.to = to;
     }
-    
+
     public final Hero getHero() {
         return hero;
     }

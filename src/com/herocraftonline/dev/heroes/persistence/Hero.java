@@ -92,17 +92,17 @@ public class Hero {
 
     public void setHeroClass(HeroClass heroClass) {
         this.heroClass = heroClass;
-        
+
         // max experience if this class is mastered
         Properties prop = plugin.getConfigManager().getProperties();
         if (masteries.contains(heroClass.getName())) {
             exp = prop.getExperience(prop.maxLevel);
         }
-        
+
         // Check the Players inventory now that they have changed class.
         this.plugin.inventoryCheck(getPlayer());
     }
-    
+
     public void gainExp(int expGain, ExperienceType source) {
         Properties prop = plugin.getConfigManager().getProperties();
         int currentLevel = prop.getLevel(exp);
@@ -115,7 +115,7 @@ public class Hero {
 
         // add the experience
         exp += expGain;
-        
+
         // call event
         ExperienceGainEvent expEvent;
         if (newLevel == currentLevel) {
@@ -129,11 +129,11 @@ public class Hero {
             exp -= expGain;
             return;
         }
-        
+
         // undo the previous gain to make sure we use the updated value
         exp -= expGain;
         expGain = expEvent.getExpGain();
-        
+
         // add the updated experience
         exp += expGain;
 

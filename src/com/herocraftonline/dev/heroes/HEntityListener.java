@@ -91,7 +91,7 @@ public class HEntityListener extends EntityListener {
                             addedExp = prop.creatureKillingExp.get(type);
                         }
                     }
-                    
+
                     hero.gainExp(addedExp, ExperienceType.KILLING);
                 }
             }

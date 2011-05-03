@@ -35,6 +35,7 @@ public class PartyCreateCommand extends BaseCommand {
             PartyManager pManager = plugin.getPartyManager();
             pManager.addHeroParty(new HeroParty(p, pManager.getHeroParties().size() + 1));
             pHero.setParty(pManager.getHeroParty(p));
+            sender.sendMessage("  §aYour party has been created!");
         }
     }
 }

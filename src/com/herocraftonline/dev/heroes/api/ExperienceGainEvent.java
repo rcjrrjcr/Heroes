@@ -20,11 +20,11 @@ public class ExperienceGainEvent extends Event implements Cancellable {
         this.expGain = expGain;
         this.source = source;
     }
-    
+
     public final Hero getHero() {
         return hero;
     }
-    
+
     public final ExperienceType getSource() {
         return source;
     }

@@ -20,7 +20,7 @@ public class SkillSyphon extends TargettedSkill {
         maxArgs = 2;
         identifiers.add("skill syphon");
     }
-    
+
     @Override
     public void init() {
         maxDistance = config.getInt("max-distance", 15);

@@ -27,7 +27,7 @@ public class SkillInvuln extends ActiveSkill {
     public boolean use(Hero hero, String[] args) {
         Player player = hero.getPlayer();
         hero.getEffects().put(name, System.currentTimeMillis() + 10000.0);
-        
+
         notifyNearbyPlayers(player.getLocation().toVector(), "$1 used $2!", player.getName(), name);
         return true;
     }

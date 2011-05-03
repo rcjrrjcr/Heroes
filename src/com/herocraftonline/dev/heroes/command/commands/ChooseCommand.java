@@ -30,27 +30,27 @@ public class ChooseCommand extends BaseCommand {
         if (!(sender instanceof Player)) {
             return;
         }
-        
+
         Player player = (Player) sender;
         Hero hero = plugin.getHeroManager().getHero(player);
         HeroClass currentClass = hero.getHeroClass();
         HeroClass newClass = plugin.getClassManager().getClass(args[0]);
         Properties prop = plugin.getConfigManager().getProperties();
-        
+
         if (newClass == null) {
             Messaging.send(player, "Class not found.");
             return;
         }
-        
+
         if (!newClass.isPrimary()) {
             if (newClass.getParent() != currentClass) {
                 Messaging.send(player, "Sorry, that specialty doesn't belong to $1.", currentClass.getName());
                 return;
             }
         }
-        
+
         int cost = (currentClass == plugin.getClassManager().getDefaultClass()) ? 0 : prop.swapCost;
-        
+
         if (prop.iConomy && Heroes.iConomy != null && cost > 0) {
             Account account = iConomy.getBank().getAccount(player.getName());
             if (!account.hasEnough(cost)) {
@@ -58,13 +58,13 @@ public class ChooseCommand extends BaseCommand {
                 return;
             }
         }
-        
+
         int currentExp = hero.getExp();
         hero.setHeroClass(newClass);
         if (!hero.getMasteries().contains(newClass.getName())) {
             hero.setExp(0);
         }
-        
+
         ClassChangeEvent event = new ClassChangeEvent(hero, currentClass, newClass);
         plugin.getServer().getPluginManager().callEvent(event);
         if (event.isCancelled()) {
@@ -72,12 +72,12 @@ public class ChooseCommand extends BaseCommand {
             hero.setExp(currentExp);
             return;
         }
-        
+
         if (prop.iConomy && Heroes.iConomy != null && cost > 0) {
             Account account = iConomy.getBank().getAccount(player.getName());
             account.subtract(cost);
         }
-        
+
         Messaging.send(player, "Welcome to the path of the $1!", newClass.getName());
     }
 

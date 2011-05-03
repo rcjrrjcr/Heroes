@@ -64,7 +64,7 @@ public class SkillBlackjack extends ActiveSkill {
     }
 
     private boolean checkStunned(Entity entity) {
-        if(entity==null){
+        if (entity == null) {
             return false;
         }
         int id = entity.getEntityId();

@@ -24,7 +24,7 @@ public class SkillRevive extends TargettedSkill {
         maxArgs = 1;
         identifiers.add("skill revive");
     }
-    
+
     @Override
     public void init() {
         maxDistance = config.getInt("max-distance", 15);
