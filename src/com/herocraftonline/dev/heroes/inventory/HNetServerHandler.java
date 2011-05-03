@@ -16,12 +16,18 @@ import net.minecraft.server.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.NetServerHandler;
 import net.minecraft.server.NetworkManager;
+import net.minecraft.server.Packet;
 import net.minecraft.server.Packet101CloseWindow;
 import net.minecraft.server.Packet102WindowClick;
+import net.minecraft.server.Packet103SetSlot;
 import net.minecraft.server.Packet106Transaction;
+import net.minecraft.server.Packet3Chat;
+import net.minecraft.server.Packet6SpawnPosition;
 import net.minecraft.server.Slot;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.craftbukkit.TextWrapper;
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 
@@ -29,9 +35,34 @@ public class HNetServerHandler extends NetServerHandler {
 
     @SuppressWarnings("rawtypes")
     private Map n = new HashMap();
+    private int g;
+    private int f;
 
     public HNetServerHandler(MinecraftServer minecraftserver, NetworkManager networkmanager, EntityPlayer entityplayer) {
         super(minecraftserver, networkmanager, entityplayer);
+    }
+
+    @Override
+    public void sendPacket(Packet packet) {
+        // CraftBukkit
+        if (packet instanceof Packet6SpawnPosition) {
+            Packet6SpawnPosition packet6 = (Packet6SpawnPosition) packet;
+            this.player.compassTarget = new Location(getPlayer().getWorld(), packet6.x, packet6.y, packet6.z);
+        } else if (packet instanceof Packet3Chat) {
+            String message = ((Packet3Chat) packet).a;
+            for (final String line : TextWrapper.wrapText(message)) {
+                this.networkManager.a(new Packet3Chat(line));
+            }
+            packet = null;
+        }
+        if (packet != null) {
+            this.networkManager.a(packet);
+        }
+        // CraftBukkit
+        this.g = this.f;
+        if (packet instanceof Packet103SetSlot) {
+            Bukkit.getServer().getPluginManager().callEvent(new InventoryCloseEvent((Player) this.player.getBukkitEntity()));
+        }
     }
 
     @Override
@@ -40,7 +71,7 @@ public class HNetServerHandler extends NetServerHandler {
         Bukkit.getServer().getPluginManager().callEvent(new InventoryCloseEvent((Player) this.player.getBukkitEntity()));
     }
 
-    @SuppressWarnings({"deprecation", "unchecked", "rawtypes"})
+    @SuppressWarnings({ "deprecation", "unchecked", "rawtypes" })
     @Override
     public void a(Packet102WindowClick packet102windowclick) {
         if (this.player.activeContainer.f == packet102windowclick.a && this.player.activeContainer.c(this.player)) {
@@ -150,7 +181,13 @@ public class HNetServerHandler extends NetServerHandler {
 
             ItemStack itemstack = this.player.activeContainer.a(packet102windowclick.b, packet102windowclick.c, packet102windowclick.f, this.player);
 
-            if (ItemStack.equals(packet102windowclick.e, itemstack)) {
+            // CraftBukkit start
+            boolean clickSuccessful = ItemStack.equals(packet102windowclick.e, itemstack);
+            if ((this.player.activeContainer instanceof ContainerWorkbench || this.player.activeContainer instanceof ContainerPlayer) && packet102windowclick.b == 0) {
+                clickSuccessful = false;
+            }
+            // CraftBukkit end
+            if (clickSuccessful) { // CraftBukkit - extracted to local variable
                 this.player.netServerHandler.sendPacket(new Packet106Transaction(packet102windowclick.a, packet102windowclick.d, true));
                 this.player.h = true;
                 this.player.activeContainer.a();
@@ -168,7 +205,7 @@ public class HNetServerHandler extends NetServerHandler {
 
                 this.player.a(this.player.activeContainer, arraylist);
             }
-            
+
         }
     }
 }
