@@ -38,7 +38,7 @@ public class SkillPiggify extends TargettedSkill {
 
         registerEvent(Type.ENTITY_DAMAGE, new SkillEntityListener(), Priority.Normal);
     }
-    
+
     @Override
     public void init() {
         maxDistance = config.getInt("max-distance", 20);
@@ -71,7 +71,7 @@ public class SkillPiggify extends TargettedSkill {
         if (target.getLocation().getBlock().getType() == Material.WATER) {
             type = CreatureType.SQUID;
         }
-        
+
         Entity creature = target.getWorld().spawnCreature(target.getLocation(), type);
         creature.setPassenger(target);
         creatures.add(creature);

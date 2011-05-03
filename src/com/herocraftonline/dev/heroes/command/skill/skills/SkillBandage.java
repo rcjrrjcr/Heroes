@@ -59,7 +59,7 @@ public class SkillBandage extends TargettedSkill {
                 return false;
             }
 
-            if(tPlayer.getHealth()>=20){
+            if (tPlayer.getHealth() >= 20) {
                 Messaging.send(player, "$1 is already at full health.", tPlayer.getName());
                 return false;
             }
@@ -101,10 +101,10 @@ public class SkillBandage extends TargettedSkill {
                 health = target.getHealth();
             }
             if (target == null || timesRan == ticks || health >= 20) {
-                if(health>=20){
-                    notifyNearbyPlayers(target.getLocation().toVector(), "$1s has been healed to full health by their bandages.",target.getName());
+                if (health >= 20) {
+                    notifyNearbyPlayers(target.getLocation().toVector(), "$1s has been healed to full health by their bandages.", target.getName());
                 } else {
-                    notifyNearbyPlayers(target.getLocation().toVector(), "$1s bandages have worn out.",target.getName());
+                    notifyNearbyPlayers(target.getLocation().toVector(), "$1s bandages have worn out.", target.getName());
                 }
                 int id = playerSchedulers.remove(target.getEntityId());
                 plugin.getServer().getScheduler().cancelTask(id);

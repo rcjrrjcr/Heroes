@@ -22,8 +22,8 @@ public class WhoCommand extends BaseCommand {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        if(sender instanceof Player){
-            if(plugin.getServer().getPlayer(args[0]) != null){
+        if (sender instanceof Player) {
+            if (plugin.getServer().getPlayer(args[0]) != null) {
                 Properties prop = this.plugin.getConfigManager().getProperties();
                 Player ePlayer = plugin.getServer().getPlayer(args[0]);
                 Hero hero = plugin.getHeroManager().getHero(ePlayer);

@@ -22,7 +22,7 @@ public class SkillTrack extends TargettedSkill {
         maxArgs = 1;
         identifiers.add("skill track");
     }
-    
+
     @Override
     public void init() {
         maxDistance = config.getInt("max-distance", 10000);

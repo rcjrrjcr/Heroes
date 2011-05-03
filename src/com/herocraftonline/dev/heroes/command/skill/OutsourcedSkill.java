@@ -40,7 +40,7 @@ public class OutsourcedSkill extends Skill {
         String world = player.getWorld().getName();
         String playerName = player.getName();
         SkillSettings settings = heroClass.getSkillSettings(name);
-        if(settings != null){
+        if (settings != null) {
             if (meetsLevelRequirement(hero, settings.LevelRequirement)) {
                 for (String permission : permissions) {
                     if (!Heroes.Permissions.has(player, permission)) {
@@ -78,6 +78,7 @@ public class OutsourcedSkill extends Skill {
     }
 
     @Override
-    public void execute(CommandSender sender, String[] args) {}
+    public void execute(CommandSender sender, String[] args) {
+    }
 
 }

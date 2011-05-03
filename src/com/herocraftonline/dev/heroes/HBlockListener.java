@@ -50,23 +50,23 @@ public class HBlockListener extends BlockListener {
         Material material = block.getType();
 
         switch (material) {
-        case COBBLESTONE:
-        case CLAY:
-        case DIRT:
-        case GOLD_ORE:
-        case GRASS:
-        case GRAVEL:
-        case IRON_ORE:
-        case NETHERRACK:
-        case SAND:
-        case SANDSTONE:
-        case OBSIDIAN:
-        case LOG:
-            Location loc = block.getLocation();
-            if (placedBlocks.containsKey(loc)) {
-                placedBlocks.remove(loc);
-            }
-            placedBlocks.put(loc, System.currentTimeMillis());
+            case COBBLESTONE:
+            case CLAY:
+            case DIRT:
+            case GOLD_ORE:
+            case GRASS:
+            case GRAVEL:
+            case IRON_ORE:
+            case NETHERRACK:
+            case SAND:
+            case SANDSTONE:
+            case OBSIDIAN:
+            case LOG:
+                Location loc = block.getLocation();
+                if (placedBlocks.containsKey(loc)) {
+                    placedBlocks.remove(loc);
+                }
+                placedBlocks.put(loc, System.currentTimeMillis());
         }
     }
 
@@ -101,7 +101,7 @@ public class HBlockListener extends BlockListener {
         // Get the sources of experience for the player's class
         Set<ExperienceType> expSources = playerClass.getExperienceSources();
         Properties prop = plugin.getConfigManager().getProperties();
-        
+
         int addedExp = 0;
 
         if (expSources.contains(ExperienceType.MINING)) {
@@ -115,9 +115,9 @@ public class HBlockListener extends BlockListener {
                 addedExp = prop.loggingExp.get(block.getType());
             }
         }
-        
+
         placedBlocks.remove(block.getLocation());
-        
+
         if (addedExp != 0 && prop.getLevel(hero.getExp()) != prop.maxLevel) {
             if (wasBlockPlaced(block)) {
                 if (hero.isVerbose()) {
@@ -126,7 +126,7 @@ public class HBlockListener extends BlockListener {
                 return;
             }
         }
-        
+
         hero.gainExp(addedExp, (block.getType() == Material.LOG) ? ExperienceType.LOGGING : ExperienceType.MINING);
     }
 

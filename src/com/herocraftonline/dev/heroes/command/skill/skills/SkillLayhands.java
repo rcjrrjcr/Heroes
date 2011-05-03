@@ -20,7 +20,7 @@ public class SkillLayhands extends TargettedSkill {
         maxArgs = 1;
         identifiers.add("skill layhands");
     }
-    
+
     @Override
     public void init() {
         maxDistance = config.getInt("max-distance", 15);
