@@ -59,6 +59,11 @@ public class SkillBandage extends TargettedSkill {
                 return false;
             }
 
+            if(tPlayer.getHealth()>=20){
+                Messaging.send(player, "$1 is already at full health.", tPlayer.getName());
+                return false;
+            }
+
             tickHealth = config.getInt("tick-health", 1);
             ticks = config.getInt("ticks", 10);
             playerSchedulers.put(tPlayer.getEntityId(), plugin.getServer().getScheduler().scheduleAsyncRepeatingTask(plugin, new BandageTask(plugin, tPlayer), 20L, 20L));
