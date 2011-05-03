@@ -49,7 +49,7 @@ public class ChooseCommand extends BaseCommand {
             }
         }
 
-        int cost = (currentClass == plugin.getClassManager().getDefaultClass()) ? 0 : prop.swapCost;
+        int cost = currentClass == plugin.getClassManager().getDefaultClass() ? 0 : prop.swapCost;
 
         if (prop.iConomy && Heroes.iConomy != null && cost > 0) {
             Account account = iConomy.getBank().getAccount(player.getName());

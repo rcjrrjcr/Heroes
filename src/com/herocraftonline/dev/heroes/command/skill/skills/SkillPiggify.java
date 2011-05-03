@@ -83,13 +83,14 @@ public class SkillPiggify extends TargettedSkill {
             }
         }, (long) (config.getInt("duration", 10000) * 0.02));
 
-        String targetName = (target instanceof Player) ? ((Player) target).getName() : target.getClass().getSimpleName().substring(5);
+        String targetName = target instanceof Player ? ((Player) target).getName() : target.getClass().getSimpleName().substring(5);
         notifyNearbyPlayers(player.getLocation().toVector(), "$1 used $2 on $3!", player.getName(), name, targetName);
         return true;
     }
 
     public class SkillEntityListener extends EntityListener {
 
+        @Override
         public void onEntityDamage(EntityDamageEvent event) {
             Entity entity = event.getEntity();
             if (creatures.contains(entity)) {

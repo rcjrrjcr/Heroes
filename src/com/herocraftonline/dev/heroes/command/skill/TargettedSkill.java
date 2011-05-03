@@ -67,9 +67,9 @@ public abstract class TargettedSkill extends ActiveSkill {
      * Returns the first LivingEntity in the line of sight of a Player.
      * 
      * @param player
-     *        the player being checked
+     *            the player being checked
      * @param maxDistance
-     *        the maximum distance to search for a target
+     *            the maximum distance to search for a target
      * @return the player's target or null if no target is found
      */
     public static LivingEntity getPlayerTarget(Player player, int maxDistance) {

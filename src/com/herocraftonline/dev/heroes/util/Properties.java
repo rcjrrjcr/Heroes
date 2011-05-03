@@ -59,6 +59,7 @@ public class Properties {
 
     /**
      * Convert the given Exp into the correct Level.
+     * 
      * @param exp
      * @return
      */

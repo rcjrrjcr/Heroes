@@ -47,6 +47,7 @@ public class SkillSummon extends ActiveSkill {
 
     public class SkillEntityListener extends EntityListener {
 
+        @Override
         public void onEntityTarget(EntityTargetEvent event) {
             if (event.getTarget() instanceof Player) {
                 for (Hero hero : plugin.getHeroManager().getHeroes()) {

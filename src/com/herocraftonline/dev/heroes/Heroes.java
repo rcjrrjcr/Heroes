@@ -28,6 +28,7 @@ import com.herocraftonline.dev.heroes.command.CommandManager;
 import com.herocraftonline.dev.heroes.command.SkillLoader;
 import com.herocraftonline.dev.heroes.command.commands.ArmorCommand;
 import com.herocraftonline.dev.heroes.command.commands.BindSkillCommand;
+import com.herocraftonline.dev.heroes.command.commands.ChooseCommand;
 import com.herocraftonline.dev.heroes.command.commands.ConfigReloadCommand;
 import com.herocraftonline.dev.heroes.command.commands.HelpCommand;
 import com.herocraftonline.dev.heroes.command.commands.LevelInformationCommand;
@@ -37,7 +38,6 @@ import com.herocraftonline.dev.heroes.command.commands.PartyChatCommand;
 import com.herocraftonline.dev.heroes.command.commands.PartyCreateCommand;
 import com.herocraftonline.dev.heroes.command.commands.PartyInviteCommand;
 import com.herocraftonline.dev.heroes.command.commands.RecoverItemsCommand;
-import com.herocraftonline.dev.heroes.command.commands.ChooseCommand;
 import com.herocraftonline.dev.heroes.command.commands.SkillCommand;
 import com.herocraftonline.dev.heroes.command.commands.ToolsCommand;
 import com.herocraftonline.dev.heroes.command.commands.VerboseCommand;
@@ -321,36 +321,36 @@ public class Heroes extends JavaPlugin {
         HeroClass hc = h.getHeroClass();
         int count = 0;
         String item;
-        if ((inv.getHelmet() != null) && (inv.getHelmet().getTypeId() != 0)) {
+        if (inv.getHelmet() != null && inv.getHelmet().getTypeId() != 0) {
             item = inv.getHelmet().getType().toString();
-            if (!(hc.getAllowedArmor().contains(item))) {
+            if (!hc.getAllowedArmor().contains(item)) {
                 h.addItem(inv.getHelmet());
                 Messaging.send(p, "$1 has been removed from your Inventory", MaterialUtil.getFriendlyName(item));
                 inv.setHelmet(null);
                 count++;
             }
         }
-        if ((inv.getChestplate() != null) && (inv.getChestplate().getTypeId() != 0)) {
+        if (inv.getChestplate() != null && inv.getChestplate().getTypeId() != 0) {
             item = inv.getChestplate().getType().toString();
-            if (!(hc.getAllowedArmor().contains(item))) {
+            if (!hc.getAllowedArmor().contains(item)) {
                 h.addItem(inv.getChestplate());
                 Messaging.send(p, "$1 has been removed from your Inventory", MaterialUtil.getFriendlyName(item));
                 inv.setChestplate(null);
                 count++;
             }
         }
-        if ((inv.getLeggings() != null) && (inv.getLeggings().getTypeId() != 0)) {
+        if (inv.getLeggings() != null && inv.getLeggings().getTypeId() != 0) {
             item = inv.getLeggings().getType().toString();
-            if (!(hc.getAllowedArmor().contains(item))) {
+            if (!hc.getAllowedArmor().contains(item)) {
                 h.addItem(inv.getLeggings());
                 Messaging.send(p, "$1 has been removed from your Inventory", MaterialUtil.getFriendlyName(item));
                 inv.setLeggings(null);
                 count++;
             }
         }
-        if ((inv.getBoots() != null) && (inv.getBoots().getTypeId() != 0)) {
+        if (inv.getBoots() != null && inv.getBoots().getTypeId() != 0) {
             item = inv.getBoots().getType().toString();
-            if (!(hc.getAllowedArmor().contains(item))) {
+            if (!hc.getAllowedArmor().contains(item)) {
                 h.addItem(inv.getBoots());
                 Messaging.send(p, "$1 has been removed from your Inventory", MaterialUtil.getFriendlyName(item));
                 inv.setBoots(null);
@@ -362,7 +362,7 @@ public class Heroes extends JavaPlugin {
             String itemType = itemStack.getType().toString();
 
             // Perform a check to see if what we have is a Weapon.
-            if (!(itemType.equalsIgnoreCase("BOW"))) {
+            if (!itemType.equalsIgnoreCase("BOW")) {
                 try {
                     WeaponItems.valueOf(itemType.substring(itemType.indexOf("_") + 1, itemType.length()));
                 } catch (IllegalArgumentException e1) {
@@ -370,8 +370,8 @@ public class Heroes extends JavaPlugin {
                 }
             }
 
-            if (!(hc.getAllowedWeapons().contains(itemType))) {
-                if (!(moveItem(p, i, itemStack))) {
+            if (!hc.getAllowedWeapons().contains(itemType)) {
+                if (!moveItem(p, i, itemStack)) {
                     Messaging.send(p, "$1 has been removed from your Inventory", MaterialUtil.getFriendlyName(itemType));
                     count++;
                 } else {

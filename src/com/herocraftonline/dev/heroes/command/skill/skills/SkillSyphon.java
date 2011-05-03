@@ -35,7 +35,7 @@ public class SkillSyphon extends TargettedSkill {
 
     @Override
     public boolean use(Hero hero, LivingEntity target, String[] args) {
-        Player player = (Player) hero.getPlayer();
+        Player player = hero.getPlayer();
 
         if (args.length == 1) {
             target.setHealth(target.getHealth() + 4);

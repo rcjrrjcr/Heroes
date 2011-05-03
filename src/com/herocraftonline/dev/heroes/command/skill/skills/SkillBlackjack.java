@@ -104,7 +104,7 @@ public class SkillBlackjack extends ActiveSkill {
                             double chance = config.getDouble("stun-chance", 0.20);
                             if (random.nextDouble() < chance) {
                                 stunnedEntities.put(defendingEntity.getEntityId(), System.currentTimeMillis() + config.getInt("stun-duration", 5000));
-                                String targetName = (defendingEntity instanceof Player) ? ((Player) defendingEntity).getName() : defendingEntity.getClass().getSimpleName().substring(5);
+                                String targetName = defendingEntity instanceof Player ? ((Player) defendingEntity).getName() : defendingEntity.getClass().getSimpleName().substring(5);
                                 notifyNearbyPlayers(attackingHero.getPlayer().getLocation().toVector(), "$1 stunned $2!", attackingHero.getPlayer().getName(), targetName);
                             }
                         }

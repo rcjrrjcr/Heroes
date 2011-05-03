@@ -53,8 +53,9 @@ public class SkillSmoke extends ActiveSkill {
                 if (hero.getEffects().containsKey(getName())) {
                     for (Player p : Bukkit.getServer().getOnlinePlayers()) {
                         // Skip this Packet if it's the Player using the skill, otherwise they will see two of themselves.
-                        if (p.getName().equalsIgnoreCase(player.getName()))
+                        if (p.getName().equalsIgnoreCase(player.getName())) {
                             continue;
+                        }
                         CraftPlayer hostilePlayer = (CraftPlayer) p;
                         hostilePlayer.getHandle().netServerHandler.sendPacket(new Packet20NamedEntitySpawn(entity));
                     }

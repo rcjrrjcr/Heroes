@@ -47,7 +47,7 @@ public class HCustomEventListener extends CustomEventListener {
 
             if (e.getSlotType() == InventorySlotType.ARMOR) {
                 String item = cursor.getType().toString();
-                if (!(clazz.getAllowedArmor().contains(item))) {
+                if (!clazz.getAllowedArmor().contains(item)) {
                     Messaging.send(p, "You cannot equip that armor - $1", MaterialUtil.getFriendlyName(item));
                     e.setCancelled(true);
                     return;
@@ -56,11 +56,11 @@ public class HCustomEventListener extends CustomEventListener {
             if (e.getSlotType() == InventorySlotType.QUICKBAR) {
                 String item = cursor.getType().toString();
                 // If it doesn't contain a '_' and it isn't a Bow then it definitely isn't a Weapon.
-                if (!(item.contains("_")) && !(item.equalsIgnoreCase("BOW"))) {
+                if (!item.contains("_") && !item.equalsIgnoreCase("BOW")) {
                     return;
                 }
                 // Perform a check to see if what we have is a Weapon.
-                if (!(item.equalsIgnoreCase("BOW"))) {
+                if (!item.equalsIgnoreCase("BOW")) {
                     try {
                         // Get the value of the item.
                         HeroClass.WeaponItems.valueOf(item.substring(item.indexOf("_") + 1, item.length()));
@@ -70,7 +70,7 @@ public class HCustomEventListener extends CustomEventListener {
                     }
                 }
                 // Check if the Players HeroClass allows this WEAPON to be equipped.
-                if (!(clazz.getAllowedWeapons().contains(item))) {
+                if (!clazz.getAllowedWeapons().contains(item)) {
                     Messaging.send(p, "You cannot equip that $1.", MaterialUtil.getFriendlyName(item));
                     e.setCancelled(true);
                     return;

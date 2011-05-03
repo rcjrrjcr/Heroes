@@ -50,23 +50,23 @@ public class HBlockListener extends BlockListener {
         Material material = block.getType();
 
         switch (material) {
-            case COBBLESTONE:
-            case CLAY:
-            case DIRT:
-            case GOLD_ORE:
-            case GRASS:
-            case GRAVEL:
-            case IRON_ORE:
-            case NETHERRACK:
-            case SAND:
-            case SANDSTONE:
-            case OBSIDIAN:
-            case LOG:
-                Location loc = block.getLocation();
-                if (placedBlocks.containsKey(loc)) {
-                    placedBlocks.remove(loc);
-                }
-                placedBlocks.put(loc, System.currentTimeMillis());
+        case COBBLESTONE:
+        case CLAY:
+        case DIRT:
+        case GOLD_ORE:
+        case GRASS:
+        case GRAVEL:
+        case IRON_ORE:
+        case NETHERRACK:
+        case SAND:
+        case SANDSTONE:
+        case OBSIDIAN:
+        case LOG:
+            Location loc = block.getLocation();
+            if (placedBlocks.containsKey(loc)) {
+                placedBlocks.remove(loc);
+            }
+            placedBlocks.put(loc, System.currentTimeMillis());
         }
     }
 
@@ -76,7 +76,7 @@ public class HBlockListener extends BlockListener {
 
         if (placedBlocks.containsKey(loc)) {
             long timePlaced = placedBlocks.get(loc);
-            if ((timePlaced + blockTrackingDuration) > System.currentTimeMillis()) {
+            if (timePlaced + blockTrackingDuration > System.currentTimeMillis()) {
                 return true;
             } else {
                 return false;
@@ -127,7 +127,7 @@ public class HBlockListener extends BlockListener {
             }
         }
 
-        hero.gainExp(addedExp, (block.getType() == Material.LOG) ? ExperienceType.LOGGING : ExperienceType.MINING);
+        hero.gainExp(addedExp, block.getType() == Material.LOG ? ExperienceType.LOGGING : ExperienceType.MINING);
     }
 
 }
