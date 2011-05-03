@@ -1,7 +1,7 @@
 package com.herocraftonline.dev.heroes;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Set;
 
 import org.bukkit.Location;
@@ -21,10 +21,23 @@ import com.herocraftonline.dev.heroes.util.Messaging;
 public class HBlockListener extends BlockListener {
 
     private final Heroes plugin;
-    private List<Location> placedBlocks = new LinkedList<Location>();
+    private Map<Location, Long> placedBlocks;
 
     public HBlockListener(Heroes plugin) {
         this.plugin = plugin;
+    }
+
+    @SuppressWarnings("serial")
+    public void init() {
+        final int maxTrackedBlocks = plugin.getConfigManager().getProperties().maxTrackedBlocks;
+        placedBlocks = new LinkedHashMap<Location, Long>() {
+            private final int MAX_ENTRIES = maxTrackedBlocks;
+
+            @Override
+            protected boolean removeEldestEntry(Map.Entry<Location, Long> eldest) {
+                return size() > MAX_ENTRIES;
+            }
+        };
     }
 
     @Override
@@ -50,10 +63,26 @@ public class HBlockListener extends BlockListener {
         case OBSIDIAN:
         case LOG:
             Location loc = block.getLocation();
-            if (!placedBlocks.contains(loc)) {
-                placedBlocks.add(loc);
+            if (placedBlocks.containsKey(loc)) {
+                placedBlocks.remove(loc);
+            }
+            placedBlocks.put(loc, System.currentTimeMillis());
+        }
+    }
+
+    private boolean wasBlockPlaced(Block block) {
+        Location loc = block.getLocation();
+        int blockTrackingDuration = plugin.getConfigManager().getProperties().blockTrackingDuration;
+
+        if (placedBlocks.containsKey(loc)) {
+            long timePlaced = placedBlocks.get(loc);
+            if ((timePlaced + blockTrackingDuration) > System.currentTimeMillis()) {
+                return true;
+            } else {
+                return false;
             }
         }
+        return false;
     }
 
     @Override
@@ -85,6 +114,16 @@ public class HBlockListener extends BlockListener {
             if (plugin.getConfigManager().getProperties().loggingExp.containsKey(block.getType())) {
                 addedExp = plugin.getConfigManager().getProperties().loggingExp.get(block.getType());
             }
+        }
+
+        if (addedExp != 0) {
+            if (wasBlockPlaced(block)) {
+                if (hero.isVerbose()) {
+                    Messaging.send(player, "No experience gained - block placed too recently.");
+                }
+                return;
+            }
+            placedBlocks.remove(block.getLocation());
         }
 
         BlockBreakExperienceEvent expEvent = new BlockBreakExperienceEvent(player, addedExp, block.getType());

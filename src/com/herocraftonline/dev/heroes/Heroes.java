@@ -140,6 +140,8 @@ public class Heroes extends JavaPlugin {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        
+        blockListener.init();
 
         for (Player player : getServer().getOnlinePlayers()) {
             heroManager.loadHeroFile(player);
