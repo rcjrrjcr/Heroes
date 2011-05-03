@@ -36,24 +36,26 @@ public class OutsourcedSkill extends Skill {
 
         Hero hero = plugin.getHeroManager().getHero(player);
         HeroClass heroClass = hero.getPlayerClass();
-        
+
         String world = player.getWorld().getName();
         String playerName = player.getName();
-        SkillSettings settings = heroClass.getSkillSettings(name);
-        if (settings != null && meetsLevelRequirement(hero, settings.LevelRequirement)) {
-            for (String permission : permissions) {
-                if (!Heroes.Permissions.has(player, permission)) {
-                    Heroes.Permissions.addUserPermission(world, playerName, permission);
+        if (heroClass.hasSkill(name)) {
+            SkillSettings settings = heroClass.getSkillSettings(name);
+            if (settings != null && meetsLevelRequirement(hero, settings.LevelRequirement)) {
+                for (String permission : permissions) {
+                    if (!Heroes.Permissions.has(player, permission)) {
+                        Heroes.Permissions.addUserPermission(world, playerName, permission);
+                    }
+                }
+            } else {
+                for (String permission : permissions) {
+                    if (Heroes.Permissions.has(player, permission)) {
+                        Heroes.Permissions.removeUserPermission(world, playerName, permission);
+                    }
                 }
             }
-        } else {
-            for (String permission : permissions) {
-                if (Heroes.Permissions.has(player, permission)) {
-                    Heroes.Permissions.removeUserPermission(world, playerName, permission);
-                }
-            }
+            Heroes.Permissions.save(world);
         }
-        Heroes.Permissions.save(world);
     }
 
     public class SkillCustomListener extends CustomEventListener {
@@ -72,7 +74,6 @@ public class OutsourcedSkill extends Skill {
     }
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
-    }
+    public void execute(CommandSender sender, String[] args) {}
 
 }
