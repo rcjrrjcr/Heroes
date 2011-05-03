@@ -56,6 +56,7 @@ public class OutsourcedSkill extends Skill {
                     System.out.println("  removing perm " + permission);
                     Heroes.Permissions.removeUserPermission(world, playerName, permission);
                 }
+                Heroes.Permissions.removeCachedItem(world, playerName.toLowerCase(), permission);
             }
         }
         Heroes.Permissions.save(world);
