@@ -315,6 +315,7 @@ public class Heroes extends JavaPlugin {
         log(Level.INFO, "Skills loaded: " + skNo.toString());
     }
 
+    @SuppressWarnings("deprecation")
     public void inventoryCheck(Player p) {
         PlayerInventory inv = p.getInventory();
         Hero h = this.heroManager.getHero(p);
@@ -377,6 +378,7 @@ public class Heroes extends JavaPlugin {
                 } else {
                     Messaging.send(p, "You are not trained to use a $1", MaterialUtil.getFriendlyName(itemType));
                 }
+                p.updateInventory();
             }
         }
         if (count > 0) {
