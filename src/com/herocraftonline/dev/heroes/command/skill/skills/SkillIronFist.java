@@ -38,7 +38,7 @@ public class SkillIronFist extends PassiveSkill {
                 if (subEvent.getDamager() instanceof Player) {
                     Player player = (Player) subEvent.getDamager();
                     Hero hero = plugin.getHeroManager().getHero(player);
-                    if (hero.getEffects().containsKey(name)) {
+                    if (hero.getEffects().hasEffect(name)) {
                         if (player.getItemInHand().getType() == Material.AIR) {
                             event.setDamage(event.getDamage() * 2);
                         }

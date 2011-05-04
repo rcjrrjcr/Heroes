@@ -31,7 +31,7 @@ public class Hero {
     protected List<String> masteries;
     protected Map<String, Long> cooldowns;
     protected Map<Entity, CreatureType> summons;
-    protected Map<String, Double> effects;
+    protected HeroEffects effects;
     protected Map<Material, String[]> binds;
     protected HeroParty party;
     protected Map<Player, HeroParty> invites;
@@ -50,7 +50,7 @@ public class Hero {
         this.binds = binds;
         this.party = null;
         this.invites = new HashMap<Player, HeroParty>();
-        this.effects = new HashMap<String, Double>();
+        this.effects = new HeroEffects();
         this.verbose = verbose;
     }
 
@@ -173,7 +173,7 @@ public class Hero {
         return summons;
     }
 
-    public Map<String, Double> getEffects() {
+    public HeroEffects getEffects() {
         return effects;
     }
 

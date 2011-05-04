@@ -249,13 +249,13 @@ public class Heroes extends JavaPlugin {
      */
     @Override
     public void onDisable() {
+        heroManager.stopChecker();
         for (Player player : getServer().getOnlinePlayers()) {
             heroManager.saveHeroFile(player);
         }
 
         Heroes.iConomy = null; // When it Enables again it performs the checks anyways.
         Heroes.Permissions = null; // When it Enables again it performs the checks anyways.
-
         log.info(getDescription().getName() + " version " + getDescription().getVersion() + " is disabled!");
         debugLog.close();
     }

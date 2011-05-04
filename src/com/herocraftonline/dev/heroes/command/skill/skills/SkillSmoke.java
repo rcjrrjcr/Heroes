@@ -38,7 +38,7 @@ public class SkillSmoke extends ActiveSkill {
             CraftPlayer hostilePlayer = (CraftPlayer) player;
             hostilePlayer.getHandle().netServerHandler.sendPacket(new Packet29DestroyEntity(craftPlayer.getEntityId()));
         }
-        hero.getEffects().put(getName(), System.currentTimeMillis() + 10000.0);
+        hero.getEffects().putEffect(getName(), 10000.0);
         return true;
     }
 
@@ -50,7 +50,7 @@ public class SkillSmoke extends ActiveSkill {
                 Hero hero = plugin.getHeroManager().getHero(player);
                 CraftPlayer craftPlayer = (CraftPlayer) player;
                 EntityHuman entity = craftPlayer.getHandle();
-                if (hero.getEffects().containsKey(getName())) {
+                if (hero.getEffects().hasEffect(getName())) {
                     for (Player p : Bukkit.getServer().getOnlinePlayers()) {
                         // Skip this Packet if it's the Player using the skill, otherwise they will see two of themselves.
                         if (p.getName().equalsIgnoreCase(player.getName())) {
@@ -59,7 +59,7 @@ public class SkillSmoke extends ActiveSkill {
                         CraftPlayer hostilePlayer = (CraftPlayer) p;
                         hostilePlayer.getHandle().netServerHandler.sendPacket(new Packet20NamedEntitySpawn(entity));
                     }
-                    hero.getEffects().remove(getName());
+                    hero.getEffects().removeEffect(getName());
                 }
             }
         }
