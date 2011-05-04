@@ -10,11 +10,11 @@ import org.bukkit.util.config.Configuration;
 import org.bukkit.util.config.ConfigurationNode;
 
 import com.herocraftonline.dev.heroes.Heroes;
-import com.herocraftonline.dev.heroes.command.skill.ActiveSkill;
+import com.herocraftonline.dev.heroes.command.skill.ActiveEffectSkill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 import com.herocraftonline.dev.heroes.persistence.HeroEffects;
 
-public class SkillInvuln extends ActiveSkill {
+public class SkillInvuln extends ActiveEffectSkill {
     
     private int duration;
 
@@ -45,19 +45,10 @@ public class SkillInvuln extends ActiveSkill {
     @Override
     public boolean use(Hero hero, String[] args) {
         Player player = hero.getPlayer();
-        final String playerName = player.getName();
+        String playerName = player.getName();
         hero.getEffects().putEffect(name, (double)duration);
 
         notifyNearbyPlayers(player.getLocation().toVector(), "$1 used $2!", playerName, name);
-        plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                Player player = plugin.getServer().getPlayer(playerName);
-                if (player != null) {
-                    notifyNearbyPlayers(player.getLocation().toVector(), "$1 lost $2.", playerName, name);
-                }
-            }
-        }, (long)(duration * 0.02));
         return true;
     }
 
@@ -78,6 +69,5 @@ public class SkillInvuln extends ActiveSkill {
                 }
             }
         }
-
     }
 }

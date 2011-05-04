@@ -66,7 +66,7 @@ public class SkillBandage extends TargettedSkill {
 
             tickHealth = config.getInt("tick-health", 1);
             ticks = config.getInt("ticks", 10);
-            playerSchedulers.put(tPlayer.getEntityId(), plugin.getServer().getScheduler().scheduleAsyncRepeatingTask(plugin, new BandageTask(plugin, tPlayer), 20L, 20L));
+            playerSchedulers.put(tPlayer.getEntityId(), plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new BandageTask(plugin, tPlayer), 20L, 20L));
 
             notifyNearbyPlayers(player.getLocation().toVector(), "$1 is bandaging $2.", player.getName(), tPlayer == player ? "himself" : tPlayer.getName());
 
