@@ -22,6 +22,7 @@ import org.bukkit.util.config.ConfigurationNode;
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.skill.ActiveSkill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
+import com.herocraftonline.dev.heroes.persistence.HeroEffects;
 
 public class SkillBlackjack extends ActiveSkill {
 
@@ -48,7 +49,7 @@ public class SkillBlackjack extends ActiveSkill {
     @Override
     public boolean use(Hero hero, String[] args) {
         int duration = config.getInt("effect-duration", 10000);
-        hero.getEffects().put(name, System.currentTimeMillis() + 60000.0);
+        hero.getEffects().putEffect(name, 60000.0);
         notifyNearbyPlayers(hero.getPlayer().getLocation().toVector(), "$1 gained $2!", hero.getPlayer().getName(), name);
         plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, new EffectRemover(hero), (long) (duration * 0.02));
         return true;
@@ -99,8 +100,8 @@ public class SkillBlackjack extends ActiveSkill {
 
                     if (attackingEntity instanceof Player) {
                         Hero attackingHero = plugin.getHeroManager().getHero((Player) attackingEntity);
-                        Map<String, Double> effects = attackingHero.getEffects();
-                        if (effects.containsKey(name)) {
+                        HeroEffects effects = attackingHero.getEffects();
+                        if (effects.hasEffect(name)) {
                             double chance = config.getDouble("stun-chance", 0.20);
                             if (random.nextDouble() < chance) {
                                 stunnedEntities.put(defendingEntity.getEntityId(), System.currentTimeMillis() + config.getInt("stun-duration", 5000));
@@ -151,7 +152,7 @@ public class SkillBlackjack extends ActiveSkill {
 
         @Override
         public void run() {
-            Double time = hero.getEffects().remove(name);
+            Double time = hero.getEffects().removeEffect(name);
             if (time != null) {
                 notifyNearbyPlayers(hero.getPlayer().getLocation().toVector(), "$1 loses $2!", hero.getPlayer().getName(), name);
             }

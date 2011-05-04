@@ -1,7 +1,5 @@
 package com.herocraftonline.dev.heroes.command.skill.skills;
 
-import java.util.Map;
-
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event.Priority;
@@ -14,6 +12,7 @@ import org.bukkit.util.config.ConfigurationNode;
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.skill.ActiveSkill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
+import com.herocraftonline.dev.heroes.persistence.HeroEffects;
 
 public class SkillInvuln extends ActiveSkill {
     
@@ -47,7 +46,7 @@ public class SkillInvuln extends ActiveSkill {
     public boolean use(Hero hero, String[] args) {
         Player player = hero.getPlayer();
         final String playerName = player.getName();
-        hero.getEffects().put(name, System.currentTimeMillis() + (double)duration);
+        hero.getEffects().putEffect(name, (double)duration);
 
         notifyNearbyPlayers(player.getLocation().toVector(), "$1 used $2!", playerName, name);
         plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, new Runnable() {
@@ -73,8 +72,8 @@ public class SkillInvuln extends ActiveSkill {
             Entity defender = event.getEntity();
             if (defender instanceof Player) {
                 Player player = (Player) defender;
-                Map<String, Double> effects = plugin.getHeroManager().getHero(player).getEffects();
-                if (effects.containsKey(name) && effects.get(name) > System.currentTimeMillis()) {
+                HeroEffects effects = plugin.getHeroManager().getHero(player).getEffects();
+                if (effects.hasEffect(name)) {
                     event.setCancelled(true);
                 }
             }
