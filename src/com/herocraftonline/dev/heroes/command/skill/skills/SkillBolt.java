@@ -17,6 +17,8 @@ import com.herocraftonline.dev.heroes.util.Messaging;
 
 public class SkillBolt extends TargettedSkill {
 
+    private int radius;
+
     public SkillBolt(Heroes plugin) {
         super(plugin);
         name = "Bolt";
@@ -30,6 +32,7 @@ public class SkillBolt extends TargettedSkill {
     @Override
     public void init() {
         maxDistance = config.getInt("max-distance", 20);
+        radius = config.getInt("radius", 5);
     }
 
     @Override
@@ -54,7 +57,7 @@ public class SkillBolt extends TargettedSkill {
             return false;
         }
 
-        List<Entity> entityList = target.getNearbyEntities(10, 10, 10);
+        List<Entity> entityList = target.getNearbyEntities(radius, radius, radius);
         for (Entity n : entityList) {
             if (n instanceof LivingEntity) {
                 if (n != player) {

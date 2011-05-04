@@ -11,6 +11,10 @@ import com.herocraftonline.dev.heroes.persistence.Hero;
 
 public class SkillSyphon extends TargettedSkill {
 
+    private double hpMult;
+    private int def;
+    private final static int maxHealth = 20; // Max health(200) or full health(20)??
+
     public SkillSyphon(Heroes plugin) {
         super(plugin);
         name = "Syphon";
@@ -24,6 +28,8 @@ public class SkillSyphon extends TargettedSkill {
     @Override
     public void init() {
         maxDistance = config.getInt("max-distance", 15);
+        hpMult = config.getDouble("multiplier", 1d);
+        def = config.getInt("default-health", 4);
     }
 
     @Override
@@ -37,19 +43,23 @@ public class SkillSyphon extends TargettedSkill {
     public boolean use(Hero hero, LivingEntity target, String[] args) {
         Player player = hero.getPlayer();
 
-        if (args.length == 1) {
-            target.setHealth(target.getHealth() + 4);
-            player.setHealth(player.getHealth() - 4);
-        } else {
+        int transferredHealth = def;
+        if (args.length != 1) {
             try {
-                int health = Integer.parseInt(args[1]);
-                target.setHealth(target.getHealth() + health);
-                player.setHealth(player.getHealth() - health);
+                transferredHealth = Integer.parseInt(args[1]);
             } catch (NumberFormatException e) {
                 player.sendMessage("Sorry, that's an incorrect health value!");
                 return false;
             }
         }
+        int playerHealth = player.getHealth();
+        transferredHealth = playerHealth < transferredHealth ? playerHealth : transferredHealth > maxHealth ? maxHealth : transferredHealth;
+        player.setHealth(playerHealth - transferredHealth);
+        int targetHealth = target.getHealth();
+        transferredHealth *= hpMult;
+        transferredHealth = maxHealth - targetHealth < transferredHealth ? maxHealth - targetHealth : transferredHealth < 0 ? 0 : transferredHealth;
+        target.setHealth(targetHealth + transferredHealth);
+
         return true;
     }
 

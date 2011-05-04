@@ -20,11 +20,11 @@ import org.bukkit.util.config.Configuration;
 import org.bukkit.util.config.ConfigurationNode;
 
 import com.herocraftonline.dev.heroes.Heroes;
-import com.herocraftonline.dev.heroes.command.skill.ActiveSkill;
+import com.herocraftonline.dev.heroes.command.skill.ActiveEffectSkill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 import com.herocraftonline.dev.heroes.persistence.HeroEffects;
 
-public class SkillBlackjack extends ActiveSkill {
+public class SkillBlackjack extends ActiveEffectSkill {
 
     private PlayerListener playerListener = new SkillPlayerListener();
     private EntityListener entityListener = new SkillEntityListener();
@@ -48,10 +48,9 @@ public class SkillBlackjack extends ActiveSkill {
 
     @Override
     public boolean use(Hero hero, String[] args) {
-        int duration = config.getInt("effect-duration", 10000);
-        hero.getEffects().putEffect(name, 60000.0);
+        int duration = config.getInt("effect-duration", 20000);
+        hero.getEffects().putEffect(name, (double) duration);
         notifyNearbyPlayers(hero.getPlayer().getLocation().toVector(), "$1 gained $2!", hero.getPlayer().getName(), name);
-        plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, new EffectRemover(hero), (long) (duration * 0.02));
         return true;
     }
 
@@ -60,7 +59,7 @@ public class SkillBlackjack extends ActiveSkill {
         ConfigurationNode node = Configuration.getEmptyNode();
         node.setProperty("stun-duration", 5000);
         node.setProperty("stun-chance", 0.20);
-        node.setProperty("effect-duration", 10000);
+        node.setProperty("effect-duration", 20000);
         return node;
     }
 
@@ -141,22 +140,6 @@ public class SkillBlackjack extends ActiveSkill {
             }
         }
 
-    }
-
-    private class EffectRemover implements Runnable {
-        private Hero hero;
-
-        public EffectRemover(Hero hero) {
-            this.hero = hero;
-        }
-
-        @Override
-        public void run() {
-            Double time = hero.getEffects().removeEffect(name);
-            if (time != null) {
-                notifyNearbyPlayers(hero.getPlayer().getLocation().toVector(), "$1 loses $2!", hero.getPlayer().getName(), name);
-            }
-        }
     }
 
 }

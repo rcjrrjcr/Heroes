@@ -9,6 +9,7 @@
 package com.herocraftonline.dev.heroes.command;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.bukkit.command.Command;
@@ -16,10 +17,10 @@ import org.bukkit.command.CommandSender;
 
 public class CommandManager {
 
-    protected List<BaseCommand> commands;
+    protected LinkedHashMap<String, BaseCommand> commands;
 
     public CommandManager() {
-        commands = new ArrayList<BaseCommand>();
+        commands = new LinkedHashMap<String, BaseCommand>();
     }
 
     public boolean dispatch(CommandSender sender, Command command, String label, String[] args) {
@@ -32,7 +33,7 @@ public class CommandManager {
         String[] trimmedArgs = null;
         StringBuilder identifier = new StringBuilder();
 
-        for (BaseCommand cmd : commands) {
+        for (BaseCommand cmd : commands.values()) {
             StringBuilder tmpIdentifier = new StringBuilder();
             String[] tmpArgs = cmd.validate(input, tmpIdentifier);
             if (tmpIdentifier.length() > identifier.length()) {
@@ -57,13 +58,7 @@ public class CommandManager {
     }
 
     public void addCommand(BaseCommand command) {
-        String name = command.getName();
-        for (BaseCommand cmd : commands) {
-            if (cmd.getName().equalsIgnoreCase(name)) {
-                return;
-            }
-        }
-        commands.add(command);
+        commands.put(command.name, command);
     }
 
     public void removeCommand(BaseCommand command) {
@@ -71,6 +66,10 @@ public class CommandManager {
     }
 
     public List<BaseCommand> getCommands() {
-        return commands;
+        return new ArrayList<BaseCommand>(commands.values());
+    }
+
+    public BaseCommand getCommand(String name) {
+        return commands.get(name);
     }
 }

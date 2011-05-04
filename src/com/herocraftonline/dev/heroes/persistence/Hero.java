@@ -50,7 +50,7 @@ public class Hero {
         this.binds = binds;
         this.party = null;
         this.invites = new HashMap<Player, HeroParty>();
-        this.effects = new HeroEffects();
+        this.effects = new HeroEffects(plugin.getCommandManager(), this);
         this.verbose = verbose;
     }
 
