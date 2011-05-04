@@ -7,14 +7,22 @@ import java.util.Set;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+import com.herocraftonline.dev.heroes.command.BaseCommand;
+import com.herocraftonline.dev.heroes.command.CommandManager;
+import com.herocraftonline.dev.heroes.command.skill.ActiveEffectSkill;
+
 public class HeroEffects {
 
+    protected final Hero hero;
     protected Map<String, Double> effects;
     protected ReadWriteLock effectLock;
+    protected final CommandManager manager;
 
-    HeroEffects() {
+    HeroEffects(CommandManager manager, Hero hero) {
         effects = new HashMap<String, Double>();
         this.effectLock = new ReentrantReadWriteLock(false);
+        this.manager = manager;
+        this.hero = hero;
     }
 
     public boolean hasEffect(String effect) {
@@ -56,6 +64,12 @@ public class HeroEffects {
             time = time - interval;
             if(time.isNaN()||time <= 0)
             {
+                String name = effect.getKey();
+                BaseCommand cmd = manager.getCommand(name);
+                if(cmd != null&&cmd instanceof ActiveEffectSkill) {
+                    ActiveEffectSkill active = (ActiveEffectSkill) cmd;
+                    active.onExpire(hero);
+                }
                 iter.remove();
                 continue;
             }
