@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.BaseCommand;
 import com.herocraftonline.dev.heroes.persistence.Hero;
+import com.herocraftonline.dev.heroes.util.Messaging;
 import com.herocraftonline.dev.heroes.util.Properties;
 
 public class WhoCommand extends BaseCommand {
@@ -33,6 +34,8 @@ public class WhoCommand extends BaseCommand {
                 sender.sendMessage("  §aClass : " + hero.getHeroClass().getName());
                 sender.sendMessage("  §aLevel : " + level);
 
+            } else {
+                Messaging.send(sender, "Player not online!");
             }
         }
     }
