@@ -15,7 +15,7 @@ import com.herocraftonline.dev.heroes.persistence.Hero;
 import com.herocraftonline.dev.heroes.persistence.HeroEffects;
 
 public class SkillInvuln extends ActiveSkill {
-    
+
     private int duration;
 
     public SkillInvuln(Heroes plugin) {
@@ -26,10 +26,10 @@ public class SkillInvuln extends ActiveSkill {
         minArgs = 0;
         maxArgs = 0;
         identifiers.add("skill invuln");
-        
+
         registerEvent(Type.ENTITY_DAMAGE, new SkillEntityListener(), Priority.Normal);
     }
-    
+
     @Override
     public void init() {
         duration = config.getInt("duration", 10000);
@@ -46,7 +46,7 @@ public class SkillInvuln extends ActiveSkill {
     public boolean use(Hero hero, String[] args) {
         Player player = hero.getPlayer();
         final String playerName = player.getName();
-        hero.getEffects().putEffect(name, (double)duration);
+        hero.getEffects().putEffect(name, (double) duration);
 
         notifyNearbyPlayers(player.getLocation().toVector(), "$1 used $2!", playerName, name);
         plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, new Runnable() {
@@ -57,7 +57,7 @@ public class SkillInvuln extends ActiveSkill {
                     notifyNearbyPlayers(player.getLocation().toVector(), "$1 lost $2.", playerName, name);
                 }
             }
-        }, (long)(duration * 0.02));
+        }, (long) (duration * 0.02));
         return true;
     }
 
@@ -68,7 +68,7 @@ public class SkillInvuln extends ActiveSkill {
             if (event.isCancelled()) {
                 return;
             }
-            
+
             Entity defender = event.getEntity();
             if (defender instanceof Player) {
                 Player player = (Player) defender;

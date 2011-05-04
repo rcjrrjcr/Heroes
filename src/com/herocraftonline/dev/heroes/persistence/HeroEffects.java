@@ -23,44 +23,41 @@ public class HeroEffects {
         effectLock.readLock().unlock();
         return has;
     }
-    
+
     public Double getEffect(String effect) {
         effectLock.readLock().lock();
         Double time = effects.get(effect);
         effectLock.readLock().unlock();
         return time;
     }
-    
+
     public Double putEffect(String effect, Double time) {
         effectLock.writeLock().lock();
         Double oldTime = effects.put(effect, time);
         effectLock.writeLock().unlock();
         return oldTime;
     }
-    
+
     public Double removeEffect(String effect) {
         effectLock.writeLock().lock();
         Double oldTime = effects.remove(effect);
         effectLock.writeLock().unlock();
         return oldTime;
     }
-    
-    void update(int interval)
-    {
+
+    void update(int interval) {
         effectLock.writeLock().lock();
         Set<Map.Entry<String, Double>> effectSet = effects.entrySet();
-        for(Iterator<Map.Entry<String, Double>> iter = effectSet.iterator(); iter.hasNext();)
-        {
+        for (Iterator<Map.Entry<String, Double>> iter = effectSet.iterator(); iter.hasNext();) {
             Map.Entry<String, Double> effect = iter.next();
             Double time = effect.getValue();
             time = time - interval;
-            if(time.isNaN()||time <= 0)
-            {
+            if (time.isNaN() || time <= 0) {
                 iter.remove();
                 continue;
             }
             effect.setValue(time);
-        } 
+        }
         effectLock.writeLock().unlock();
         return;
     }

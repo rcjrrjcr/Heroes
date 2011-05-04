@@ -37,7 +37,7 @@ public class ArmorCommand extends BaseCommand {
             for (int i = 0; i < categories.length; i++) {
                 categorizedArmors[i] = "";
             }
-            
+
             for (String armor : allArmors) {
                 for (int i = 0; i < categories.length; i++) {
                     if (armor.endsWith(categories[i].toUpperCase())) {

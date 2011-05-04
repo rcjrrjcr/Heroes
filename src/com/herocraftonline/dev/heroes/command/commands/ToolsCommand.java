@@ -37,7 +37,7 @@ public class ToolsCommand extends BaseCommand {
             for (int i = 0; i < categories.length; i++) {
                 categorizedTools[i] = "";
             }
-            
+
             for (String tool : allTools) {
                 for (int i = 0; i < categories.length; i++) {
                     if (tool.endsWith(categories[i].toUpperCase())) {

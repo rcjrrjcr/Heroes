@@ -23,13 +23,13 @@ public class SkillTrack extends ActiveSkill {
     @Override
     public boolean use(Hero hero, String[] args) {
         Player player = hero.getPlayer();
-        
+
         Player target = plugin.getServer().getPlayer(args[0]);
         if (target == null) {
             Messaging.send(player, "Target not found.");
             return false;
         }
-        
+
         Location location = target.getLocation();
         Messaging.send(player, "$1 : $2", target.getName(), location.toString());
         player.setCompassTarget(location);
