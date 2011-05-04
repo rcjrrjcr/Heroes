@@ -209,6 +209,11 @@ public class Hero {
             return false;
         }
     }
+    
+    @Override
+    public int hashCode() {
+        return player.getName().hashCode();
+    }
 
     public boolean isVerbose() {
         return verbose;
