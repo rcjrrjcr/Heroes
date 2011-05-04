@@ -41,6 +41,7 @@ import com.herocraftonline.dev.heroes.command.commands.RecoverItemsCommand;
 import com.herocraftonline.dev.heroes.command.commands.SkillCommand;
 import com.herocraftonline.dev.heroes.command.commands.ToolsCommand;
 import com.herocraftonline.dev.heroes.command.commands.VerboseCommand;
+import com.herocraftonline.dev.heroes.command.commands.WhoCommand;
 import com.herocraftonline.dev.heroes.command.skill.OutsourcedSkill;
 import com.herocraftonline.dev.heroes.command.skill.Skill;
 import com.herocraftonline.dev.heroes.inventory.HNetServerHandler;
@@ -225,6 +226,7 @@ public class Heroes extends JavaPlugin {
         commandManager.addCommand(new VerboseCommand(this));
         commandManager.addCommand(new ArmorCommand(this));
         commandManager.addCommand(new ToolsCommand(this));
+        commandManager.addCommand(new WhoCommand(this));
     }
 
     /**
