@@ -13,10 +13,10 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityListener;
 
 import com.herocraftonline.dev.heroes.Heroes;
-import com.herocraftonline.dev.heroes.command.skill.ActiveSkill;
+import com.herocraftonline.dev.heroes.command.skill.ActiveEffectSkill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 
-public class SkillSmoke extends ActiveSkill {
+public class SkillSmoke extends ActiveEffectSkill {
 
     public SkillSmoke(Heroes plugin) {
         super(plugin);
@@ -38,7 +38,7 @@ public class SkillSmoke extends ActiveSkill {
             CraftPlayer hostilePlayer = (CraftPlayer) player;
             hostilePlayer.getHandle().netServerHandler.sendPacket(new Packet29DestroyEntity(craftPlayer.getEntityId()));
         }
-        hero.getEffects().put(getName(), System.currentTimeMillis() + 10000.0);
+        hero.getEffects().putEffect(getName(), 10000.0);
         return true;
     }
 
@@ -48,19 +48,25 @@ public class SkillSmoke extends ActiveSkill {
             if (event.getEntity() instanceof Player) {
                 Player player = (Player) event.getEntity();
                 Hero hero = plugin.getHeroManager().getHero(player);
-                CraftPlayer craftPlayer = (CraftPlayer) player;
-                EntityHuman entity = craftPlayer.getHandle();
-                if (hero.getEffects().containsKey(getName())) {
-                    for (Player p : Bukkit.getServer().getOnlinePlayers()) {
-                        // Skip this Packet if it's the Player using the skill, otherwise they will see two of themselves.
-                        if (p.getName().equalsIgnoreCase(player.getName()))
-                            continue;
-                        CraftPlayer hostilePlayer = (CraftPlayer) p;
-                        hostilePlayer.getHandle().netServerHandler.sendPacket(new Packet20NamedEntitySpawn(entity));
-                    }
-                    hero.getEffects().remove(getName());
+                if (hero.getEffects().hasEffect(getName())) {
+                    onExpire(hero);
+                    hero.getEffects().removeEffect(name);
                 }
             }
         }
+    }
+
+    @Override
+    public void onExpire(Hero hero) {
+        Player player = hero.getPlayer();
+        EntityHuman entity = ((CraftPlayer) player).getHandle();
+        for (Player p : Bukkit.getServer().getOnlinePlayers()) {
+            if (p.getName().equalsIgnoreCase(player.getName())) {
+                continue;
+            }
+            CraftPlayer hostilePlayer = (CraftPlayer) p;
+            hostilePlayer.getHandle().netServerHandler.sendPacket(new Packet20NamedEntitySpawn(entity));
+        }
+        super.onExpire(hero);
     }
 }

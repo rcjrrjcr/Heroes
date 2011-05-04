@@ -36,7 +36,7 @@ public class SkillFireball extends ActiveSkill {
         Location playerLoc = player.getLocation();
         double dx = target.get(0).getX() - playerLoc.getX();
         double height = 1;
-        double dy = (target.get(0).getY() + (double) (height / 2.0F)) - (playerLoc.getY() + (double) (height / 2.0F));
+        double dy = target.get(0).getY() + height / 2.0F - (playerLoc.getY() + height / 2.0F);
         double dz = target.get(0).getZ() - playerLoc.getZ();
 
         CraftPlayer craftPlayer = (CraftPlayer) player;
@@ -46,7 +46,7 @@ public class SkillFireball extends ActiveSkill {
         double d8 = 4D;
         Vec3D vec3d = getLocation(player, 1.0F);
         fireball.locX = playerLoc.getX() + vec3d.a * d8;
-        fireball.locY = playerLoc.getY() + (double) (height / 2.0F) + 0.5D;
+        fireball.locY = playerLoc.getY() + height / 2.0F + 0.5D;
         fireball.locZ = playerLoc.getZ() + vec3d.c * d8;
 
         ((CraftWorld) player.getWorld()).getHandle().a(fireball);

@@ -34,12 +34,13 @@ public class ArmorCommand extends BaseCommand {
             String[] categories = { "Helmet", "Chestplate", "Leggings", "Boots" };
             String[] categorizedArmors = new String[categories.length];
 
+            for (int i = 0; i < categories.length; i++) {
+                categorizedArmors[i] = "";
+            }
+
             for (String armor : allArmors) {
                 for (int i = 0; i < categories.length; i++) {
                     if (armor.endsWith(categories[i].toUpperCase())) {
-                        if (categorizedArmors[i] == null) {
-                            categorizedArmors[i] = "";
-                        }
                         categorizedArmors[i] += MaterialUtil.getFriendlyName(armor).split(" ")[0] + ", ";
                         break;
                     }

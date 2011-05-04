@@ -31,7 +31,7 @@ public class Hero {
     protected List<String> masteries;
     protected Map<String, Long> cooldowns;
     protected Map<Entity, CreatureType> summons;
-    protected Map<String, Double> effects;
+    protected HeroEffects effects;
     protected Map<Material, String[]> binds;
     protected HeroParty party;
     protected Map<Player, HeroParty> invites;
@@ -50,7 +50,7 @@ public class Hero {
         this.binds = binds;
         this.party = null;
         this.invites = new HashMap<Player, HeroParty>();
-        this.effects = new HashMap<String, Double>();
+        this.effects = new HeroEffects(plugin.getCommandManager(), this);
         this.verbose = verbose;
     }
 
@@ -173,7 +173,7 @@ public class Hero {
         return summons;
     }
 
-    public Map<String, Double> getEffects() {
+    public HeroEffects getEffects() {
         return effects;
     }
 
@@ -201,20 +201,38 @@ public class Hero {
         return invites;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (o instanceof Hero) {
-            return player.getName().equalsIgnoreCase(((Hero) o).getPlayer().getName());
-        } else {
-            return false;
-        }
-    }
-
     public boolean isVerbose() {
         return verbose;
     }
 
     public void setVerbose(boolean verbose) {
         this.verbose = verbose;
+    }
+
+    @Override
+    public int hashCode() {
+        return player == null ? 0 : player.getName().hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        Hero other = (Hero) obj;
+        if (player == null) {
+            if (other.player != null) {
+                return false;
+            }
+        } else if (!player.getName().equals(other.player.getName())) {
+            return false;
+        }
+        return true;
     }
 }

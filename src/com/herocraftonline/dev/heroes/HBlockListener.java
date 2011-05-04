@@ -76,7 +76,7 @@ public class HBlockListener extends BlockListener {
 
         if (placedBlocks.containsKey(loc)) {
             long timePlaced = placedBlocks.get(loc);
-            if ((timePlaced + blockTrackingDuration) > System.currentTimeMillis()) {
+            if (timePlaced + blockTrackingDuration > System.currentTimeMillis()) {
                 return true;
             } else {
                 return false;
@@ -127,7 +127,7 @@ public class HBlockListener extends BlockListener {
             }
         }
 
-        hero.gainExp(addedExp, (block.getType() == Material.LOG) ? ExperienceType.LOGGING : ExperienceType.MINING);
+        hero.gainExp(addedExp, block.getType() == Material.LOG ? ExperienceType.LOGGING : ExperienceType.MINING);
     }
 
 }

@@ -32,6 +32,10 @@ public class BindSkillCommand extends BaseCommand {
             Material material = player.getItemInHand().getType();
             if (args.length > 0) {
                 if (heroClass.hasSkill(args[0])) {
+                    if (material == Material.AIR) {
+                        Messaging.send(sender, "You must be holding an item to bind a skill!");
+                        return;
+                    }
                     hero.bind(material, args);
                     Messaging.send(sender, "$1 has been bound to $2.", MaterialUtil.getFriendlyName(material), args[0]);
                 } else {

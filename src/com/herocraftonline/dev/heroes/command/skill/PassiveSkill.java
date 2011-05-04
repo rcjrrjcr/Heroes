@@ -22,15 +22,14 @@ public abstract class PassiveSkill extends Skill {
     }
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
-    }
+    public void execute(CommandSender sender, String[] args) {}
 
     private void apply(Hero hero) {
-        hero.getEffects().put(name.toLowerCase(), Double.POSITIVE_INFINITY);
+        hero.getEffects().putEffect(name.toLowerCase(), Double.POSITIVE_INFINITY);
     }
 
     public void unapply(Hero hero) {
-        hero.getEffects().remove(name.toLowerCase());
+        hero.getEffects().removeEffect(name.toLowerCase());
     }
 
     public class SkillCustomEventListener extends CustomEventListener {

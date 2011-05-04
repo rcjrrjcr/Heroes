@@ -42,14 +42,24 @@ public class ChooseCommand extends BaseCommand {
             return;
         }
 
+        if (newClass == currentClass) {
+            Messaging.send(player, "Y U DO? AMNESIA? NO GOOD!");
+            return;
+        }
+
         if (!newClass.isPrimary()) {
             if (newClass.getParent() != currentClass) {
                 Messaging.send(player, "Sorry, that specialty doesn't belong to $1.", currentClass.getName());
                 return;
             }
+
+            if (!hero.getMasteries().contains(currentClass.getName())) {
+                Messaging.send(player, "You must master $1 before specializing!", currentClass.getName());
+                return;
+            }
         }
 
-        int cost = (currentClass == plugin.getClassManager().getDefaultClass()) ? 0 : prop.swapCost;
+        int cost = currentClass == plugin.getClassManager().getDefaultClass() ? 0 : prop.swapCost;
 
         if (prop.iConomy && Heroes.iConomy != null && cost > 0) {
             Account account = iConomy.getBank().getAccount(player.getName());

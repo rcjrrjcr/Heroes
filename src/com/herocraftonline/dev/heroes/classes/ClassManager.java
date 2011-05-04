@@ -69,7 +69,7 @@ public class ClassManager {
             List<String> armor = config.getStringList("classes." + className + ".permitted-armor", defaultType);
             for (String a : armor) {
                 // If it's a generic type like 'DIAMOND' or 'LEATHER' we add all the possible entries.
-                if (!(a.contains("_"))) {
+                if (!a.contains("_")) {
                     try {
                         ArmorType aType = ArmorType.valueOf(a);
                         newClass.addAllowedArmor(aType + "_HELMET");
@@ -106,7 +106,7 @@ public class ClassManager {
                     continue;
                 }
                 // If it's a generic type like 'DIAMOND' or 'LEATHER' we add all the possible entries.
-                if (!(w.contains("_"))) {
+                if (!w.contains("_")) {
                     try {
                         WeaponType wType = WeaponType.valueOf(w);
                         newClass.addAllowedWeapon(wType + "_PICKAXE");

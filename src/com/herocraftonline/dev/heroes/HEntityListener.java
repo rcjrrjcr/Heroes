@@ -81,11 +81,10 @@ public class HEntityListener extends EntityListener {
                                     break;
                                 }
                             }
-                        } catch (IllegalArgumentException e) {
-                        }
+                        } catch (IllegalArgumentException e) {}
                         if (type != null) {
                             // If EXP hasn't been assigned for this Entity then we stop here.
-                            if (!(prop.creatureKillingExp.containsKey(type))) {
+                            if (!prop.creatureKillingExp.containsKey(type)) {
                                 return;
                             }
                             addedExp = prop.creatureKillingExp.get(type);

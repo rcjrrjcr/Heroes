@@ -17,6 +17,8 @@ import com.herocraftonline.dev.heroes.util.Messaging;
 
 public class SkillBolt extends TargettedSkill {
 
+    private int radius;
+
     public SkillBolt(Heroes plugin) {
         super(plugin);
         name = "Bolt";
@@ -30,6 +32,7 @@ public class SkillBolt extends TargettedSkill {
     @Override
     public void init() {
         maxDistance = config.getInt("max-distance", 20);
+        radius = config.getInt("radius", 5);
     }
 
     @Override
@@ -54,7 +57,7 @@ public class SkillBolt extends TargettedSkill {
             return false;
         }
 
-        List<Entity> entityList = target.getNearbyEntities(10, 10, 10);
+        List<Entity> entityList = target.getNearbyEntities(radius, radius, radius);
         for (Entity n : entityList) {
             if (n instanceof LivingEntity) {
                 if (n != player) {
@@ -64,7 +67,7 @@ public class SkillBolt extends TargettedSkill {
         }
         target.getWorld().strikeLightning(target.getLocation());
 
-        String targetName = (target instanceof Player) ? ((Player) target).getName() : target.getClass().getSimpleName().substring(5);
+        String targetName = target instanceof Player ? ((Player) target).getName() : target.getClass().getSimpleName().substring(5);
         notifyNearbyPlayers(player.getLocation().toVector(), "$1 used $2 on $3!", player.getName(), name, targetName);
         return false;
     }

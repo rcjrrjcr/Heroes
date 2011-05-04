@@ -1,7 +1,5 @@
 package com.herocraftonline.dev.heroes.command.skill.skills;
 
-import java.util.Map;
-
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event.Type;
@@ -11,6 +9,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.skill.ActiveSkill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
+import com.herocraftonline.dev.heroes.persistence.HeroEffects;
 
 public class SkillOne extends ActiveSkill {
 
@@ -28,7 +27,7 @@ public class SkillOne extends ActiveSkill {
 
     @Override
     public boolean use(Hero hero, String[] args) {
-        hero.getEffects().put(name, System.currentTimeMillis() + 10000.0);
+        hero.getEffects().putEffect(name, 10000.0);
         return true;
     }
 
@@ -39,13 +38,9 @@ public class SkillOne extends ActiveSkill {
             Player player = event.getPlayer();
             Hero hero = plugin.getHeroManager().getHero(player);
 
-            Map<String, Double> effects = hero.getEffects();
-            if (effects.containsKey(name)) {
-                if (effects.get(name) > System.currentTimeMillis()) {
-                    player.setVelocity(player.getLocation().getDirection().multiply(1.3).setY(0));
-                } else {
-                    effects.remove(name);
-                }
+            HeroEffects effects = hero.getEffects();
+            if (effects.hasEffect(name)) {
+                player.setVelocity(player.getLocation().getDirection().multiply(1.3).setY(0));
             }
         }
 

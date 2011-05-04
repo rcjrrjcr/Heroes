@@ -34,6 +34,10 @@ public class ToolsCommand extends BaseCommand {
             String[] categories = { "Sword", "Spade", "Pickaxe", "Axe", "Hoe" };
             String[] categorizedTools = new String[categories.length];
 
+            for (int i = 0; i < categories.length; i++) {
+                categorizedTools[i] = "";
+            }
+
             for (String tool : allTools) {
                 for (int i = 0; i < categories.length; i++) {
                     if (tool.endsWith(categories[i].toUpperCase())) {

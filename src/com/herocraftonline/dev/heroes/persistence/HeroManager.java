@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
 
 import org.bukkit.Material;
@@ -29,12 +31,16 @@ public class HeroManager {
     private Heroes plugin;
     private Set<Hero> heroes;
     private File playerFolder;
+    private Timer timer;
+    private final static int interval = 100;
 
     public HeroManager(Heroes plugin) {
         this.plugin = plugin;
         this.heroes = new HashSet<Hero>();
         playerFolder = new File(plugin.getDataFolder(), "players"); // Setup our Player Data Folder
-        playerFolder.mkdirs(); // Create the folder if it do esn't exist.
+        playerFolder.mkdirs(); // Create the folder if it doesn't exist.
+        timer = new Timer(false); // Maintenance thread only
+        timer.scheduleAtFixedRate(new EffectChecker(interval, this), 0, interval);
     }
 
     /**
@@ -185,5 +191,31 @@ public class HeroManager {
 
     public Hero[] getHeroes() {
         return heroes.toArray(new Hero[0]);
+    }
+
+    public Set<Hero> getHeroSet() {
+        return heroes;
+    }
+
+    public void stopChecker() {
+        timer.cancel();
+    }
+}
+
+class EffectChecker extends TimerTask {
+    private final int interval;
+    private final HeroManager manager;
+
+    EffectChecker(int interval, HeroManager manager) {
+        this.interval = interval;
+        this.manager = manager;
+    }
+
+    @Override
+    public void run() {
+        Set<Hero> heroes = manager.getHeroSet();
+        for (Hero hero : heroes) {
+            hero.getEffects().update(interval);
+        }
     }
 }

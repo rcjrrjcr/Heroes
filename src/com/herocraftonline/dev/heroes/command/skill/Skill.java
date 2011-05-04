@@ -26,8 +26,7 @@ public abstract class Skill extends BaseCommand {
         super(plugin);
     }
 
-    public void init() {
-    }
+    public void init() {}
 
     protected void notifyNearbyPlayers(Vector source, String message, String... args) {
         Player[] players = plugin.getServer().getOnlinePlayers();

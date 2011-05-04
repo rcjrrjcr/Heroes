@@ -28,8 +28,9 @@ public class PartyManager {
 
     public HeroParty getHeroParty(Player owner) {
         for (HeroParty party : parties) {
-            if (party.getLeader().equals(owner))
+            if (party.getLeader().equals(owner)) {
                 continue;
+            }
             return party;
         }
         return null;
