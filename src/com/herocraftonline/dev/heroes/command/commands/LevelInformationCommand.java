@@ -36,11 +36,11 @@ public class LevelInformationCommand extends BaseCommand {
             sender.sendMessage("§c-----[ " + "§fYour Level Information§c ]-----");
             sender.sendMessage("  §aClass : " + hero.getHeroClass().getName());
             sender.sendMessage("  §aLevel : " + level);
-            sender.sendMessage("  §aExp : " + exp);
+            sender.sendMessage("  §aTotal Exp : " + exp);
             if (level != prop.maxLevel) {
                 int next = prop.getExperience(level + 1);
                 sender.sendMessage("  §aNext Level : " + (level + 1));
-                sender.sendMessage("  §aExp to Go: " + (next - exp));
+                sender.sendMessage("  §aExp this level: " + (exp - current) + "/" + (next - current));
                 sender.sendMessage(createExperienceBar(exp, current, next));
             } else {
                 sender.sendMessage("  §aMASTERED!");
