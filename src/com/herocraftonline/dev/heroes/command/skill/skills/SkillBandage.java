@@ -114,7 +114,11 @@ public class SkillBandage extends TargettedSkill {
                 if (target != null) {
                     int newHealth = health + tickHealth;
                     newHealth = newHealth > 20 ? 20 : newHealth;
-                    target.setHealth(newHealth);
+
+                    // Added check due to - 'java.lang.IllegalArgumentException: Health must be between 0 and 200'
+                    if(newHealth>=0 && newHealth<=200){
+                        target.setHealth(newHealth);
+                    }
                 }
             }
         }

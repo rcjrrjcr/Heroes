@@ -443,7 +443,6 @@ public class Heroes extends JavaPlugin {
             Location loc = player.getLocation();
             HNetServerHandler handler = new HNetServerHandler(server.getHandle().server, craftPlayer.getHandle().netServerHandler.networkManager, craftPlayer.getHandle());
             handler.a(loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
-            craftPlayer.getHandle().netServerHandler = handler;
         }
     }
 }
