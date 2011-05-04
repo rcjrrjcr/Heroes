@@ -1,17 +1,14 @@
 package com.herocraftonline.dev.heroes.command.skill.skills;
 
 import org.bukkit.Location;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.util.config.Configuration;
-import org.bukkit.util.config.ConfigurationNode;
 
 import com.herocraftonline.dev.heroes.Heroes;
-import com.herocraftonline.dev.heroes.command.skill.TargettedSkill;
+import com.herocraftonline.dev.heroes.command.skill.ActiveSkill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 import com.herocraftonline.dev.heroes.util.Messaging;
 
-public class SkillTrack extends TargettedSkill {
+public class SkillTrack extends ActiveSkill {
 
     public SkillTrack(Heroes plugin) {
         super(plugin);
@@ -24,23 +21,19 @@ public class SkillTrack extends TargettedSkill {
     }
 
     @Override
-    public void init() {
-        maxDistance = config.getInt("max-distance", 10000);
-    }
-
-    @Override
-    public ConfigurationNode getDefaultConfig() {
-        ConfigurationNode node = Configuration.getEmptyNode();
-        node.setProperty("max-distance", 10000);
-        return node;
-    }
-
-    @Override
-    public boolean use(Hero hero, LivingEntity target, String[] args) {
-        Location location = target.getLocation();
+    public boolean use(Hero hero, String[] args) {
         Player player = hero.getPlayer();
-        Messaging.send(player, "Location: $1", location.toString());
+        
+        Player target = plugin.getServer().getPlayer(args[0]);
+        if (target == null) {
+            Messaging.send(player, "Target not found.");
+            return false;
+        }
+        
+        Location location = target.getLocation();
+        Messaging.send(player, "$1 : $2", target.getName(), location.toString());
         player.setCompassTarget(location);
         return true;
     }
+
 }
