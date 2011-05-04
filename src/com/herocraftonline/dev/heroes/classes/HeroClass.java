@@ -95,6 +95,11 @@ public class HeroClass {
             return false;
         }
     }
+    
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
 
     public boolean isPrimary() {
         return parent == null;
