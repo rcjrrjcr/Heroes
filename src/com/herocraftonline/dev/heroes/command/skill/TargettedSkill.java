@@ -1,6 +1,7 @@
 package com.herocraftonline.dev.heroes.command.skill;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
@@ -73,7 +74,10 @@ public abstract class TargettedSkill extends ActiveSkill {
      * @return the player's target or null if no target is found
      */
     public static LivingEntity getPlayerTarget(Player player, int maxDistance) {
-        List<Block> lineOfSight = player.getLineOfSight(null, maxDistance);
+        HashSet<Byte> transparent = new HashSet<Byte>();
+        transparent.add((byte)Material.AIR.getId());
+        transparent.add((byte)Material.WATER.getId());
+        List<Block> lineOfSight = player.getLineOfSight(transparent, maxDistance);
         double halfDistance = maxDistance / 2.0;
         List<Entity> nearbyEntities = player.getNearbyEntities(halfDistance, halfDistance, halfDistance);
         for (Entity entity : nearbyEntities) {
@@ -107,7 +111,8 @@ public abstract class TargettedSkill extends ActiveSkill {
         Iterator<Block> iterator = new BlockIterator(a.getWorld(), aLoc.toVector(), ab, 0, distance + 1);
         while (iterator.hasNext()) {
             Block block = iterator.next();
-            if (block.getType() != Material.AIR) {
+            Material type = block.getType();
+            if (type != Material.AIR && type != Material.WATER) {
                 return false;
             }
         }
