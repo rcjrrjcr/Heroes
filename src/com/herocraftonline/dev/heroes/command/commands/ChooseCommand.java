@@ -41,7 +41,7 @@ public class ChooseCommand extends BaseCommand {
             Messaging.send(player, "Class not found.");
             return;
         }
-        
+
         if (newClass == currentClass) {
             Messaging.send(player, "Y U DO? AMNESIA? NO GOOD!");
             return;
@@ -52,7 +52,7 @@ public class ChooseCommand extends BaseCommand {
                 Messaging.send(player, "Sorry, that specialty doesn't belong to $1.", currentClass.getName());
                 return;
             }
-            
+
             if (!hero.getMasteries().contains(currentClass.getName())) {
                 Messaging.send(player, "You must master $1 before specializing!", currentClass.getName());
                 return;

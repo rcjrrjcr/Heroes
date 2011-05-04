@@ -201,25 +201,38 @@ public class Hero {
         return invites;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (o instanceof Hero) {
-            return player.getName().equalsIgnoreCase(((Hero) o).getPlayer().getName());
-        } else {
-            return false;
-        }
-    }
-    
-    @Override
-    public int hashCode() {
-        return player.getName().hashCode();
-    }
-
     public boolean isVerbose() {
         return verbose;
     }
 
     public void setVerbose(boolean verbose) {
         this.verbose = verbose;
+    }
+
+    @Override
+    public int hashCode() {
+        return player == null ? 0 : player.getName().hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        Hero other = (Hero) obj;
+        if (player == null) {
+            if (other.player != null) {
+                return false;
+            }
+        } else if (!player.getName().equals(other.player.getName())) {
+            return false;
+        }
+        return true;
     }
 }
