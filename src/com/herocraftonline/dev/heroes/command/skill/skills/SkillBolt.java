@@ -48,7 +48,7 @@ public class SkillBolt extends TargettedSkill {
         Player player = hero.getPlayer();
 
         if (target == player) {
-            Messaging.send(player, "Sorry, you can't target yourself!");
+            Messaging.send(player, "You need a target.");
             return false;
         }
 
