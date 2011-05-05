@@ -50,7 +50,7 @@ public class SkillBlackjack extends ActiveEffectSkill {
     public boolean use(Hero hero, String[] args) {
         int duration = config.getInt("effect-duration", 20000);
         hero.getEffects().putEffect(name, (double) duration);
-        notifyNearbyPlayers(hero.getPlayer().getLocation().toVector(), useText , hero.getPlayer().getName(), name);
+        notifyNearbyPlayers(hero.getPlayer().getLocation().toVector(), useText, hero.getPlayer().getName(), name);
         return true;
     }
 

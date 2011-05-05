@@ -52,7 +52,7 @@ public class HeroEffects {
         effectLock.writeLock().unlock();
         return oldTime;
     }
-    
+
     public Double expireEffect(String effect) {
         effectLock.writeLock().lock();
         Double oldTime = effects.remove(effect);
@@ -62,7 +62,7 @@ public class HeroEffects {
             active.onExpire(hero);
         }
         effectLock.writeLock().unlock();
-        return oldTime;        
+        return oldTime;
     }
 
     void update(int interval) {

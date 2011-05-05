@@ -39,7 +39,9 @@ public class SkillSmoke extends ActiveEffectSkill {
             hostilePlayer.getHandle().netServerHandler.sendPacket(new Packet29DestroyEntity(craftPlayer.getEntityId()));
         }
         hero.getEffects().putEffect(getName(), 10000.0);
-        if(useText != null) notifyNearbyPlayers(craftPlayer.getLocation().toVector(), useText, craftPlayer.getName(), name); //Kinda ruins the stealthy part, but can be set to null to disable it
+        if (useText != null) {
+            notifyNearbyPlayers(craftPlayer.getLocation().toVector(), useText, craftPlayer.getName(), name); // Kinda ruins the stealthy part, but can be set to null to disable it
+        }
         return true;
     }
 

@@ -90,7 +90,7 @@ public class Heroes extends JavaPlugin {
     public static iConomy iConomy;
 
     // Variable for mana regen
-//    private long regenrate = 100L;
+    // private long regenrate = 100L;
 
     @Override
     public void onLoad() {

@@ -69,7 +69,9 @@ public class SkillBandage extends TargettedSkill {
             ticks = config.getInt("ticks", 10);
             playerSchedulers.put(tPlayer.getEntityId(), plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new BandageTask(plugin, tPlayer), 20L, 20L));
 
-            if(useText != null) notifyNearbyPlayers(player.getLocation().toVector(), useText, player.getName(), name, tPlayer == player ? "himself" : tPlayer.getName());
+            if (useText != null) {
+                notifyNearbyPlayers(player.getLocation().toVector(), useText, player.getName(), name, tPlayer == player ? "himself" : tPlayer.getName());
+            }
 
             // The following should consume 1 piece of Paper per cast.
             int firstSlot = player.getInventory().first(Material.PAPER);

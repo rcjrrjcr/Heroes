@@ -5,20 +5,23 @@ import com.herocraftonline.dev.heroes.persistence.Hero;
 
 public abstract class ActiveEffectSkill extends ActiveSkill {
 
-    protected String expireText = null;
+    protected String expiryText = null;
+
     public ActiveEffectSkill(Heroes plugin) {
         super(plugin);
     }
-    
+
     @Override
     public void init() {
-        expireText = config.getString("expiretext", "%hero% lost %name%!");
-        if(expireText != null) {
-            expireText = expireText.replace("%hero%", "$1").replace("%skill%", "$2");
+        expiryText = config.getString("expire-text", "%hero% lost %skill%!");
+        if (expiryText != null) {
+            expiryText = expiryText.replace("%hero%", "$1").replace("%skill%", "$2");
         }
     }
-    
+
     public void onExpire(Hero hero) {
-        if(expireText != null) notifyNearbyPlayers(hero.getPlayer().getLocation().toVector(), expireText, hero.getPlayer().getName(), name);
+        if (expiryText != null) {
+            notifyNearbyPlayers(hero.getPlayer().getLocation().toVector(), expiryText, hero.getPlayer().getName(), name);
+        }
     }
 }

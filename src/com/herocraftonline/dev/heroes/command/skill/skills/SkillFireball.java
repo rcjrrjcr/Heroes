@@ -50,7 +50,9 @@ public class SkillFireball extends ActiveSkill {
         fireball.locZ = playerLoc.getZ() + vec3d.c * d8;
 
         ((CraftWorld) player.getWorld()).getHandle().a(fireball);
-        if(useText != null) notifyNearbyPlayers(playerLoc.toVector(), useText, hero.getPlayer().getName(), name);
+        if (useText != null) {
+            notifyNearbyPlayers(playerLoc.toVector(), useText, hero.getPlayer().getName(), name);
+        }
         return true;
     }
 

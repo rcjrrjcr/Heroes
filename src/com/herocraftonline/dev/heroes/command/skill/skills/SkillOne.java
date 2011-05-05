@@ -28,7 +28,9 @@ public class SkillOne extends ActiveEffectSkill {
     @Override
     public boolean use(Hero hero, String[] args) {
         hero.getEffects().putEffect(name, 10000.0);
-        if(useText != null) notifyNearbyPlayers(hero.getPlayer().getLocation().toVector(), useText, hero.getPlayer().getName(), name);
+        if (useText != null) {
+            notifyNearbyPlayers(hero.getPlayer().getLocation().toVector(), useText, hero.getPlayer().getName(), name);
+        }
         return true;
     }
 

@@ -51,10 +51,10 @@ public class Properties {
      */
     public void calcExp() {
         levels = new int[maxLevel];
-        
+
         double A = maxExp * Math.pow(maxLevel - 1, -(power + 1));
         for (int i = 0; i < maxLevel; i++) {
-            levels[i] = (int)(A * Math.pow(i, power + 1));
+            levels[i] = (int) (A * Math.pow(i, power + 1));
         }
     }
 

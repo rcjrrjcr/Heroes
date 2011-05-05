@@ -33,7 +33,9 @@ public class SkillTrack extends ActiveSkill {
         Location location = target.getLocation();
         Messaging.send(player, "$1 : $2", target.getName(), location.toString());
         player.setCompassTarget(location);
-        if(useText != null) notifyNearbyPlayers(player.getLocation().toVector(), useText, player.getName(), name);
+        if (useText != null) {
+            notifyNearbyPlayers(player.getLocation().toVector(), useText, player.getName(), name);
+        }
         return true;
     }
 

@@ -29,11 +29,12 @@ public class SkillSummon extends ActiveSkill {
 
     @Override
     public void init() {
-        useText = config.getString("usetext","%hero% summoned %creature%!");
-        if(useText != null) {
+        useText = config.getString("use-text", "%hero% summoned %creature%!");
+        if (useText != null) {
             useText = useText.replace("%hero%", "$1").replace("%skill%", "$2").replace("%creature%", "$3");
         }
     }
+
     @Override
     public boolean use(Hero hero, String[] args) {
         Player player = hero.getPlayer();
@@ -45,7 +46,9 @@ public class SkillSummon extends ActiveSkill {
                 return false;
             }
             hero.getSummons().put(spawnedEntity, creatureType);
-            if(useText != null) notifyNearbyPlayers(player.getLocation().toVector(), useText, player.getName(), name, creatureType.toString());
+            if (useText != null) {
+                notifyNearbyPlayers(player.getLocation().toVector(), useText, player.getName(), name, creatureType.toString());
+            }
             Messaging.send(player, "You have succesfully summoned a " + creatureType.toString());
             return true;
         }

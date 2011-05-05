@@ -25,13 +25,15 @@ public abstract class TargettedSkill extends ActiveSkill {
     public TargettedSkill(Heroes plugin) {
         super(plugin);
     }
+
     @Override
     public void init() {
-        useText = config.getString("usetext", "%hero% used %name% on %target%!");
-        if(useText != null) {
+        useText = config.getString("use-text", "%hero% used %skill% on %target%!");
+        if (useText != null) {
             useText = useText.replace("%hero%", "$1").replace("%skill%", "$2").replace("%target%", "$3");
         }
     }
+
     @Override
     public boolean use(Hero hero, String[] args) {
         Player player = hero.getPlayer();
@@ -81,8 +83,8 @@ public abstract class TargettedSkill extends ActiveSkill {
      */
     public static LivingEntity getPlayerTarget(Player player, int maxDistance) {
         HashSet<Byte> transparent = new HashSet<Byte>();
-        transparent.add((byte)Material.AIR.getId());
-        transparent.add((byte)Material.WATER.getId());
+        transparent.add((byte) Material.AIR.getId());
+        transparent.add((byte) Material.WATER.getId());
         List<Block> lineOfSight = player.getLineOfSight(transparent, maxDistance);
         double halfDistance = maxDistance / 2.0;
         List<Entity> nearbyEntities = player.getNearbyEntities(halfDistance, halfDistance, halfDistance);
