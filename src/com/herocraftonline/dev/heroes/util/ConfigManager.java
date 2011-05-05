@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.List;
 import java.util.logging.Level;
 
 import org.bukkit.ChatColor;
@@ -190,6 +191,9 @@ public class ConfigManager {
                 ConfigurationNode node = config.getNode(skill.getName());
                 if (node == null) {
                     addNodeToConfig(config, skill.getDefaultConfig(), skill.getName());
+                } else {
+                    ConfigurationNode defaultNode = skill.getDefaultConfig();
+                    mergeNodeToConfig(config, defaultNode, skill.getName());
                 }
             }
 
@@ -201,6 +205,18 @@ public class ConfigManager {
     private void addNodeToConfig(Configuration config, ConfigurationNode node, String path) {
         for (String key : node.getKeys(null)) {
             config.setProperty(path + "." + key, node.getProperty(key));
+        }
+    }
+    
+    private void mergeNodeToConfig(Configuration config, ConfigurationNode node, String path) {
+        List<String> keys = node.getKeys(null);
+        if (keys != null) {
+            for (String key : keys) {
+                Object value = config.getProperty(path + "." + key);
+                if (value == null) {
+                    config.setProperty(path + "." + key, node.getProperty(key));
+                }
+            }
         }
     }
 

@@ -6,7 +6,6 @@ import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event.Type;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityListener;
-import org.bukkit.util.config.Configuration;
 import org.bukkit.util.config.ConfigurationNode;
 
 import com.herocraftonline.dev.heroes.Heroes;
@@ -38,7 +37,7 @@ public class SkillInvuln extends ActiveEffectSkill {
 
     @Override
     public ConfigurationNode getDefaultConfig() {
-        ConfigurationNode node = Configuration.getEmptyNode();
+        ConfigurationNode node = super.getDefaultConfig();
         node.setProperty("duration", 10000);
         return node;
     }

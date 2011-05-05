@@ -4,6 +4,8 @@ import java.util.Map;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.util.config.Configuration;
+import org.bukkit.util.config.ConfigurationNode;
 
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
@@ -21,10 +23,17 @@ public abstract class ActiveSkill extends Skill {
 
     @Override
     public void init() {
-        useText = config.getString("use-text", "%hero% gained %skill%!");
+        useText = config.getString("use-text", "%hero% used %skill%!");
         if (useText != null) {
             useText = useText.replace("%hero%", "$1").replace("%skill%", "$2");
         }
+    }
+    
+    @Override
+    public ConfigurationNode getDefaultConfig() {
+        ConfigurationNode node = Configuration.getEmptyNode();
+        node.setProperty("use-text", "%hero% used %skill%!");
+        return node;
     }
 
     @Override

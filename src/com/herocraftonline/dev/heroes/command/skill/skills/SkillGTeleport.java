@@ -23,7 +23,7 @@ public class SkillGTeleport extends ActiveSkill {
     @Override
     public void init() {
         super.init();
-        targetText = config.getString("targettext");
+        targetText = config.getString("target-text");
         if (targetText != null) {
             targetText = targetText.replace("%hero%", "$1").replace("%skill%", "$2").replace("%target%", "$3");
         }

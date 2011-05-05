@@ -16,7 +16,6 @@ import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.util.config.Configuration;
 import org.bukkit.util.config.ConfigurationNode;
 
 import com.herocraftonline.dev.heroes.Heroes;
@@ -56,7 +55,7 @@ public class SkillBlackjack extends ActiveEffectSkill {
 
     @Override
     public ConfigurationNode getDefaultConfig() {
-        ConfigurationNode node = Configuration.getEmptyNode();
+        ConfigurationNode node = super.getDefaultConfig();
         node.setProperty("stun-duration", 5000);
         node.setProperty("stun-chance", 0.20);
         node.setProperty("effect-duration", 20000);

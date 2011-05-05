@@ -13,6 +13,8 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.BlockIterator;
 import org.bukkit.util.Vector;
+import org.bukkit.util.config.Configuration;
+import org.bukkit.util.config.ConfigurationNode;
 
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.persistence.Hero;
@@ -28,10 +30,19 @@ public abstract class TargettedSkill extends ActiveSkill {
 
     @Override
     public void init() {
+        maxDistance = config.getInt("max-distance", 15);
         useText = config.getString("use-text", "%hero% used %skill% on %target%!");
         if (useText != null) {
             useText = useText.replace("%hero%", "$1").replace("%skill%", "$2").replace("%target%", "$3");
         }
+    }
+    
+    @Override
+    public ConfigurationNode getDefaultConfig() {
+        ConfigurationNode node = Configuration.getEmptyNode();
+        node.setProperty("use-text", "%hero% used %skill% on %target%!");
+        node.setProperty("max-distance", 15);
+        return node;
     }
 
     @Override

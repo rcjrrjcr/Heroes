@@ -5,6 +5,8 @@ import org.bukkit.event.CustomEventListener;
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event.Type;
+import org.bukkit.util.config.Configuration;
+import org.bukkit.util.config.ConfigurationNode;
 
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.api.ClassChangeEvent;
@@ -51,6 +53,14 @@ public abstract class PassiveSkill extends Skill {
         if (unapplyText != null) {
             unapplyText = unapplyText.replace("%hero%", "$1").replace("%skill%", "$2");
         }
+    }
+    
+    @Override
+    public ConfigurationNode getDefaultConfig() {
+        ConfigurationNode node = Configuration.getEmptyNode();
+        node.setProperty("apply-text", "%hero% gained %skill%!");
+        node.setProperty("unapply-text", "%hero% lost %skill%!");
+        return node;
     }
 
     public class SkillCustomEventListener extends CustomEventListener {

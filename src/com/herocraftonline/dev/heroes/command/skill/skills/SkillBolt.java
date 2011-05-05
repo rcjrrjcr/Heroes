@@ -7,7 +7,6 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
-import org.bukkit.util.config.Configuration;
 import org.bukkit.util.config.ConfigurationNode;
 
 import com.herocraftonline.dev.heroes.Heroes;
@@ -38,7 +37,7 @@ public class SkillBolt extends TargettedSkill {
 
     @Override
     public ConfigurationNode getDefaultConfig() {
-        ConfigurationNode node = Configuration.getEmptyNode();
+        ConfigurationNode node = super.getDefaultConfig();
         node.setProperty("max-distance", 20);
         return node;
     }

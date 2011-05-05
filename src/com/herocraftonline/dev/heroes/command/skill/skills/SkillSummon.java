@@ -9,6 +9,7 @@ import org.bukkit.entity.Slime;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityListener;
 import org.bukkit.event.entity.EntityTargetEvent;
+import org.bukkit.util.config.ConfigurationNode;
 
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.skill.ActiveSkill;
@@ -33,6 +34,13 @@ public class SkillSummon extends ActiveSkill {
         if (useText != null) {
             useText = useText.replace("%hero%", "$1").replace("%skill%", "$2").replace("%creature%", "$3");
         }
+    }
+    
+    @Override
+    public ConfigurationNode getDefaultConfig() {
+        ConfigurationNode node = super.getDefaultConfig();
+        node.setProperty("use-text", "%hero% summoned %creature%!");
+        return node;
     }
 
     @Override

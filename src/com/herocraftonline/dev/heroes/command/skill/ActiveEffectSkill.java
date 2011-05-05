@@ -13,6 +13,7 @@ public abstract class ActiveEffectSkill extends ActiveSkill {
 
     @Override
     public void init() {
+        super.init();
         expiryText = config.getString("expire-text", "%hero% lost %skill%!");
         if (expiryText != null) {
             expiryText = expiryText.replace("%hero%", "$1").replace("%skill%", "$2");
