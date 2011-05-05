@@ -13,10 +13,18 @@ import com.herocraftonline.dev.heroes.util.Messaging;
 
 public abstract class ActiveSkill extends Skill {
 
+    protected String useText = null;
     public ActiveSkill(Heroes plugin) {
         super(plugin);
     }
 
+    @Override
+    public void init() {
+        useText = config.getString("usetext","%hero% gained %name%!");
+        if(useText != null) {
+            useText = useText.replace("%hero%", "$1").replace("%skill%", "$2");
+        }
+    }
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (sender instanceof Player) {

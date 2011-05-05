@@ -7,11 +7,11 @@ import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 import com.herocraftonline.dev.heroes.Heroes;
-import com.herocraftonline.dev.heroes.command.skill.ActiveSkill;
+import com.herocraftonline.dev.heroes.command.skill.ActiveEffectSkill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 import com.herocraftonline.dev.heroes.persistence.HeroEffects;
 
-public class SkillOne extends ActiveSkill {
+public class SkillOne extends ActiveEffectSkill {
 
     public SkillOne(Heroes plugin) {
         super(plugin);
@@ -28,6 +28,7 @@ public class SkillOne extends ActiveSkill {
     @Override
     public boolean use(Hero hero, String[] args) {
         hero.getEffects().putEffect(name, 10000.0);
+        if(useText != null) notifyNearbyPlayers(hero.getPlayer().getLocation().toVector(), useText, hero.getPlayer().getName(), name);
         return true;
     }
 

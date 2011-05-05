@@ -25,7 +25,13 @@ public abstract class TargettedSkill extends ActiveSkill {
     public TargettedSkill(Heroes plugin) {
         super(plugin);
     }
-
+    @Override
+    public void init() {
+        useText = config.getString("usetext", "%hero% used %name% on %target%!");
+        if(useText != null) {
+            useText = useText.replace("%hero%", "$1").replace("%skill%", "$2").replace("%target%", "$3");
+        }
+    }
     @Override
     public boolean use(Hero hero, String[] args) {
         Player player = hero.getPlayer();

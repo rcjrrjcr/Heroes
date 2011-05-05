@@ -31,6 +31,7 @@ public class SkillBolt extends TargettedSkill {
 
     @Override
     public void init() {
+        super.init();
         maxDistance = config.getInt("max-distance", 20);
         radius = config.getInt("radius", 5);
     }
@@ -68,7 +69,7 @@ public class SkillBolt extends TargettedSkill {
         target.getWorld().strikeLightning(target.getLocation());
 
         String targetName = target instanceof Player ? ((Player) target).getName() : target.getClass().getSimpleName().substring(5);
-        notifyNearbyPlayers(player.getLocation().toVector(), "$1 used $2 on $3!", player.getName(), name, targetName);
+        if(useText != null) notifyNearbyPlayers(player.getLocation().toVector(), useText, player.getName(), name, target == player ? "himself" : targetName);
         return false;
     }
 }
