@@ -220,7 +220,7 @@ class EffectChecker extends TimerTask {
 
     @Override
     public void run() {
-        Set<Hero> heroes = manager.getHeroSet();
+        Hero[] heroes = manager.getHeroes();
         for (Hero hero : heroes) {
             if (hero == null) {
                 continue;
@@ -239,7 +239,7 @@ class ManaUpdater extends TimerTask {
 
     @Override
     public void run() {
-        Set<Hero> heroes = manager.getHeroSet();
+        Hero[] heroes = manager.getHeroes();
         for (Hero hero : heroes) {
             if (hero == null) {
                 continue;

@@ -6,6 +6,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.util.config.ConfigurationNode;
 
@@ -61,7 +62,12 @@ public class SkillBolt extends TargettedSkill {
         for (Entity n : entityList) {
             if (n instanceof LivingEntity) {
                 if (n != player) {
-                    target.getWorld().strikeLightning(n.getLocation());
+                    // Throw a dummy damage event to make it obey PvP restricting plugins
+                    EntityDamageEvent event = new EntityDamageByEntityEvent(player, target, DamageCause.ENTITY_ATTACK, 0);
+                    plugin.getServer().getPluginManager().callEvent(event);
+                    if (!event.isCancelled()) {
+                        target.getWorld().strikeLightning(n.getLocation());
+                    }
                 }
             }
         }
