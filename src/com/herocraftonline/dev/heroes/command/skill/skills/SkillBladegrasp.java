@@ -9,11 +9,11 @@ import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityListener;
 
 import com.herocraftonline.dev.heroes.Heroes;
-import com.herocraftonline.dev.heroes.command.skill.ActiveSkill;
+import com.herocraftonline.dev.heroes.command.skill.ActiveEffectSkill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 import com.herocraftonline.dev.heroes.persistence.HeroEffects;
 
-public class SkillBladegrasp extends ActiveSkill {
+public class SkillBladegrasp extends ActiveEffectSkill {
 
     public SkillBladegrasp(Heroes plugin) {
         super(plugin);
@@ -30,6 +30,7 @@ public class SkillBladegrasp extends ActiveSkill {
     @Override
     public boolean use(Hero hero, String[] args) {
         hero.getEffects().putEffect(name, 60000.0);
+        if(useText != null) notifyNearbyPlayers(hero.getPlayer().getLocation().toVector(), useText, hero.getPlayer().getName(), name);
         return true;
     }
 
@@ -44,7 +45,7 @@ public class SkillBladegrasp extends ActiveSkill {
                 if (effects.hasEffect(name)) {
                     if (event.getCause() == DamageCause.ENTITY_ATTACK || event.getCause() == DamageCause.ENTITY_EXPLOSION) {
                         event.setCancelled(true);
-                        effects.removeEffect(name);
+                        effects.expireEffect(name);
                     }
                 }
             }

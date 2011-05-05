@@ -32,6 +32,7 @@ public class SkillBandage extends TargettedSkill {
 
     @Override
     public void init() {
+        super.init();
         maxDistance = config.getInt("max-distance", 5);
     }
 
@@ -68,7 +69,7 @@ public class SkillBandage extends TargettedSkill {
             ticks = config.getInt("ticks", 10);
             playerSchedulers.put(tPlayer.getEntityId(), plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new BandageTask(plugin, tPlayer), 20L, 20L));
 
-            notifyNearbyPlayers(player.getLocation().toVector(), "$1 is bandaging $2.", player.getName(), tPlayer == player ? "himself" : tPlayer.getName());
+            if(useText != null) notifyNearbyPlayers(player.getLocation().toVector(), useText, player.getName(), name, tPlayer == player ? "himself" : tPlayer.getName());
 
             // The following should consume 1 piece of Paper per cast.
             int firstSlot = player.getInventory().first(Material.PAPER);

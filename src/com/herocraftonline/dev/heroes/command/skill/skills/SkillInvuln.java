@@ -32,6 +32,7 @@ public class SkillInvuln extends ActiveEffectSkill {
 
     @Override
     public void init() {
+        super.init();
         duration = config.getInt("duration", 10000);
     }
 
@@ -48,7 +49,7 @@ public class SkillInvuln extends ActiveEffectSkill {
         String playerName = player.getName();
         hero.getEffects().putEffect(name, (double) duration);
 
-        notifyNearbyPlayers(player.getLocation().toVector(), "$1 used $2!", playerName, name);
+        if(useText != null) notifyNearbyPlayers(player.getLocation().toVector(), useText, playerName, name);
         return true;
     }
 

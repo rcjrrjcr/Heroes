@@ -15,6 +15,8 @@ import com.herocraftonline.dev.heroes.persistence.Hero;
 
 public abstract class PassiveSkill extends Skill {
 
+    protected String applyText = null;
+    protected String unapplyText = null;
     public PassiveSkill(Heroes plugin) {
         super(plugin);
 
@@ -24,14 +26,31 @@ public abstract class PassiveSkill extends Skill {
     @Override
     public void execute(CommandSender sender, String[] args) {}
 
-    private void apply(Hero hero) {
+    protected void apply(Hero hero) {
         hero.getEffects().putEffect(name.toLowerCase(), Double.POSITIVE_INFINITY);
+        if(applyText != null) {
+            notifyNearbyPlayers(hero.getPlayer().getLocation().toVector(), applyText, hero.getPlayer().getName(), name);
+        }
     }
 
-    public void unapply(Hero hero) {
+    protected void unapply(Hero hero) {
         hero.getEffects().removeEffect(name.toLowerCase());
+        if(unapplyText != null) {
+            notifyNearbyPlayers(hero.getPlayer().getLocation().toVector(), unapplyText, hero.getPlayer().getName(), name);
+        }
     }
 
+    @Override
+    public void init() {
+        applyText = config.getString("applytext","%hero% gained %name%!");
+        if(applyText != null) {
+            applyText = applyText.replace("%hero%", "$1").replace("%skill%", "$2");
+        }
+        unapplyText = config.getString("unapplytext","%hero% lost %name%!");
+        if(unapplyText != null) {
+            unapplyText = unapplyText.replace("%hero%", "$1").replace("%skill%", "$2");
+        }
+    }
     public class SkillCustomEventListener extends CustomEventListener {
 
         @Override
@@ -60,7 +79,6 @@ public abstract class PassiveSkill extends Skill {
                 }
             }
         }
-
     }
 
 }
