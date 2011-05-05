@@ -90,7 +90,7 @@ public class Heroes extends JavaPlugin {
     public static iConomy iConomy;
 
     // Variable for mana regen
-    private long regenrate = 100L;
+//    private long regenrate = 100L;
 
     @Override
     public void onLoad() {
@@ -107,26 +107,6 @@ public class Heroes extends JavaPlugin {
 
         // Setup the Property for Levels * Exp
         getConfigManager().getProperties().calcExp();
-
-        // Start mana regen
-        getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
-            @Override
-            public void run() {
-                for (Hero hero : getHeroManager().getHeroes()) {
-                    int mana = hero.getMana();
-                    if (mana < 100) {
-                        if (mana > 95) {
-                            hero.setMana(100);
-                        } else {
-                            hero.setMana(mana + 5);
-                            if (hero.isVerbose()) {
-                                Messaging.send(hero.getPlayer(), Messaging.createManaBar(mana + 5));
-                            }
-                        }
-                    }
-                }
-            }
-        }, 100L, regenrate);
 
         // Skills Loader
         loadSkills();

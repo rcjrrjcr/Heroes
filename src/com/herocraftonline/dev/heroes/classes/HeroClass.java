@@ -1,7 +1,7 @@
 package com.herocraftonline.dev.heroes.classes;
 
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -59,11 +59,11 @@ public class HeroClass {
 
     public HeroClass() {
         name = new String();
-        allowedArmor = new HashSet<String>();
-        allowedWeapons = new HashSet<String>();
-        experienceSources = new HashSet<ExperienceType>();
-        specializations = new HashSet<HeroClass>();
-        skills = new HashMap<String, SkillSettings>();
+        allowedArmor = new LinkedHashSet<String>();
+        allowedWeapons = new LinkedHashSet<String>();
+        experienceSources = new LinkedHashSet<ExperienceType>();
+        specializations = new LinkedHashSet<HeroClass>();
+        skills = new LinkedHashMap<String, SkillSettings>();
         tameWolves = false;
         tameMax = 0;
         summonCreatures = false;

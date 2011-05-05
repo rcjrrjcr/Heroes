@@ -31,16 +31,22 @@ public class HeroManager {
     private Heroes plugin;
     private Set<Hero> heroes;
     private File playerFolder;
-    private Timer timer;
-    private final static int interval = 100;
+    private Timer effectTimer;
+    private Timer manaTimer;
+    private final static int effectInterval = 100;
+    private final static int manaInterval = 5000; //Possible to be configurable?
 
     public HeroManager(Heroes plugin) {
         this.plugin = plugin;
         this.heroes = new HashSet<Hero>();
         playerFolder = new File(plugin.getDataFolder(), "players"); // Setup our Player Data Folder
         playerFolder.mkdirs(); // Create the folder if it doesn't exist.
-        timer = new Timer(false); // Maintenance thread only
-        timer.scheduleAtFixedRate(new EffectChecker(interval, this), 0, interval);
+        
+        effectTimer = new Timer(false); // Maintenance thread only
+        effectTimer.scheduleAtFixedRate(new EffectChecker(effectInterval, this), 0, effectInterval);
+        
+        manaTimer = new Timer(false); // Maintenance thread only
+        manaTimer.scheduleAtFixedRate(new ManaUpdater(this), 0, manaInterval);
     }
 
     /**
@@ -198,7 +204,8 @@ public class HeroManager {
     }
 
     public void stopChecker() {
-        timer.cancel();
+        effectTimer.cancel();
+        manaTimer.cancel();
     }
 }
 
@@ -215,7 +222,25 @@ class EffectChecker extends TimerTask {
     public void run() {
         Set<Hero> heroes = manager.getHeroSet();
         for (Hero hero : heroes) {
+            if(hero==null) continue;
             hero.getEffects().update(interval);
+        }
+    }
+}
+
+class ManaUpdater extends TimerTask {
+    private final HeroManager manager;
+
+    ManaUpdater(HeroManager manager) {
+        this.manager = manager;
+    }
+
+    @Override
+    public void run() {
+        Set<Hero> heroes = manager.getHeroSet();
+        for (Hero hero : heroes) {
+            if(hero==null) continue;
+            hero.setMana(hero.getMana() > 100 ? hero.getMana() : hero.getMana() > 95 ? 100 : hero.getMana() + 5); //Hooray for the ternary operator!
         }
     }
 }
