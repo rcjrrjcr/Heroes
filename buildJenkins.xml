@@ -1,9 +1,18 @@
-<project name="Heroes" default="jar-main" basedir=".">
-  <property name="dir.bin" value="bin" />
+<project name="Heroes" default="build" basedir=".">
+    <property name="dir.bin" value="bin" />
     <property name="dir.dist" value="build" />
     <property name="dir.bin.skills" value="com/herocraftonline/dev/heroes/command/skill/skills" />
     <property name="dir.dist.skills" value="Heroes/externals" />
     
+	<property name="classpath" value="libs"/>
+
+    <!-- Classpath for the project -->  
+    <path id="master-classpath">
+      <fileset dir="${classpath}">
+        <include name="*.jar"/>
+      </fileset>
+    </path>
+	
     <taskdef resource="net/sf/antcontrib/antcontrib.properties">
         <classpath>
             <pathelement location="/tc-ant/ant-contrib-1.0b3.jar" />
@@ -15,7 +24,9 @@
         <mkdir dir="${dir.dist}/${dir.dist.skills}" />
         <mkdir dir="${dir.bin}" />
         <mkdir dir="${dir.bin}/${dir.dist.skills}" />
-        <javac srcdir="src" destdir="bin" />
+        <javac srcdir="src" destdir="bin">
+        	<classpath refid="master-classpath"/>
+	    </javac>
         <antcall target="jar-main" />
     </target>
 
