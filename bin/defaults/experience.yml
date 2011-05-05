@@ -1,0 +1,40 @@
+killing:
+    chicken: 5
+    cow: 5
+    creeper: 50
+    ghast: 200
+    pig: 5
+    pig_zombie: 50
+    sheep: 5
+    skeleton: 25
+    spider: 35
+    zombie: 15
+    squid: 3
+    slime: 35
+    giant: 500
+    player: 50
+mining:
+    coal: 5
+    cobblestone: 1
+    clay: 5
+    diamond_ore: 150
+    dirt: 1
+    glowstone: 20
+    gold_ore: 5
+    coal_ore: 50
+    redstone_ore: 50
+    grass: 1
+    gravel: 1
+    iron_ore: 10
+    lapis_ore: 150
+    mossy_cobblestone: 15
+    netherrack: 1
+    obsidian: 10
+    redstone_ore: 90
+    sand: 1
+    sandstone: 2
+    snow_block: 1
+    soul_sand: 15
+    stone: 1
+logging:
+    log: 5
