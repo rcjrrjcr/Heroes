@@ -36,7 +36,7 @@ public abstract class TargettedSkill extends ActiveSkill {
             useText = useText.replace("%hero%", "$1").replace("%skill%", "$2").replace("%target%", "$3");
         }
     }
-    
+
     @Override
     public ConfigurationNode getDefaultConfig() {
         ConfigurationNode node = Configuration.getEmptyNode();

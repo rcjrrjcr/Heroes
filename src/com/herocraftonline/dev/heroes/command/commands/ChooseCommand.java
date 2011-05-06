@@ -58,9 +58,9 @@ public class ChooseCommand extends BaseCommand {
                 return;
             }
         }
-        
+
         if (Heroes.Permissions != null && newClass != plugin.getClassManager().getDefaultClass()) {
-            if (!Heroes.Permissions.has(player, "heroes." + newClass.getName().toLowerCase())) {
+            if (!Heroes.Permissions.has(player, "heroes.classes." + newClass.getName().toLowerCase())) {
                 Messaging.send(player, "You don't have permission for $1.", newClass.getName());
                 return;
             }

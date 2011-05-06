@@ -66,13 +66,13 @@ public class HeroManager {
             int mana = playerConfig.getInt("mana", 0);
             int exp = playerConfig.getInt("experience", 0);
             boolean verbose = playerConfig.getBoolean("verbose", true);
-            
+
             HeroClass playerClass = null;
             // Grab the Players Class.
             if (playerConfig.getString("class") != null) {
                 playerClass = plugin.getClassManager().getClass(playerConfig.getString("class")); // Grab the Players Class from the File.
                 if (Heroes.Permissions != null && playerClass != plugin.getClassManager().getDefaultClass()) {
-                    if (!Heroes.Permissions.has(player, "heroes." + playerClass.getName().toLowerCase())) {
+                    if (!Heroes.Permissions.has(player, "heroes.classes." + playerClass.getName().toLowerCase())) {
                         playerClass = plugin.getClassManager().getDefaultClass();
                     }
                 }
@@ -112,7 +112,7 @@ public class HeroManager {
                     }
                 }
             }
-            
+
             if (masteries.contains(playerClass.getName())) {
                 exp = plugin.getConfigManager().getProperties().maxExp;
             }

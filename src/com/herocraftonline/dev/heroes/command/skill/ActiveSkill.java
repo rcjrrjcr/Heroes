@@ -28,7 +28,7 @@ public abstract class ActiveSkill extends Skill {
             useText = useText.replace("%hero%", "$1").replace("%skill%", "$2");
         }
     }
-    
+
     @Override
     public ConfigurationNode getDefaultConfig() {
         ConfigurationNode node = Configuration.getEmptyNode();

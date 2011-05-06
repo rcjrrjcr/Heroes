@@ -54,7 +54,7 @@ public abstract class PassiveSkill extends Skill {
             unapplyText = unapplyText.replace("%hero%", "$1").replace("%skill%", "$2");
         }
     }
-    
+
     @Override
     public ConfigurationNode getDefaultConfig() {
         ConfigurationNode node = Configuration.getEmptyNode();

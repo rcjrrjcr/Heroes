@@ -207,7 +207,7 @@ public class ConfigManager {
             config.setProperty(path + "." + key, node.getProperty(key));
         }
     }
-    
+
     private void mergeNodeToConfig(Configuration config, ConfigurationNode node, String path) {
         List<String> keys = node.getKeys(null);
         if (keys != null) {

@@ -2,6 +2,8 @@ package com.herocraftonline.dev.heroes.command.skill.skills;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.util.config.Configuration;
+import org.bukkit.util.config.ConfigurationNode;
 
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.skill.ActiveSkill;
@@ -21,6 +23,14 @@ public class SkillTrack extends ActiveSkill {
     }
 
     @Override
+    public void init() {}
+
+    @Override
+    public ConfigurationNode getDefaultConfig() {
+        return Configuration.getEmptyNode();
+    }
+
+    @Override
     public boolean use(Hero hero, String[] args) {
         Player player = hero.getPlayer();
 
@@ -31,7 +41,7 @@ public class SkillTrack extends ActiveSkill {
         }
 
         Location location = target.getLocation();
-        Messaging.send(player, "$1 : $2", target.getName(), location.toString());
+        Messaging.send(player, "Tracked $1: $2", target.getName(), "(" + location.getBlockX() + ", " + location.getBlockY() + ", " + location.getBlockZ() + ")");
         player.setCompassTarget(location);
         if (useText != null) {
             notifyNearbyPlayers(player.getLocation().toVector(), useText, player.getName(), name);

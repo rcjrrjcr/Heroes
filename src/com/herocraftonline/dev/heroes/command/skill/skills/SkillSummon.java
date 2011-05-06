@@ -35,7 +35,7 @@ public class SkillSummon extends ActiveSkill {
             useText = useText.replace("%hero%", "$1").replace("%skill%", "$2").replace("%creature%", "$3");
         }
     }
-    
+
     @Override
     public ConfigurationNode getDefaultConfig() {
         ConfigurationNode node = super.getDefaultConfig();

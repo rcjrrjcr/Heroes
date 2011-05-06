@@ -25,7 +25,7 @@ public abstract class ActiveEffectSkill extends ActiveSkill {
             expiryText = expiryText.replace("%hero%", "$1").replace("%skill%", "$2");
         }
     }
-    
+
     @Override
     public ConfigurationNode getDefaultConfig() {
         ConfigurationNode node = Configuration.getEmptyNode();
