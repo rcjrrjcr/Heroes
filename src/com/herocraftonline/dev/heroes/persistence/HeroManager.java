@@ -17,9 +17,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.config.Configuration;
 
 import com.herocraftonline.dev.heroes.Heroes;
-import com.herocraftonline.dev.heroes.api.HeroLoadEvent;
-import com.herocraftonline.dev.heroes.api.NewHeroEvent;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
+import com.herocraftonline.dev.heroes.command.BaseCommand;
+import com.herocraftonline.dev.heroes.command.skill.OutsourcedSkill;
 
 /**
  * Player management
@@ -63,6 +63,7 @@ public class HeroManager {
 
             // Grab the Data we need.
             List<String> masteries = playerConfig.getStringList("masteries", new ArrayList<String>());
+
             int mana = playerConfig.getInt("mana", 0);
             int exp = playerConfig.getInt("experience", 0);
             boolean verbose = playerConfig.getBoolean("verbose", true);
@@ -121,13 +122,26 @@ public class HeroManager {
             Hero playerHero = new Hero(plugin, player, playerClass, exp, mana, verbose, masteries, itemRecovery, binds);
             // Add the Hero to the Set.
             addHero(playerHero);
+
+            // Handle OutsourcedSkills
+            List<BaseCommand> commands = plugin.getCommandManager().getCommands();
+            if (Heroes.Permissions != null) {
+                for (BaseCommand cmd : commands) {
+                    if (cmd instanceof OutsourcedSkill) {
+                        OutsourcedSkill skill = (OutsourcedSkill) cmd;
+                        if (playerClass.hasSkill(skill.getName())) {
+                            skill.tryLearningSkill(playerHero);
+                        }
+                    }
+                }
+            }
+
             plugin.log(Level.INFO, "Loaded hero: " + player.getName());
         } else {
             // Create a New Hero with the Default Setup.
             createNewHero(player);
             plugin.log(Level.INFO, "Created hero: " + player.getName());
         }
-        plugin.getServer().getPluginManager().callEvent(new HeroLoadEvent(getHero(player)));
     }
 
     /**
@@ -144,7 +158,6 @@ public class HeroManager {
         playerConfig.setProperty("mana", getHero(player).getMana());
         playerConfig.setProperty("verbose", getHero(player).isVerbose());
         playerConfig.setProperty("masteries", getHero(player).getMasteries());
-
         playerConfig.removeProperty("itemrecovery"); // Just a precaution, we'll remove any values before resaving the list.
         for (ItemStack item : getHero(player).getItems()) {
             String durability = Short.toString(item.getDurability());
@@ -168,7 +181,6 @@ public class HeroManager {
 
     public boolean createNewHero(Player player) {
         Hero hero = new Hero(plugin, player, plugin.getClassManager().getDefaultClass(), 0, 0, true, new ArrayList<String>(), new ArrayList<ItemStack>(), new HashMap<Material, String[]>());
-        plugin.getServer().getPluginManager().callEvent(new NewHeroEvent(hero));
         return addHero(hero);
     }
 
