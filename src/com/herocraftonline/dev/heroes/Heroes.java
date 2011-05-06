@@ -145,9 +145,18 @@ public class Heroes extends JavaPlugin {
                 Heroes.Permissions = ((Permissions) test).getHandler();
                 log(Level.INFO, "Permissions found.");
                 for (Player player : getServer().getOnlinePlayers()) {
+                    Hero hero = heroManager.getHero(player);
+                    HeroClass heroClass = hero.getHeroClass();
+                    
                     for (BaseCommand cmd : commandManager.getCommands()) {
                         if (cmd instanceof OutsourcedSkill) {
-                            ((OutsourcedSkill) cmd).tryLearningSkill(heroManager.getHero(player));
+                            ((OutsourcedSkill) cmd).tryLearningSkill(hero);
+                        }
+                    }
+                    
+                    if (Heroes.Permissions != null && heroClass != classManager.getDefaultClass()) {
+                        if (!Heroes.Permissions.has(player, "heroes." + heroClass.getName().toLowerCase())) {
+                            hero.setHeroClass(classManager.getDefaultClass());
                         }
                     }
                 }

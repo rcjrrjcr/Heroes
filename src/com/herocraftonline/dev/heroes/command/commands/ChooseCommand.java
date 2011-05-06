@@ -58,6 +58,13 @@ public class ChooseCommand extends BaseCommand {
                 return;
             }
         }
+        
+        if (Heroes.Permissions != null && newClass != plugin.getClassManager().getDefaultClass()) {
+            if (!Heroes.Permissions.has(player, "heroes." + newClass.getName().toLowerCase())) {
+                Messaging.send(player, "You don't have permission for $1.", newClass.getName());
+                return;
+            }
+        }
 
         int cost = currentClass == plugin.getClassManager().getDefaultClass() ? 0 : prop.swapCost;
 
@@ -71,9 +78,6 @@ public class ChooseCommand extends BaseCommand {
 
         int currentExp = hero.getExp();
         hero.setHeroClass(newClass);
-        if (!hero.getMasteries().contains(newClass.getName())) {
-            hero.setExp(0);
-        }
 
         ClassChangeEvent event = new ClassChangeEvent(hero, currentClass, newClass);
         plugin.getServer().getPluginManager().callEvent(event);

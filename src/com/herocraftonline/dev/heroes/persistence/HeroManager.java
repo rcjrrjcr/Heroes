@@ -61,19 +61,24 @@ public class HeroManager {
             Configuration playerConfig = new Configuration(playerFile); // Setup the Configuration
             playerConfig.load(); // Load the Config File
 
-            HeroClass playerClass;
-            // Grab the Players Class.
-            if (playerConfig.getString("class") != null) {
-                playerClass = plugin.getClassManager().getClass(playerConfig.getString("class")); // Grab the Players Class from the File.
-            } else {
-                playerClass = plugin.getClassManager().getDefaultClass(); // If no Class saved then revert to the Default Class.
-            }
-
             // Grab the Data we need.
             List<String> masteries = playerConfig.getStringList("masteries", new ArrayList<String>());
             int mana = playerConfig.getInt("mana", 0);
             int exp = playerConfig.getInt("experience", 0);
             boolean verbose = playerConfig.getBoolean("verbose", true);
+            
+            HeroClass playerClass = null;
+            // Grab the Players Class.
+            if (playerConfig.getString("class") != null) {
+                playerClass = plugin.getClassManager().getClass(playerConfig.getString("class")); // Grab the Players Class from the File.
+                if (Heroes.Permissions != null && playerClass != plugin.getClassManager().getDefaultClass()) {
+                    if (!Heroes.Permissions.has(player, "heroes." + playerClass.getName().toLowerCase())) {
+                        playerClass = plugin.getClassManager().getDefaultClass();
+                    }
+                }
+            } else {
+                playerClass = plugin.getClassManager().getDefaultClass(); // If no Class saved then revert to the Default Class.
+            }
 
             // Lets sort out any items we need to recover.
             List<ItemStack> itemRecovery = new ArrayList<ItemStack>();
@@ -106,6 +111,10 @@ public class HeroManager {
                         continue;
                     }
                 }
+            }
+            
+            if (masteries.contains(playerClass.getName())) {
+                exp = plugin.getConfigManager().getProperties().maxExp;
             }
 
             // Create a New Hero

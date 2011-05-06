@@ -96,7 +96,9 @@ public class Hero {
         // max experience if this class is mastered
         Properties prop = plugin.getConfigManager().getProperties();
         if (masteries.contains(heroClass.getName())) {
-            exp = prop.getExperience(prop.maxLevel);
+            exp = prop.maxExp;
+        } else {
+            exp = 0;
         }
 
         // Check the Players inventory now that they have changed class.
