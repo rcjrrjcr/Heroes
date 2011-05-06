@@ -30,6 +30,7 @@ public class SkillSummon extends ActiveSkill {
 
     @Override
     public void init() {
+        super.init();
         useText = config.getString("use-text", "%hero% summoned %creature%!");
         if (useText != null) {
             useText = useText.replace("%hero%", "$1").replace("%skill%", "$2").replace("%creature%", "$3");

@@ -25,6 +25,7 @@ public class SkillHarmtouch extends TargettedSkill {
 
     @Override
     public void init() {
+        super.init();
         maxDistance = config.getInt("max-distance", 15);
     }
 
@@ -40,7 +41,7 @@ public class SkillHarmtouch extends TargettedSkill {
     public boolean use(Hero hero, LivingEntity target, String[] args) {
         Player player = hero.getPlayer();
         if (target == player) {
-            Messaging.send(player, "Sorry, you can't target yourself!");
+            Messaging.send(player, "You need a target!");
             return false;
         }
 

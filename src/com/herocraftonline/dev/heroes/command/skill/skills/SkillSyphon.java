@@ -26,6 +26,7 @@ public class SkillSyphon extends TargettedSkill {
 
     @Override
     public void init() {
+        super.init();
         maxDistance = config.getInt("max-distance", 15);
         hpMult = config.getDouble("multiplier", 1d);
         def = config.getInt("default-health", 4);
