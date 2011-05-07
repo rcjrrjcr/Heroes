@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event.Result;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
@@ -60,7 +61,7 @@ public class HPlayerListener extends PlayerListener {
 
     @Override
     public void onPlayerInteract(PlayerInteractEvent event) {
-        if (event.isCancelled()) {
+        if (event.useItemInHand() == Result.DENY) {
             return;
         }
         
