@@ -7,12 +7,23 @@ import net.minecraft.server.MathHelper;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.CraftWorld;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Snowball;
+import org.bukkit.event.Event.Priority;
+import org.bukkit.event.Event.Type;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageByProjectileEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityListener;
+import org.bukkit.event.entity.EntityTargetEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.util.config.ConfigurationNode;
 
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.skill.ActiveSkill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
+import com.herocraftonline.dev.heroes.persistence.HeroEffects;
 
 public class SkillFireball extends ActiveSkill {
 
@@ -26,6 +37,8 @@ public class SkillFireball extends ActiveSkill {
         minArgs = 0;
         maxArgs = 1;
         identifiers.add("skill fireball");
+        
+        registerEvent(Type.ENTITY_DAMAGE, new SkillEntityListener(), Priority.Normal);
     }
 
     @Override
@@ -51,19 +64,39 @@ public class SkillFireball extends ActiveSkill {
         float f = 0.4f;
         double motX = (double) (-MathHelper.sin(yaw) * MathHelper.cos(pitch) * f);
         double motZ = (double) (MathHelper.cos(yaw) * MathHelper.cos(pitch) * f);
-        double motY = (double) (-MathHelper.sin(pitch / 180.0F * 3.1415927F) * f);
+        double motY = (double) (-MathHelper.sin(pitch) * f);
 
         CraftPlayer craftPlayer = (CraftPlayer) player;
         EntityPlayer playerEntity = craftPlayer.getHandle();
         EntitySnowball snowball = new EntitySnowball(playerEntity.world, location.getX() + motX * 3, location.getY() + motY * 3, location.getZ() + motZ * 3);
         ((CraftWorld) player.getWorld()).getHandle().addEntity(snowball);
-        snowball.a(motX, motY, motZ, 2F, 1.0F);
+        snowball.a(motX, motY, motZ, 1.6F, 1.0F);
         snowball.fireTicks = 1000;
 
         if (useText != null) {
             notifyNearbyPlayers(location.toVector(), useText, hero.getPlayer().getName(), name);
         }
         return true;
+    }
+    
+    public class SkillEntityListener extends EntityListener {
+
+        @Override
+        public void onEntityDamage(EntityDamageEvent event) {
+            if (event.isCancelled()) {
+                return;
+            }
+            if (event instanceof EntityDamageByProjectileEvent) {
+                EntityDamageByProjectileEvent subEvent = (EntityDamageByProjectileEvent) event;
+                Entity projectile = subEvent.getProjectile();
+                if (projectile instanceof Snowball) {
+                    if (projectile.getFireTicks() > 0) {
+                        subEvent.getEntity().setFireTicks(50);
+                    }
+                }
+            }
+        }
+
     }
 
 }

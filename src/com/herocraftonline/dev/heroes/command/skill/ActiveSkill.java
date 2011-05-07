@@ -77,7 +77,7 @@ public abstract class ActiveSkill extends Skill {
                     cooldowns.put(name, time);
                 }
                 hero.setMana(hero.getMana() - settings.ManaCost);
-                if (hero.isVerbose()) {
+                if (hero.isVerbose() && settings.ManaCost > 0) {
                     Messaging.send(hero.getPlayer(), Messaging.createManaBar(hero.getMana()));
                 }
             }

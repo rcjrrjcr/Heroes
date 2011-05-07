@@ -47,7 +47,6 @@ public abstract class TargettedSkill extends ActiveSkill {
 
     @Override
     public boolean use(Hero hero, String[] args) {
-        System.out.println("use");
         Player player = hero.getPlayer();
         LivingEntity target = null;
         if (args.length > 0) {
@@ -75,7 +74,6 @@ public abstract class TargettedSkill extends ActiveSkill {
         if (target == null) {
             target = player;
         }
-        System.out.println(target.getEntityId());
         return use(hero, target, args);
     }
 
