@@ -20,6 +20,7 @@ import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.command.BaseCommand;
 import com.herocraftonline.dev.heroes.command.skill.OutsourcedSkill;
+import com.herocraftonline.dev.heroes.util.Messaging;
 
 /**
  * Player management
@@ -265,7 +266,11 @@ class ManaUpdater extends TimerTask {
             if (hero == null) {
                 continue;
             }
-            hero.setMana(hero.getMana() > 100 ? hero.getMana() : hero.getMana() > 95 ? 100 : hero.getMana() + 5); // Hooray for the ternary operator!
+            int mana = hero.getMana();
+            if (mana < 100 && hero.isVerbose()) {
+                Messaging.send(hero.getPlayer(), Messaging.createManaBar(mana));
+            }
+            hero.setMana(mana > 100 ? mana : mana > 95 ? 100 : mana + 5); // Hooray for the ternary operator!
         }
     }
 }
