@@ -19,7 +19,7 @@ public class SkillTame extends ActiveSkill {
     @Override
     public boolean use(Hero hero, String[] args) {
         if (useText != null) {
-            notifyNearbyPlayers(hero.getPlayer().getLocation().toVector(), useText, hero.getPlayer().getName(), name);
+            notifyNearbyPlayers(hero.getPlayer().getLocation(), useText, hero.getPlayer().getName(), name);
         }
         return true;
     }

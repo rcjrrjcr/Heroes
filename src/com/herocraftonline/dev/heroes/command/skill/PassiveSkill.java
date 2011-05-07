@@ -32,14 +32,14 @@ public abstract class PassiveSkill extends Skill {
     protected void apply(Hero hero) {
         hero.getEffects().putEffect(name.toLowerCase(), Double.POSITIVE_INFINITY);
         if (applyText != null) {
-            notifyNearbyPlayers(hero.getPlayer().getLocation().toVector(), applyText, hero.getPlayer().getName(), name);
+            notifyNearbyPlayers(hero.getPlayer().getLocation(), applyText, hero.getPlayer().getName(), name);
         }
     }
 
     protected void unapply(Hero hero) {
         Double effect = hero.getEffects().removeEffect(name.toLowerCase());
         if (unapplyText != null && effect != null) {
-            notifyNearbyPlayers(hero.getPlayer().getLocation().toVector(), unapplyText, hero.getPlayer().getName(), name);
+            notifyNearbyPlayers(hero.getPlayer().getLocation(), unapplyText, hero.getPlayer().getName(), name);
         }
     }
 

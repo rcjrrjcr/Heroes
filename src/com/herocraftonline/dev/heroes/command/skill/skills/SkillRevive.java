@@ -57,7 +57,7 @@ public class SkillRevive extends TargettedSkill {
                 } else {
                     targetPlayer.teleport(loc);
                     if (useText != null) {
-                        notifyNearbyPlayers(player.getLocation().toVector(), useText, player.getName(), name, target == player ? "himself" : targetPlayer.getName());
+                        notifyNearbyPlayers(player.getLocation(), useText, player.getName(), name, target == player ? "himself" : targetPlayer.getName());
                     }
                 }
             }

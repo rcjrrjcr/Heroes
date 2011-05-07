@@ -36,7 +36,7 @@ public abstract class ActiveEffectSkill extends ActiveSkill {
 
     public void onExpire(Hero hero) {
         if (expiryText != null) {
-            notifyNearbyPlayers(hero.getPlayer().getLocation().toVector(), expiryText, hero.getPlayer().getName(), name);
+            notifyNearbyPlayers(hero.getPlayer().getLocation(), expiryText, hero.getPlayer().getName(), name);
         }
     }
 }

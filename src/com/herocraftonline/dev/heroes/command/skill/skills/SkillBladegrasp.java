@@ -31,7 +31,7 @@ public class SkillBladegrasp extends ActiveEffectSkill {
     public boolean use(Hero hero, String[] args) {
         hero.getEffects().putEffect(name, 60000.0);
         if (useText != null) {
-            notifyNearbyPlayers(hero.getPlayer().getLocation().toVector(), useText, hero.getPlayer().getName(), name);
+            notifyNearbyPlayers(hero.getPlayer().getLocation(), useText, hero.getPlayer().getName(), name);
         }
         return true;
     }

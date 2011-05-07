@@ -8,7 +8,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event.Type;
 import org.bukkit.event.Listener;
-import org.bukkit.util.Vector;
 import org.bukkit.util.config.Configuration;
 import org.bukkit.util.config.ConfigurationNode;
 
@@ -28,12 +27,14 @@ public abstract class Skill extends BaseCommand {
 
     public void init() {}
 
-    protected void notifyNearbyPlayers(Vector source, String message, String... args) {
+    protected void notifyNearbyPlayers(Location source, String message, String... args) {
         Player[] players = plugin.getServer().getOnlinePlayers();
         for (Player player : players) {
             Location playerLocation = player.getLocation();
-            if (playerLocation.toVector().distance(source) < 30) {
-                Messaging.send(player, message, args);
+            if (source.getWorld().equals(playerLocation.getWorld())) {
+                if (playerLocation.toVector().distance(source.toVector()) < 30) {
+                    Messaging.send(player, message, args);
+                }
             }
         }
     }

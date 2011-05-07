@@ -49,7 +49,7 @@ public class SkillBlackjack extends ActiveEffectSkill {
     public boolean use(Hero hero, String[] args) {
         int duration = config.getInt("effect-duration", 20000);
         hero.getEffects().putEffect(name, (double) duration);
-        notifyNearbyPlayers(hero.getPlayer().getLocation().toVector(), useText, hero.getPlayer().getName(), name);
+        notifyNearbyPlayers(hero.getPlayer().getLocation(), useText, hero.getPlayer().getName(), name);
         return true;
     }
 
@@ -104,7 +104,7 @@ public class SkillBlackjack extends ActiveEffectSkill {
                             if (random.nextDouble() < chance) {
                                 stunnedEntities.put(defendingEntity.getEntityId(), System.currentTimeMillis() + config.getInt("stun-duration", 5000));
                                 String targetName = defendingEntity instanceof Player ? ((Player) defendingEntity).getName() : defendingEntity.getClass().getSimpleName().substring(5);
-                                notifyNearbyPlayers(attackingHero.getPlayer().getLocation().toVector(), "$1 stunned $2!", attackingHero.getPlayer().getName(), targetName);
+                                notifyNearbyPlayers(attackingHero.getPlayer().getLocation(), "$1 stunned $2!", attackingHero.getPlayer().getName(), targetName);
                             }
                         }
                     }

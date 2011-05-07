@@ -49,7 +49,7 @@ public class SkillInvuln extends ActiveEffectSkill {
         hero.getEffects().putEffect(name, (double) duration);
 
         if (useText != null) {
-            notifyNearbyPlayers(player.getLocation().toVector(), useText, playerName, name);
+            notifyNearbyPlayers(player.getLocation(), useText, playerName, name);
         }
         return true;
     }

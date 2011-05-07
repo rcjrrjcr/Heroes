@@ -69,7 +69,7 @@ public class SkillBandage extends TargettedSkill {
             playerSchedulers.put(tPlayer.getEntityId(), plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new BandageTask(plugin, tPlayer), 20L, 20L));
 
             if (useText != null) {
-                notifyNearbyPlayers(player.getLocation().toVector(), useText, player.getName(), name, tPlayer == player ? "himself" : tPlayer.getName());
+                notifyNearbyPlayers(player.getLocation(), useText, player.getName(), name, tPlayer == player ? "himself" : tPlayer.getName());
             }
 
             // The following should consume 1 piece of Paper per cast.
@@ -104,9 +104,9 @@ public class SkillBandage extends TargettedSkill {
             }
             if (target == null || timesRan == ticks || health >= 20) {
                 if (health >= 20) {
-                    notifyNearbyPlayers(target.getLocation().toVector(), "$1 has been healed to full health by their bandages.", target.getName());
+                    notifyNearbyPlayers(target.getLocation(), "$1 has been healed to full health by their bandages.", target.getName());
                 } else {
-                    notifyNearbyPlayers(target.getLocation().toVector(), "$1 bandages have worn out.", target.getName() + "'s");
+                    notifyNearbyPlayers(target.getLocation(), "$1 bandages have worn out.", target.getName() + "'s");
                 }
                 int id = playerSchedulers.remove(target.getEntityId());
                 plugin.getServer().getScheduler().cancelTask(id);
