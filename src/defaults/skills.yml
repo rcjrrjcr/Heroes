@@ -1,5 +1,5 @@
 Smoke:
-    usetext: "%hero% vanishes in a puff of smoke! (%skill%)"
-    expiretext: "%hero% reappears in a puff of smoke! (%skill%)"
+    use-text: "%hero% vanishes in a puff of smoke! (%skill%)"
+    expire-text: "%hero% reappears in a puff of smoke! (%skill%)"
 Summon:
-    usetext: "%hero% summoned %creature%!"
+    use-text: "%hero% summoned %creature%!"

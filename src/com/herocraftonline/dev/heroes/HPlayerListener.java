@@ -60,15 +60,12 @@ public class HPlayerListener extends PlayerListener {
 
     @Override
     public void onPlayerInteract(PlayerInteractEvent event) {
-        if (event.isCancelled()) {
-            return;
-        }
-        
         Player player = event.getPlayer();
         Material material = player.getItemInHand().getType();
         Hero hero = plugin.getHeroManager().getHero(player);
         if (hero.getBinds().containsKey(material)) {
             if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+                event.setCancelled(false);
                 String[] args = hero.getBinds().get(material);
                 plugin.onCommand(player, null, "skill", args);
             }
