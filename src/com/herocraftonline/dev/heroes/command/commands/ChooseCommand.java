@@ -48,13 +48,9 @@ public class ChooseCommand extends BaseCommand {
         }
 
         if (!newClass.isPrimary()) {
-            if (newClass.getParent() != currentClass) {
-                Messaging.send(player, "Sorry, that specialty doesn't belong to $1.", currentClass.getName());
-                return;
-            }
-
-            if (!hero.getMasteries().contains(currentClass.getName())) {
-                Messaging.send(player, "You must master $1 before specializing!", currentClass.getName());
+            String parentName = newClass.getParent().getName();
+            if (!hero.getMasteries().contains(parentName)) {
+                Messaging.send(player, "You must master $1 before specializing!", parentName);
                 return;
             }
         }

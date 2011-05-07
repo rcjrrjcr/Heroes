@@ -202,25 +202,28 @@ public class Heroes extends JavaPlugin {
      */
     private void registerCommands() {
         // Page 1
-        commandManager.addCommand(new HelpCommand(this));
-        commandManager.addCommand(new RecoverItemsCommand(this));
+        commandManager.addCommand(new PathsCommand(this));
+        commandManager.addCommand(new SpecsCommand(this));
         commandManager.addCommand(new ChooseCommand(this));
+        commandManager.addCommand(new LevelInformationCommand(this));
+        commandManager.addCommand(new SkillCommand(this));
+        commandManager.addCommand(new BindSkillCommand(this));
+        commandManager.addCommand(new ArmorCommand(this));
+        commandManager.addCommand(new ToolsCommand(this));
+        
+        // Page 2
+        commandManager.addCommand(new ManaCommand(this));
+        commandManager.addCommand(new VerboseCommand(this));
+        commandManager.addCommand(new WhoCommand(this));
+        commandManager.addCommand(new RecoverItemsCommand(this));
         commandManager.addCommand(new PartyAcceptCommand(this));
         commandManager.addCommand(new PartyCreateCommand(this));
         commandManager.addCommand(new PartyInviteCommand(this));
         commandManager.addCommand(new PartyChatCommand(this));
-        // Page 2
-        commandManager.addCommand(new BindSkillCommand(this));
+        
+        // Page 3
         commandManager.addCommand(new ConfigReloadCommand(this));
-        commandManager.addCommand(new SkillCommand(this));
-        commandManager.addCommand(new LevelInformationCommand(this));
-        commandManager.addCommand(new ManaCommand(this));
-        commandManager.addCommand(new VerboseCommand(this));
-        commandManager.addCommand(new ArmorCommand(this));
-        commandManager.addCommand(new ToolsCommand(this));
-        commandManager.addCommand(new WhoCommand(this));
-        commandManager.addCommand(new PathsCommand(this));
-        commandManager.addCommand(new SpecsCommand(this));
+        commandManager.addCommand(new HelpCommand(this));
     }
 
     /**
