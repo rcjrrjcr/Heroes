@@ -7,7 +7,6 @@ import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event.Type;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityListener;
 import org.bukkit.util.config.ConfigurationNode;
 
@@ -19,8 +18,7 @@ import com.herocraftonline.dev.heroes.persistence.HeroEffects;
 public class SkillReflect extends ActiveEffectSkill {
 
     private int duration;
-//    private double factor;
-    
+
     public SkillReflect(Heroes plugin) {
         super(plugin);
         name = "Reflect";
@@ -37,8 +35,6 @@ public class SkillReflect extends ActiveEffectSkill {
     public void init() {
         super.init();
         duration = config.getInt("duration", 10000);
-//        factor = config.getDouble("multiplier", 0D);
-//        factor = factor < 0 ? 0 : factor;
     }
 
     @Override
@@ -55,7 +51,7 @@ public class SkillReflect extends ActiveEffectSkill {
         hero.getEffects().putEffect(name, (double) duration);
 
         if (useText != null) {
-            notifyNearbyPlayers(player.getLocation().toVector(), useText, playerName, name);
+            notifyNearbyPlayers(player.getLocation(), useText, playerName, name);
         }
         return true;
     }
@@ -64,22 +60,22 @@ public class SkillReflect extends ActiveEffectSkill {
 
         @Override
         public void onEntityDamage(EntityDamageEvent event) {
-            if (event.isCancelled()||event instanceof EntityDamageByEntityEvent) {
+            if (event.isCancelled() || event instanceof EntityDamageByEntityEvent) {
                 return;
             }
-            
+
             EntityDamageByEntityEvent edbe = (EntityDamageByEntityEvent) event;
             Entity defender = edbe.getEntity();
             Entity attacker = edbe.getDamager();
-            if (attacker instanceof LivingEntity&&defender instanceof Player) {
+            if (attacker instanceof LivingEntity && defender instanceof Player) {
                 Player player = (Player) defender;
-                
+
                 HeroEffects effects = plugin.getHeroManager().getHero(player).getEffects();
                 if (effects.hasEffect(name)) {
-                    if(attacker instanceof Player) {
+                    if (attacker instanceof Player) {
                         Player att = (Player) attacker;
                         HeroEffects attEffects = plugin.getHeroManager().getHero(att).getEffects();
-                        if(attEffects.hasEffect(name)) {
+                        if (attEffects.hasEffect(name)) {
                             event.setCancelled(true);
                             return;
                         }
@@ -92,4 +88,3 @@ public class SkillReflect extends ActiveEffectSkill {
         }
     }
 }
-

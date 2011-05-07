@@ -210,7 +210,7 @@ public class Heroes extends JavaPlugin {
         commandManager.addCommand(new BindSkillCommand(this));
         commandManager.addCommand(new ArmorCommand(this));
         commandManager.addCommand(new ToolsCommand(this));
-        
+
         // Page 2
         commandManager.addCommand(new ManaCommand(this));
         commandManager.addCommand(new VerboseCommand(this));
@@ -220,7 +220,7 @@ public class Heroes extends JavaPlugin {
         commandManager.addCommand(new PartyCreateCommand(this));
         commandManager.addCommand(new PartyInviteCommand(this));
         commandManager.addCommand(new PartyChatCommand(this));
-        
+
         // Page 3
         commandManager.addCommand(new ConfigReloadCommand(this));
         commandManager.addCommand(new HelpCommand(this));

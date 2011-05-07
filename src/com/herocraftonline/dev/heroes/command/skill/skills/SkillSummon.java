@@ -19,7 +19,7 @@ import com.herocraftonline.dev.heroes.util.Messaging;
 public class SkillSummon extends ActiveSkill {
 
     private int maxSummons;
-    
+
     public SkillSummon(Heroes plugin) {
         super(plugin);
         name = "Summon";

@@ -32,7 +32,7 @@ public class SkillFireball extends ActiveSkill {
         minArgs = 0;
         maxArgs = 1;
         identifiers.add("skill fireball");
-        
+
         registerEvent(Type.ENTITY_DAMAGE, new SkillEntityListener(), Priority.Monitor);
     }
 
@@ -73,7 +73,7 @@ public class SkillFireball extends ActiveSkill {
         }
         return true;
     }
-    
+
     public class SkillEntityListener extends EntityListener {
 
         @Override

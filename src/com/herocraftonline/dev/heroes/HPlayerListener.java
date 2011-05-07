@@ -55,7 +55,7 @@ public class HPlayerListener extends PlayerListener {
         if (event.isCancelled()) {
             return;
         }
-        
+
         plugin.inventoryCheck(event.getPlayer());
     }
 
@@ -64,7 +64,7 @@ public class HPlayerListener extends PlayerListener {
         if (event.useItemInHand() == Result.DENY) {
             return;
         }
-        
+
         Player player = event.getPlayer();
         Material material = player.getItemInHand().getType();
         Hero hero = plugin.getHeroManager().getHero(player);
@@ -82,12 +82,12 @@ public class HPlayerListener extends PlayerListener {
         if (event.isCancelled()) {
             return;
         }
-        
+
         Player player = event.getPlayer();
         if (event.getFrom().getWorld() != event.getTo().getWorld()) {
             Hero hero = plugin.getHeroManager().getHero(player);
             HeroClass heroClass = hero.getHeroClass();
-            
+
             List<BaseCommand> commands = plugin.getCommandManager().getCommands();
             for (BaseCommand cmd : commands) {
                 if (cmd instanceof OutsourcedSkill) {

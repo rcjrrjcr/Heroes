@@ -31,7 +31,7 @@ public class SpecsCommand extends BaseCommand {
             return;
         }
         HeroClass playerClass = plugin.getHeroManager().getHero((Player) sender).getHeroClass();
-        
+
         int page = 0;
         if (args.length != 0) {
             try {
@@ -41,7 +41,7 @@ public class SpecsCommand extends BaseCommand {
 
         Set<HeroClass> childClasses = playerClass.getSpecializations();
         HeroClass[] specs = childClasses.toArray(new HeroClass[0]);
-        
+
         if (specs.length == 0) {
             Messaging.send(sender, "$1 has no specializations.", playerClass.getName());
             return;

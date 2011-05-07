@@ -59,7 +59,7 @@ public class ClassManager {
         }
         for (String className : classNames) {
             HeroClass newClass = new HeroClass(className.substring(0, 1).toUpperCase() + className.substring(1).toLowerCase());
-            
+
             newClass.setDescription(config.getString("classes." + className + ".description", ""));
 
             List<String> defaultType = new ArrayList<String>();
