@@ -91,6 +91,8 @@ public class ChooseCommand extends BaseCommand {
             Account account = iConomy.getBank().getAccount(player.getName());
             account.subtract(cost);
         }
+        
+        hero.getBinds().clear();
 
         Messaging.send(player, "Welcome to the path of the $1!", newClass.getName());
     }
