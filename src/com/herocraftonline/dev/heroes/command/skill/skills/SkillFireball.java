@@ -8,26 +8,24 @@ import org.bukkit.Location;
 import org.bukkit.craftbukkit.CraftWorld;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event.Type;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageByProjectileEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityListener;
-import org.bukkit.event.entity.EntityTargetEvent;
-import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.util.config.ConfigurationNode;
 
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.skill.ActiveSkill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
-import com.herocraftonline.dev.heroes.persistence.HeroEffects;
 
 public class SkillFireball extends ActiveSkill {
 
     private int damage;
+    private int fireTicks;
 
     public SkillFireball(Heroes plugin) {
         super(plugin);
@@ -44,13 +42,15 @@ public class SkillFireball extends ActiveSkill {
     @Override
     public void init() {
         super.init();
-        damage = config.getInt("damage", 10);
+        damage = config.getInt("damage", 4);
+        fireTicks = config.getInt("fire-ticks", 100);
     }
 
     @Override
     public ConfigurationNode getDefaultConfig() {
         ConfigurationNode node = super.getDefaultConfig();
-        node.setProperty("damage", 10);
+        node.setProperty("damage", 4);
+        node.setProperty("fire-ticks", 100);
         return node;
     }
 
@@ -70,7 +70,7 @@ public class SkillFireball extends ActiveSkill {
         EntityPlayer playerEntity = craftPlayer.getHandle();
         EntitySnowball snowball = new EntitySnowball(playerEntity.world, location.getX() + motX * 3, location.getY() + motY * 3, location.getZ() + motZ * 3);
         ((CraftWorld) player.getWorld()).getHandle().addEntity(snowball);
-        snowball.a(motX, motY, motZ, 1.6F, 1.0F);
+        snowball.a(motX, motY, motZ, 1.2F, 1.0F);
         snowball.fireTicks = 1000;
 
         if (useText != null) {
@@ -91,7 +91,12 @@ public class SkillFireball extends ActiveSkill {
                 Entity projectile = subEvent.getProjectile();
                 if (projectile instanceof Snowball) {
                     if (projectile.getFireTicks() > 0) {
-                        subEvent.getEntity().setFireTicks(50);
+                        Entity entity = subEvent.getEntity();
+                        if (entity instanceof LivingEntity) {
+                            LivingEntity livingEntity = (LivingEntity) entity;
+                            livingEntity.setFireTicks(fireTicks);
+                            livingEntity.damage(damage);
+                        }
                     }
                 }
             }
