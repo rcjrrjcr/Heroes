@@ -188,13 +188,6 @@ public class ClassManager {
             }
             newClass.setExperienceSources(experienceSources);
 
-            int maxSummon = config.getInt("classes." + className + ".tameMax", 0);
-            try {
-                newClass.setTameMax(maxSummon);
-            } catch (Exception e) {
-                plugin.log(Level.WARNING, "summon-max not set correctly -  (" + maxSummon + ") is not a number for - " + className);
-            }
-
             boolean added = addClass(newClass);
             if (!added) {
                 plugin.log(Level.WARNING, "Duplicate class (" + className + ") found. Skipping this class.");

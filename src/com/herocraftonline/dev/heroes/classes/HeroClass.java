@@ -47,10 +47,6 @@ public class HeroClass {
 
     private String name;
     private HeroClass parent;
-    private boolean tameWolves;
-    private int tameMax;
-    private boolean summonCreatures;
-    private int summonMax;
     private Set<String> allowedArmor;
     private Set<String> allowedWeapons;
     private Set<ExperienceType> experienceSources;
@@ -64,10 +60,6 @@ public class HeroClass {
         experienceSources = new LinkedHashSet<ExperienceType>();
         specializations = new LinkedHashSet<HeroClass>();
         skills = new LinkedHashMap<String, SkillSettings>();
-        tameWolves = false;
-        tameMax = 0;
-        summonCreatures = false;
-        summonMax = 0;
     }
 
     public HeroClass(String name) {
@@ -124,22 +116,6 @@ public class HeroClass {
         return parent == null ? null : parent;
     }
 
-    public boolean getTamable() {
-        return tameWolves;
-    }
-
-    public int getTameMax() {
-        return tameMax;
-    }
-
-    public boolean getSummonable() {
-        return summonCreatures;
-    }
-
-    public int getSummonMax() {
-        return summonMax;
-    }
-
     public void setParent(HeroClass parent) {
         this.parent = parent;
     }
@@ -162,22 +138,6 @@ public class HeroClass {
 
     public void setExperienceSources(Set<ExperienceType> experienceSources) {
         this.experienceSources = experienceSources;
-    }
-
-    public void setTamable(Boolean tameWolves) {
-        this.tameWolves = tameWolves;
-    }
-
-    public void setTameMax(int tameMax) {
-        this.tameMax = tameMax;
-    }
-
-    public void setSummonable(Boolean summonCreatures) {
-        this.summonCreatures = summonCreatures;
-    }
-
-    public void setSummonMax(int summonMax) {
-        this.summonMax = summonMax;
     }
 
     @Override
