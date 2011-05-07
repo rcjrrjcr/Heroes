@@ -150,6 +150,7 @@ public class Hero {
                     exp = prop.getExperience(prop.maxLevel);
                     masteries.add(heroClass.getName());
                     Messaging.broadcast(plugin, "$1 has become a master $2!", player.getName(), heroClass.getName());
+                    plugin.getHeroManager().saveHeroFile(player);
                 }
             }
         }
