@@ -37,8 +37,10 @@ import com.herocraftonline.dev.heroes.command.commands.PartyAcceptCommand;
 import com.herocraftonline.dev.heroes.command.commands.PartyChatCommand;
 import com.herocraftonline.dev.heroes.command.commands.PartyCreateCommand;
 import com.herocraftonline.dev.heroes.command.commands.PartyInviteCommand;
+import com.herocraftonline.dev.heroes.command.commands.PathsCommand;
 import com.herocraftonline.dev.heroes.command.commands.RecoverItemsCommand;
 import com.herocraftonline.dev.heroes.command.commands.SkillCommand;
+import com.herocraftonline.dev.heroes.command.commands.SpecsCommand;
 import com.herocraftonline.dev.heroes.command.commands.ToolsCommand;
 import com.herocraftonline.dev.heroes.command.commands.VerboseCommand;
 import com.herocraftonline.dev.heroes.command.commands.WhoCommand;
@@ -217,6 +219,8 @@ public class Heroes extends JavaPlugin {
         commandManager.addCommand(new ArmorCommand(this));
         commandManager.addCommand(new ToolsCommand(this));
         commandManager.addCommand(new WhoCommand(this));
+        commandManager.addCommand(new PathsCommand(this));
+        commandManager.addCommand(new SpecsCommand(this));
     }
 
     /**

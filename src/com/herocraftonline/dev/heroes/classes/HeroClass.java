@@ -46,6 +46,7 @@ public class HeroClass {
     }
 
     private String name;
+    private String description;
     private HeroClass parent;
     private Set<String> allowedArmor;
     private Set<String> allowedWeapons;
@@ -55,6 +56,7 @@ public class HeroClass {
 
     public HeroClass() {
         name = new String();
+        description = new String();
         allowedArmor = new LinkedHashSet<String>();
         allowedWeapons = new LinkedHashSet<String>();
         experienceSources = new LinkedHashSet<ExperienceType>();
@@ -165,6 +167,14 @@ public class HeroClass {
             return false;
         }
         return true;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
 }
