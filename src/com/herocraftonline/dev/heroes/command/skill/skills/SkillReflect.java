@@ -60,7 +60,7 @@ public class SkillReflect extends ActiveEffectSkill {
 
         @Override
         public void onEntityDamage(EntityDamageEvent event) {
-            if (event.isCancelled() || event instanceof EntityDamageByEntityEvent) {
+            if (event.isCancelled() || !(event instanceof EntityDamageByEntityEvent)) {
                 return;
             }
 
