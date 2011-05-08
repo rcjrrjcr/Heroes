@@ -22,16 +22,13 @@ import com.herocraftonline.dev.heroes.util.Messaging;
 
 public abstract class TargettedSkill extends ActiveSkill {
 
-    protected int maxDistance;
-
     public TargettedSkill(Heroes plugin) {
         super(plugin);
     }
 
     @Override
     public void init() {
-        maxDistance = config.getInt("max-distance", 15);
-        useText = config.getString("use-text", "%hero% used %skill% on %target%!");
+        useText = getSetting(null, "use-text", "%hero% used %skill%!");
         if (useText != null) {
             useText = useText.replace("%hero%", "$1").replace("%skill%", "$2").replace("%target%", "$3");
         }
@@ -48,6 +45,7 @@ public abstract class TargettedSkill extends ActiveSkill {
     @Override
     public boolean use(Hero hero, String[] args) {
         Player player = hero.getPlayer();
+        int maxDistance = getSetting(hero.getHeroClass(), "maxDistance", 10);
         LivingEntity target = null;
         if (args.length > 0) {
             target = plugin.getServer().getPlayer(args[0]);
@@ -78,10 +76,6 @@ public abstract class TargettedSkill extends ActiveSkill {
     }
 
     public abstract boolean use(Hero hero, LivingEntity target, String[] args);
-
-    public int getMaxDistance() {
-        return maxDistance;
-    }
 
     /**
      * Returns the first LivingEntity in the line of sight of a Player.

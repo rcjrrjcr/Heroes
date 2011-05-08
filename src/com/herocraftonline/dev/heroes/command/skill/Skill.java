@@ -1,9 +1,6 @@
 package com.herocraftonline.dev.heroes.command.skill;
 
-import java.util.HashMap;
-
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event.Type;
@@ -12,14 +9,14 @@ import org.bukkit.util.config.Configuration;
 import org.bukkit.util.config.ConfigurationNode;
 
 import com.herocraftonline.dev.heroes.Heroes;
+import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.command.BaseCommand;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 import com.herocraftonline.dev.heroes.util.Messaging;
 
 public abstract class Skill extends BaseCommand {
 
-    protected ConfigurationNode config;
-    protected HashMap<Material, Integer> cost = new HashMap<Material, Integer>();
+    private ConfigurationNode config;
 
     public Skill(Heroes plugin) {
         super(plugin);
@@ -50,13 +47,21 @@ public abstract class Skill extends BaseCommand {
     public ConfigurationNode getDefaultConfig() {
         return Configuration.getEmptyNode();
     }
-
-    public HashMap<Material, Integer> getCost() {
-        return cost;
-    }
-
-    public ConfigurationNode getConfig() {
-        return config;
+    
+    @SuppressWarnings("unchecked")
+    public <T> T getSetting(HeroClass heroClass, String setting, T def) {
+        Object value = null;
+        if (heroClass != null) {
+            value = heroClass.getSkillSettings(name).getProperty(setting);
+        }
+        if (value == null) {
+            value = config.getProperty(setting);
+        }
+        try {
+            return value == null ? def : (T) value;
+        } catch (ClassCastException e) {
+            return def;
+        }
     }
 
     public void setConfig(ConfigurationNode config) {

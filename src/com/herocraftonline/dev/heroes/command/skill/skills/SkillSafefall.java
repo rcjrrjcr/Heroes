@@ -7,8 +7,6 @@ import org.bukkit.event.Event.Type;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityListener;
-import org.bukkit.util.config.ConfigurationNode;
-
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.skill.ActiveEffectSkill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
@@ -28,19 +26,6 @@ public class SkillSafefall extends ActiveEffectSkill {
         identifiers.add("skill safefall");
 
         registerEvent(Type.ENTITY_DAMAGE, new SkillEntityListener(), Priority.Normal);
-    }
-
-    @Override
-    public void init() {
-        super.init();
-        duration = config.getInt("duration", 10000);
-    }
-
-    @Override
-    public ConfigurationNode getDefaultConfig() {
-        ConfigurationNode node = super.getDefaultConfig();
-        node.setProperty("duration", 10000);
-        return node;
     }
 
     @Override

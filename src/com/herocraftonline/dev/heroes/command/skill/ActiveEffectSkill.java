@@ -16,11 +16,11 @@ public abstract class ActiveEffectSkill extends ActiveSkill {
 
     @Override
     public void init() {
-        useText = config.getString("use-text", "%hero% gained %skill%!");
+        useText = getSetting(null, "use-text", "%hero% gained %skill%!");
         if (useText != null) {
             useText = useText.replace("%hero%", "$1").replace("%skill%", "$2");
         }
-        expiryText = config.getString("expire-text", "%hero% lost %skill%!");
+        expiryText = getSetting(null, "expire-text", "%hero% lost %skill%!");
         if (expiryText != null) {
             expiryText = expiryText.replace("%hero%", "$1").replace("%skill%", "$2");
         }
@@ -31,6 +31,7 @@ public abstract class ActiveEffectSkill extends ActiveSkill {
         ConfigurationNode node = Configuration.getEmptyNode();
         node.setProperty("use-text", "%hero% gained %skill%!");
         node.setProperty("expire-text", "%hero% lost %skill%!");
+        node.setProperty("duration", 10000);
         return node;
     }
 

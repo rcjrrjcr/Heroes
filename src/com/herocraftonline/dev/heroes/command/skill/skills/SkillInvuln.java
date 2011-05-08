@@ -15,8 +15,6 @@ import com.herocraftonline.dev.heroes.persistence.HeroEffects;
 
 public class SkillInvuln extends ActiveEffectSkill {
 
-    private int duration;
-
     public SkillInvuln(Heroes plugin) {
         super(plugin);
         name = "Invuln";
@@ -30,12 +28,6 @@ public class SkillInvuln extends ActiveEffectSkill {
     }
 
     @Override
-    public void init() {
-        super.init();
-        duration = config.getInt("duration", 10000);
-    }
-
-    @Override
     public ConfigurationNode getDefaultConfig() {
         ConfigurationNode node = super.getDefaultConfig();
         node.setProperty("duration", 10000);
@@ -46,7 +38,7 @@ public class SkillInvuln extends ActiveEffectSkill {
     public boolean use(Hero hero, String[] args) {
         Player player = hero.getPlayer();
         String playerName = player.getName();
-        hero.getEffects().putEffect(name, (double) duration);
+        hero.getEffects().putEffect(name, getSetting(hero.getHeroClass(), "duration", 10000.0));
 
         if (useText != null) {
             notifyNearbyPlayers(player.getLocation(), useText, playerName, name);

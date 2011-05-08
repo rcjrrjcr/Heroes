@@ -2,8 +2,6 @@ package com.herocraftonline.dev.heroes.command.skill.skills;
 
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.util.config.ConfigurationNode;
-
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.skill.TargettedSkill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
@@ -18,19 +16,6 @@ public class SkillLayhands extends TargettedSkill {
         minArgs = 0;
         maxArgs = 1;
         identifiers.add("skill layhands");
-    }
-
-    @Override
-    public void init() {
-        super.init();
-        maxDistance = config.getInt("max-distance", 15);
-    }
-
-    @Override
-    public ConfigurationNode getDefaultConfig() {
-        ConfigurationNode node = super.getDefaultConfig();
-        node.setProperty("max-distance", 15);
-        return node;
     }
 
     @Override

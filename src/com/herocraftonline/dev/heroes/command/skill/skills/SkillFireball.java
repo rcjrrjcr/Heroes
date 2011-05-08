@@ -16,13 +16,11 @@ import org.bukkit.util.Vector;
 import org.bukkit.util.config.ConfigurationNode;
 
 import com.herocraftonline.dev.heroes.Heroes;
+import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.command.skill.ActiveSkill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 
 public class SkillFireball extends ActiveSkill {
-
-    private int damage;
-    private int fireTicks;
 
     public SkillFireball(Heroes plugin) {
         super(plugin);
@@ -34,13 +32,6 @@ public class SkillFireball extends ActiveSkill {
         identifiers.add("skill fireball");
 
         registerEvent(Type.ENTITY_DAMAGE, new SkillEntityListener(), Priority.Monitor);
-    }
-
-    @Override
-    public void init() {
-        super.init();
-        damage = config.getInt("damage", 4);
-        fireTicks = config.getInt("fire-ticks", 100);
     }
 
     @Override
@@ -88,9 +79,14 @@ public class SkillFireball extends ActiveSkill {
                     if (projectile.getFireTicks() > 0) {
                         Entity entity = subEvent.getEntity();
                         if (entity instanceof LivingEntity) {
-                            LivingEntity livingEntity = (LivingEntity) entity;
-                            livingEntity.setFireTicks(fireTicks);
-                            livingEntity.damage(damage);
+                            Entity dmger = subEvent.getDamager();
+                            if (dmger instanceof Player) {
+                                Hero hero = plugin.getHeroManager().getHero((Player) dmger);
+                                HeroClass heroClass = hero.getHeroClass();
+                                LivingEntity livingEntity = (LivingEntity) entity;
+                                livingEntity.setFireTicks(getSetting(heroClass, "fire-ticks", 100));
+                                livingEntity.damage(getSetting(heroClass, "damage", 4));
+                            }
                         }
                     }
                 }
