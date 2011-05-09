@@ -9,15 +9,6 @@
 		<finalName>Heroes</finalName>
 		<plugins>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.2</version>
-				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
-				</configuration>
-			</plugin>
-			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<configuration>
 					<descriptors>
@@ -71,11 +62,8 @@
 						</goals>
 						<configuration>
 							<tasks>
-								<property name="dir.bin" value="bin" />
 								<property name="dir.dist" value="target" />
-								<property name="dir.bin.skills" value="com/herocraftonline/dev/heroes/command/skill/skills" />
 								<property name="dir.dist.skills" value="externals" />
-								<property name="runtime-classpath" refid="maven.runtime.classpath" />
 								<mkdir dir="${dir.dist}/${dir.dist.skills}" />
 							</tasks>
 						</configuration>
@@ -104,9 +92,24 @@
 	</build>
 	<dependencies>
 		<dependency>
+			<groupId>org.bukkit</groupId>
+			<artifactId>craftbukkit</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<type>jar</type>
+			<scope>compile</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.bukkit</groupId>
+					<artifactId>minecraft-server</artifactId>
+					<!-- Stupid, stupid duplicate classes. How do you select conflicting classes among dependencies? -->
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
 			<groupId>com.nijikokun.bukkit</groupId>
 			<artifactId>Permissions</artifactId>
 			<version>2.7.2</version>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.nijikokun.bukkit</groupId>
@@ -117,28 +120,16 @@
 		</dependency>
 		<dependency>
 			<groupId>org.bukkit</groupId>
-			<artifactId>craftbukkit</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.bukkit</groupId>
-			<artifactId>minecraft-server</artifactId>
-			<version>1.5</version>
-			<type>jar</type>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.bukkit</groupId>
 			<artifactId>bukkit</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
+			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
 	</dependencies>
 	<repositories>
 		<repository>
 			<id>bukkit-repo</id>
-			<name>bukkit-repo</name>
+-			<name>bukkit-repo</name>
 			<url>http://repo.bukkit.org/artifactory/repo</url>
 		</repository>
 	</repositories>
