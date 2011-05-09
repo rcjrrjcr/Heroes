@@ -36,16 +36,19 @@ public class SkillRepairWeapon extends PassiveSkill {
         public void onCustomEvent(Event event) {
             if (event instanceof InventoryChangedEvent) {
                 InventoryChangedEvent subEvent = (InventoryChangedEvent) event;
+                System.out.println("InventoryChangedEvent detected.");
                 CraftPlayer player = (CraftPlayer) subEvent.getPlayer();
                 Container container = player.getHandle().activeContainer;
                 InventoryCrafting ic;
                 InventoryCraftResult icr;
                 if (container instanceof ContainerPlayer) {
                     ContainerPlayer cp = (ContainerPlayer) container;
+                    System.out.println("Player is currently using in-head crafting table.");
                     ic = cp.a;
                     icr = (InventoryCraftResult) cp.b;
                 } else if (container instanceof ContainerWorkbench) {
                     ContainerWorkbench cw = (ContainerWorkbench) container;
+                    System.out.println("Player is currently using workbench.");
                     ic = cw.a;
                     icr = (InventoryCraftResult) cw.b;
                 } else {
@@ -67,18 +70,23 @@ public class SkillRepairWeapon extends PassiveSkill {
                         if (name[0].equals("WOOD")) {
                             newLevel = 0;
                             repairTypeId = Material.WOOD.getId();
+                            System.out.println("Found a wood sword.");
                         } else if (name[0].equals("STONE")) {
                             newLevel = 1;
                             repairTypeId = Material.COBBLESTONE.getId();
+                            System.out.println("Found a stone sword.");
                         } else if (name[0].equals("IRON")) {
                             newLevel = 2;
                             repairTypeId = Material.IRON_INGOT.getId();
+                            System.out.println("Found an iron sword.");
                         } else if (name[0].equals("GOLD")) {
                             newLevel = 3;
                             repairTypeId = Material.GOLD_INGOT.getId();
+                            System.out.println("Found a gold sword.");
                         } else if (name[0].equals("DIAMOND")) {
                             newLevel = 4;
                             repairTypeId = Material.DIAMOND.getId();
+                            System.out.println("Found a diamond sword.");
                         }
                         if (newLevel > repairLevel) {
                             repairLevel = newLevel;
@@ -87,6 +95,7 @@ public class SkillRepairWeapon extends PassiveSkill {
                     }
                 }
                 if (weaponPos == -1) {
+                    System.out.println("No weapon found.");
                     return;
                 }
                 for (int i = 0; i < items.length; i++) {
@@ -96,6 +105,8 @@ public class SkillRepairWeapon extends PassiveSkill {
                     }
                     if (is.id == repairTypeId) {
                         repairPos = i;
+                        System.out.println("Found instance of repair material.");
+                        break;
                     }
                 }
                 if (repairPos == -1) {
@@ -109,9 +120,12 @@ public class SkillRepairWeapon extends PassiveSkill {
                 } else {
                     repair.count--;
                 }
+                System.out.println("Used up one unit of repair material.");
                 weapon.damage = weapon.damage < 50 ? 0 : weapon.damage - 50;
+                System.out.println("Weapon durability set to "+weapon.damage+".");
                 items[weaponPos] = null;
                 icr.setItem(0, weapon);
+                System.out.println("Weapon moved to result slot.");
             }
         }
     }
