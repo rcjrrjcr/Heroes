@@ -1,8 +1,8 @@
 <project name="Heroes" default="build" basedir=".">
     <property name="dir.bin" value="bin" />
-    <property name="dir.dist" value="build" />
+    <property name="dir.dist" value="target" />
     <property name="dir.bin.skills" value="com/herocraftonline/dev/heroes/command/skill/skills" />
-    <property name="dir.dist.skills" value="Heroes/externals" />
+    <property name="dir.dist.skills" value="externals" />
     
 	<property name="classpath" value="libs"/>
 
@@ -39,6 +39,7 @@
     </target>
 
     <target name="jar-skills">
+    	<mkdir dir="${dir.bin}/${dir.bin.skills}/" />
         <foreach target="jar-skill" param="files">
             <fileset dir="${dir.bin}/${dir.bin.skills}" includes="Skill*.class" excludes="Skill*$*.class" />
         </foreach>
