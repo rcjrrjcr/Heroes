@@ -21,11 +21,8 @@
 			</excludes>
 		</fileSet>
 		<fileSet>
-			<directory>${project.build.directory}/externals/</directory>
-			<outputDirectory>/Heroes/externals/</outputDirectory>
-			<includes>
-				<include>Skill*.jar</include>
-			</includes>
+			<directory>${project.build.directory}/externals</directory>
+			<outputDirectory>Heroes/externals</outputDirectory>
 		</fileSet>
 	</fileSets>
 	<files>
