@@ -8,8 +8,6 @@ import com.herocraftonline.dev.heroes.persistence.Hero;
 
 public class SkillGTeleport extends ActiveSkill {
 
-    private String targetText = null;
-
     public SkillGTeleport(Heroes plugin) {
         super(plugin);
         name = "Group Teleport";
@@ -21,24 +19,12 @@ public class SkillGTeleport extends ActiveSkill {
     }
 
     @Override
-    public void init() {
-        super.init();
-        targetText = config.getString("target-text");
-        if (targetText != null) {
-            targetText = targetText.replace("%hero%", "$1").replace("%skill%", "$2").replace("%target%", "$3");
-        }
-    }
-
-    @Override
     public boolean use(Hero hero, String[] args) {
         if (hero.getParty() != null && hero.getParty().getMembers().size() != 1) {
             Player player = hero.getPlayer();
             String heroName = player.getName();
             for (Player n : hero.getParty().getMembers()) {
                 n.teleport(player);
-                if (targetText != null) {
-                    notifyNearbyPlayers(n.getLocation(), useText, heroName, name, n.getName());
-                }
             }
             if (useText != null) {
                 notifyNearbyPlayers(player.getLocation(), useText, heroName, name);

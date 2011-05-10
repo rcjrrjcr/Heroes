@@ -24,16 +24,9 @@ public class SkillHarmtouch extends TargettedSkill {
     }
 
     @Override
-    public void init() {
-        super.init();
-        maxDistance = config.getInt("max-distance", 15);
-    }
-
-    @Override
     public ConfigurationNode getDefaultConfig() {
         ConfigurationNode node = super.getDefaultConfig();
         node.setProperty("damage", 10);
-        node.setProperty("max-distance", 15);
         return node;
     }
 
@@ -45,7 +38,7 @@ public class SkillHarmtouch extends TargettedSkill {
             return false;
         }
 
-        int damage = config.getInt("damage", 10);
+        int damage = getSetting(hero.getHeroClass(), "damage", 10);
         EntityDamageByEntityEvent damageEntityEvent = new EntityDamageByEntityEvent(player, target, DamageCause.CUSTOM, damage);
         plugin.getServer().getPluginManager().callEvent(damageEntityEvent);
         if (damageEntityEvent.isCancelled()) {

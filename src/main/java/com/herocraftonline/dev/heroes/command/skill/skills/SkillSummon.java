@@ -18,8 +18,6 @@ import com.herocraftonline.dev.heroes.util.Messaging;
 
 public class SkillSummon extends ActiveSkill {
 
-    private int maxSummons;
-
     public SkillSummon(Heroes plugin) {
         super(plugin);
         name = "Summon";
@@ -33,11 +31,10 @@ public class SkillSummon extends ActiveSkill {
     @Override
     public void init() {
         super.init();
-        useText = config.getString("use-text", "%hero% summoned %creature%!");
+        useText = getSetting(null, "use-text", "%hero% summoned %creature%!");
         if (useText != null) {
             useText = useText.replace("%hero%", "$1").replace("%skill%", "$2").replace("%creature%", "$3");
         }
-        maxSummons = config.getInt("max-summons", 3);
     }
 
     @Override
@@ -52,7 +49,7 @@ public class SkillSummon extends ActiveSkill {
     public boolean use(Hero hero, String[] args) {
         Player player = hero.getPlayer();
         CreatureType creatureType = CreatureType.fromName(args[0].toUpperCase());
-        if (creatureType != null && hero.getSummons().size() <= maxSummons) {
+        if (creatureType != null && hero.getSummons().size() <= getSetting(hero.getHeroClass(), "max-summons", 3)) {
             Entity spawnedEntity = player.getWorld().spawnCreature(player.getLocation(), creatureType);
             if (spawnedEntity instanceof Creature && spawnedEntity instanceof Ghast && spawnedEntity instanceof Slime) {
                 spawnedEntity.remove();

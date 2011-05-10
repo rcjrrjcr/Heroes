@@ -8,16 +8,12 @@ import org.bukkit.event.Event.Type;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityListener;
-import org.bukkit.util.config.ConfigurationNode;
-
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.skill.ActiveEffectSkill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 import com.herocraftonline.dev.heroes.persistence.HeroEffects;
 
 public class SkillReflect extends ActiveEffectSkill {
-
-    private int duration;
 
     public SkillReflect(Heroes plugin) {
         super(plugin);
@@ -32,23 +28,10 @@ public class SkillReflect extends ActiveEffectSkill {
     }
 
     @Override
-    public void init() {
-        super.init();
-        duration = config.getInt("duration", 10000);
-    }
-
-    @Override
-    public ConfigurationNode getDefaultConfig() {
-        ConfigurationNode node = super.getDefaultConfig();
-        node.setProperty("duration", 10000);
-        return node;
-    }
-
-    @Override
     public boolean use(Hero hero, String[] args) {
         Player player = hero.getPlayer();
         String playerName = player.getName();
-        hero.getEffects().putEffect(name, (double) duration);
+        hero.getEffects().putEffect(name, getSetting(hero.getHeroClass(), "duration", 10000.0));
 
         if (useText != null) {
             notifyNearbyPlayers(player.getLocation(), useText, playerName, name);

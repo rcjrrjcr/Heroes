@@ -10,9 +10,7 @@ import com.herocraftonline.dev.heroes.persistence.Hero;
 
 public class SkillSyphon extends TargettedSkill {
 
-    private double hpMult;
-    private int def;
-    private final static int maxHealth = 20; // Max health(200) or full health(20)??
+    private final static int maxHealth = 20;
 
     public SkillSyphon(Heroes plugin) {
         super(plugin);
@@ -25,17 +23,10 @@ public class SkillSyphon extends TargettedSkill {
     }
 
     @Override
-    public void init() {
-        super.init();
-        maxDistance = config.getInt("max-distance", 15);
-        hpMult = config.getDouble("multiplier", 1d);
-        def = config.getInt("default-health", 4);
-    }
-
-    @Override
     public ConfigurationNode getDefaultConfig() {
         ConfigurationNode node = super.getDefaultConfig();
-        node.setProperty("max-distance", 15);
+        node.setProperty("multiplier", 1d);
+        node.setProperty("default-health", 4);
         return node;
     }
 
@@ -43,7 +34,7 @@ public class SkillSyphon extends TargettedSkill {
     public boolean use(Hero hero, LivingEntity target, String[] args) {
         Player player = hero.getPlayer();
 
-        int transferredHealth = def;
+        int transferredHealth = getSetting(hero.getHeroClass(), "default-health", 4);
         if (args.length != 1) {
             try {
                 transferredHealth = Integer.parseInt(args[1]);
@@ -56,7 +47,7 @@ public class SkillSyphon extends TargettedSkill {
         transferredHealth = playerHealth < transferredHealth ? playerHealth : transferredHealth > maxHealth ? maxHealth : transferredHealth;
         player.setHealth(playerHealth - transferredHealth);
         int targetHealth = target.getHealth();
-        transferredHealth *= hpMult;
+        transferredHealth *= getSetting(hero.getHeroClass(), "multiplier", 1d);
         transferredHealth = maxHealth - targetHealth < transferredHealth ? maxHealth - targetHealth : transferredHealth < 0 ? 0 : transferredHealth;
         target.setHealth(targetHealth + transferredHealth);
 

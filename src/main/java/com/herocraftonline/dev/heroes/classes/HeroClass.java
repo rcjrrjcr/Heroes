@@ -5,6 +5,8 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.bukkit.util.config.ConfigurationNode;
+
 public class HeroClass {
 
     public static enum ArmorType {
@@ -51,7 +53,7 @@ public class HeroClass {
     private Set<String> allowedArmor;
     private Set<String> allowedWeapons;
     private Set<ExperienceType> experienceSources;
-    private Map<String, SkillSettings> skills;
+    private Map<String, ConfigurationNode> skills;
     private Set<HeroClass> specializations;
 
     public HeroClass() {
@@ -61,7 +63,7 @@ public class HeroClass {
         allowedWeapons = new LinkedHashSet<String>();
         experienceSources = new LinkedHashSet<ExperienceType>();
         specializations = new LinkedHashSet<HeroClass>();
-        skills = new LinkedHashMap<String, SkillSettings>();
+        skills = new LinkedHashMap<String, ConfigurationNode>();
     }
 
     public HeroClass(String name) {
@@ -73,8 +75,8 @@ public class HeroClass {
         return skills.containsKey(name.toLowerCase());
     }
 
-    public void addSkill(String name, int requiredLevel, int manaCost, int cooldown) {
-        skills.put(name.toLowerCase(), new SkillSettings(requiredLevel, manaCost, cooldown));
+    public void addSkill(String name, ConfigurationNode settings) {
+        skills.put(name.toLowerCase(), settings);
     }
 
     public void removeSkill(String name) {
@@ -130,7 +132,7 @@ public class HeroClass {
         this.specializations = specializations;
     }
 
-    public SkillSettings getSkillSettings(String name) {
+    public ConfigurationNode getSkillSettings(String name) {
         return skills.get(name.toLowerCase());
     }
 

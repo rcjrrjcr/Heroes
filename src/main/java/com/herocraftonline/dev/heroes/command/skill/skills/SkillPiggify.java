@@ -39,15 +39,8 @@ public class SkillPiggify extends TargettedSkill {
     }
 
     @Override
-    public void init() {
-        super.init();
-        maxDistance = config.getInt("max-distance", 20);
-    }
-
-    @Override
     public ConfigurationNode getDefaultConfig() {
         ConfigurationNode node = super.getDefaultConfig();
-        node.setProperty("max-distance", 20);
         node.setProperty("duration", 10000);
         return node;
     }
@@ -81,7 +74,7 @@ public class SkillPiggify extends TargettedSkill {
                 creatures.get(0).remove();
                 creatures.remove(0);
             }
-        }, (long) (config.getInt("duration", 10000) * 0.02));
+        }, (long) (getSetting(hero.getHeroClass(), "duration", 10000) * 0.02));
 
         String targetName = target instanceof Player ? ((Player) target).getName() : target.getClass().getSimpleName().substring(5);
         if (useText != null) {

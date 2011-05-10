@@ -6,12 +6,12 @@ import org.bukkit.event.CustomEventListener;
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event.Type;
+import org.bukkit.util.config.ConfigurationNode;
 
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.api.ClassChangeEvent;
 import com.herocraftonline.dev.heroes.api.LevelEvent;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
-import com.herocraftonline.dev.heroes.classes.SkillSettings;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 
 public class OutsourcedSkill extends Skill {
@@ -38,9 +38,9 @@ public class OutsourcedSkill extends Skill {
 
         String world = player.getWorld().getName();
         String playerName = player.getName();
-        SkillSettings settings = heroClass.getSkillSettings(name);
+        ConfigurationNode settings = heroClass.getSkillSettings(name);
         if (settings != null) {
-            if (meetsLevelRequirement(hero, settings.LevelRequirement)) {
+            if (meetsLevelRequirement(hero, settings.getInt("level", 1))) {
                 for (String permission : permissions) {
                     if (!Heroes.Permissions.has(player, permission)) {
                         Heroes.Permissions.addUserPermission(world, playerName, permission);

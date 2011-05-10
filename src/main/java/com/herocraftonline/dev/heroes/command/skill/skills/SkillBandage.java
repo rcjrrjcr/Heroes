@@ -9,6 +9,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.config.ConfigurationNode;
 
 import com.herocraftonline.dev.heroes.Heroes;
+import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.command.skill.TargettedSkill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 import com.herocraftonline.dev.heroes.util.Messaging;
@@ -16,8 +17,6 @@ import com.herocraftonline.dev.heroes.util.Messaging;
 public class SkillBandage extends TargettedSkill {
 
     private HashMap<Integer, Integer> playerSchedulers = new HashMap<Integer, Integer>();
-    private int tickHealth;
-    private int ticks;
 
     public SkillBandage(Heroes plugin) {
         super(plugin);
@@ -27,12 +26,6 @@ public class SkillBandage extends TargettedSkill {
         minArgs = 0;
         maxArgs = 1;
         identifiers.add("skill bandage");
-    }
-
-    @Override
-    public void init() {
-        super.init();
-        maxDistance = config.getInt("max-distance", 5);
     }
 
     @Override
@@ -64,9 +57,10 @@ public class SkillBandage extends TargettedSkill {
                 return false;
             }
 
-            tickHealth = config.getInt("tick-health", 1);
-            ticks = config.getInt("ticks", 10);
-            playerSchedulers.put(tPlayer.getEntityId(), plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new BandageTask(plugin, tPlayer), 20L, 20L));
+            HeroClass heroClass = hero.getHeroClass();
+            int ticks = getSetting(heroClass, "ticks", 10);
+            int tickHealth = getSetting(heroClass, "tick-health", 1);
+            playerSchedulers.put(tPlayer.getEntityId(), plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new BandageTask(plugin, tPlayer, ticks, tickHealth), 20L, 20L));
 
             if (useText != null) {
                 notifyNearbyPlayers(player.getLocation(), useText, player.getName(), name, tPlayer == player ? "himself" : tPlayer.getName());
@@ -90,10 +84,14 @@ public class SkillBandage extends TargettedSkill {
         private JavaPlugin plugin;
         private Player target;
         private int timesRan = 0;
+        private final int ticks;
+        private final int tickHealth;
 
-        public BandageTask(JavaPlugin plugin, Player target) {
+        public BandageTask(JavaPlugin plugin, Player target, int ticks, int tickHealth) {
             this.plugin = plugin;
             this.target = target;
+            this.ticks = ticks;
+            this.tickHealth = tickHealth;
         }
 
         @Override
