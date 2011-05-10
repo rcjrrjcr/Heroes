@@ -5,8 +5,6 @@ import java.util.HashMap;
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.util.config.ConfigurationNode;
-
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.skill.TargettedSkill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
@@ -22,19 +20,6 @@ public class SkillRevive extends TargettedSkill {
         minArgs = 1;
         maxArgs = 1;
         identifiers.add("skill revive");
-    }
-
-    @Override
-    public void init() {
-        super.init();
-        maxDistance = config.getInt("max-distance", 15);
-    }
-
-    @Override
-    public ConfigurationNode getDefaultConfig() {
-        ConfigurationNode node = super.getDefaultConfig();
-        node.setProperty("max-distance", 15);
-        return node;
     }
 
     @Override

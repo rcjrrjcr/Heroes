@@ -19,6 +19,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.util.config.ConfigurationNode;
 
 import com.herocraftonline.dev.heroes.Heroes;
+import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.command.skill.ActiveEffectSkill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 import com.herocraftonline.dev.heroes.persistence.HeroEffects;
@@ -47,7 +48,7 @@ public class SkillBlackjack extends ActiveEffectSkill {
 
     @Override
     public boolean use(Hero hero, String[] args) {
-        int duration = config.getInt("effect-duration", 20000);
+        int duration = getSetting(hero.getHeroClass(), "effect-duration", 20000);
         hero.getEffects().putEffect(name, (double) duration);
         notifyNearbyPlayers(hero.getPlayer().getLocation(), useText, hero.getPlayer().getName(), name);
         return true;
@@ -98,11 +99,13 @@ public class SkillBlackjack extends ActiveEffectSkill {
 
                     if (attackingEntity instanceof Player) {
                         Hero attackingHero = plugin.getHeroManager().getHero((Player) attackingEntity);
+                        HeroClass heroClass = attackingHero.getHeroClass();
                         HeroEffects effects = attackingHero.getEffects();
                         if (effects.hasEffect(name)) {
-                            double chance = config.getDouble("stun-chance", 0.20);
+                            double chance = getSetting(heroClass, "stun-chance", 0.20);
                             if (random.nextDouble() < chance) {
-                                stunnedEntities.put(defendingEntity.getEntityId(), System.currentTimeMillis() + config.getInt("stun-duration", 5000));
+                                int duration = getSetting(heroClass, "stun-duration", 5000);
+                                stunnedEntities.put(defendingEntity.getEntityId(), System.currentTimeMillis() + duration);
                                 String targetName = defendingEntity instanceof Player ? ((Player) defendingEntity).getName() : defendingEntity.getClass().getSimpleName().substring(5);
                                 notifyNearbyPlayers(attackingHero.getPlayer().getLocation(), "$1 stunned $2!", attackingHero.getPlayer().getName(), targetName);
                             }

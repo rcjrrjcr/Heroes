@@ -8,16 +8,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
-import org.bukkit.util.config.ConfigurationNode;
-
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.skill.TargettedSkill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 import com.herocraftonline.dev.heroes.util.Messaging;
 
 public class SkillBolt extends TargettedSkill {
-
-    private int radius;
 
     public SkillBolt(Heroes plugin) {
         super(plugin);
@@ -27,20 +23,6 @@ public class SkillBolt extends TargettedSkill {
         minArgs = 0;
         maxArgs = 1;
         identifiers.add("skill bolt");
-    }
-
-    @Override
-    public void init() {
-        super.init();
-        maxDistance = config.getInt("max-distance", 20);
-        radius = config.getInt("radius", 5);
-    }
-
-    @Override
-    public ConfigurationNode getDefaultConfig() {
-        ConfigurationNode node = super.getDefaultConfig();
-        node.setProperty("max-distance", 20);
-        return node;
     }
 
     @Override
@@ -58,6 +40,7 @@ public class SkillBolt extends TargettedSkill {
             return false;
         }
 
+        int radius = getSetting(hero.getHeroClass(), "radius", 10);
         List<Entity> entityList = target.getNearbyEntities(radius, radius, radius);
         for (Entity n : entityList) {
             if (n instanceof LivingEntity) {

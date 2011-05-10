@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.logging.Level;
 
 import org.bukkit.util.config.Configuration;
+import org.bukkit.util.config.ConfigurationNode;
 
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.classes.HeroClass.ArmorItems;
@@ -16,6 +17,7 @@ import com.herocraftonline.dev.heroes.classes.HeroClass.ExperienceType;
 import com.herocraftonline.dev.heroes.classes.HeroClass.WeaponItems;
 import com.herocraftonline.dev.heroes.classes.HeroClass.WeaponType;
 import com.herocraftonline.dev.heroes.command.skill.OutsourcedSkill;
+import com.herocraftonline.dev.heroes.command.skill.Skill;
 
 public class ClassManager {
 
@@ -143,14 +145,24 @@ public class ClassManager {
 
             List<String> skillNames = config.getKeys("classes." + className + ".permitted-skills");
             if (skillNames != null) {
-                for (String skill : skillNames) {
+                for (String skillName : skillNames) {
                     try {
-                        int reqLevel = config.getInt("classes." + className + ".permitted-skills." + skill + ".level", 1);
-                        int manaCost = config.getInt("classes." + className + ".permitted-skills." + skill + ".mana", 0);
-                        int cooldown = config.getInt("classes." + className + ".permitted-skills." + skill + ".cooldown", 0);
-                        newClass.addSkill(skill, reqLevel, manaCost, cooldown);
+                        Skill skill = (Skill) plugin.getCommandManager().getCommand(skillName);
+                        if (skill == null) {
+                            plugin.log(Level.WARNING, "Skill " + skillName + " defined for " + className + " not found.");
+                            continue;
+                        }
+                        
+                        ConfigurationNode skillSettings = Configuration.getEmptyNode();
+                        List<String> settings = config.getKeys("classes." + className + ".permitted-skills." + skillName);
+                        if (settings != null) {
+                            for (String key : settings) {
+                                skillSettings.setProperty(key, config.getProperty("classes." + className + ".permitted-skills." + skillName + "." + key));
+                            }
+                        }
+                        newClass.addSkill(skillName, skillSettings);
                     } catch (IllegalArgumentException e) {
-                        plugin.log(Level.WARNING, "Invalid skill (" + skill + ") defined for " + className + ". Skipping this skill.");
+                        plugin.log(Level.WARNING, "Invalid skill (" + skillName + ") defined for " + className + ". Skipping this skill.");
                     }
                 }
             } else {
@@ -161,8 +173,9 @@ public class ClassManager {
             if (permissionSkillNames != null) {
                 for (String skill : permissionSkillNames) {
                     try {
-                        int reqLevel = config.getInt("classes." + className + ".permission-skills." + skill + ".level", 1);
-                        newClass.addSkill(skill, reqLevel, 0, 0);
+                        ConfigurationNode skillSettings = Configuration.getEmptyNode();
+                        skillSettings.setProperty("level", config.getInt("classes." + className + ".permission-skills." + skill + ".level", 1));
+                        newClass.addSkill(skill, skillSettings);
 
                         String usage = config.getString("classes." + className + ".permission-skills." + skill + ".usage", "");
                         String[] permissions = config.getStringList("classes." + className + ".permission-skills." + skill + ".permissions", null).toArray(new String[0]);

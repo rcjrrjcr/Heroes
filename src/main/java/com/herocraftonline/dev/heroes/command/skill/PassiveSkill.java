@@ -12,7 +12,6 @@ import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.api.ClassChangeEvent;
 import com.herocraftonline.dev.heroes.api.LevelEvent;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
-import com.herocraftonline.dev.heroes.classes.SkillSettings;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 
 public abstract class PassiveSkill extends Skill {
@@ -42,7 +41,7 @@ public abstract class PassiveSkill extends Skill {
             notifyNearbyPlayers(hero.getPlayer().getLocation(), unapplyText, hero.getPlayer().getName(), name);
         }
     }
-
+/*
     @Override
     public void init() {
         applyText = config.getString("apply-text", "%hero% gained %skill%!");
@@ -54,7 +53,7 @@ public abstract class PassiveSkill extends Skill {
             unapplyText = unapplyText.replace("%hero%", "$1").replace("%skill%", "$2");
         }
     }
-
+*/
     @Override
     public ConfigurationNode getDefaultConfig() {
         ConfigurationNode node = Configuration.getEmptyNode();
@@ -83,8 +82,8 @@ public abstract class PassiveSkill extends Skill {
             }
             if (hero != null) {
                 HeroClass heroClass = hero.getHeroClass();
-                SkillSettings settings = heroClass.getSkillSettings(name);
-                if (settings == null || !meetsLevelRequirement(hero, settings.LevelRequirement)) {
+                ConfigurationNode settings = heroClass.getSkillSettings(name);
+                if (settings == null || !meetsLevelRequirement(hero, settings.getInt("level", 1))) {
                     unapply(hero);
                 } else {
                     apply(hero);
