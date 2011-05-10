@@ -1,6 +1,6 @@
 <project name="Heroes" default="build" basedir=".">
-    <property name="dir.bin" value="bin" />
     <property name="dir.dist" value="target" />
+    <property name="dir.bin" value="${dir.dist}/classes" />
     <property name="dir.bin.skills" value="com/herocraftonline/dev/heroes/command/skill/skills" />
     <property name="dir.dist.skills" value="externals" />
     
