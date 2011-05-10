@@ -8,7 +8,7 @@
 	</formats>
 	<fileSets>
 		<fileSet>
-			<directory>${project.basedir}/Heroes/</directory>
+			<directory>${project.basedir}/default/</directory>
 			<outputDirectory>/Heroes/</outputDirectory>
 			<includes>
 				<include>classes.yml</include>
@@ -16,6 +16,9 @@
 				<include>experience.yml</include>
 				<include>skills.yml</include>
 			</includes>
+			<excludes>
+				<exclude>skill.info.example</exclude>
+			</excludes>
 		</fileSet>
 		<fileSet>
 			<directory>${project.build.directory}/externals/</directory>
