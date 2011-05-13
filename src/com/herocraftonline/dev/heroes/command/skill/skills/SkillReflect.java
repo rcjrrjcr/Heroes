@@ -31,11 +31,8 @@ public class SkillReflect extends ActiveEffectSkill {
     public boolean use(Hero hero, String[] args) {
         Player player = hero.getPlayer();
         String playerName = player.getName();
-        hero.getEffects().putEffect(name, getSetting(hero.getHeroClass(), "duration", 10000.0));
-
-        if (useText != null) {
-            notifyNearbyPlayers(player.getLocation(), useText, playerName, name);
-        }
+        applyEffect(hero);
+        notifyNearbyPlayers(player.getLocation(), useText, playerName, name);
         return true;
     }
 

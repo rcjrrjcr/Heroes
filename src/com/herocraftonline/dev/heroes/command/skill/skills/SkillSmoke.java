@@ -34,14 +34,12 @@ public class SkillSmoke extends ActiveEffectSkill {
     public boolean use(Hero hero, String[] args) {
         CraftPlayer craftPlayer = (CraftPlayer) hero.getPlayer();
         // Tell all the logged in Clients to Destroy the Entity - Appears Invisible.
-        for (Player player : Bukkit.getServer().getOnlinePlayers()) {
+        for (Player player : plugin.getServer().getOnlinePlayers()) {
             CraftPlayer hostilePlayer = (CraftPlayer) player;
             hostilePlayer.getHandle().netServerHandler.sendPacket(new Packet29DestroyEntity(craftPlayer.getEntityId()));
         }
-        hero.getEffects().putEffect(getName(), 10000.0);
-        if (useText != null) {
-            notifyNearbyPlayers(craftPlayer.getLocation(), useText, craftPlayer.getName(), name); // Kinda ruins the stealthy part, but can be set to null to disable it
-        }
+        applyEffect(hero);
+        notifyNearbyPlayers(craftPlayer.getLocation(), useText, craftPlayer.getName(), name); // Kinda ruins the stealthy part, but can be set to null to disable it
         return true;
     }
 

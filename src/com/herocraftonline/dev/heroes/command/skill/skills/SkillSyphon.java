@@ -52,9 +52,7 @@ public class SkillSyphon extends TargettedSkill {
         target.setHealth(targetHealth + transferredHealth);
 
         String targetName = target instanceof Player ? ((Player) target).getName() : target.getClass().getSimpleName().substring(5);
-        if (useText != null) {
-            notifyNearbyPlayers(player.getLocation(), useText, player.getName(), name, target == player ? "himself" : targetName);
-        }
+        notifyNearbyPlayers(player.getLocation(), useText, player.getName(), name, target == player ? "himself" : targetName);
         return true;
     }
 

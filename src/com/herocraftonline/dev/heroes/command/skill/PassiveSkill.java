@@ -15,6 +15,9 @@ import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 
 public abstract class PassiveSkill extends Skill {
+    
+    public final String SETTING_APPLYTEXT = "apply-text";
+    public final String SETTING_UNAPPLYTEXT = "unapply-text";
 
     protected String applyText = null;
     protected String unapplyText = null;
@@ -41,24 +44,24 @@ public abstract class PassiveSkill extends Skill {
             notifyNearbyPlayers(hero.getPlayer().getLocation(), unapplyText, hero.getPlayer().getName(), name);
         }
     }
-/*
+
     @Override
     public void init() {
-        applyText = config.getString("apply-text", "%hero% gained %skill%!");
+        applyText = getSetting(null, SETTING_APPLYTEXT, "%hero% gained %skill%!");
         if (applyText != null) {
             applyText = applyText.replace("%hero%", "$1").replace("%skill%", "$2");
         }
-        unapplyText = config.getString("unapply-text", "%hero% lost %skill%!");
+        unapplyText = getSetting(null, SETTING_UNAPPLYTEXT, "%hero% lost %skill%!");
         if (unapplyText != null) {
             unapplyText = unapplyText.replace("%hero%", "$1").replace("%skill%", "$2");
         }
     }
-*/
+
     @Override
     public ConfigurationNode getDefaultConfig() {
         ConfigurationNode node = Configuration.getEmptyNode();
-        node.setProperty("apply-text", "%hero% gained %skill%!");
-        node.setProperty("unapply-text", "%hero% lost %skill%!");
+        node.setProperty(SETTING_APPLYTEXT, "%hero% gained %skill%!");
+        node.setProperty(SETTING_UNAPPLYTEXT, "%hero% lost %skill%!");
         return node;
     }
 
@@ -83,7 +86,7 @@ public abstract class PassiveSkill extends Skill {
             if (hero != null) {
                 HeroClass heroClass = hero.getHeroClass();
                 ConfigurationNode settings = heroClass.getSkillSettings(name);
-                if (settings == null || !meetsLevelRequirement(hero, settings.getInt("level", 1))) {
+                if (settings == null || !meetsLevelRequirement(hero, getSetting(heroClass, SETTING_LEVEL, 1))) {
                     unapply(hero);
                 } else {
                     apply(hero);

@@ -46,9 +46,7 @@ public class SkillHarmtouch extends TargettedSkill {
         }
         target.damage(damage, player);
         String targetName = target instanceof Player ? ((Player) target).getName() : target.getClass().getSimpleName().substring(5);
-        if (useText != null) {
-            notifyNearbyPlayers(player.getLocation(), "$1 used $2 on $3!", player.getName(), name, target == player ? "himself" : targetName);
-        }
+        notifyNearbyPlayers(player.getLocation(), "$1 used $2 on $3!", player.getName(), name, target == player ? "himself" : targetName);
         return true;
     }
 

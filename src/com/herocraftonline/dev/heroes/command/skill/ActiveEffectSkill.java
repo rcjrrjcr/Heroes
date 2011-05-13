@@ -7,8 +7,11 @@ import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 
 public abstract class ActiveEffectSkill extends ActiveSkill {
-
-    protected String expiryText = null;
+    
+    public final String SETTING_EXPIRETEXT = "expire-text";
+    public final String SETTING_DURATION = "effect-duration";
+    
+    protected String expireText = null;
 
     public ActiveEffectSkill(Heroes plugin) {
         super(plugin);
@@ -16,28 +19,32 @@ public abstract class ActiveEffectSkill extends ActiveSkill {
 
     @Override
     public void init() {
-        useText = getSetting(null, "use-text", "%hero% gained %skill%!");
+        useText = getSetting(null, SETTING_USETEXT, "%hero% gained %skill%!");
         if (useText != null) {
             useText = useText.replace("%hero%", "$1").replace("%skill%", "$2");
         }
-        expiryText = getSetting(null, "expire-text", "%hero% lost %skill%!");
-        if (expiryText != null) {
-            expiryText = expiryText.replace("%hero%", "$1").replace("%skill%", "$2");
+        expireText = getSetting(null, SETTING_EXPIRETEXT, "%hero% lost %skill%!");
+        if (expireText != null) {
+            expireText = expireText.replace("%hero%", "$1").replace("%skill%", "$2");
         }
     }
 
     @Override
     public ConfigurationNode getDefaultConfig() {
         ConfigurationNode node = Configuration.getEmptyNode();
-        node.setProperty("use-text", "%hero% gained %skill%!");
-        node.setProperty("expire-text", "%hero% lost %skill%!");
-        node.setProperty("duration", 10000);
+        node.setProperty(SETTING_USETEXT, "%hero% gained %skill%!");
+        node.setProperty(SETTING_EXPIRETEXT, "%hero% lost %skill%!");
+        node.setProperty(SETTING_DURATION, 10000);
         return node;
+    }
+    
+    protected void applyEffect(Hero hero) {
+        hero.getEffects().putEffect(name, getSetting(hero.getHeroClass(), SETTING_DURATION, 10000.0));
     }
 
     public void onExpire(Hero hero) {
-        if (expiryText != null) {
-            notifyNearbyPlayers(hero.getPlayer().getLocation(), expiryText, hero.getPlayer().getName(), name);
+        if (expireText != null) {
+            notifyNearbyPlayers(hero.getPlayer().getLocation(), expireText, hero.getPlayer().getName(), name);
         }
     }
 }

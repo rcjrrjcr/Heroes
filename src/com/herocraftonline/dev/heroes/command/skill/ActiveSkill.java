@@ -15,6 +15,11 @@ import com.herocraftonline.dev.heroes.util.Messaging;
 
 public abstract class ActiveSkill extends Skill {
 
+    public final String SETTING_MANA = "mana";
+    public final String SETTING_COOLDOWN = "cooldown";
+    public final String SETTING_EXP = "exp";
+    public final String SETTING_USETEXT = "use-text";
+    
     protected String useText;
     
     public ActiveSkill(Heroes plugin) {
@@ -23,7 +28,7 @@ public abstract class ActiveSkill extends Skill {
 
     @Override
     public void init() {
-        useText = getSetting(null, "use-text", "%hero% used %skill%!");
+        useText = getSetting(null, SETTING_USETEXT, "%hero% used %skill%!");
         if (useText != null) {
             useText = useText.replace("%hero%", "$1").replace("%skill%", "$2");
         }
@@ -32,7 +37,7 @@ public abstract class ActiveSkill extends Skill {
     @Override
     public ConfigurationNode getDefaultConfig() {
         ConfigurationNode node = Configuration.getEmptyNode();
-        node.setProperty("use-text", "%hero% used %skill%!");
+        node.setProperty(SETTING_USETEXT, "%hero% used %skill%!");
         return node;
     }
 
@@ -50,19 +55,19 @@ public abstract class ActiveSkill extends Skill {
                 Messaging.send(player, "$1s cannot use $2.", heroClass.getName(), name);
                 return;
             }
-            int level = getSetting(heroClass, "level", 1);
+            int level = getSetting(heroClass, SETTING_LEVEL, 1);
             if (!meetsLevelRequirement(hero, level)) {
                 Messaging.send(player, "You must be level $1 to use $2.", String.valueOf(level), name);
                 return;
             }
-            int manaCost = getSetting(heroClass, "mana", 0);
+            int manaCost = getSetting(heroClass, SETTING_MANA, 0);
             if (manaCost > hero.getMana()) {
                 Messaging.send(player, "Not enough mana!");
                 return;
             }
             Map<String, Long> cooldowns = hero.getCooldowns();
             long time = System.currentTimeMillis();
-            int cooldown = getSetting(heroClass, "cooldown", 0);
+            int cooldown = getSetting(heroClass, SETTING_COOLDOWN, 0);
             if (cooldown > 0) {
                 Long timeUsed = cooldowns.get(name);
                 if (timeUsed != null) {
@@ -78,7 +83,7 @@ public abstract class ActiveSkill extends Skill {
                     cooldowns.put(name, time);
                 }
                 
-                hero.gainExp(getSetting(heroClass, "exp", 0), ExperienceType.SKILL);
+                hero.gainExp(getSetting(heroClass, SETTING_EXP, 0), ExperienceType.SKILL);
                 hero.setMana(hero.getMana() - manaCost);
                 if (hero.isVerbose() && manaCost > 0) {
                     Messaging.send(hero.getPlayer(), Messaging.createManaBar(hero.getMana()));

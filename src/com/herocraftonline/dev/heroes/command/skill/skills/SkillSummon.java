@@ -31,16 +31,14 @@ public class SkillSummon extends ActiveSkill {
     @Override
     public void init() {
         super.init();
-        useText = getSetting(null, "use-text", "%hero% summoned %creature%!");
-        if (useText != null) {
-            useText = useText.replace("%hero%", "$1").replace("%skill%", "$2").replace("%creature%", "$3");
-        }
+        useText = getSetting(null, SETTING_USETEXT, "%hero% summoned %creature%!");
+        useText = useText.replace("%hero%", "$1").replace("%skill%", "$2").replace("%creature%", "$3");
     }
 
     @Override
     public ConfigurationNode getDefaultConfig() {
         ConfigurationNode node = super.getDefaultConfig();
-        node.setProperty("use-text", "%hero% summoned %creature%!");
+        node.setProperty(SETTING_USETEXT, "%hero% summoned %creature%!");
         node.setProperty("max-summons", 3);
         return node;
     }
@@ -56,9 +54,7 @@ public class SkillSummon extends ActiveSkill {
                 return false;
             }
             hero.getSummons().put(spawnedEntity, creatureType);
-            if (useText != null) {
-                notifyNearbyPlayers(player.getLocation(), useText, player.getName(), name, creatureType.toString());
-            }
+            notifyNearbyPlayers(player.getLocation(), useText, player.getName(), name, creatureType.toString());
             Messaging.send(player, "You have succesfully summoned a " + creatureType.toString());
             return true;
         }

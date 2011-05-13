@@ -15,7 +15,9 @@ import com.herocraftonline.dev.heroes.persistence.Hero;
 import com.herocraftonline.dev.heroes.util.Messaging;
 
 public abstract class Skill extends BaseCommand {
-
+    
+    public final String SETTING_LEVEL = "level";
+    
     private ConfigurationNode config;
 
     public Skill(Heroes plugin) {

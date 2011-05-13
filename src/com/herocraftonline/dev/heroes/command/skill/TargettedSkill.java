@@ -21,6 +21,8 @@ import com.herocraftonline.dev.heroes.persistence.Hero;
 import com.herocraftonline.dev.heroes.util.Messaging;
 
 public abstract class TargettedSkill extends ActiveSkill {
+    
+    public final String SETTING_MAXDISTANCE = "max-distance";
 
     public TargettedSkill(Heroes plugin) {
         super(plugin);
@@ -28,7 +30,7 @@ public abstract class TargettedSkill extends ActiveSkill {
 
     @Override
     public void init() {
-        useText = getSetting(null, "use-text", "%hero% used %skill%!");
+        useText = getSetting(null, SETTING_USETEXT, "%hero% used %skill%!");
         if (useText != null) {
             useText = useText.replace("%hero%", "$1").replace("%skill%", "$2").replace("%target%", "$3");
         }
@@ -37,15 +39,15 @@ public abstract class TargettedSkill extends ActiveSkill {
     @Override
     public ConfigurationNode getDefaultConfig() {
         ConfigurationNode node = Configuration.getEmptyNode();
-        node.setProperty("use-text", "%hero% used %skill% on %target%!");
-        node.setProperty("max-distance", 15);
+        node.setProperty(SETTING_USETEXT, "%hero% used %skill% on %target%!");
+        node.setProperty(SETTING_MAXDISTANCE, 15);
         return node;
     }
 
     @Override
     public boolean use(Hero hero, String[] args) {
         Player player = hero.getPlayer();
-        int maxDistance = getSetting(hero.getHeroClass(), "maxDistance", 10);
+        int maxDistance = getSetting(hero.getHeroClass(), SETTING_MAXDISTANCE, 10);
         LivingEntity target = null;
         if (args.length > 0) {
             target = plugin.getServer().getPlayer(args[0]);

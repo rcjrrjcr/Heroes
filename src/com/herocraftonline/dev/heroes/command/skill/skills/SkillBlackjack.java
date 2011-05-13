@@ -48,8 +48,7 @@ public class SkillBlackjack extends ActiveEffectSkill {
 
     @Override
     public boolean use(Hero hero, String[] args) {
-        int duration = getSetting(hero.getHeroClass(), "effect-duration", 20000);
-        hero.getEffects().putEffect(name, (double) duration);
+        applyEffect(hero);
         notifyNearbyPlayers(hero.getPlayer().getLocation(), useText, hero.getPlayer().getName(), name);
         return true;
     }
@@ -59,7 +58,7 @@ public class SkillBlackjack extends ActiveEffectSkill {
         ConfigurationNode node = super.getDefaultConfig();
         node.setProperty("stun-duration", 5000);
         node.setProperty("stun-chance", 0.20);
-        node.setProperty("effect-duration", 20000);
+        node.setProperty(SETTING_DURATION, 20000);
         return node;
     }
 

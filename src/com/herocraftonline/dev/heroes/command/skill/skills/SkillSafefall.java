@@ -14,8 +14,6 @@ import com.herocraftonline.dev.heroes.persistence.HeroEffects;
 
 public class SkillSafefall extends ActiveEffectSkill {
 
-    private int duration;
-
     public SkillSafefall(Heroes plugin) {
         super(plugin);
         name = "Safefall";
@@ -32,11 +30,8 @@ public class SkillSafefall extends ActiveEffectSkill {
     public boolean use(Hero hero, String[] args) {
         Player player = hero.getPlayer();
         String playerName = player.getName();
-        hero.getEffects().putEffect(name, (double) duration);
-
-        if (useText != null) {
-            notifyNearbyPlayers(player.getLocation(), useText, playerName, name);
-        }
+        applyEffect(hero);
+        notifyNearbyPlayers(player.getLocation(), useText, playerName, name);
         return true;
     }
 

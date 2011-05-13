@@ -26,9 +26,7 @@ public class SkillGTeleport extends ActiveSkill {
             for (Player n : hero.getParty().getMembers()) {
                 n.teleport(player);
             }
-            if (useText != null) {
-                notifyNearbyPlayers(player.getLocation(), useText, heroName, name);
-            }
+            notifyNearbyPlayers(player.getLocation(), useText, heroName, name);
             return true;
         }
         return false;
