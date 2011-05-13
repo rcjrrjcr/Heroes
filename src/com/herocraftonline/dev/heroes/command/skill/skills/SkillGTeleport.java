@@ -10,12 +10,12 @@ public class SkillGTeleport extends ActiveSkill {
 
     public SkillGTeleport(Heroes plugin) {
         super(plugin);
-        name = "Group Teleport";
-        description = "Skill - Group Teleport";
-        usage = "/skill gteleport";
+        name = "GroupTeleport";
+        description = "Summons your group to your location";
+        usage = "/skill groupteleport";
         minArgs = 0;
         maxArgs = 0;
-        identifiers.add("skill gteleport");
+        identifiers.add("skill groupteleport");
     }
 
     @Override

@@ -17,7 +17,7 @@ public class SkillInvuln extends ActiveEffectSkill {
     public SkillInvuln(Heroes plugin) {
         super(plugin);
         name = "Invuln";
-        description = "Skill - Invuln";
+        description = "Grants total damage immunity";
         usage = "/skill invuln";
         minArgs = 0;
         maxArgs = 0;

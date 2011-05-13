@@ -25,6 +25,7 @@ public class OutsourcedSkill extends Skill {
         this.usage = usage;
         this.minArgs = 0;
         this.maxArgs = 0;
+        this.description = usage;
         registerEvent(Type.CUSTOM_EVENT, new SkillCustomListener(), Priority.Normal);
     }
 

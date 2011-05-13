@@ -13,7 +13,7 @@ public class SkillJump extends ActiveSkill {
     public SkillJump(Heroes plugin) {
         super(plugin);
         name = "Jump";
-        description = "Skill - Jump";
+        description = "Launches you into the air";
         usage = "/skill jump";
         minArgs = 0;
         maxArgs = 0;

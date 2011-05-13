@@ -17,10 +17,9 @@ public class SkillIronFist extends PassiveSkill {
     public SkillIronFist(Heroes plugin) {
         super(plugin);
         name = "IronFist";
-        description = "Skill - Iron Fist";
-        usage = "/skill ironfist";
-        minArgs = 0;
-        maxArgs = 0;
+        description = "Increases your unarmed damage (passive)";
+        minArgs = 1;
+        maxArgs = 1;
         identifiers.add("skill ironfist");
 
         registerEvent(Type.ENTITY_DAMAGE, new SkillPlayerListener(), Priority.Normal);

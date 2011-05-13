@@ -25,10 +25,10 @@ public class SkillFireball extends ActiveSkill {
     public SkillFireball(Heroes plugin) {
         super(plugin);
         name = "Fireball";
-        description = "Skill - Fireball";
-        usage = "/skill fireball [player]";
+        description = "Shoots a dangerous ball of fire";
+        usage = "/skill fireball";
         minArgs = 0;
-        maxArgs = 1;
+        maxArgs = 0;
         identifiers.add("skill fireball");
 
         registerEvent(Type.ENTITY_DAMAGE, new SkillEntityListener(), Priority.Monitor);

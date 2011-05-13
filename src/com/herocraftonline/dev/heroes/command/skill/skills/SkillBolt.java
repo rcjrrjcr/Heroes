@@ -18,8 +18,8 @@ public class SkillBolt extends TargettedSkill {
     public SkillBolt(Heroes plugin) {
         super(plugin);
         name = "Bolt";
-        description = "Skill - Bolt";
-        usage = "/skill bolt <target>";
+        description = "Calls a bolt of thunder down on the target";
+        usage = "/skill bolt [target]";
         minArgs = 0;
         maxArgs = 1;
         identifiers.add("skill bolt");

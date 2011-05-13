@@ -24,6 +24,7 @@ public abstract class PassiveSkill extends Skill {
 
     public PassiveSkill(Heroes plugin) {
         super(plugin);
+        usage = "Passive Skill";
 
         registerEvent(Type.CUSTOM_EVENT, new SkillCustomEventListener(), Priority.Monitor);
     }

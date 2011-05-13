@@ -19,7 +19,7 @@ public class SkillOne extends ActiveEffectSkill {
     public SkillOne(Heroes plugin) {
         super(plugin);
         name = "One";
-        description = "Skill - one";
+        description = "Provides a short burst of speed";
         usage = "/skill one";
         minArgs = 0;
         maxArgs = 0;

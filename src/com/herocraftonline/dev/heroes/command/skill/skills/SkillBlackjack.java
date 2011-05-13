@@ -34,7 +34,7 @@ public class SkillBlackjack extends ActiveEffectSkill {
     public SkillBlackjack(Heroes plugin) {
         super(plugin);
         name = "Blackjack";
-        description = "Skill - blackjack";
+        description = "Gives your melee attacks a chance to stun";
         usage = "/skill blackjack";
         minArgs = 0;
         maxArgs = 0;

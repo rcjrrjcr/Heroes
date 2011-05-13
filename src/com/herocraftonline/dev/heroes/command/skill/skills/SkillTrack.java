@@ -15,7 +15,7 @@ public class SkillTrack extends ActiveSkill {
     public SkillTrack(Heroes plugin) {
         super(plugin);
         name = "Track";
-        description = "Skill - Track";
+        description = "Locates a player";
         usage = "/skill track <player>";
         minArgs = 1;
         maxArgs = 1;

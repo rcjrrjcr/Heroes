@@ -21,8 +21,8 @@ public class SkillSummon extends ActiveSkill {
     public SkillSummon(Heroes plugin) {
         super(plugin);
         name = "Summon";
-        description = "Skill - Summon";
-        usage = "/skill summon <monster>";
+        description = "Summons a creature to fight by your side";
+        usage = "/skill summon <creature>";
         minArgs = 1;
         maxArgs = 1;
         identifiers.add("skill summon");

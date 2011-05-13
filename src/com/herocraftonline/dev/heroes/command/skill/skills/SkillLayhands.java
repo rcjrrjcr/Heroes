@@ -11,8 +11,8 @@ public class SkillLayhands extends TargettedSkill {
     public SkillLayhands(Heroes plugin) {
         super(plugin);
         name = "Layhands";
-        description = "Skill - Layhands";
-        usage = "/skill layhands <player>";
+        description = "Heals the target to full";
+        usage = "/skill layhands [target]";
         minArgs = 0;
         maxArgs = 1;
         identifiers.add("skill layhands");

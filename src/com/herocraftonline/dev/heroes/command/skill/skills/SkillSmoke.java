@@ -21,11 +21,12 @@ public class SkillSmoke extends ActiveEffectSkill {
     public SkillSmoke(Heroes plugin) {
         super(plugin);
         name = "Smoke";
-        description = "Skill - smoke";
+        description = "You completely disappear from view";
         usage = "/skill smoke";
         minArgs = 0;
         maxArgs = 0;
         identifiers.add("skill smoke");
+        notes.add("Note: Taking damage removes the effect");
 
         registerEvent(Type.ENTITY_DAMAGE, new SkillEntityListener(), Priority.Normal);
     }

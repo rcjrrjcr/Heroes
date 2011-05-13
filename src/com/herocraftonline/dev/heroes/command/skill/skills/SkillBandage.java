@@ -21,8 +21,8 @@ public class SkillBandage extends TargettedSkill {
     public SkillBandage(Heroes plugin) {
         super(plugin);
         name = "Bandage";
-        description = "Skill - Bandage";
-        usage = "/skill bandage";
+        description = "Bandages the target";
+        usage = "/skill bandage [target]";
         minArgs = 0;
         maxArgs = 1;
         identifiers.add("skill bandage");

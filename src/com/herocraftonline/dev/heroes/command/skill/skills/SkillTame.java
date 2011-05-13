@@ -9,7 +9,7 @@ public class SkillTame extends ActiveSkill {
     public SkillTame(Heroes plugin) {
         super(plugin);
         name = "Tame";
-        description = "Skill - Tame";
+        description = "Summons a wolf to your side";
         usage = "/skill tame";
         minArgs = 1;
         maxArgs = 1;

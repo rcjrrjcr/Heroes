@@ -18,7 +18,7 @@ public class SkillBladegrasp extends ActiveEffectSkill {
     public SkillBladegrasp(Heroes plugin) {
         super(plugin);
         name = "Bladegrasp";
-        description = "Skill - Bladegrasp";
+        description = "Blocks incoming melee damage";
         usage = "/skill bladegrasp";
         minArgs = 0;
         maxArgs = 0;

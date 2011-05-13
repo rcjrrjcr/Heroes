@@ -29,8 +29,8 @@ public class SkillPiggify extends TargettedSkill {
     public SkillPiggify(Heroes plugin) {
         super(plugin);
         name = "Piggify";
-        description = "Skill - Piggify";
-        usage = "/skill piggify <target>";
+        description = "Forces your target to ride a pig";
+        usage = "/skill piggify [target]";
         minArgs = 0;
         maxArgs = 1;
         identifiers.add("skill piggify");

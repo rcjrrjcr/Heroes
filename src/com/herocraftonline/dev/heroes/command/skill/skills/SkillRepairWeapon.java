@@ -23,7 +23,7 @@ public class SkillRepairWeapon extends PassiveSkill {
     public SkillRepairWeapon(Heroes plugin) {
         super(plugin);
         name = "RepairWeapon";
-        description = "Skill - Repair Weapon";
+        description = "Allows materials to repair weapons (passive)";
         usage = "Drop material on weapon";
         minArgs = 0;
         maxArgs = 0;

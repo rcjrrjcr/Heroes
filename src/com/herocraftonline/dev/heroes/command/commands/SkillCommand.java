@@ -70,10 +70,13 @@ public class SkillCommand extends BaseCommand {
         }
         for (int s = start; s < end; s++) {
             Skill skill = skills.get(s);
-            sender.sendMessage("  §a" + skill.getName() + ": " + skill.getUsage() + " - Lvl " + heroClass.getSkillSettings(skill.getName()).getInt("level", 1));
+            String name = skill.getName();
+            int level = skill.getSetting(heroClass, skill.SETTING_LEVEL, 1);
+            String desc = skill.getDescription();
+            sender.sendMessage("  §f@" + level + " §e" + name + ":§a " + desc);
         }
 
-        sender.sendMessage("§cFor more info on a particular skill, type '/<skill> ?'");
+        sender.sendMessage("§cTo use a skill, type '§f/skill <name>§c'. For info use '§f/skill <name> ?§c'.");
     }
 
 }

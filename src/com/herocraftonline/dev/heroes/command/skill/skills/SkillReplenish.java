@@ -10,7 +10,7 @@ public class SkillReplenish extends ActiveSkill {
     public SkillReplenish(Heroes plugin) {
         super(plugin);
         name = "Replenish";
-        description = "Brings the caster's mana back to full.";
+        description = "Brings your mana back to full";
         usage = "/skill replenish";
         minArgs = 0;
         maxArgs = 0;

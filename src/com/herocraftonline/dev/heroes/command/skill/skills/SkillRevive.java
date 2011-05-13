@@ -15,8 +15,8 @@ public class SkillRevive extends TargettedSkill {
     public SkillRevive(Heroes plugin) {
         super(plugin);
         name = "Revive";
-        description = "Skill - Revive";
-        usage = "/skill revive";
+        description = "Teleports the target to their place of death";
+        usage = "/skill revive [target]";
         minArgs = 1;
         maxArgs = 1;
         identifiers.add("skill revive");
