@@ -9,6 +9,7 @@ import org.bukkit.util.config.ConfigurationNode;
 
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
+import com.herocraftonline.dev.heroes.classes.HeroClass.ExperienceType;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 import com.herocraftonline.dev.heroes.util.Messaging;
 
@@ -76,6 +77,8 @@ public abstract class ActiveSkill extends Skill {
                 if (cooldown > 0) {
                     cooldowns.put(name, time);
                 }
+                
+                hero.gainExp(getSetting(heroClass, "exp", 0), ExperienceType.SKILL);
                 hero.setMana(hero.getMana() - manaCost);
                 if (hero.isVerbose() && manaCost > 0) {
                     Messaging.send(hero.getPlayer(), Messaging.createManaBar(hero.getMana()));

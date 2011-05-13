@@ -41,6 +41,7 @@ public class HeroClass {
     }
 
     public static enum ExperienceType {
+        SKILL,
         KILLING,
         MINING,
         CRAFTING,
