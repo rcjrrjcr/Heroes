@@ -7,10 +7,10 @@ import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 
 public abstract class ActiveEffectSkill extends ActiveSkill {
-    
+
     public final String SETTING_EXPIRETEXT = "expire-text";
     public final String SETTING_DURATION = "effect-duration";
-    
+
     protected String expireText = null;
 
     public ActiveEffectSkill(Heroes plugin) {
@@ -20,13 +20,9 @@ public abstract class ActiveEffectSkill extends ActiveSkill {
     @Override
     public void init() {
         useText = getSetting(null, SETTING_USETEXT, "%hero% gained %skill%!");
-        if (useText != null) {
-            useText = useText.replace("%hero%", "$1").replace("%skill%", "$2");
-        }
+        useText = useText.replace("%hero%", "$1").replace("%skill%", "$2");
         expireText = getSetting(null, SETTING_EXPIRETEXT, "%hero% lost %skill%!");
-        if (expireText != null) {
-            expireText = expireText.replace("%hero%", "$1").replace("%skill%", "$2");
-        }
+        expireText = expireText.replace("%hero%", "$1").replace("%skill%", "$2");
     }
 
     @Override
@@ -37,14 +33,12 @@ public abstract class ActiveEffectSkill extends ActiveSkill {
         node.setProperty(SETTING_DURATION, 10000);
         return node;
     }
-    
+
     protected void applyEffect(Hero hero) {
         hero.getEffects().putEffect(name, getSetting(hero.getHeroClass(), SETTING_DURATION, 10000.0));
     }
 
     public void onExpire(Hero hero) {
-        if (expireText != null) {
-            notifyNearbyPlayers(hero.getPlayer().getLocation(), expireText, hero.getPlayer().getName(), name);
-        }
+        notifyNearbyPlayers(hero.getPlayer().getLocation(), expireText, hero.getPlayer().getName(), name);
     }
 }

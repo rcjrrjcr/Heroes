@@ -15,7 +15,7 @@ import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 
 public abstract class PassiveSkill extends Skill {
-    
+
     public final String SETTING_APPLYTEXT = "apply-text";
     public final String SETTING_UNAPPLYTEXT = "unapply-text";
 
@@ -33,14 +33,12 @@ public abstract class PassiveSkill extends Skill {
 
     protected void apply(Hero hero) {
         hero.getEffects().putEffect(name.toLowerCase(), Double.POSITIVE_INFINITY);
-        if (applyText != null) {
-            notifyNearbyPlayers(hero.getPlayer().getLocation(), applyText, hero.getPlayer().getName(), name);
-        }
+        notifyNearbyPlayers(hero.getPlayer().getLocation(), applyText, hero.getPlayer().getName(), name);
     }
 
     protected void unapply(Hero hero) {
         Double effect = hero.getEffects().removeEffect(name.toLowerCase());
-        if (unapplyText != null && effect != null) {
+        if (effect != null) {
             notifyNearbyPlayers(hero.getPlayer().getLocation(), unapplyText, hero.getPlayer().getName(), name);
         }
     }
@@ -48,13 +46,9 @@ public abstract class PassiveSkill extends Skill {
     @Override
     public void init() {
         applyText = getSetting(null, SETTING_APPLYTEXT, "%hero% gained %skill%!");
-        if (applyText != null) {
-            applyText = applyText.replace("%hero%", "$1").replace("%skill%", "$2");
-        }
+        applyText = applyText.replace("%hero%", "$1").replace("%skill%", "$2");
         unapplyText = getSetting(null, SETTING_UNAPPLYTEXT, "%hero% lost %skill%!");
-        if (unapplyText != null) {
-            unapplyText = unapplyText.replace("%hero%", "$1").replace("%skill%", "$2");
-        }
+        unapplyText = unapplyText.replace("%hero%", "$1").replace("%skill%", "$2");
     }
 
     @Override

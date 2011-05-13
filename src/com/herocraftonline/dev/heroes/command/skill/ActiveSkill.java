@@ -19,9 +19,9 @@ public abstract class ActiveSkill extends Skill {
     public final String SETTING_COOLDOWN = "cooldown";
     public final String SETTING_EXP = "exp";
     public final String SETTING_USETEXT = "use-text";
-    
+
     protected String useText;
-    
+
     public ActiveSkill(Heroes plugin) {
         super(plugin);
     }
@@ -29,9 +29,7 @@ public abstract class ActiveSkill extends Skill {
     @Override
     public void init() {
         useText = getSetting(null, SETTING_USETEXT, "%hero% used %skill%!");
-        if (useText != null) {
-            useText = useText.replace("%hero%", "$1").replace("%skill%", "$2");
-        }
+        useText = useText.replace("%hero%", "$1").replace("%skill%", "$2");
     }
 
     @Override
@@ -82,7 +80,7 @@ public abstract class ActiveSkill extends Skill {
                 if (cooldown > 0) {
                     cooldowns.put(name, time);
                 }
-                
+
                 hero.gainExp(getSetting(heroClass, SETTING_EXP, 0), ExperienceType.SKILL);
                 hero.setMana(hero.getMana() - manaCost);
                 if (hero.isVerbose() && manaCost > 0) {
