@@ -16,8 +16,8 @@ public class SkillSyphon extends TargettedSkill {
         super(plugin);
         name = "Syphon";
         description = "Skill - Syphon";
-        usage = "/skill syphon";
-        minArgs = 1;
+        usage = "/skill syphon [target] [health]";
+        minArgs = 0;
         maxArgs = 2;
         identifiers.add("skill syphon");
     }
@@ -35,7 +35,7 @@ public class SkillSyphon extends TargettedSkill {
         Player player = hero.getPlayer();
 
         int transferredHealth = getSetting(hero.getHeroClass(), "default-health", 4);
-        if (args.length != 1) {
+        if (args.length == 2) {
             try {
                 transferredHealth = Integer.parseInt(args[1]);
             } catch (NumberFormatException e) {

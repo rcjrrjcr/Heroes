@@ -30,12 +30,12 @@ public abstract class ActiveEffectSkill extends ActiveSkill {
         ConfigurationNode node = Configuration.getEmptyNode();
         node.setProperty(SETTING_USETEXT, "%hero% gained %skill%!");
         node.setProperty(SETTING_EXPIRETEXT, "%hero% lost %skill%!");
-        node.setProperty(SETTING_DURATION, 10000);
+        node.setProperty(SETTING_DURATION, 10000d);
         return node;
     }
 
     protected void applyEffect(Hero hero) {
-        hero.getEffects().putEffect(name, getSetting(hero.getHeroClass(), SETTING_DURATION, 10000.0));
+        hero.getEffects().putEffect(name, getSetting(hero.getHeroClass(), SETTING_DURATION, 10000d));
     }
 
     public void onExpire(Hero hero) {
