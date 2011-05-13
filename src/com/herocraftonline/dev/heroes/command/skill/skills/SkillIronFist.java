@@ -16,7 +16,7 @@ public class SkillIronFist extends PassiveSkill {
 
     public SkillIronFist(Heroes plugin) {
         super(plugin);
-        name = "Iron Fist";
+        name = "IronFist";
         description = "Skill - Iron Fist";
         usage = "/skill ironfist";
         minArgs = 0;
