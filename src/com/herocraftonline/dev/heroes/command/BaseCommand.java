@@ -16,10 +16,12 @@ public abstract class BaseCommand {
     protected int minArgs;
     protected int maxArgs;
     protected List<String> identifiers;
+    protected List<String> notes;
 
     public BaseCommand(Heroes plugin) {
         this.plugin = plugin;
         this.identifiers = new ArrayList<String>();
+        this.notes = new ArrayList<String>();
     }
 
     public abstract void execute(CommandSender sender, String[] args);
@@ -106,6 +108,10 @@ public abstract class BaseCommand {
             return false;
         }
         return true;
+    }
+    
+    public List<String> getNotes() {
+        return notes;
     }
 
 }

@@ -44,16 +44,18 @@ public class CommandManager {
         }
 
         if (match != null) {
-            if (trimmedArgs != null) {
-                match.execute(sender, trimmedArgs);
-                return true;
+            if (trimmedArgs == null || (trimmedArgs.length > 0 && trimmedArgs[0].equals("?"))) {
+                sender.sendMessage("§cCommand:§e " + match.getName());
+                sender.sendMessage("§cDescription:§e " + match.getDescription());
+                sender.sendMessage("§cUsage:§e " + match.getUsage());
+                List<String> notes = match.getNotes();
+                for (String note : notes) {
+                    sender.sendMessage("§e" + note);
+                }
             } else {
-                sender.sendMessage("§cCommand: " + match.getName());
-                sender.sendMessage("§cDescription: " + match.getDescription());
-                sender.sendMessage("§cUsage: " + match.getUsage());
+                match.execute(sender, trimmedArgs);
             }
         }
-
         return true;
     }
 

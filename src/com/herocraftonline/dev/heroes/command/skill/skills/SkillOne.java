@@ -1,10 +1,13 @@
 package com.herocraftonline.dev.heroes.command.skill.skills;
 
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event.Type;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.util.Vector;
+import org.bukkit.util.config.ConfigurationNode;
 
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.skill.ActiveEffectSkill;
@@ -24,6 +27,13 @@ public class SkillOne extends ActiveEffectSkill {
 
         registerEvent(Type.PLAYER_MOVE, new SkillPlayerListener(), Priority.Normal);
     }
+    
+    @Override
+    public ConfigurationNode getDefaultConfig() {
+        ConfigurationNode node = super.getDefaultConfig();
+        node.setProperty("speed", 0.7);
+        return node;
+    }
 
     @Override
     public boolean use(Hero hero, String[] args) {
@@ -41,7 +51,16 @@ public class SkillOne extends ActiveEffectSkill {
 
             HeroEffects effects = hero.getEffects();
             if (effects.hasEffect(name)) {
-                player.setVelocity(player.getLocation().getDirection().multiply(1.3).setY(0));
+                double speed = getSetting(hero.getHeroClass(), "speed", 0.7);
+                Location loc = player.getLocation();
+                Vector dir = loc.getDirection().normalize();
+                dir.setX(dir.getX() * speed);
+                dir.setZ(dir.getZ() * speed);
+                dir.setY(0);
+                if (player.getWorld().getBlockTypeIdAt(loc.getBlockX(), loc.getBlockY() - 2, loc.getBlockZ()) == 0) {
+                    dir.setY(-0.5);
+                }
+                player.setVelocity(dir);
             }
         }
 
