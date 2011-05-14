@@ -1,5 +1,7 @@
 package com.herocraftonline.dev.heroes.command.skill;
 
+import java.util.List;
+
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event.Priority;
@@ -50,19 +52,30 @@ public abstract class Skill extends BaseCommand {
         return Configuration.getEmptyNode();
     }
     
-    @SuppressWarnings("unchecked")
-    public <T> T getSetting(HeroClass heroClass, String setting, T def) {
-        Object value = null;
-        if (heroClass != null) {
-            value = heroClass.getSkillSettings(name).getProperty(setting);
+    public double getSetting(HeroClass heroClass, String setting, double def) {
+        List<String> keys = heroClass == null ? null : heroClass.getSkillSettings(name).getKeys(null);
+        if (keys != null && keys.contains(setting)) {
+            return heroClass.getSkillSettings(name).getDouble(setting, def);
+        } else {
+            return config.getDouble(setting, def);
         }
-        if (value == null) {
-            value = config.getProperty(setting);
+    }
+    
+    public int getSetting(HeroClass heroClass, String setting, int def) {
+        List<String> keys = heroClass == null ? null : heroClass.getSkillSettings(name).getKeys(null);
+        if (keys != null && keys.contains(setting)) {
+            return heroClass.getSkillSettings(name).getInt(setting, def);
+        } else {
+            return config.getInt(setting, def);
         }
-        try {
-            return value == null ? def : (T) value;
-        } catch (ClassCastException e) {
-            return def;
+    }
+    
+    public String getSetting(HeroClass heroClass, String setting, String def) {
+        List<String> keys = heroClass == null ? null : heroClass.getSkillSettings(name).getKeys(null);
+        if (keys != null && keys.contains(setting)) {
+            return heroClass.getSkillSettings(name).getString(setting, def);
+        } else {
+            return config.getString(setting, def);
         }
     }
 
