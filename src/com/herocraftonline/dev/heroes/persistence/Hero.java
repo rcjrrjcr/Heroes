@@ -1,9 +1,9 @@
 package com.herocraftonline.dev.heroes.persistence;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.bukkit.Material;
 import org.bukkit.entity.CreatureType;
@@ -28,7 +28,7 @@ public class Hero {
     protected int exp;
     protected int mana;
     protected boolean verbose;
-    protected List<String> masteries;
+    protected Set<String> masteries;
     protected Map<String, Long> cooldowns;
     protected Map<Entity, CreatureType> summons;
     protected HeroEffects effects;
@@ -37,7 +37,7 @@ public class Hero {
     protected Map<Player, HeroParty> invites;
     protected List<ItemStack> itemRecovery;
 
-    public Hero(Heroes plugin, Player player, HeroClass heroClass, int exp, int mana, boolean verbose, List<String> masteries, List<ItemStack> itemRecovery, Map<Material, String[]> binds) {
+    public Hero(Heroes plugin, Player player, HeroClass heroClass, int exp, int mana, boolean verbose, Set<String> masteries, List<ItemStack> itemRecovery, Map<Material, String[]> binds) {
         this.plugin = plugin;
         this.player = player;
         this.heroClass = heroClass;
@@ -86,7 +86,7 @@ public class Hero {
         return mana;
     }
 
-    public List<String> getMasteries() {
+    public Set<String> getMasteries() {
         return masteries;
     }
 
@@ -164,8 +164,8 @@ public class Hero {
         this.mana = mana;
     }
 
-    public void setMasteries(ArrayList<String> masterys) {
-        this.masteries = masterys;
+    public void setMasteries(Set<String> masteries) {
+        this.masteries = masteries;
     }
 
     public Map<String, Long> getCooldowns() {

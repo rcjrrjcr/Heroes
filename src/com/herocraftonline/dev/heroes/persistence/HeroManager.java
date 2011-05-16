@@ -64,7 +64,7 @@ public class HeroManager {
             playerConfig.load(); // Load the Config File
 
             // Grab the Data we need.
-            List<String> masteries = playerConfig.getStringList("masteries", new ArrayList<String>());
+            Set<String> masteries = new HashSet<String>(playerConfig.getStringList("masteries", new ArrayList<String>()));
 
             int mana = playerConfig.getInt("mana", 0);
             int exp = playerConfig.getInt("experience", 0);
@@ -191,7 +191,7 @@ public class HeroManager {
     }
 
     public boolean createNewHero(Player player) {
-        Hero hero = new Hero(plugin, player, plugin.getClassManager().getDefaultClass(), 0, 0, true, new ArrayList<String>(), new ArrayList<ItemStack>(), new HashMap<Material, String[]>());
+        Hero hero = new Hero(plugin, player, plugin.getClassManager().getDefaultClass(), 0, 0, true, new HashSet<String>(), new ArrayList<ItemStack>(), new HashMap<Material, String[]>());
         return addHero(hero);
     }
 
