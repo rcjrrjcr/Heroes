@@ -1,6 +1,8 @@
 package com.herocraftonline.dev.heroes.persistence;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -16,6 +18,7 @@ import com.herocraftonline.dev.heroes.api.ExperienceGainEvent;
 import com.herocraftonline.dev.heroes.api.LevelEvent;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.classes.HeroClass.ExperienceType;
+import com.herocraftonline.dev.heroes.command.skill.Skill;
 import com.herocraftonline.dev.heroes.party.HeroParty;
 import com.herocraftonline.dev.heroes.util.Messaging;
 import com.herocraftonline.dev.heroes.util.Properties;
@@ -25,33 +28,35 @@ public class Hero {
     protected final Heroes plugin;
     protected Player player;
     protected HeroClass heroClass;
-    protected int exp;
-    protected int mana;
-    protected boolean verbose;
-    protected Set<String> masteries;
-    protected Map<String, Long> cooldowns;
-    protected Map<Entity, CreatureType> summons;
-    protected HeroEffects effects;
-    protected Map<Material, String[]> binds;
+    protected int exp = 0;
+    protected int mana = 0;
+    protected boolean verbose = true;
     protected HeroParty party;
-    protected Map<Player, HeroParty> invites;
-    protected List<ItemStack> itemRecovery;
-
-    public Hero(Heroes plugin, Player player, HeroClass heroClass, int exp, int mana, boolean verbose, Set<String> masteries, List<ItemStack> itemRecovery, Map<Material, String[]> binds) {
+    protected HeroEffects effects;
+    protected Set<String> masteries = new HashSet<String>();
+    protected Map<String, Long> cooldowns = new HashMap<String, Long>();
+    protected Map<Entity, CreatureType> summons = new HashMap<Entity, CreatureType>();
+    protected Map<Material, String[]> binds = new HashMap<Material, String[]>();
+    protected Map<Player, HeroParty> invites = new HashMap<Player, HeroParty>();
+    protected List<ItemStack> itemRecovery = new ArrayList<ItemStack>();
+    protected Set<String> suppressedSkills = new HashSet<String>();
+    
+    public Hero(Heroes plugin, Player player, HeroClass heroClass) {
         this.plugin = plugin;
         this.player = player;
         this.heroClass = heroClass;
+        this.effects = new HeroEffects(plugin.getCommandManager(), this);
+    }
+
+    public Hero(Heroes plugin, Player player, HeroClass heroClass, int exp, int mana, boolean verbose, Set<String> masteries, List<ItemStack> itemRecovery, Map<Material, String[]> binds, Set<String> suppressedSkills) {
+        this(plugin, player, heroClass);
         this.exp = exp;
         this.mana = mana;
         this.masteries = masteries;
         this.itemRecovery = itemRecovery;
-        this.cooldowns = new HashMap<String, Long>();
-        this.summons = new HashMap<Entity, CreatureType>();
         this.binds = binds;
-        this.party = null;
-        this.invites = new HashMap<Player, HeroParty>();
-        this.effects = new HeroEffects(plugin.getCommandManager(), this);
         this.verbose = verbose;
+        this.suppressedSkills = suppressedSkills;
     }
 
     public void addItem(ItemStack item) {
@@ -210,6 +215,22 @@ public class Hero {
 
     public void setVerbose(boolean verbose) {
         this.verbose = verbose;
+    }
+    
+    public void setSuppressed(Skill skill, boolean suppressed) {
+        if (suppressed) {
+            suppressedSkills.add(skill.getName());
+        } else {
+            suppressedSkills.remove(skill.getName());
+        }
+    }
+    
+    public boolean isSuppressing(Skill skill) {
+        return suppressedSkills.contains(skill.getName());
+    }
+    
+    public final String[] getSuppressedSkills() {
+        return suppressedSkills.toArray(new String[0]);
     }
 
     @Override

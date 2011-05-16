@@ -32,17 +32,16 @@ public class HPlayerListener extends PlayerListener {
         Player player = event.getPlayer();
         HeroManager heroManager = plugin.getHeroManager();
         heroManager.saveHeroFile(player);
+        heroManager.removeHero(heroManager.getHero(player));
     }
 
     @Override
     public void onPlayerJoin(PlayerJoinEvent event) {
-        long start = System.currentTimeMillis();
         Player player = event.getPlayer();
         HeroManager heroManager = plugin.getHeroManager();
         heroManager.loadHeroFile(player);
         plugin.swapNetServerHandler(player);
         plugin.inventoryCheck(player);
-        System.out.println("Player join time: " + (System.currentTimeMillis() - start));
     }
 
     @Override

@@ -60,7 +60,7 @@ public class CommandManager {
     }
 
     public void addCommand(BaseCommand command) {
-        commands.put(command.name, command);
+        commands.put(command.name.toLowerCase(), command);
     }
 
     public void removeCommand(BaseCommand command) {
@@ -72,6 +72,6 @@ public class CommandManager {
     }
 
     public BaseCommand getCommand(String name) {
-        return commands.get(name);
+        return commands.get(name.toLowerCase());
     }
 }

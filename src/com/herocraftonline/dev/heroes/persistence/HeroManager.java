@@ -64,9 +64,8 @@ public class HeroManager {
             playerConfig.load(); // Load the Config File
 
             // Grab the Data we need.
-            Set<String> masteries = new HashSet<String>(playerConfig.getStringList("masteries", new ArrayList<String>()));
+            Set<String> masteries = new HashSet<String>(playerConfig.getStringList("masteries", null));
 
-            int mana = playerConfig.getInt("mana", 0);
             int exp = playerConfig.getInt("experience", 0);
             boolean verbose = playerConfig.getBoolean("verbose", true);
 
@@ -119,9 +118,11 @@ public class HeroManager {
             if (masteries.contains(playerClass.getName())) {
                 exp = plugin.getConfigManager().getProperties().maxExp;
             }
+            
+            Set<String> suppressed = new HashSet<String>(playerConfig.getStringList("suppressed", null));
 
             // Create a New Hero
-            Hero playerHero = new Hero(plugin, player, playerClass, exp, mana, verbose, masteries, itemRecovery, binds);
+            Hero playerHero = new Hero(plugin, player, playerClass, exp, 0, verbose, masteries, itemRecovery, binds, suppressed);
             // Add the Hero to the Set.
             addHero(playerHero);
 
@@ -164,11 +165,12 @@ public class HeroManager {
         File playerFile = new File(playerFolder, player.getName() + ".yml");
         Configuration playerConfig = new Configuration(playerFile);
         // Save the players stuff
-        playerConfig.setProperty("class", getHero(player).getHeroClass().toString());
-        playerConfig.setProperty("experience", getHero(player).getExp());
-        playerConfig.setProperty("mana", getHero(player).getMana());
-        playerConfig.setProperty("verbose", getHero(player).isVerbose());
-        playerConfig.setProperty("masteries", getHero(player).getMasteries());
+        Hero hero = getHero(player);
+        playerConfig.setProperty("class", hero.getHeroClass().toString());
+        playerConfig.setProperty("experience", hero.getExp());
+        playerConfig.setProperty("verbose", hero.isVerbose());
+        playerConfig.setProperty("masteries", hero.getMasteries());
+        playerConfig.setProperty("suppressed", hero.getSuppressedSkills());
         playerConfig.removeProperty("itemrecovery"); // Just a precaution, we'll remove any values before resaving the list.
         for (ItemStack item : getHero(player).getItems()) {
             String durability = Short.toString(item.getDurability());
@@ -191,7 +193,7 @@ public class HeroManager {
     }
 
     public boolean createNewHero(Player player) {
-        Hero hero = new Hero(plugin, player, plugin.getClassManager().getDefaultClass(), 0, 0, true, new HashSet<String>(), new ArrayList<ItemStack>(), new HashMap<Material, String[]>());
+        Hero hero = new Hero(plugin, player, plugin.getClassManager().getDefaultClass());
         return addHero(hero);
     }
 
@@ -277,10 +279,10 @@ class ManaUpdater extends TimerTask {
                 continue;
             }
             int mana = hero.getMana();
-            if (mana < 100 && hero.isVerbose()) {
-                Messaging.send(hero.getPlayer(), Messaging.createManaBar(mana));
-            }
             hero.setMana(mana > 100 ? mana : mana > 95 ? 100 : mana + 5); // Hooray for the ternary operator!
+            if (mana != 100 && hero.isVerbose()) {
+                Messaging.send(hero.getPlayer(), Messaging.createManaBar(hero.getMana()));
+            }
         }
     }
 }

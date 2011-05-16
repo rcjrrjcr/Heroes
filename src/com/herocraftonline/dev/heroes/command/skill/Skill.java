@@ -32,6 +32,10 @@ public abstract class Skill extends BaseCommand {
         Player[] players = plugin.getServer().getOnlinePlayers();
         for (Player player : players) {
             Location playerLocation = player.getLocation();
+            Hero hero = plugin.getHeroManager().getHero(player);
+            if (hero.isSuppressing(this)) {
+                continue;
+            }
             if (source.getWorld().equals(playerLocation.getWorld())) {
                 if (playerLocation.toVector().distance(source.toVector()) < 30) {
                     Messaging.send(player, message, args);
