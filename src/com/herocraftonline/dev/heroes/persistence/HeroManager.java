@@ -20,6 +20,7 @@ import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.command.BaseCommand;
 import com.herocraftonline.dev.heroes.command.skill.OutsourcedSkill;
+import com.herocraftonline.dev.heroes.command.skill.PassiveSkill;
 import com.herocraftonline.dev.heroes.util.Messaging;
 
 /**
@@ -133,6 +134,15 @@ public class HeroManager {
                         if (playerClass.hasSkill(skill.getName())) {
                             skill.tryLearningSkill(playerHero);
                         }
+                    }
+                }
+            }
+
+            for (BaseCommand cmd : commands) {
+                if (cmd instanceof PassiveSkill) {
+                    PassiveSkill skill = (PassiveSkill) cmd;
+                    if (playerClass.hasSkill(skill.getName())) {
+                        skill.tryApplying(playerHero);
                     }
                 }
             }

@@ -33,7 +33,7 @@ public abstract class PassiveSkill extends Skill {
     public void execute(CommandSender sender, String[] args) {}
 
     protected void apply(Hero hero) {
-        hero.getEffects().putEffect(name.toLowerCase(), Double.POSITIVE_INFINITY);
+        hero.getEffects().putEffect(name, Double.POSITIVE_INFINITY);
         notifyNearbyPlayers(hero.getPlayer().getLocation(), applyText, hero.getPlayer().getName(), name);
     }
 
@@ -41,6 +41,21 @@ public abstract class PassiveSkill extends Skill {
         Double effect = hero.getEffects().removeEffect(name.toLowerCase());
         if (effect != null) {
             notifyNearbyPlayers(hero.getPlayer().getLocation(), unapplyText, hero.getPlayer().getName(), name);
+        }
+    }
+
+    public void tryApplying(Hero hero) {
+        HeroClass heroClass = hero.getHeroClass();
+        if (!heroClass.hasSkill(name)) {
+            return;
+        }
+        ConfigurationNode settings = heroClass.getSkillSettings(name);
+        if (settings != null) {
+            if (meetsLevelRequirement(hero, getSetting(heroClass, SETTING_LEVEL, 1))) {
+                apply(hero);
+            } else {
+                unapply(hero);
+            }
         }
     }
 
@@ -64,27 +79,15 @@ public abstract class PassiveSkill extends Skill {
 
         @Override
         public void onCustomEvent(Event event) {
-            Hero hero = null;
             if (event instanceof LevelEvent) {
                 LevelEvent subEvent = (LevelEvent) event;
-                if (subEvent.isCancelled()) {
-                    return;
+                if (!subEvent.isCancelled()) {
+                    tryApplying(subEvent.getHero());
                 }
-                hero = subEvent.getHero();
             } else if (event instanceof ClassChangeEvent) {
                 ClassChangeEvent subEvent = (ClassChangeEvent) event;
                 if (subEvent.isCancelled()) {
-                    return;
-                }
-                hero = subEvent.getHero();
-            }
-            if (hero != null) {
-                HeroClass heroClass = hero.getHeroClass();
-                ConfigurationNode settings = heroClass.getSkillSettings(name);
-                if (settings == null || !meetsLevelRequirement(hero, getSetting(heroClass, SETTING_LEVEL, 1))) {
-                    unapply(hero);
-                } else {
-                    apply(hero);
+                    tryApplying(subEvent.getHero());
                 }
             }
         }

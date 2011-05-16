@@ -36,7 +36,6 @@ public class OutsourcedSkill extends Skill {
 
         HeroClass heroClass = hero.getHeroClass();
         Player player = hero.getPlayer();
-
         String world = player.getWorld().getName();
         String playerName = player.getName();
         ConfigurationNode settings = heroClass.getSkillSettings(name);

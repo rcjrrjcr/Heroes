@@ -24,6 +24,13 @@ public class HeroEffects {
         this.manager = manager;
         this.hero = hero;
     }
+    
+    public String[] getEffects() {
+        effectLock.readLock().lock();
+        String[] effectList = effects.keySet().toArray(new String[0]);
+        effectLock.readLock().unlock();
+        return effectList;
+    }
 
     public boolean hasEffect(String effect) {
         effectLock.readLock().lock();
@@ -54,6 +61,7 @@ public class HeroEffects {
     }
 
     public Double expireEffect(String effect) {
+        System.out.println(effect + " expired");
         effectLock.writeLock().lock();
         Double oldTime = effects.remove(effect);
         BaseCommand cmd = manager.getCommand(effect);
