@@ -76,7 +76,7 @@ public class SkillCommand extends BaseCommand {
             sender.sendMessage("  §f@" + level + " §e" + name + ":§a " + desc);
         }
 
-        sender.sendMessage("§cTo use a skill, type '§f/skill <name>§c'. For info use '§f/skill <name> ?§c'.");
+        sender.sendMessage("§cTo use a skill, type §f/skill <name>§c. For info use §f/skill <name> ?§c.");
     }
 
 }
