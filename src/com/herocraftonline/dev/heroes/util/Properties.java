@@ -28,6 +28,7 @@ public class Properties {
     public int[] levels;
     public double expLoss;
     // Experience//
+    public boolean resetExpOnClassChange = true;
     public int blockTrackingDuration;
     public int maxTrackedBlocks;
     public int playerKillingExp = 0;

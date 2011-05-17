@@ -41,7 +41,7 @@ public class HEntityListener extends EntityListener {
             // 5% of the next level's experience requirement
             // Experience loss can't reduce level
             Hero heroDefender = plugin.getHeroManager().getHero((Player) defender);
-            int exp = heroDefender.getExp();
+            int exp = heroDefender.getExperience();
             int level = prop.getLevel(exp);
             if (level < prop.maxLevel) {
                 int currentLevelExp = prop.getExperience(level);
@@ -50,7 +50,7 @@ public class HEntityListener extends EntityListener {
                 if (exp - expLoss < currentLevelExp) {
                     expLoss = exp - currentLevelExp;
                 }
-                heroDefender.setExp(exp - expLoss);
+                heroDefender.setExperience(exp - expLoss);
                 Messaging.send(heroDefender.getPlayer(), "You have lost " + expLoss + " exp for dying.");
             }
         }

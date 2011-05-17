@@ -32,7 +32,7 @@ public class RecoverItemsCommand extends BaseCommand {
             Player p = (Player) sender;
             Hero h = this.plugin.getHeroManager().getHero(p);
 
-            List<ItemStack> items = h.getItems();
+            List<ItemStack> items = h.getRecoveryItems();
             List<ItemStack> newItems = new ArrayList<ItemStack>();
 
             if (!(items.size() > 0)) {
@@ -52,7 +52,7 @@ public class RecoverItemsCommand extends BaseCommand {
             if (newItems.size() > 0) {
                 Messaging.send(p, "You have $1 left to recover.", newItems.size() + " Items");
             }
-            h.setItems(newItems);
+            h.setRecoveryItems(newItems);
         }
     }
 }

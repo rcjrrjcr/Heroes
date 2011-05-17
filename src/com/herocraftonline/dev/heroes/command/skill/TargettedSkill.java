@@ -66,6 +66,7 @@ public abstract class TargettedSkill extends ActiveSkill {
         }
         if (target == null) {
             target = getPlayerTarget(player, maxDistance);
+            System.out.println(target);
         } else {
             if (args.length > 1) {
                 args = Arrays.copyOfRange(args, 1, args.length);
@@ -93,8 +94,7 @@ public abstract class TargettedSkill extends ActiveSkill {
         transparent.add((byte) Material.AIR.getId());
         transparent.add((byte) Material.WATER.getId());
         List<Block> lineOfSight = player.getLineOfSight(transparent, maxDistance);
-        double halfDistance = maxDistance / 2.0;
-        List<Entity> nearbyEntities = player.getNearbyEntities(halfDistance, halfDistance, halfDistance);
+        List<Entity> nearbyEntities = player.getNearbyEntities(maxDistance, maxDistance, maxDistance);
         for (Entity entity : nearbyEntities) {
             if (entity instanceof LivingEntity) {
                 Location entityLocation = entity.getLocation();

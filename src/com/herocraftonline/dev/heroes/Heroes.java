@@ -248,7 +248,7 @@ public class Heroes extends JavaPlugin {
      */
     @Override
     public void onDisable() {
-        heroManager.stopChecker();
+        heroManager.stopTimers();
         for (Player player : getServer().getOnlinePlayers()) {
             heroManager.saveHeroFile(player);
         }
@@ -326,7 +326,7 @@ public class Heroes extends JavaPlugin {
         if (inv.getHelmet() != null && inv.getHelmet().getTypeId() != 0) {
             item = inv.getHelmet().getType().toString();
             if (!hc.getAllowedArmor().contains(item)) {
-                h.addItem(inv.getHelmet());
+                h.addRecoveryItem(inv.getHelmet());
                 Messaging.send(p, "$1 has been removed from your Inventory", MaterialUtil.getFriendlyName(item));
                 inv.setHelmet(null);
                 count++;
@@ -335,7 +335,7 @@ public class Heroes extends JavaPlugin {
         if (inv.getChestplate() != null && inv.getChestplate().getTypeId() != 0) {
             item = inv.getChestplate().getType().toString();
             if (!hc.getAllowedArmor().contains(item)) {
-                h.addItem(inv.getChestplate());
+                h.addRecoveryItem(inv.getChestplate());
                 Messaging.send(p, "$1 has been removed from your Inventory", MaterialUtil.getFriendlyName(item));
                 inv.setChestplate(null);
                 count++;
@@ -344,7 +344,7 @@ public class Heroes extends JavaPlugin {
         if (inv.getLeggings() != null && inv.getLeggings().getTypeId() != 0) {
             item = inv.getLeggings().getType().toString();
             if (!hc.getAllowedArmor().contains(item)) {
-                h.addItem(inv.getLeggings());
+                h.addRecoveryItem(inv.getLeggings());
                 Messaging.send(p, "$1 has been removed from your Inventory", MaterialUtil.getFriendlyName(item));
                 inv.setLeggings(null);
                 count++;
@@ -353,7 +353,7 @@ public class Heroes extends JavaPlugin {
         if (inv.getBoots() != null && inv.getBoots().getTypeId() != 0) {
             item = inv.getBoots().getType().toString();
             if (!hc.getAllowedArmor().contains(item)) {
-                h.addItem(inv.getBoots());
+                h.addRecoveryItem(inv.getBoots());
                 Messaging.send(p, "$1 has been removed from your Inventory", MaterialUtil.getFriendlyName(item));
                 inv.setBoots(null);
                 count++;
@@ -394,7 +394,7 @@ public class Heroes extends JavaPlugin {
         Hero h = this.getHeroManager().getHero(p);
         int empty = firstEmpty(p);
         if (empty == -1) {
-            h.addItem(item);
+            h.addRecoveryItem(item);
             inv.setItem(slot, null);
             return false;
         } else {

@@ -28,7 +28,7 @@ public class WhoCommand extends BaseCommand {
                 Properties prop = this.plugin.getConfigManager().getProperties();
                 Player ePlayer = plugin.getServer().getPlayer(args[0]);
                 Hero hero = plugin.getHeroManager().getHero(ePlayer);
-                int level = prop.getLevel(hero.getExp());
+                int level = prop.getLevel(hero.getExperience());
 
                 sender.sendMessage("§c-----[ " + "§f" + ePlayer.getName() + "§c ]-----");
                 sender.sendMessage("  §aClass : " + hero.getHeroClass().getName());

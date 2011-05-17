@@ -48,9 +48,9 @@ public class ChooseCommand extends BaseCommand {
         }
 
         if (!newClass.isPrimary()) {
-            String parentName = newClass.getParent().getName();
-            if (!hero.getMasteries().contains(parentName)) {
-                Messaging.send(player, "You must master $1 before specializing!", parentName);
+            HeroClass parentClass = newClass.getParent();
+            if (!hero.isMaster(parentClass)) {
+                Messaging.send(player, "You must master $1 before specializing!", parentClass.getName());
                 return;
             }
         }
@@ -72,15 +72,19 @@ public class ChooseCommand extends BaseCommand {
             }
         }
 
-        int currentExp = hero.getExp();
         hero.setHeroClass(newClass);
 
         ClassChangeEvent event = new ClassChangeEvent(hero, currentClass, newClass);
         plugin.getServer().getPluginManager().callEvent(event);
         if (event.isCancelled()) {
             hero.setHeroClass(currentClass);
-            hero.setExp(currentExp);
             return;
+        }
+
+        if (prop.resetExpOnClassChange) {
+            if (!hero.isMaster(currentClass)) {
+                hero.setExperience(currentClass, 0);
+            }
         }
 
         if (prop.iConomy && Heroes.iConomy != null && cost > 0) {
