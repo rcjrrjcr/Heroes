@@ -23,11 +23,11 @@ public class PartyAcceptCommand extends BaseCommand {
     public void execute(CommandSender sender, String[] args) {
         if (sender instanceof Player) {
             Player p = (Player) sender;
+            Player argPlayer = plugin.getServer().getPlayer(args[0]);
             Hero pHero = plugin.getHeroManager().getHero(p);
-
-            if (pHero.getInvites().containsKey(args[0])) {
-                pHero.setParty(pHero.getInvites().get(args[0]));
-                pHero.getInvites().remove(args[0]);
+            if (pHero.getInvites().containsKey(argPlayer)) {
+                pHero.setParty(pHero.getInvites().get(argPlayer));
+                pHero.getInvites().remove(argPlayer);
             } else {
                 sender.sendMessage("§aSorry, you don't have an invite from that player");
             }

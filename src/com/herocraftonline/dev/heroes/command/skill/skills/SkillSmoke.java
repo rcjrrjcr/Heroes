@@ -9,8 +9,11 @@ import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event.Type;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityListener;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerListener;
 
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.skill.ActiveEffectSkill;
@@ -52,6 +55,19 @@ public class SkillSmoke extends ActiveEffectSkill {
                 Hero hero = plugin.getHeroManager().getHero(player);
                 if (hero.getEffects().hasEffect(getName())) {
                     hero.getEffects().expireEffect(name);
+                }
+            }
+        }
+    }
+
+    public class SkillPlayerListener extends PlayerListener {
+        @Override
+        public void onPlayerInteract(PlayerInteractEvent event){
+            if(event.getAction() != Action.PHYSICAL){
+                Player player = event.getPlayer();
+                Hero hero = plugin.getHeroManager().getHero(player);
+                if(hero.getEffects().hasEffect(getName())){
+                    hero.getEffects().expireEffect(name); 
                 }
             }
         }

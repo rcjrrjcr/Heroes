@@ -41,7 +41,7 @@ public class PartyInviteCommand extends BaseCommand {
                 Hero inviteeHero = plugin.getHeroManager().getHero(invitee);
                 inviteeHero.getInvites().put(p, pHero.getParty());
                 sender.sendMessage("§aThat player has been invited to the party");
-                invitee.sendMessage("§a" + p.getName() + " has invited you their party.");
+                invitee.sendMessage("§a" + p.getName() + " has invited you their party. /party accept " + p.getName());
             }
         }
     }
