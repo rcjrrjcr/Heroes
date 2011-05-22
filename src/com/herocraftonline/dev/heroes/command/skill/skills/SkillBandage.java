@@ -110,8 +110,17 @@ public class SkillBandage extends TargettedSkill {
                 timesRan++;
                 target = plugin.getServer().getPlayer(target.getName());
                 if (target != null) {
+                    // If the Target is already dead then we stop here otherwise a bug occurs where they can't respawn.
+                    if (health <= 0) {
+                        int id = playerSchedulers.remove(target.getEntityId());
+                        plugin.getServer().getScheduler().cancelTask(id);
+                        return;
+                    }
+                    // Get the new Health value.
                     int newHealth = health + tickHealth;
+                    // Make sure it's not above 20.
                     newHealth = newHealth > 20 ? 20 : newHealth;
+                    // Make sure it's not below 0.
                     newHealth = newHealth < 0 ? 0 : newHealth;
                     target.setHealth(newHealth);
                 }
