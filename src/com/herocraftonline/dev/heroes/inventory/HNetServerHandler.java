@@ -12,7 +12,6 @@ import net.minecraft.server.NetworkManager;
 import net.minecraft.server.Packet;
 import net.minecraft.server.Packet101CloseWindow;
 import net.minecraft.server.Packet102WindowClick;
-import net.minecraft.server.Packet103SetSlot;
 import net.minecraft.server.Packet106Transaction;
 import net.minecraft.server.Packet3Chat;
 import net.minecraft.server.Packet6SpawnPosition;
@@ -57,14 +56,20 @@ public class HNetServerHandler extends NetServerHandler {
         this.g = this.f;
 
         // Heroes Start - This is to cover for plugins which give items to a player directly to the Hotbar.
-        if (packet instanceof Packet103SetSlot) {
-            Bukkit.getServer().getPluginManager().callEvent(new InventoryChangedEvent((Player) this.player.getBukkitEntity()));
-        }
+        //if (packet instanceof Packet103SetSlot) {
+        //Bukkit.getServer().getPluginManager().callEvent(new InventoryChangedEvent((Player) this.player.getBukkitEntity()));
+        //}
         // Heroes End
     }
 
     @Override
     public void a(Packet101CloseWindow packet101closewindow) {
+        // CraftBukkit start
+        if (this.player.dead) {
+            return;
+        }
+        // CraftBukkit end
+
         this.player.z();
         // Heroes Start
         Bukkit.getServer().getPluginManager().callEvent(new InventoryCloseEvent((Player) this.player.getBukkitEntity()));
@@ -74,6 +79,12 @@ public class HNetServerHandler extends NetServerHandler {
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public void a(Packet102WindowClick packet102windowclick) {
+        // CraftBukkit start
+        if (this.player.dead) {
+            return;
+        }
+        // CraftBukkit end
+
         if (this.player.activeContainer.f == packet102windowclick.a && this.player.activeContainer.c(this.player)) {
             ItemStack itemstack = this.player.activeContainer.a(packet102windowclick.b, packet102windowclick.c, packet102windowclick.f, this.player);
             if (ItemStack.equals(packet102windowclick.e, itemstack)) {

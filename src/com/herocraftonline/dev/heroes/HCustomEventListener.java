@@ -1,7 +1,6 @@
 package com.herocraftonline.dev.heroes;
 
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
 import org.bukkit.event.CustomEventListener;
 import org.bukkit.event.Event;
 
@@ -22,56 +21,11 @@ public class HCustomEventListener extends CustomEventListener {
          */
         if (event instanceof InventoryCloseEvent) {
             InventoryCloseEvent e = (InventoryCloseEvent) event;
-            Player p = e.getPlayer();
-            this.plugin.inventoryCheck(p);
+            this.plugin.inventoryCheck(e.getPlayer());
         }
         if (event instanceof InventoryChangedEvent) {
             InventoryChangedEvent e = (InventoryChangedEvent) event;
             this.plugin.inventoryCheck(e.getPlayer());
-
-            // Player p = e.getPlayer();
-            //
-            // ItemStack cursor = e.getCursor();
-            //
-            // if (cursor.getType() == Material.AIR) {
-            // return;
-            // }
-            //
-            // Hero hero = plugin.getHeroManager().getHero(p);
-            // HeroClass clazz = hero.getHeroClass();
-            //
-            // if (e.getSlotType() == InventorySlotType.ARMOR) {
-            // String item = cursor.getType().toString();
-            // if (!clazz.getAllowedArmor().contains(item)) {
-            // Messaging.send(p, "You cannot equip that armor - $1", MaterialUtil.getFriendlyName(item));
-            // e.setCancelled(true);
-            // return;
-            // }
-            // }
-            // if (e.getSlotType() == InventorySlotType.QUICKBAR) {
-            // String item = cursor.getType().toString();
-            // System.out.print(item);
-            // // If it doesn't contain a '_' and it isn't a Bow then it definitely isn't a Weapon.
-            // if (!item.contains("_") && !item.equalsIgnoreCase("BOW")) {
-            // return;
-            // }
-            // // Perform a check to see if what we have is a Weapon.
-            // if (!item.equalsIgnoreCase("BOW")) {
-            // try {
-            // // Get the value of the item.
-            // HeroClass.WeaponItems.valueOf(item.substring(item.indexOf("_") + 1, item.length()));
-            // } catch (IllegalArgumentException e1) {
-            // // If it isn't a Weapon then we exit out here.
-            // return;
-            // }
-            // }
-            // // Check if the Players HeroClass allows this WEAPON to be equipped.
-            // if (!clazz.getAllowedWeapons().contains(item)) {
-            // Messaging.send(p, "You cannot equip that $1.", MaterialUtil.getFriendlyName(item));
-            // e.setCancelled(true);
-            // return;
-            // }
-            // }
         }
     }
 

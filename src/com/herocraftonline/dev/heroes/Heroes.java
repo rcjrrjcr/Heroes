@@ -330,39 +330,43 @@ public class Heroes extends JavaPlugin {
             item = inv.getHelmet().getType().toString();
             if (!hc.getAllowedArmor().contains(item)) {
                 h.addRecoveryItem(inv.getHelmet());
-                Messaging.send(p, "$1 has been removed from your Inventory", MaterialUtil.getFriendlyName(item));
+                if(moveItem(p, -1, inv.getHelmet())){
+                    count++;
+                }
                 inv.setHelmet(null);
-                count++;
             }
         }
         if (inv.getChestplate() != null && inv.getChestplate().getTypeId() != 0) {
             item = inv.getChestplate().getType().toString();
             if (!hc.getAllowedArmor().contains(item)) {
                 h.addRecoveryItem(inv.getChestplate());
-                Messaging.send(p, "$1 has been removed from your Inventory", MaterialUtil.getFriendlyName(item));
+                if(moveItem(p, -1, inv.getChestplate())){
+                    count++;
+                }
                 inv.setChestplate(null);
-                count++;
             }
         }
         if (inv.getLeggings() != null && inv.getLeggings().getTypeId() != 0) {
             item = inv.getLeggings().getType().toString();
             if (!hc.getAllowedArmor().contains(item)) {
                 h.addRecoveryItem(inv.getLeggings());
-                Messaging.send(p, "$1 has been removed from your Inventory", MaterialUtil.getFriendlyName(item));
+                if(moveItem(p, -1, inv.getLeggings())){
+                    count++;
+                }
                 inv.setLeggings(null);
-                count++;
             }
         }
         if (inv.getBoots() != null && inv.getBoots().getTypeId() != 0) {
             item = inv.getBoots().getType().toString();
             if (!hc.getAllowedArmor().contains(item)) {
                 h.addRecoveryItem(inv.getBoots());
-                Messaging.send(p, "$1 has been removed from your Inventory", MaterialUtil.getFriendlyName(item));
+                if(moveItem(p, -1, inv.getBoots())){
+                    count++;
+                }
                 inv.setBoots(null);
-                count++;
             }
         }
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 9; i++) {
             ItemStack itemStack = inv.getItem(i);
             String itemType = itemStack.getType().toString();
 
@@ -376,20 +380,16 @@ public class Heroes extends JavaPlugin {
             }
 
             if (!hc.getAllowedWeapons().contains(itemType)) {
-                if (!moveItem(p, i, itemStack)) {
-                    Messaging.send(p, "$1 has been removed from your Inventory", MaterialUtil.getFriendlyName(itemType));
+                if (moveItem(p, i, itemStack)) {
                     count++;
-                } else {
-                    Messaging.send(p, "You are not trained to use a $1", MaterialUtil.getFriendlyName(itemType));
                 }
-                p.updateInventory();
             }
         }
         if (count > 0) {
             Messaging.send(p, "$1 have been removed from your inventory.", count + " Items");
             Messaging.send(p, "Please make space in your inventory then type '$1'", "/heroes recoveritems");
-            p.updateInventory();
         }
+        p.updateInventory();
     }
 
     public boolean moveItem(Player p, int slot, ItemStack item) {
@@ -398,12 +398,18 @@ public class Heroes extends JavaPlugin {
         int empty = firstEmpty(p);
         if (empty == -1) {
             h.addRecoveryItem(item);
-            inv.setItem(slot, null);
-            return false;
+            if(slot != -1){
+                inv.setItem(slot, null);
+            }
+            Messaging.send(p, "$1 has been removed from your inventory.", MaterialUtil.getFriendlyName(item.getType()));
+            return true;
         } else {
             inv.setItem(empty, item);
-            inv.setItem(slot, null);
-            return true;
+            if(slot != -1){
+                inv.setItem(slot, null);
+            }
+            Messaging.send(p, "You are not trained to use a $1.", MaterialUtil.getFriendlyName(item.getType()));
+            return false;
         }
     }
 

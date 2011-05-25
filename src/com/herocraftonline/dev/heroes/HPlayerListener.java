@@ -54,7 +54,6 @@ public class HPlayerListener extends PlayerListener {
         if (event.isCancelled()) {
             return;
         }
-
         plugin.inventoryCheck(event.getPlayer());
     }
 
