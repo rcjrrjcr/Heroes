@@ -19,7 +19,7 @@ public class SkillWolf extends ActiveSkill{
         minArgs = 0;
         maxArgs = 0;
         identifiers.add("skill wolf");
-        }
+    }
 
     @Override
     public boolean use(Hero hero, String[] args) {
@@ -30,5 +30,4 @@ public class SkillWolf extends ActiveSkill{
         wolf.setTamed(true);
         return true;
     }
-
 }
