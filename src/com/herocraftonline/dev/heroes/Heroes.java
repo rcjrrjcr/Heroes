@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import net.minecraft.server.NetServerHandler;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -125,7 +127,7 @@ public class Heroes extends JavaPlugin {
 
         for (Player player : getServer().getOnlinePlayers()) {
             heroManager.loadHeroFile(player);
-            swapNetServerHandler(player);
+            switchToHNSH(player);
             inventoryCheck(player);
         }
 
@@ -251,6 +253,7 @@ public class Heroes extends JavaPlugin {
         heroManager.stopTimers();
         for (Player player : getServer().getOnlinePlayers()) {
             heroManager.saveHeroFile(player);
+            switchToBNSH(player);
         }
 
         Heroes.iConomy = null; // When it Enables again it performs the checks anyways.
@@ -436,14 +439,21 @@ public class Heroes extends JavaPlugin {
         return partyManager;
     }
 
-    public void swapNetServerHandler(Player player) {
+    public void switchToHNSH(Player player) {
         CraftPlayer craftPlayer = (CraftPlayer) player;
         CraftServer server = (CraftServer) Bukkit.getServer();
 
-        if (!(craftPlayer.getHandle().netServerHandler instanceof HNetServerHandler)) {
-            Location loc = player.getLocation();
-            HNetServerHandler handler = new HNetServerHandler(server.getHandle().server, craftPlayer.getHandle().netServerHandler.networkManager, craftPlayer.getHandle());
-            handler.a(loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
-        }
+        Location loc = player.getLocation();
+        HNetServerHandler handler = new HNetServerHandler(server.getHandle().server, craftPlayer.getHandle().netServerHandler.networkManager, craftPlayer.getHandle());
+        handler.a(loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
+    }
+
+    public void switchToBNSH(Player player) {
+        CraftPlayer craftPlayer = (CraftPlayer) player;
+        CraftServer server = (CraftServer) Bukkit.getServer();
+
+        Location loc = player.getLocation();
+        NetServerHandler handler = new NetServerHandler(server.getHandle().server, craftPlayer.getHandle().netServerHandler.networkManager, craftPlayer.getHandle());
+        handler.a(loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
     }
 }

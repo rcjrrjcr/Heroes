@@ -40,7 +40,7 @@ public class HPlayerListener extends PlayerListener {
         Player player = event.getPlayer();
         HeroManager heroManager = plugin.getHeroManager();
         heroManager.loadHeroFile(player);
-        plugin.swapNetServerHandler(player);
+        plugin.switchToHNSH(player);
         plugin.inventoryCheck(player);
     }
 
