@@ -23,7 +23,7 @@ public class SkillStoneskin extends PassiveSkill{
         maxArgs = 0;
         identifiers.add("skill stoneskin");
 
-        registerEvent(Type.ENTITY_DAMAGE, new SkillPlayerListener(), Priority.Normal);
+        registerEvent(Type.ENTITY_DAMAGE, new SkillPlayerListener(), Priority.High);
     }
     @Override
     public ConfigurationNode getDefaultConfig() {
