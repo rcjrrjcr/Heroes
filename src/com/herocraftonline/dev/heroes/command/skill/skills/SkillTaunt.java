@@ -15,10 +15,10 @@ public class SkillTaunt extends ActiveSkill{
         super(plugin);
         name = "Taunt";
         description = "Taunts enemies around you";
-        usage = "/skill Taunt";
+        usage = "/skill taunt";
         minArgs = 0;
         maxArgs = 0;
-        identifiers.add("skill Taunt");
+        identifiers.add("skill taunt");
     }
 
     @Override
