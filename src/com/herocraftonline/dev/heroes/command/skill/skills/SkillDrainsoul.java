@@ -8,7 +8,7 @@ import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.skill.TargettedSkill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 
-public class SkillDrainsoul extends TargettedSkill{
+public class SkillDrainsoul extends TargettedSkill {
 
     public SkillDrainsoul(Heroes plugin) {
         super(plugin);
@@ -18,7 +18,7 @@ public class SkillDrainsoul extends TargettedSkill{
         maxArgs = 0;
         identifiers.add("skill stoneskin");
     }
-    
+
     @Override
     public ConfigurationNode getDefaultConfig() {
         ConfigurationNode node = super.getDefaultConfig();
@@ -30,12 +30,12 @@ public class SkillDrainsoul extends TargettedSkill{
     public boolean use(Hero hero, LivingEntity target, String[] args) {
         Player player = hero.getPlayer();
         int absorbamount = getSetting(hero.getHeroClass(), "absorb-amount", 4);
-        if(target.getHealth() < absorbamount){
+        if (target.getHealth() < absorbamount) {
             player.setHealth(player.getHealth() + target.getHealth());
             target.damage(target.getHealth());
-        }else{
+        } else {
             player.setHealth(player.getHealth() + absorbamount);
-            target.damage(absorbamount);  
+            target.damage(absorbamount);
         }
         return true;
     }

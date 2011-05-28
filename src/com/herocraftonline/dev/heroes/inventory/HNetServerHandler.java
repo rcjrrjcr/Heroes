@@ -56,9 +56,9 @@ public class HNetServerHandler extends NetServerHandler {
         this.g = this.f;
 
         // Heroes Start - This is to cover for plugins which give items to a player directly to the Hotbar.
-        //if (packet instanceof Packet103SetSlot) {
-        //Bukkit.getServer().getPluginManager().callEvent(new InventoryChangedEvent((Player) this.player.getBukkitEntity()));
-        //}
+        // if (packet instanceof Packet103SetSlot) {
+        // Bukkit.getServer().getPluginManager().callEvent(new InventoryChangedEvent((Player) this.player.getBukkitEntity()));
+        // }
         // Heroes End
     }
 

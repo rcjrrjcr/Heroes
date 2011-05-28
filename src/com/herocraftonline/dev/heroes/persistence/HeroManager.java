@@ -74,9 +74,9 @@ public class HeroManager {
             playerHero.suppressedSkills = new HashSet<String>(playerConfig.getStringList("suppressed", null));
 
             addHero(playerHero);
-            
+
             performSkillChecks(playerHero);
-            
+
             plugin.log(Level.INFO, "Loaded hero: " + player.getName());
         } else {
             // Create a New Hero with the Default Setup.
@@ -117,7 +117,7 @@ public class HeroManager {
                 }
             }
         }
-        
+
         if (hero.experience.get(hero.getHeroClass().getName()) == null) {
             hero.setExperience(0);
         }

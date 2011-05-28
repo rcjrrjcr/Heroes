@@ -9,7 +9,7 @@ import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.skill.PassiveSkill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 
-public class SkillGills extends PassiveSkill{
+public class SkillGills extends PassiveSkill {
 
     public SkillGills(Heroes plugin) {
         super(plugin);
@@ -35,4 +35,3 @@ public class SkillGills extends PassiveSkill{
         }
     }
 }
-
