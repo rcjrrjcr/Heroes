@@ -61,7 +61,6 @@ public class HeroEffects {
     }
 
     public Double expireEffect(String effect) {
-        System.out.println(effect + " expired");
         effectLock.writeLock().lock();
         Double oldTime = effects.remove(effect);
         BaseCommand cmd = manager.getCommand(effect);
