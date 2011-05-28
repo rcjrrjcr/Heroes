@@ -8,9 +8,9 @@ import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.skill.TargettedSkill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 
-public class Leech extends TargettedSkill{
+public class SkillLeech extends TargettedSkill{
 
-    public Leech(Heroes plugin) {
+    public SkillLeech(Heroes plugin) {
         super(plugin);
         name = "Leech";
         description = "Steals mana from an opponant";
@@ -42,4 +42,3 @@ public class Leech extends TargettedSkill{
 
 }
 
-}
