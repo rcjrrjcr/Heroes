@@ -31,12 +31,12 @@ public class SkillLeech extends TargettedSkill{
     public boolean use(Hero hero, LivingEntity target, String[] args) {
         Hero tHero = plugin.getHeroManager().getHero((Player) target);
         int transferamount = getSetting(hero.getHeroClass(), "transfer-amount", 20);
-        if(hero.getMana() > transferamount){
+        if(tHero.getMana() > transferamount){
             if((hero.getMana() + transferamount) > 100){
                 transferamount = (100 - hero.getMana());
             }
-                hero.setMana(hero.getMana() + transferamount);
-                tHero.setMana(tHero.getMana() - transferamount);
+            hero.setMana(hero.getMana() + transferamount);
+            tHero.setMana(tHero.getMana() - transferamount);
             return true;
         }else{
             return false;
