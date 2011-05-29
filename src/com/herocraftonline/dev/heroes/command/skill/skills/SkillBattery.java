@@ -34,8 +34,10 @@ public class SkillBattery extends TargettedSkill{
         if(hero.getMana() > transferamount){
             hero.setMana(hero.getMana() - transferamount);
             tHero.setMana(tHero.getMana() + transferamount);
+            return true;
+        }else{
+            return false;
         }
-        return true;
     }
 
 }
