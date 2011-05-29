@@ -30,7 +30,7 @@ public class SkillDrainsoul extends TargettedSkill{
     public boolean use(Hero hero, LivingEntity target, String[] args) {
         Player player = hero.getPlayer();
         int absorbamount = getSetting(hero.getHeroClass(), "absorb-amount", 4);
-        if(target.getHealth() > absorbamount){
+        if(target.getHealth() < absorbamount){
             player.setHealth(player.getHealth() + target.getHealth());
             target.damage(target.getHealth());
         }else{
