@@ -15,7 +15,7 @@ public class SkillDrainsoul extends TargettedSkill{
         name = "Drainsoul";
         description = "Absorb health from target";
         minArgs = 0;
-        maxArgs = 1;
+        maxArgs = 0;
         identifiers.add("skill drainsoul");
     }
     
@@ -30,12 +30,17 @@ public class SkillDrainsoul extends TargettedSkill{
     public boolean use(Hero hero, LivingEntity target, String[] args) {
         Player player = hero.getPlayer();
         int absorbamount = getSetting(hero.getHeroClass(), "absorb-amount", 4);
+        if((hero.getPlayer().getHealth() + absorbamount) > 100){
+            absorbamount = (100 - hero.getPlayer().getHealth());
+        }
         if(target.getHealth() < absorbamount){
             player.setHealth(player.getHealth() + target.getHealth());
             target.damage(target.getHealth());
+            notifyNearbyPlayers(hero.getPlayer().getLocation(), useText, hero.getPlayer().getName(), name);
         }else{
             player.setHealth(player.getHealth() + absorbamount);
             target.damage(absorbamount);  
+            notifyNearbyPlayers(hero.getPlayer().getLocation(), useText, hero.getPlayer().getName(), name);
         }
         return true;
     }

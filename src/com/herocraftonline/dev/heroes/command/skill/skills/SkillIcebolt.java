@@ -1,7 +1,6 @@
 package com.herocraftonline.dev.heroes.command.skill.skills;
 
 import java.util.HashSet;
-import java.util.List;
 
 import net.minecraft.server.MathHelper;
 

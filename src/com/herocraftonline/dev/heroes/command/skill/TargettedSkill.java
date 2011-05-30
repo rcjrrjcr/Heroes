@@ -66,7 +66,6 @@ public abstract class TargettedSkill extends ActiveSkill {
         }
         if (target == null) {
             target = getPlayerTarget(player, maxDistance);
-            System.out.println(target);
         } else {
             if (args.length > 1) {
                 args = Arrays.copyOfRange(args, 1, args.length);
