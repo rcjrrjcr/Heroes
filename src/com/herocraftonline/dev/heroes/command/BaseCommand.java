@@ -109,7 +109,7 @@ public abstract class BaseCommand {
         }
         return true;
     }
-    
+
     public List<String> getNotes() {
         return notes;
     }

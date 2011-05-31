@@ -31,7 +31,7 @@ public class Hero {
     protected int mana = 0;
     protected boolean verbose = true;
     protected HeroParty party;
-    protected HeroEffects effects;    
+    protected HeroEffects effects;
     protected Map<String, Integer> experience = new HashMap<String, Integer>();
     protected Map<String, Long> cooldowns = new HashMap<String, Long>();
     protected Map<Entity, CreatureType> summons = new HashMap<Entity, CreatureType>();
@@ -39,7 +39,7 @@ public class Hero {
     protected Map<Player, HeroParty> invites = new HashMap<Player, HeroParty>();
     protected List<ItemStack> itemRecovery = new ArrayList<ItemStack>();
     protected Set<String> suppressedSkills = new HashSet<String>();
-    
+
     public Hero(Heroes plugin, Player player, HeroClass heroClass) {
         this.plugin = plugin;
         this.player = player;
@@ -80,20 +80,20 @@ public class Hero {
     public HeroClass getHeroClass() {
         return heroClass;
     }
-    
+
     public boolean isMaster() {
         return isMaster(heroClass);
     }
-    
+
     public boolean isMaster(HeroClass heroClass) {
         int maxExp = plugin.getConfigManager().getProperties().maxExp;
         return getExperience(heroClass) >= maxExp;
     }
-    
+
     public int getExperience() {
         return getExperience(heroClass);
     }
-    
+
     public int getExperience(HeroClass heroClass) {
         Integer exp = experience.get(heroClass.getName());
         return exp == null ? 0 : exp;
@@ -102,7 +102,7 @@ public class Hero {
     public void setExperience(int experience) {
         setExperience(heroClass, experience);
     }
-    
+
     public void setExperience(HeroClass heroClass, int experience) {
         this.experience.put(heroClass.getName(), experience);
     }
@@ -113,14 +113,14 @@ public class Hero {
 
     public void setHeroClass(HeroClass heroClass) {
         this.heroClass = heroClass;
-        
+
         // Check the Players inventory now that they have changed class.
         this.plugin.inventoryCheck(getPlayer());
     }
 
     public void gainExp(int expGain, ExperienceType source) {
         int exp = getExperience();
-        
+
         Properties prop = plugin.getConfigManager().getProperties();
         int currentLevel = prop.getLevel(exp);
         int newLevel = prop.getLevel(exp + expGain);
@@ -168,7 +168,7 @@ public class Hero {
                 }
             }
         }
-        
+
         setExperience(exp);
     }
 
@@ -219,7 +219,7 @@ public class Hero {
     public void setVerbose(boolean verbose) {
         this.verbose = verbose;
     }
-    
+
     public void setSuppressed(Skill skill, boolean suppressed) {
         if (suppressed) {
             suppressedSkills.add(skill.getName());
@@ -227,11 +227,11 @@ public class Hero {
             suppressedSkills.remove(skill.getName());
         }
     }
-    
+
     public boolean isSuppressing(Skill skill) {
         return suppressedSkills.contains(skill.getName());
     }
-    
+
     public final String[] getSuppressedSkills() {
         return suppressedSkills.toArray(new String[0]);
     }

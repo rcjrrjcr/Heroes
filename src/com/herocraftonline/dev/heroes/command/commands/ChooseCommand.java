@@ -10,8 +10,7 @@ import com.herocraftonline.dev.heroes.command.BaseCommand;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 import com.herocraftonline.dev.heroes.util.Messaging;
 import com.herocraftonline.dev.heroes.util.Properties;
-import com.nijiko.coelho.iConomy.iConomy;
-import com.nijiko.coelho.iConomy.system.Account;
+import com.nijikokun.register.payment.Method.MethodAccount;
 
 public class ChooseCommand extends BaseCommand {
 
@@ -64,10 +63,10 @@ public class ChooseCommand extends BaseCommand {
 
         int cost = currentClass == plugin.getClassManager().getDefaultClass() ? 0 : prop.swapCost;
 
-        if (prop.iConomy && Heroes.iConomy != null && cost > 0) {
-            Account account = iConomy.getBank().getAccount(player.getName());
+        if (prop.iConomy && Heroes.getMethod().hasMethod() && cost > 0) {
+            MethodAccount account = Heroes.getMethod().getMethod().getAccount(player.getName());
             if (!account.hasEnough(cost)) {
-                Messaging.send(hero.getPlayer(), "Not enough money (costs " + iConomy.getBank().format(cost) + ")! ");
+                Messaging.send(hero.getPlayer(), "Not enough money (costs " + Heroes.getMethod().getMethod().format(cost) + ")! ");
                 return;
             }
         }
@@ -87,8 +86,8 @@ public class ChooseCommand extends BaseCommand {
             }
         }
 
-        if (prop.iConomy && Heroes.iConomy != null && cost > 0) {
-            Account account = iConomy.getBank().getAccount(player.getName());
+        if (prop.iConomy && Heroes.getMethod().hasMethod() && cost > 0) {
+            MethodAccount account = Heroes.getMethod().getMethod().getAccount(player.getName());
             account.subtract(cost);
         }
 

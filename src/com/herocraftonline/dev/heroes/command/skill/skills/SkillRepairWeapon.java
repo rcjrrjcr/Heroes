@@ -62,7 +62,7 @@ public class SkillRepairWeapon extends PassiveSkill {
                         continue;
                     }
                     String[] name = Material.getMaterial(is.id).toString().split("_", 2);
-                    if (name.length==2 && name[1].equals("SWORD")) {
+                    if (name.length == 2 && name[1].equals("SWORD")) {
                         int newLevel = -1;
                         if (name[0].equals("WOOD")) {
                             newLevel = 0;

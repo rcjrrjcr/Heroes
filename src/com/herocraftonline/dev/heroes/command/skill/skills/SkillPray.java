@@ -6,7 +6,7 @@ import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.skill.ActiveSkill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 
-public class SkillPray extends ActiveSkill{
+public class SkillPray extends ActiveSkill {
 
     public SkillPray(Heroes plugin) {
         super(plugin);

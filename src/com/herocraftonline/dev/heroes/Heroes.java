@@ -60,6 +60,7 @@ import com.herocraftonline.dev.heroes.util.Messaging;
 import com.nijiko.coelho.iConomy.iConomy;
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
+import com.nijikokun.register.payment.Methods;
 
 /**
  * Heroes Plugin for Herocraft
@@ -92,7 +93,9 @@ public class Heroes extends JavaPlugin {
 
     // Variable for the Permissions plugin handler.
     public static PermissionHandler Permissions;
-    public static iConomy iConomy;
+    // iConomy Stuff
+    // public static iConomy iConomy;
+    public static Methods Method = null;
 
     // Variable for mana regen
     // private long regenrate = 100L;
@@ -231,21 +234,6 @@ public class Heroes extends JavaPlugin {
     }
 
     /**
-     * Setup the iConomy plugin.
-     * 
-     * @param plugin
-     * @return
-     */
-    public void setupiConomy() {
-        Plugin test = this.getServer().getPluginManager().getPlugin("iConomy");
-        if (Heroes.iConomy == null) {
-            if (test != null) {
-                Heroes.iConomy = (iConomy) test;
-            }
-        }
-    }
-
-    /**
      * What to do during the Disabling of Heroes -- Likely save data and close connections.
      */
     @Override
@@ -256,9 +244,8 @@ public class Heroes extends JavaPlugin {
             switchToBNSH(player);
         }
 
-        Heroes.iConomy = null; // When it Enables again it performs the checks anyways.
         Heroes.Permissions = null; // When it Enables again it performs the checks anyways.
-        log.info(getDescription().getName() + " version " + getDescription().getVersion() + " is disabled!");
+        getLog().info(getDescription().getName() + " version " + getDescription().getVersion() + " is disabled!");
         debugLog.close();
     }
 
@@ -277,7 +264,7 @@ public class Heroes extends JavaPlugin {
      * @param msg
      */
     public void log(Level level, String msg) {
-        log.log(level, "[Heroes] " + msg);
+        getLog().log(level, "[Heroes] " + msg);
         debugLog.log(level, "[Heroes] " + msg);
     }
 
@@ -289,7 +276,7 @@ public class Heroes extends JavaPlugin {
      */
     public void debugLog(Level level, String msg) {
         if (this.configManager.getProperties().debug) {
-            log.log(level, "[Debug] " + msg);
+            getLog().log(level, "[Debug] " + msg);
         }
         debugLog.log(level, "[Debug] " + msg);
     }
@@ -330,7 +317,7 @@ public class Heroes extends JavaPlugin {
             item = inv.getHelmet().getType().toString();
             if (!hc.getAllowedArmor().contains(item)) {
                 h.addRecoveryItem(inv.getHelmet());
-                if(moveItem(p, -1, inv.getHelmet())){
+                if (moveItem(p, -1, inv.getHelmet())) {
                     count++;
                 }
                 inv.setHelmet(null);
@@ -340,7 +327,7 @@ public class Heroes extends JavaPlugin {
             item = inv.getChestplate().getType().toString();
             if (!hc.getAllowedArmor().contains(item)) {
                 h.addRecoveryItem(inv.getChestplate());
-                if(moveItem(p, -1, inv.getChestplate())){
+                if (moveItem(p, -1, inv.getChestplate())) {
                     count++;
                 }
                 inv.setChestplate(null);
@@ -350,7 +337,7 @@ public class Heroes extends JavaPlugin {
             item = inv.getLeggings().getType().toString();
             if (!hc.getAllowedArmor().contains(item)) {
                 h.addRecoveryItem(inv.getLeggings());
-                if(moveItem(p, -1, inv.getLeggings())){
+                if (moveItem(p, -1, inv.getLeggings())) {
                     count++;
                 }
                 inv.setLeggings(null);
@@ -360,7 +347,7 @@ public class Heroes extends JavaPlugin {
             item = inv.getBoots().getType().toString();
             if (!hc.getAllowedArmor().contains(item)) {
                 h.addRecoveryItem(inv.getBoots());
-                if(moveItem(p, -1, inv.getBoots())){
+                if (moveItem(p, -1, inv.getBoots())) {
                     count++;
                 }
                 inv.setBoots(null);
@@ -398,14 +385,14 @@ public class Heroes extends JavaPlugin {
         int empty = firstEmpty(p);
         if (empty == -1) {
             h.addRecoveryItem(item);
-            if(slot != -1){
+            if (slot != -1) {
                 inv.setItem(slot, null);
             }
             Messaging.send(p, "$1 has been removed from your inventory.", MaterialUtil.getFriendlyName(item.getType()));
             return true;
         } else {
             inv.setItem(empty, item);
-            if(slot != -1){
+            if (slot != -1) {
                 inv.setItem(slot, null);
             }
             Messaging.send(p, "You are not trained to use a $1.", MaterialUtil.getFriendlyName(item.getType()));
@@ -461,5 +448,17 @@ public class Heroes extends JavaPlugin {
         Location loc = player.getLocation();
         NetServerHandler handler = new NetServerHandler(server.getHandle().server, craftPlayer.getHandle().netServerHandler.networkManager, craftPlayer.getHandle());
         handler.a(loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
+    }
+
+    public static Logger getLog() {
+        return log;
+    }
+
+    public static Methods getMethod() {
+        return Method;
+    }
+
+    public void setMethod(Methods method) {
+        Method = method;
     }
 }
