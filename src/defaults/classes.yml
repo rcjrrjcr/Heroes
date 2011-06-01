@@ -1,18 +1,29 @@
 classes:
-    #This is a starter class, when you first join a server this will be your class, this class cannot use any tools or armor types. It has no skills and doesn't gain 
-    #experience.
-    Vagrant:
+    LOSTSOUL:
         default: true
         summon-max: 0
         permitted-armor: []
-        permitted-weapon: []
+        permitted-weapon: [WOOD]
         permitted-skills:
+            Jump:
+                level: 5
+                mana: 25
+                cooldown: 30000
         experience-sources: []
-    #This warrior class has the use of leather, iron and chainmail. It can use wood, stone and an iron-pickaxe. 
-    #It has Jump and TestSkill, TestSkill is a permission based skill. It's from the plugin "herosneak".
-    #Permission based skills allow you to make other plugins provide your classes skills.
-    #It gets experience from KILLING.
-    Warrior:
+        permission-skills:
+            Sneak:
+                level: 3
+                usage: '/sneak'
+                permissions: ['herosneak.sneak']
+            ChestShopSell:
+                level: 1
+                usage: 'Chest Shop Sell Use'
+                permissions: ['iConomyChestShop.shop.sell']
+            ChestShopBuy:
+                level: 1
+                usage: 'Chest Shop Buy Use'
+                permissions: ['iConomyChestShop.shop.buy']
+    WARRIOR:
         default: false
         summon-max: 0
         permitted-armor: [LEATHER, IRON, CHAINMAIL]
@@ -28,22 +39,555 @@ classes:
                 usage: '/sneak'
                 permissions: ['herosneak.sneak']
         experience-sources: [KILLING]
-    #This is a "sub-class". Basically you need to be part of the Warrior (See parent) profession to be able to switch to this class. The switch level is determined by the config file.
-    #This class can use LEATHER, Chainmail and Iron armour
-    #It can use WOOD, DIAMOND_PICKAXE, DIAMOND_AXE, DIAMOND_SPADE, DIAMOND_HOE tools ansd weapons
-    Knight:
+    Paladin:
         default: false
-        parent: CRAFTER
+        parent: WARRIOR
         summon-max: 0
-        permitted-armor: [LEATHER, CHAINMAIL, IRON]
-        permitted-weapon: [WOOD, IRON, STONE, DIAMOND_PICKAXE, DIAMOND_AXE, DIAMOND_SPADE, DIAMOND_HOE]
+        permitted-armor: [LEATHER, DIAMOND, IRON, CHAINMAIL, GOLD]
+        permitted-weapon: [WOOD, GOLD, STONE, IRON, IRON_PICKAXE]
+        permitted-skills:
+            Layhands:
+                level: 1
+                mana: 100
+                cooldown: 30000
+            Invuln:
+                level: 10
+                mana: 25
+                cooldown: 30000
+        permission-skills:
+            Soulfire:
+                level: 5
+                usage: 'SoulFire - Blazing Sword'
+                permissions: ['firelord.sword']
+        experience-sources: [KILLING]
+    Dreadknight:
+        default: false
+        parent: WARRIOR
+        summon-max: 0
+        permitted-armor: [LEATHER, IRON, CHAINMAIL]
+        permitted-weapon: [WOOD, GOLD, STONE, IRON_PICKAXE]
+        permitted-skills:
+            Harmtouch:
+                level: 1
+                mana: 80
+                cooldown: 300000
+        experience-sources: [KILLING]
+    Dragoon:
+        default: false
+        parent: WARRIOR
+        summon-max: 0
+        permitted-armor: [LEATHER, IRON, CHAINMAIL]
+        permitted-weapon: [WOOD, IRON, STONE, DIAMOND_SPADE, IRON_PICKAXE]
+        permitted-skills:
+            Jump:
+                level: 1
+                mana: 10
+                cooldown: 10000
+        experience-sources: [KILLING]
+    Samurai:
+        default: false
+        parent: WARRIOR
+        summon-max: 0
+        permitted-armor: [LEATHER, CHAINMAIL]
+        permitted-weapon: [WOOD, GOLD, IRON, DIAMOND, STONE, IRON_PICKAXE]
+        permitted-skills:
+            Bladegrasp:
+                level: 1
+                mana: 75
+                cooldown: 10000
+            One:
+                level: 10
+                mana: 50
+                cooldown: 10000
+        experience-sources: [KILLING]
+    ROGUE:
+        default: false
+        summon-max: 0
+        permitted-armor: [LEATHER]
+        permitted-weapon: [WOOD, STONE, IRON, IRON_PICKAXE]
+        permitted-skills:
+            Blackjack:
+                level: 5
+                mana: 25
+                cooldown: 30000
+        permission-skills:
+            Sneak:
+                level: 1
+                usage: '/sneak'
+                permissions: ['herosneak.sneak']
+        experience-sources: [KILLING]
+    Ninja:
+        default: false
+        parent: ROGUE
+        summon-max: 0
+        permitted-armor: [LEATHER]
+        permitted-weapon: [WOOD, GOLD, DIAMOND, IRON, STONE, IRON_PICKAXE]
+        permitted-skills:
+            Blackjack:
+                level: 1
+                mana: 25
+                cooldown: 30000
+            Smoke:
+                level: 1
+                mana: 25
+                cooldown: 30000
+        permission-skills:
+            Sneak:
+                level: 1
+                usage: '/sneak'
+                permissions: ['herosneak.sneak']
+            Spy:
+                level: 1
+                usage: '/spy'
+                permissions: ['spy.fun']
+        experience-sources: [KILLING]
+    Ranger:
+        default: false
+        parent: ROGUE
+        summon-max: 0
+        permitted-armor: [LEATHER, CHAINMAIL]
+        permitted-weapon: [WOOD, IRON, STONE, IRON_PICKAXE]
+        permitted-skills:
+            Track:
+                level: 1
+                mana: 25
+                cooldown: 30000
+        permission-skills:
+            Sneak:
+                level: 1
+                usage: '/sneak'
+                permissions: ['herosneak.sneak']
+        experience-sources: [KILLING]
+    Beastmaster:
+        default: false
+        parent: ROGUE
+        summon-max: 0
+        permitted-armor: [CHAINMAIL, LEATHER]
+        permitted-weapon: [WOOD, GOLD, IRON, STONE, IRON_PICKAXE]
+        permitted-skills:
+            Tame:
+                level: 1
+                mana: 25
+                cooldown: 30000
+        permission-skills:
+            Sneak:
+                level: 1
+                usage: '/sneak'
+                permissions: ['herosneak.sneak']
+        experience-sources: [KILLING]
+    Thief:
+        default: false
+        parent: ROGUE
+        summon-max: 0
+        permitted-armor: [LEATHER]
+        permitted-weapon: [WOOD, DIAMOND, IRON, STONE, IRON_PICKAXE]
+        permitted-skills:
+            Blackjack:
+                level: 1
+                mana: 25
+                cooldown: 30000
+        permission-skills:
+            Sneak:
+                level: 1
+                usage: '/sneak'
+                permissions: ['herosneak.sneak']
+        experience-sources: [KILLING]
+    MAGE:
+        default: false
+        summon-max: 0
+        permitted-armor: [LEATHER]
+        permitted-weapon: [WOOD, STONE, IRON_PICKAXE]
+        permitted-skills:
+            Fireball:
+                level: 1
+                mana: 25
+                cooldown: 30000
+            Replenish:
+                level: 5
+                mana: 5
+                cooldown: 10000
+        experience-sources: [KILLING]
+    Elementalist:
+        default: false
+        parent: MAGE
+        summon-max: 0
+        permitted-armor: [LEATHER, GOLD_CHESTPLATE]
+        permitted-weapon: [WOOD, STONE, IRON_PICKAXE]
         permitted-skills:
             Jump:
                 level: 1
                 mana: 25
                 cooldown: 30000
-            Invuln:
+            Replenish:
+                level: 1
+                mana: 5
+                cooldown: 10000
+        permission-skills:
+            Firelord Armor:
                 level: 10
-                mana: 20
-                cooldown: 50000
+                usage: 'Reflective Golden Armor'
+                permissions: ['firelord.armor']
         experience-sources: [KILLING]
+    Wizard:
+        default: false
+        parent: MAGE
+        summon-max: 0
+        permitted-armor: [LEATHER]
+        permitted-weapon: [WOOD, STONE, IRON_PICKAXE]
+        permitted-skills:
+            GTeleport:
+                level: 1
+                mana: 100
+                cooldown: 30000
+            Replenish:
+                level: 1
+                mana: 5
+                cooldown: 10000
+            Bolt:
+                level: 10
+                mana: 50
+                cooldown: 3000
+        experience-sources: [KILLING]
+    Necromancer:
+        default: false
+        parent: MAGE
+        summon-max: 0
+        permitted-armor: [LEATHER]
+        permitted-weapon: [WOOD, STONE, IRON_PICKAXE]
+        permitted-skills:
+            Summon:
+                level: 1
+                mana: 25
+                cooldown: 30000
+            Replenish:
+                level: 1
+                mana: 5
+                cooldown: 10000
+        experience-sources: [KILLING]
+    Enchanter:
+        default: false
+        parent: MAGE
+        summon-max: 0
+        permitted-armor: [LEATHER]
+        permitted-weapon: [WOOD, STONE, IRON_PICKAXE]
+        permitted-skills:
+            Piggify:
+                level: 1
+                mana: 25
+                cooldown: 30000
+            Replenish:
+                level: 1
+                mana: 5
+                cooldown: 10000
+        permission-skills:
+            Sneak:
+                level: 1
+                usage: '/sneak'
+                permissions: ['herosneak.sneak']
+        experience-sources: [KILLING]
+    HEALER:
+        default: false
+        summon-max: 0
+        permitted-armor: [LEATHER, CHAINMAIL]
+        permitted-weapon: [WOOD, STONE, IRON_PICKAXE]
+        permitted-skills:
+            Bandage:
+                level: 1
+                mana: 25
+                cooldown: 0
+        permission-skills:
+            Bandage:
+                level: 1
+                usage: 'Bandage Use with Paper'
+                permissions: ['bandage.use']
+        experience-sources: [KILLING]
+    Cleric:
+        default: false
+        parent: HEALER
+        summon-max: 0
+        permitted-armor: [LEATHER, DIAMOND, CHAINMAIL, IRON, GOLD]
+        permitted-weapon: [WOOD, STONE, IRON_PICKAXE]
+        permitted-skills:
+            Invuln:
+                level: 1
+                mana: 25
+                cooldown: 30000
+        permission-skills:
+            Bandage:
+                level: 1
+                usage: 'Bandage Use with Paper'
+                permissions: ['bandage.use']
+        experience-sources: [KILLING]
+    Priest:
+        default: false
+        parent: HEALER
+        summon-max: 0
+        permitted-armor: [LEATHER, IRON, GOLD]
+        permitted-weapon: [WOOD, STONE, IRON_PICKAXE]
+        permitted-skills:
+            Revive:
+                level: 1
+                mana: 25
+                cooldown: 30000
+        permission-skills:
+            Bandage:
+                level: 1
+                usage: 'Bandage Use with Paper'
+                permissions: ['bandage.use']
+        experience-sources: [KILLING]
+    Bloodmage:
+        default: false
+        parent: HEALER
+        summon-max: 0
+        permitted-armor: [LEATHER]
+        permitted-weapon: [WOOD, STONE, IRON, IRON_PICKAXE]
+        permitted-skills:
+            Syphon:
+                level: 1
+                mana: 25
+                cooldown: 30000
+        permission-skills:
+            Bandage:
+                level: 1
+                usage: 'Bandage Use with Paper'
+                permissions: ['bandage.use']
+        experience-sources: [KILLING]
+    Monk:
+        default: false
+        parent: HEALER
+        summon-max: 0
+        permitted-armor: [LEATHER]
+        permitted-weapon: [IRON_PICKAXE, IRON_AXE, IRON_SPADE, STONE_PICKAXE, STONE_SPADE]
+        permitted-skills:
+            IronFist:
+                level: 1
+        permission-skills:
+            Bandage:
+                level: 1
+                usage: 'Bandage Use with Paper'
+                permissions: ['bandage.use']
+        experience-sources: [KILLING]
+    CRAFTER:
+        default: false
+        summon-max: 0
+        permitted-armor: [LEATHER, CHAINMAIL]
+        permitted-weapon: [IRON, STONE, WOOD, IRON_PICKAXE]
+        permitted-skills:
+            Sneak:
+                level: 1
+                mana: 25
+                cooldown: 30000
+        permission-skills:
+            ChestShop:
+                level: 1
+                usage: 'Chest Shop Creation'
+                permissions: ['iConomyChestShop.shop.*']
+            Sneak:
+                level: 5
+                usage: '/sneak - to hide!'
+                permissions: ['herosneak.sneak']
+        experience-sources: [MINING, LOGGING]
+    Smith:
+        default: false
+        parent: CRAFTER
+        summon-max: 0
+        permitted-armor: [LEATHER, CHAINMAIL, IRON]
+        permitted-weapon: [WOOD, DIAMOND_PICKAXE, DIAMOND_AXE, DIAMOND_SPADE, DIAMOND_HOE]
+        permitted-skills:
+            Jump:
+                level: 1
+                mana: 25
+                cooldown: 30000
+        permission-skills:
+            ChestShop:
+                level: 1
+                usage: 'Chest Shop Use'
+                permissions: ['iConomyChestShop.shop.*']
+            Sneak:
+                level: 5
+                usage: '/sneak - to hide!'
+                permissions: ['herosneak.sneak']
+        experience-sources: [MINING]
+    Architect:
+        default: false
+        parent: CRAFTER
+        summon-max: 0
+        permitted-armor: [LEATHER, DIAMOND, IRON, CHAINMAIL]
+        permitted-weapon: [WOOD, STONE, IRON, DIAMOND_PICKAXE, DIAMOND_AXE, DIAMOND_SPADE, DIAMOND_HOE]
+        permitted-skills:
+            Jump:
+                level: 1
+                mana: 25
+                cooldown: 30000
+        permission-skills:
+            ChestShop:
+                level: 1
+                usage: 'Chest Shop Use'
+                permissions: ['iConomyChestShop.shop.*']
+            Gate:
+                level: 1
+                usage: 'Gate Creation'
+                permissions: ['craftbook.mech.gate']
+            Elevator:
+                level: 1
+                usage: 'Elevator Creation'
+                permissions: ['craftbook.mech.elevator']
+            Light-Switch:
+                level: 1
+                usage: 'Light-Switch Creation'
+                permissions: ['craftbook.mech.light-switch']
+            Bridge:
+                level: 1
+                usage: 'Bridge Creation'
+                permissions: ['craftbook.mech.bridge']
+            Sneak:
+                level: 5
+                usage: '/sneak - to hide!'
+                permissions: ['herosneak.sneak']
+        experience-sources: [MINING]
+    Alchemist:
+        default: false
+        parent: CRAFTER
+        summon-max: 0
+        permitted-armor: [LEATHER, CHAINMAIL]
+        permitted-weapon: [WOOD, DIAMOND_PICKAXE, DIAMOND_AXE, DIAMOND_SPADE, DIAMOND_HOE]
+        permitted-skills:
+            Jump:
+                level: 1
+                mana: 25
+                cooldown: 30000
+        permission-skills:
+            ChestShop:
+                level: 1
+                usage: 'Chest Shop Use'
+                permissions: ['iConomyChestShop.shop.*']
+            Sneak:
+                level: 5
+                usage: '/sneak - to hide!'
+                permissions: ['herosneak.sneak']
+        experience-sources: [MINING]
+    Engineer:
+        default: false
+        parent: CRAFTER
+        summon-max: 0
+        permitted-armor: [LEATHER, CHAINMAIL, IRON]
+        permitted-weapon: [WOOD, DIAMOND_PICKAXE, DIAMOND_AXE, DIAMOND_SPADE, DIAMOND_HOE]
+        permitted-skills:
+            Jump:
+                level: 1
+                mana: 25
+                cooldown: 30000
+        permission-skills:
+            Sneak:
+                level: 5
+                usage: '/sneak - to hide!'
+                permissions: ['herosneak.sneak']
+            ChestShop:
+                level: 1
+                usage: 'Chest Shop Use'
+                permissions: ['iConomyChestShop.shop.*']
+            IC1:
+                level: 1
+                usage: 'Integrated Circuits 1'
+                permissions: ['craftbook.ic.safe']
+            IC1:
+                level: 1
+                usage: 'Integrated Circuits 1'
+                permissions: ['craftbook.ic.safe']
+            IC1:
+                level: 1
+                usage: 'Integrated Circuits 1'
+                permissions: ['craftbook.ic.safe']
+        experience-sources: [MINING]
+    JEDI:
+        default: false
+        summon-max: 0
+        permitted-armor: [LEATHER, IRON, CHAINMAIL, GOLD, DIAMOND]
+        permitted-weapon: [WOOD, STONE, IRON, GOLD, DIAMOND]
+        permitted-skills:
+            Jump:
+                level: 1
+                mana: 5
+                cooldown: 5000
+            Bolt:
+                level: 1
+                mana: 100
+                cooldown: 10000
+            Blackjack:
+                level: 1
+            Bladegrasp:
+                level: 1
+                mana: 25
+                cooldown: 3000
+            GTeleport:
+                level: 1
+                mana: 25
+                cooldown: 3000
+            Harmtouch:
+                level: 1
+                mana: 80
+                cooldown: 30000
+            IronFist:
+                level: 1
+            Revive:
+                level: 1
+                mana: 25
+                cooldown: 3000
+            Track:
+                level: 1
+                mana: 25
+                cooldown: 3000
+            Layhands:
+                level: 1
+                mana: 25
+                cooldown: 3000
+            Tame:
+                level: 1
+                mana: 25
+                cooldown: 3000
+            Bandages:
+                level: 1
+                mana: 25
+                cooldown: 3000
+            Fireball:
+                level: 1
+                mana: 25
+                cooldown: 3000
+            Piggify:
+                level: 1
+                mana: 25
+                cooldown: 3000
+            Invuln:
+                level: 1
+                mana: 25
+                cooldown: 30000
+            One:
+                level: 1
+                mana: 25
+                cooldown: 30000
+            Summon:
+                level: 1
+                mana: 25
+                cooldown: 3000
+            Syphon:
+                level: 1
+                mana: 25
+                cooldown: 30000
+            Replenish:
+                level: 1
+                mana: 5
+                cooldown: 10000
+            Smoke:
+                level: 1
+                mana: 25
+                cooldown: 3000
+            Bandage:
+                level: 1
+                mana: 25
+                cooldown: 0
+        permission-skills:
+            Sneak:
+                level: 1
+                usage: '/sneak'
+                permissions: ['herosneak.sneak']
+        experience-sources: []
