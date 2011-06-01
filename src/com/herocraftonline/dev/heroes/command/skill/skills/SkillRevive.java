@@ -17,7 +17,7 @@ public class SkillRevive extends TargettedSkill {
         name = "Revive";
         description = "Teleports the target to their place of death";
         usage = "/skill revive [target]";
-        minArgs = 1;
+        minArgs = 0;
         maxArgs = 1;
         identifiers.add("skill revive");
     }
