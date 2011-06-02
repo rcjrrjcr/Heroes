@@ -32,8 +32,6 @@ public class HNetServerHandler extends NetServerHandler {
 
     public HNetServerHandler(MinecraftServer minecraftserver, NetworkManager networkmanager, EntityPlayer entityplayer) {
         super(minecraftserver, networkmanager, entityplayer);
-        networkmanager.a(this);
-        entityplayer.netServerHandler = this;
     }
 
     @Override
