@@ -90,6 +90,7 @@ public class Methods {
                 plugin = method;
             else
                 plugin = manager.getPlugin(name);
+
             if (plugin == null)
                 continue;
 
@@ -97,9 +98,6 @@ public class Methods {
                 this.self = true;
                 manager.enablePlugin(plugin);
             }
-
-            if (plugin == null)
-                continue;
 
             Method current = this.createMethod(plugin);
             if (current == null)
