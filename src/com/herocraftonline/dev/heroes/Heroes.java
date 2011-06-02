@@ -5,14 +5,8 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import net.minecraft.server.NetServerHandler;
-
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.craftbukkit.CraftServer;
-import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event.Type;
@@ -49,7 +43,6 @@ import com.herocraftonline.dev.heroes.command.commands.VerboseCommand;
 import com.herocraftonline.dev.heroes.command.commands.WhoCommand;
 import com.herocraftonline.dev.heroes.command.skill.OutsourcedSkill;
 import com.herocraftonline.dev.heroes.command.skill.Skill;
-import com.herocraftonline.dev.heroes.inventory.HNetServerHandler;
 import com.herocraftonline.dev.heroes.party.PartyManager;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 import com.herocraftonline.dev.heroes.persistence.HeroManager;
@@ -271,7 +264,8 @@ public class Heroes extends JavaPlugin {
     }
 
     /**
-     * Print messages to the server Log as well as to our DebugLog. 'debugLog' is used to seperate Heroes information from the Servers Log Output.
+     * Print messages to the server Log as well as to our DebugLog. 'debugLog' is used to seperate
+     * Heroes information from the Servers Log Output.
      * 
      * @param level
      * @param msg
@@ -282,7 +276,8 @@ public class Heroes extends JavaPlugin {
     }
 
     /**
-     * Print messages to the Debug Log, if the servers in Debug Mode then we also wan't to print the messages to the standard Server Console.
+     * Print messages to the Debug Log, if the servers in Debug Mode then we also wan't to print the
+     * messages to the standard Server Console.
      * 
      * @param level
      * @param msg
@@ -330,7 +325,7 @@ public class Heroes extends JavaPlugin {
             item = inv.getHelmet().getType().toString();
             if (!hc.getAllowedArmor().contains(item)) {
                 h.addRecoveryItem(inv.getHelmet());
-                if(moveItem(p, -1, inv.getHelmet())){
+                if (moveItem(p, -1, inv.getHelmet())) {
                     count++;
                 }
                 inv.setHelmet(null);
@@ -340,7 +335,7 @@ public class Heroes extends JavaPlugin {
             item = inv.getChestplate().getType().toString();
             if (!hc.getAllowedArmor().contains(item)) {
                 h.addRecoveryItem(inv.getChestplate());
-                if(moveItem(p, -1, inv.getChestplate())){
+                if (moveItem(p, -1, inv.getChestplate())) {
                     count++;
                 }
                 inv.setChestplate(null);
@@ -350,7 +345,7 @@ public class Heroes extends JavaPlugin {
             item = inv.getLeggings().getType().toString();
             if (!hc.getAllowedArmor().contains(item)) {
                 h.addRecoveryItem(inv.getLeggings());
-                if(moveItem(p, -1, inv.getLeggings())){
+                if (moveItem(p, -1, inv.getLeggings())) {
                     count++;
                 }
                 inv.setLeggings(null);
@@ -360,7 +355,7 @@ public class Heroes extends JavaPlugin {
             item = inv.getBoots().getType().toString();
             if (!hc.getAllowedArmor().contains(item)) {
                 h.addRecoveryItem(inv.getBoots());
-                if(moveItem(p, -1, inv.getBoots())){
+                if (moveItem(p, -1, inv.getBoots())) {
                     count++;
                 }
                 inv.setBoots(null);
@@ -398,14 +393,14 @@ public class Heroes extends JavaPlugin {
         int empty = firstEmpty(p);
         if (empty == -1) {
             h.addRecoveryItem(item);
-            if(slot != -1){
+            if (slot != -1) {
                 inv.setItem(slot, null);
             }
             Messaging.send(p, "$1 has been removed from your inventory.", MaterialUtil.getFriendlyName(item.getType()));
             return true;
         } else {
             inv.setItem(empty, item);
-            if(slot != -1){
+            if (slot != -1) {
                 inv.setItem(slot, null);
             }
             Messaging.send(p, "You are not trained to use a $1.", MaterialUtil.getFriendlyName(item.getType()));
@@ -446,20 +441,22 @@ public class Heroes extends JavaPlugin {
     }
 
     public void switchToHNSH(Player player) {
-        CraftPlayer craftPlayer = (CraftPlayer) player;
-        CraftServer server = (CraftServer) Bukkit.getServer();
-
-        Location loc = player.getLocation();
-        HNetServerHandler handler = new HNetServerHandler(server.getHandle().server, craftPlayer.getHandle().netServerHandler.networkManager, craftPlayer.getHandle());
-        handler.a(loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
+        // CraftPlayer craftPlayer = (CraftPlayer) player;
+        // CraftServer server = (CraftServer) Bukkit.getServer();
+        //
+        // Location loc = player.getLocation();
+        // HNetServerHandler handler = new HNetServerHandler(server.getHandle().server,
+        // craftPlayer.getHandle().netServerHandler.networkManager, craftPlayer.getHandle());
+        // handler.a(loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
     }
 
     public void switchToBNSH(Player player) {
-        CraftPlayer craftPlayer = (CraftPlayer) player;
-        CraftServer server = (CraftServer) Bukkit.getServer();
-
-        Location loc = player.getLocation();
-        NetServerHandler handler = new NetServerHandler(server.getHandle().server, craftPlayer.getHandle().netServerHandler.networkManager, craftPlayer.getHandle());
-        handler.a(loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
+        // CraftPlayer craftPlayer = (CraftPlayer) player;
+        // CraftServer server = (CraftServer) Bukkit.getServer();
+        //
+        // Location loc = player.getLocation();
+        // NetServerHandler handler = new NetServerHandler(server.getHandle().server,
+        // craftPlayer.getHandle().netServerHandler.networkManager, craftPlayer.getHandle());
+        // handler.a(loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
     }
 }
