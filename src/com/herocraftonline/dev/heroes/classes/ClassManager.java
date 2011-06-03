@@ -152,7 +152,7 @@ public class ClassManager {
                             plugin.log(Level.WARNING, "Skill " + skillName + " defined for " + className + " not found.");
                             continue;
                         }
-                        
+
                         ConfigurationNode skillSettings = Configuration.getEmptyNode();
                         List<String> settings = config.getKeys("classes." + className + ".permitted-skills." + skillName);
                         if (settings != null) {
@@ -220,9 +220,17 @@ public class ClassManager {
             String parentName = config.getString("classes." + className + ".parent");
             if (parentName != null && (!parentName.isEmpty() || parentName.equals("null"))) {
                 HeroClass parent = getClass(parentName);
-                parent.getSpecializations().add(unlinkedClass);
-                unlinkedClass.setParent(parent);
+                if(parent!=null){
+                    parent.getSpecializations().add(unlinkedClass);
+                    unlinkedClass.setParent(parent);
+                } else {
+                    plugin.log(Level.WARNING, "Cannot assign '" + className + "' a Parent Class as '" + parentName + "' does not exist.");
+                }
             }
+        }
+
+        if(defaultClass==null) {
+            plugin.log(Level.SEVERE, "You are missing a Default Class, this will cause ALOT of issues!");
         }
     }
 
