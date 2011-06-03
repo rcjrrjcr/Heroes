@@ -20,26 +20,6 @@ public class InventoryChecker {
     }
 
     /**
-     * Check if the Player can equip the given Item into the HotBar slots.
-     * @param p
-     * @param item
-     * @return
-     */
-    public boolean canUseWeapon(Player p, ItemStack item) {
-        return false;
-    }
-
-    /**
-     * Check if the Player can equip the given Item into an Armor slot.
-     * @param p
-     * @param item
-     * @return
-     */
-    public boolean canUseArmor(Player p, ItemStack item) {
-        return false;
-    }
-
-    /**
      * Check the given Players inventory for any Armor or Weapons which are restricted.
      * @param p
      */
