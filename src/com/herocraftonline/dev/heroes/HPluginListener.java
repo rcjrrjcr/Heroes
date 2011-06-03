@@ -34,5 +34,9 @@ public class HPluginListener extends ServerListener {
             }
         }
 
+        // Check if the name is BukkitContrib.
+        if (plugin.getDescription().getName().equals("BukkitContrib")){
+            Heroes.useBukkitContrib = true;
+        }
     }
 }
