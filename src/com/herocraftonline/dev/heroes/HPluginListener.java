@@ -1,5 +1,8 @@
 package com.herocraftonline.dev.heroes;
 
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.event.server.ServerListener;
 import org.bukkit.plugin.Plugin;
@@ -16,8 +19,7 @@ public class HPluginListener extends ServerListener {
 
     @Override
     public void onPluginEnable(PluginEnableEvent event) {
-        // First grab the Plugin.
-        Plugin plugin = event.getPlugin(); // We'll check against the Plugins name, it's not fool proof but will do
+        Plugin plugin = event.getPlugin();
 
         // Check if the name is iConomy.
         if (plugin.getDescription().getName().equals("iConomy")) {
@@ -37,6 +39,20 @@ public class HPluginListener extends ServerListener {
         // Check if the name is BukkitContrib.
         if (plugin.getDescription().getName().equals("BukkitContrib")){
             Heroes.useBukkitContrib = true;
+        }
+    }
+
+    @Override
+    public void onPluginDisable(PluginDisableEvent event) {
+        Plugin plugin = event.getPlugin();
+        // Check if the name is BukkitContrib.
+        if (plugin.getDescription().getName().equals("BukkitContrib")){
+            // If BukkitContrib just Disabled then we tell Heroes to stop using BukkitContrib
+            Heroes.useBukkitContrib = false;
+            // Then we swap all the Players NSH to our Custom NSH.
+            for (Player player : Bukkit.getServer().getOnlinePlayers()) {
+                this.plugin.switchToHNSH(player);
+            }
         }
     }
 }
