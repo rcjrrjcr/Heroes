@@ -10,15 +10,12 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event.Type;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.herocraftonline.dev.heroes.classes.ClassManager;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
-import com.herocraftonline.dev.heroes.classes.HeroClass.WeaponItems;
 import com.herocraftonline.dev.heroes.command.BaseCommand;
 import com.herocraftonline.dev.heroes.command.CommandManager;
 import com.herocraftonline.dev.heroes.command.SkillLoader;
@@ -43,13 +40,14 @@ import com.herocraftonline.dev.heroes.command.commands.VerboseCommand;
 import com.herocraftonline.dev.heroes.command.commands.WhoCommand;
 import com.herocraftonline.dev.heroes.command.skill.OutsourcedSkill;
 import com.herocraftonline.dev.heroes.command.skill.Skill;
+import com.herocraftonline.dev.heroes.inventory.BukkitContribInventoryListener;
+import com.herocraftonline.dev.heroes.inventory.HeroesInventoryListener;
+import com.herocraftonline.dev.heroes.inventory.InventoryChecker;
 import com.herocraftonline.dev.heroes.party.PartyManager;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 import com.herocraftonline.dev.heroes.persistence.HeroManager;
 import com.herocraftonline.dev.heroes.util.ConfigManager;
 import com.herocraftonline.dev.heroes.util.DebugLog;
-import com.herocraftonline.dev.heroes.util.MaterialUtil;
-import com.herocraftonline.dev.heroes.util.Messaging;
 import com.nijiko.coelho.iConomy.iConomy;
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
@@ -74,7 +72,6 @@ public class Heroes extends JavaPlugin {
     private final HPluginListener pluginListener = new HPluginListener(this);
     private final HEntityListener entityListener = new HEntityListener(this);
     private final HBlockListener blockListener = new HBlockListener(this);
-    private final HCustomEventListener customListener = new HCustomEventListener(this);
 
     // Various data managers
     private ConfigManager configManager;
@@ -87,8 +84,15 @@ public class Heroes extends JavaPlugin {
     public static PermissionHandler Permissions;
     public static iConomy iConomy;
 
-    // Variable for mana regen
-    // private long regenrate = 100L;
+    // Variable for BukkitContrib.
+    public static boolean useBukkitContrib = false;
+
+    // Inventory Event listeners for both Heroes and BukkitContrib
+    private final HeroesInventoryListener heroesInventoryListener = new HeroesInventoryListener(this);
+    private final BukkitContribInventoryListener bukkitContribInventoryListener = new BukkitContribInventoryListener(this);
+
+    // Inventory Checker Class -- This class has the methods to check a players inventory and restrictions.
+    private final InventoryChecker inventoryChecker = new InventoryChecker(this);
 
     @Override
     public void onLoad() {
@@ -121,7 +125,7 @@ public class Heroes extends JavaPlugin {
         for (Player player : getServer().getOnlinePlayers()) {
             heroManager.loadHeroFile(player);
             switchToHNSH(player);
-            inventoryCheck(player);
+            getInventoryChecker().inventoryCheck(player);
         }
 
         // Call our function to register the events Heroes needs.
@@ -190,7 +194,10 @@ public class Heroes extends JavaPlugin {
         pluginManager.registerEvent(Type.BLOCK_PLACE, blockListener, Priority.Monitor, this);
 
         pluginManager.registerEvent(Type.PLUGIN_ENABLE, pluginListener, Priority.Monitor, this);
-        pluginManager.registerEvent(Type.CUSTOM_EVENT, customListener, Priority.Monitor, this);
+
+        // Inventory Event Listeners
+        pluginManager.registerEvent(Type.CUSTOM_EVENT, heroesInventoryListener, Priority.Monitor, this);
+        pluginManager.registerEvent(Type.CUSTOM_EVENT, bukkitContribInventoryListener, Priority.Monitor, this);
     }
 
     /**
@@ -314,116 +321,6 @@ public class Heroes extends JavaPlugin {
         log(Level.INFO, "Skills loaded: " + skNo.toString());
     }
 
-    @SuppressWarnings("deprecation")
-    public void inventoryCheck(Player p) {
-        PlayerInventory inv = p.getInventory();
-        Hero h = this.heroManager.getHero(p);
-        HeroClass hc = h.getHeroClass();
-        int count = 0;
-        String item;
-        if (inv.getHelmet() != null && inv.getHelmet().getTypeId() != 0) {
-            item = inv.getHelmet().getType().toString();
-            if (!hc.getAllowedArmor().contains(item)) {
-                h.addRecoveryItem(inv.getHelmet());
-                if (moveItem(p, -1, inv.getHelmet())) {
-                    count++;
-                }
-                inv.setHelmet(null);
-            }
-        }
-        if (inv.getChestplate() != null && inv.getChestplate().getTypeId() != 0) {
-            item = inv.getChestplate().getType().toString();
-            if (!hc.getAllowedArmor().contains(item)) {
-                h.addRecoveryItem(inv.getChestplate());
-                if (moveItem(p, -1, inv.getChestplate())) {
-                    count++;
-                }
-                inv.setChestplate(null);
-            }
-        }
-        if (inv.getLeggings() != null && inv.getLeggings().getTypeId() != 0) {
-            item = inv.getLeggings().getType().toString();
-            if (!hc.getAllowedArmor().contains(item)) {
-                h.addRecoveryItem(inv.getLeggings());
-                if (moveItem(p, -1, inv.getLeggings())) {
-                    count++;
-                }
-                inv.setLeggings(null);
-            }
-        }
-        if (inv.getBoots() != null && inv.getBoots().getTypeId() != 0) {
-            item = inv.getBoots().getType().toString();
-            if (!hc.getAllowedArmor().contains(item)) {
-                h.addRecoveryItem(inv.getBoots());
-                if (moveItem(p, -1, inv.getBoots())) {
-                    count++;
-                }
-                inv.setBoots(null);
-            }
-        }
-        for (int i = 0; i < 9; i++) {
-            ItemStack itemStack = inv.getItem(i);
-            String itemType = itemStack.getType().toString();
-
-            // Perform a check to see if what we have is a Weapon.
-            if (!itemType.equalsIgnoreCase("BOW")) {
-                try {
-                    WeaponItems.valueOf(itemType.substring(itemType.indexOf("_") + 1, itemType.length()));
-                } catch (IllegalArgumentException e1) {
-                    continue;
-                }
-            }
-
-            if (!hc.getAllowedWeapons().contains(itemType)) {
-                if (moveItem(p, i, itemStack)) {
-                    count++;
-                }
-            }
-        }
-        if (count > 0) {
-            Messaging.send(p, "$1 have been removed from your inventory.", count + " Items");
-            Messaging.send(p, "Please make space in your inventory then type '$1'", "/heroes recoveritems");
-        }
-        p.updateInventory();
-    }
-
-    public boolean moveItem(Player p, int slot, ItemStack item) {
-        PlayerInventory inv = p.getInventory();
-        Hero h = this.getHeroManager().getHero(p);
-        int empty = firstEmpty(p);
-        if (empty == -1) {
-            h.addRecoveryItem(item);
-            if (slot != -1) {
-                inv.setItem(slot, null);
-            }
-            Messaging.send(p, "$1 has been removed from your inventory.", MaterialUtil.getFriendlyName(item.getType()));
-            return true;
-        } else {
-            inv.setItem(empty, item);
-            if (slot != -1) {
-                inv.setItem(slot, null);
-            }
-            Messaging.send(p, "You are not trained to use a $1.", MaterialUtil.getFriendlyName(item.getType()));
-            return false;
-        }
-    }
-
-    /**
-     * Grab the first empty INVENTORY SLOT, skips the Hotbar.
-     * 
-     * @param p
-     * @return
-     */
-    public int firstEmpty(Player p) {
-        ItemStack[] inventory = p.getInventory().getContents();
-        for (int i = 9; i < inventory.length; i++) {
-            if (inventory[i] == null) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
     public HeroManager getHeroManager() {
         return heroManager;
     }
@@ -438,6 +335,10 @@ public class Heroes extends JavaPlugin {
 
     public PartyManager getPartyManager() {
         return partyManager;
+    }
+
+    public InventoryChecker getInventoryChecker(){
+        return inventoryChecker;
     }
 
     public void switchToHNSH(Player player) {
