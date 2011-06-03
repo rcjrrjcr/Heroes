@@ -40,7 +40,7 @@ public class RecoverItemsCommand extends BaseCommand {
             }
 
             for (int i = 0; i < items.size(); i++) {
-                int slot = this.plugin.firstEmpty(p);
+                int slot = this.plugin.getInventoryChecker().firstEmpty(p);
                 if (slot == -1) {
                     newItems.add(items.get(i));
                     continue;
