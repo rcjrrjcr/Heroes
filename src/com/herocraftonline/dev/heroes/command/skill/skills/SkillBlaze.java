@@ -36,7 +36,6 @@ public class SkillBlaze extends ActiveSkill{
     public boolean use(Hero hero, String[] args) {
         List<Entity> entities = hero.getPlayer().getNearbyEntities(5, 5, 5);
         for(Entity n : entities){
-            if(n instanceof Player){
                 Player pN = (Player) n;
                 int healamount = getSetting(hero.getHeroClass(), "fire-length", 3000);
                 EntityDamageEvent damageEvent = new EntityDamageEvent(hero.getPlayer(), DamageCause.ENTITY_ATTACK, 0);
@@ -45,7 +44,6 @@ public class SkillBlaze extends ActiveSkill{
                     return false;
                 }
                 pN.setFireTicks(healamount);
-            }
         }        
         notifyNearbyPlayers(hero.getPlayer().getLocation(), useText, hero.getPlayer().getName(), name);
         return true;
