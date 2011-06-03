@@ -107,6 +107,9 @@ public class Heroes extends JavaPlugin {
     public void onEnable() {
         log(Level.INFO, "version " + getDescription().getVersion() + " is enabled!");
 
+        // Check for BukkitContrib
+        setupBukkitContrib();
+
         // Setup the Property for Levels * Exp
         getConfigManager().getProperties().calcExp();
 
@@ -123,8 +126,8 @@ public class Heroes extends JavaPlugin {
         blockListener.init();
 
         for (Player player : getServer().getOnlinePlayers()) {
-            heroManager.loadHeroFile(player);
             switchToHNSH(player);
+            heroManager.loadHeroFile(player);
             getInventoryChecker().inventoryCheck(player);
         }
 
@@ -163,6 +166,18 @@ public class Heroes extends JavaPlugin {
                     }
                 }
             }
+        }
+    }
+
+    /**
+     * Check to see if BukkitContrib is enabled on the server, if so inform Heroes to use BukkitContrib instead.
+     */
+    public void setupBukkitContrib() {
+        Plugin test = this.getServer().getPluginManager().getPlugin("BukkitContrib");
+        if (test != null) {
+            Heroes.useBukkitContrib = true;
+        } else {
+            Heroes.useBukkitContrib = false;
         }
     }
 
@@ -342,6 +357,9 @@ public class Heroes extends JavaPlugin {
     }
 
     public void switchToHNSH(Player player) {
+        if(!(Heroes.useBukkitContrib)){
+            // Swap NSH to Heroes NSH.
+        }
         // CraftPlayer craftPlayer = (CraftPlayer) player;
         // CraftServer server = (CraftServer) Bukkit.getServer();
         //
@@ -352,6 +370,9 @@ public class Heroes extends JavaPlugin {
     }
 
     public void switchToBNSH(Player player) {
+        if(!(Heroes.useBukkitContrib)){
+            // Swap NSH to Bukkit NSH.
+        }
         // CraftPlayer craftPlayer = (CraftPlayer) player;
         // CraftServer server = (CraftServer) Bukkit.getServer();
         //
