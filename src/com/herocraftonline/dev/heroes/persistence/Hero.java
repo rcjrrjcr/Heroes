@@ -115,7 +115,7 @@ public class Hero {
         this.heroClass = heroClass;
 
         // Check the Players inventory now that they have changed class.
-        this.plugin.getInventoryChecker().inventoryCheck(getPlayer());
+        this.plugin.getInventoryChecker().checkInventory(getPlayer());
     }
 
     public void gainExp(int expGain, ExperienceType source) {

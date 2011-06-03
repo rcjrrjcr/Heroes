@@ -44,7 +44,7 @@ public class InventoryChecker {
      * @param p
      */
     @SuppressWarnings("deprecation")
-    public void inventoryCheck(Player p) {
+    public void checkInventory(Player p) {
         PlayerInventory inv = p.getInventory();
         Hero h = plugin.getHeroManager().getHero(p);
         HeroClass hc = h.getHeroClass();
@@ -160,5 +160,4 @@ public class InventoryChecker {
         }
         return -1;
     }
-
 }

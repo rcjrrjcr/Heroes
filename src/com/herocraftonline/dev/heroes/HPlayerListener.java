@@ -41,12 +41,12 @@ public class HPlayerListener extends PlayerListener {
         HeroManager heroManager = plugin.getHeroManager();
         heroManager.loadHeroFile(player);
         plugin.switchToHNSH(player);
-        this.plugin.getInventoryChecker().inventoryCheck(player);
+        this.plugin.getInventoryChecker().checkInventory(player);
     }
 
     @Override
     public void onItemHeldChange(PlayerItemHeldEvent event) {
-        this.plugin.getInventoryChecker().inventoryCheck(event.getPlayer());
+        this.plugin.getInventoryChecker().checkInventory(event.getPlayer());
     }
 
     @Override
@@ -54,7 +54,7 @@ public class HPlayerListener extends PlayerListener {
         if (event.isCancelled()) {
             return;
         }
-        this.plugin.getInventoryChecker().inventoryCheck(event.getPlayer());
+        this.plugin.getInventoryChecker().checkInventory(event.getPlayer());
     }
 
     @Override

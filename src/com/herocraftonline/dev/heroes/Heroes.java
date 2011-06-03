@@ -128,7 +128,7 @@ public class Heroes extends JavaPlugin {
         for (Player player : getServer().getOnlinePlayers()) {
             switchToHNSH(player);
             heroManager.loadHeroFile(player);
-            getInventoryChecker().inventoryCheck(player);
+            getInventoryChecker().checkInventory(player);
         }
 
         // Call our function to register the events Heroes needs.
