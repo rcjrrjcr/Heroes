@@ -72,14 +72,13 @@ public class ChooseCommand extends BaseCommand {
             }
         }
 
-        hero.setHeroClass(newClass);
-
         ClassChangeEvent event = new ClassChangeEvent(hero, currentClass, newClass);
         plugin.getServer().getPluginManager().callEvent(event);
         if (event.isCancelled()) {
-            hero.setHeroClass(currentClass);
             return;
         }
+
+        hero.setHeroClass(newClass);
 
         if (prop.resetExpOnClassChange) {
             if (!hero.isMaster(currentClass)) {
