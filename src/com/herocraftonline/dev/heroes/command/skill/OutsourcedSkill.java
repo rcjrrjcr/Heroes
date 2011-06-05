@@ -30,11 +30,14 @@ public class OutsourcedSkill extends Skill {
     }
 
     public void tryLearningSkill(Hero hero) {
+        tryLearningSkill(hero,hero.getHeroClass());
+    }
+
+    public void tryLearningSkill(Hero hero, HeroClass heroClass) {
         if (Heroes.Permissions == null) {
             return;
         }
 
-        HeroClass heroClass = hero.getHeroClass();
         Player player = hero.getPlayer();
         String world = player.getWorld().getName();
         String playerName = player.getName();
@@ -51,26 +54,28 @@ public class OutsourcedSkill extends Skill {
                     if (Heroes.Permissions.has(player, permission)) {
                         Heroes.Permissions.removeUserPermission(world, playerName, permission);
                     }
-                    Heroes.Permissions.removeCachedItem(world, playerName.toLowerCase(), permission);
+                }
+            }
+        } else {
+            for (String permission : permissions) {
+                if (Heroes.Permissions.has(player, permission)) {
+                    Heroes.Permissions.removeUserPermission(world, playerName, permission);
                 }
             }
         }
-        Heroes.Permissions.save(world);
     }
 
     public class SkillCustomListener extends CustomEventListener {
-
         @Override
         public void onCustomEvent(Event event) {
             if (event instanceof ClassChangeEvent) {
                 ClassChangeEvent subEvent = (ClassChangeEvent) event;
-                tryLearningSkill(subEvent.getHero());
+                tryLearningSkill(subEvent.getHero(),subEvent.getTo());
             } else if (event instanceof LevelEvent) {
                 LevelEvent subEvent = (LevelEvent) event;
                 tryLearningSkill(subEvent.getHero());
             }
         }
-
     }
 
     @Override
