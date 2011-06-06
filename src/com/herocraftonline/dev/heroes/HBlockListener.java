@@ -121,6 +121,8 @@ public class HBlockListener extends BlockListener {
                 if (hero.isVerbose()) {
                     Messaging.send(player, "No experience gained - block placed too recently.");
                 }
+
+                placedBlocks.remove(block.getLocation());
                 return;
             }
         }
