@@ -116,8 +116,6 @@ public class HBlockListener extends BlockListener {
             }
         }
 
-        placedBlocks.remove(block.getLocation());
-
         if (addedExp != 0 && prop.getLevel(hero.getExperience()) != prop.maxLevel) {
             if (wasBlockPlaced(block)) {
                 if (hero.isVerbose()) {
@@ -127,6 +125,8 @@ public class HBlockListener extends BlockListener {
             }
         }
 
+        placedBlocks.remove(block.getLocation());
+        
         hero.gainExp(addedExp, block.getType() == Material.LOG ? ExperienceType.LOGGING : ExperienceType.MINING);
     }
 

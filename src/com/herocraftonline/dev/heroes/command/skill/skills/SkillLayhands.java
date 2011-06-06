@@ -22,8 +22,7 @@ public class SkillLayhands extends TargettedSkill {
     public boolean use(Hero hero, LivingEntity target, String[] args) {
         Player player = hero.getPlayer();
         target.setHealth(20);
-        String targetName = target instanceof Player ? ((Player) target).getName() : target.getClass().getSimpleName().substring(5);
-        notifyNearbyPlayers(player.getLocation(), useText, player.getName(), name, target == player ? "himself" : targetName);
+        notifyNearbyPlayers(player.getLocation(), useText, player.getName(), name, target == player ? "himself" : getEntityName(target));
         return true;
     }
 }
