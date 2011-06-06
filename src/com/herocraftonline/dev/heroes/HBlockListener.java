@@ -116,17 +116,19 @@ public class HBlockListener extends BlockListener {
             }
         }
 
-        placedBlocks.remove(block.getLocation());
-
         if (addedExp != 0 && prop.getLevel(hero.getExperience()) != prop.maxLevel) {
             if (wasBlockPlaced(block)) {
                 if (hero.isVerbose()) {
                     Messaging.send(player, "No experience gained - block placed too recently.");
                 }
+
+                placedBlocks.remove(block.getLocation());
                 return;
             }
         }
 
+        placedBlocks.remove(block.getLocation());
+        
         hero.gainExp(addedExp, block.getType() == Material.LOG ? ExperienceType.LOGGING : ExperienceType.MINING);
     }
 

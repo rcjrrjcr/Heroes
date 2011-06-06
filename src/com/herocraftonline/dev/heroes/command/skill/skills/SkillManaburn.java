@@ -8,7 +8,7 @@ import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.skill.TargettedSkill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 
-public class SkillManaburn extends TargettedSkill{
+public class SkillManaburn extends TargettedSkill {
 
     public SkillManaburn(Heroes plugin) {
         super(plugin);
@@ -29,15 +29,21 @@ public class SkillManaburn extends TargettedSkill{
 
     @Override
     public boolean use(Hero hero, LivingEntity target, String[] args) {
+        if (!(target instanceof Player)) {
+            return false;
+        }
         Hero tHero = plugin.getHeroManager().getHero((Player) target);
+        if (tHero == null) {
+            return false;
+        }
         int transferamount = getSetting(hero.getHeroClass(), "transfer-amount", 20);
-        if(tHero.getMana() > transferamount){
-            if((hero.getMana() + transferamount) > 100){
+        if (tHero.getMana() > transferamount) {
+            if ((hero.getMana() + transferamount) > 100) {
                 transferamount = (100 - hero.getMana());
             }
             tHero.setMana(tHero.getMana() - transferamount);
             return true;
-        }else{
+        } else {
             return false;
         }
     }

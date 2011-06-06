@@ -50,9 +50,8 @@ public class SkillSyphon extends TargettedSkill {
         transferredHealth *= getSetting(hero.getHeroClass(), "multiplier", 1d);
         transferredHealth = maxHealth - targetHealth < transferredHealth ? maxHealth - targetHealth : transferredHealth < 0 ? 0 : transferredHealth;
         target.setHealth(targetHealth + transferredHealth);
-
-        String targetName = target instanceof Player ? ((Player) target).getName() : target.getClass().getSimpleName().substring(5);
-        notifyNearbyPlayers(player.getLocation(), useText, player.getName(), name, target == player ? "himself" : targetName);
+        
+        notifyNearbyPlayers(player.getLocation(), useText, player.getName(), name, target == player ? "himself" : getEntityName(target));
         return true;
     }
 

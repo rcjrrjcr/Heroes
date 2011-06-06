@@ -132,5 +132,9 @@ public abstract class TargettedSkill extends ActiveSkill {
         }
         return true;
     }
+    
+    public static String getEntityName(LivingEntity entity) {
+        return entity instanceof Player ? ((Player) entity).getName() : entity.getClass().getSimpleName().substring(5);
+    }
 
 }
