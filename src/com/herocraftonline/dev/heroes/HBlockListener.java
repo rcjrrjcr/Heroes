@@ -79,6 +79,7 @@ public class HBlockListener extends BlockListener {
             if (timePlaced + blockTrackingDuration > System.currentTimeMillis()) {
                 return true;
             } else {
+                placedBlocks.remove(block.getLocation());
                 return false;
             }
         }
@@ -121,14 +122,10 @@ public class HBlockListener extends BlockListener {
                 if (hero.isVerbose()) {
                     Messaging.send(player, "No experience gained - block placed too recently.");
                 }
-
                 placedBlocks.remove(block.getLocation());
                 return;
             }
         }
-
-        placedBlocks.remove(block.getLocation());
-        
         hero.gainExp(addedExp, block.getType() == Material.LOG ? ExperienceType.LOGGING : ExperienceType.MINING);
     }
 
