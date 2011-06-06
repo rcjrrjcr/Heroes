@@ -11,7 +11,6 @@ import com.herocraftonline.dev.heroes.persistence.Hero;
 import com.herocraftonline.dev.heroes.util.Messaging;
 import com.herocraftonline.dev.heroes.util.Properties;
 import com.nijiko.coelho.iConomy.iConomy;
-import com.nijiko.coelho.iConomy.system.Account;
 
 public class ChooseCommand extends BaseCommand {
 
@@ -43,7 +42,7 @@ public class ChooseCommand extends BaseCommand {
         }
 
         if (newClass == currentClass) {
-            Messaging.send(player, "Y U DO? AMNESIA? NO GOOD!");
+            Messaging.send(player, "You are already set as this Class.");
             return;
         }
 
@@ -65,8 +64,7 @@ public class ChooseCommand extends BaseCommand {
         int cost = currentClass == plugin.getClassManager().getDefaultClass() ? 0 : prop.swapCost;
 
         if (prop.iConomy && Heroes.iConomy != null && cost > 0) {
-            Account account = iConomy.getBank().getAccount(player.getName());
-            if (!account.hasEnough(cost)) {
+            if (!iConomy.getBank().getAccount(player.getName()).hasEnough(cost)) {
                 Messaging.send(hero.getPlayer(), "Not enough money (costs " + iConomy.getBank().format(cost) + ")! ");
                 return;
             }
@@ -87,8 +85,7 @@ public class ChooseCommand extends BaseCommand {
         }
 
         if (prop.iConomy && Heroes.iConomy != null && cost > 0) {
-            Account account = iConomy.getBank().getAccount(player.getName());
-            account.subtract(cost);
+            iConomy.getBank().getAccount(player.getName()).subtract(cost);
         }
 
         hero.getBinds().clear();
