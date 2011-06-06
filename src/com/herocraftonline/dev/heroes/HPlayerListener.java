@@ -21,7 +21,7 @@ import com.herocraftonline.dev.heroes.persistence.Hero;
 import com.herocraftonline.dev.heroes.persistence.HeroManager;
 
 public class HPlayerListener extends PlayerListener {
-    private final Heroes plugin;
+    public final Heroes plugin;
 
     public HPlayerListener(Heroes instance) {
         plugin = instance;
@@ -54,7 +54,13 @@ public class HPlayerListener extends PlayerListener {
         if (event.isCancelled()) {
             return;
         }
-        this.plugin.getInventoryChecker().checkInventory(event.getPlayer());
+        final Player player = event.getPlayer();
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+            @Override
+            public void run() {
+                plugin.getInventoryChecker().checkInventory(player.getName());
+            }
+        });
     }
 
     @Override
