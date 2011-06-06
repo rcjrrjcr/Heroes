@@ -1,5 +1,6 @@
 package com.herocraftonline.dev.heroes.inventory;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -23,7 +24,13 @@ public class InventoryChecker {
      * Check the given Players inventory for any Armor or Weapons which are restricted.
      * @param p
      */
-    @SuppressWarnings("deprecation")
+    public void checkInventory(String name) {
+        Player player = Bukkit.getServer().getPlayer(name);
+        if(player != null){
+            checkInventory(player);
+        }
+    }
+
     public void checkInventory(Player p) {
         PlayerInventory inv = p.getInventory();
         Hero h = plugin.getHeroManager().getHero(p);
@@ -93,7 +100,7 @@ public class InventoryChecker {
             Messaging.send(p, "$1 have been removed from your inventory.", count + " Items");
             Messaging.send(p, "Please make space in your inventory then type '$1'", "/heroes recoveritems");
         }
-        p.updateInventory();
+        //p.updateInventory();
     }
 
     /**
