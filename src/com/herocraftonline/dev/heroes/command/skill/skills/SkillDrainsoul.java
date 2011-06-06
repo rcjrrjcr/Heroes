@@ -7,7 +7,6 @@ import org.bukkit.util.config.ConfigurationNode;
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.command.skill.TargettedSkill;
 import com.herocraftonline.dev.heroes.persistence.Hero;
-import com.herocraftonline.dev.heroes.util.CreatureUtil;
 
 public class SkillDrainsoul extends TargettedSkill{
 
@@ -19,7 +18,7 @@ public class SkillDrainsoul extends TargettedSkill{
         maxArgs = 0;
         identifiers.add("skill drainsoul");
     }
-    
+
     @Override
     public ConfigurationNode getDefaultConfig() {
         ConfigurationNode node = super.getDefaultConfig();
@@ -34,13 +33,13 @@ public class SkillDrainsoul extends TargettedSkill{
         if((hero.getPlayer().getHealth() + absorbamount) > 100){
             absorbamount = (100 - hero.getPlayer().getHealth());
         }
-        
+
         if(target.getHealth() < absorbamount){
             player.setHealth(player.getHealth() + target.getHealth());
             target.damage(target.getHealth());
         }else{
             player.setHealth(player.getHealth() + absorbamount);
-            target.damage(absorbamount);  
+            target.damage(absorbamount);
         }
         notifyNearbyPlayers(hero.getPlayer().getLocation(), useText, hero.getPlayer().getName(), name, getEntityName(target));
         return true;
