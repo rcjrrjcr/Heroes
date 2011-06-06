@@ -1,5 +1,6 @@
 package com.herocraftonline.dev.heroes.util;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
 import com.herocraftonline.dev.heroes.Heroes;
@@ -15,27 +16,27 @@ public final class Messaging {
     }
 
     private static String parameterizeMessage(String msg, String... params) {
-        msg = "§9Heroes:§c " + msg;
+        msg = ChatColor.BLUE + "Heroes: " + ChatColor.RED + msg;
         if (params != null) {
             for (int i = 0; i < params.length; i++) {
-                msg = msg.replace("$" + (i + 1), "§f" + params[i] + "§c");
+                msg = msg.replace("$" + (i + 1), ChatColor.WHITE + params[i] + ChatColor.RED);
             }
         }
         return msg;
     }
 
     public static String createManaBar(int mana) {
-        String manaBar = "§c[§9";
-        int progress = (int) (mana / 100.0 * 92);
+        String manaBar = ChatColor.RED + "[" + ChatColor.BLUE;
+        int progress = (int) (mana / 100.0 * 50);
         for (int i = 0; i < progress; i++) {
             manaBar += "|";
         }
-        manaBar += "§4";
-        for (int i = 0; i < 92 - progress; i++) {
+        manaBar += ChatColor.DARK_RED;
+        for (int i = 0; i < 50 - progress; i++) {
             manaBar += "|";
         }
-        manaBar += "§c]";
-        return manaBar;
+        manaBar += ChatColor.RED + "]";
+        return manaBar + " - " + ChatColor.BLUE + mana + "%";
     }
 
 }

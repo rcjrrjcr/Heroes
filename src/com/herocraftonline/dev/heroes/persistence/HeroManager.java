@@ -74,9 +74,9 @@ public class HeroManager {
             playerHero.suppressedSkills = new HashSet<String>(playerConfig.getStringList("suppressed", null));
 
             addHero(playerHero);
-            
+
             performSkillChecks(playerHero);
-            
+
             plugin.log(Level.INFO, "Loaded hero: " + player.getName());
         } else {
             // Create a New Hero with the Default Setup.
@@ -117,7 +117,7 @@ public class HeroManager {
                 }
             }
         }
-        
+
         if (hero.experience.get(hero.getHeroClass().getName()) == null) {
             hero.setExperience(0);
         }
@@ -329,7 +329,7 @@ class ManaUpdater extends TimerTask {
             int mana = hero.getMana();
             hero.setMana(mana > 100 ? mana : mana > 95 ? 100 : mana + 5); // Hooray for the ternary operator!
             if (mana != 100 && hero.isVerbose()) {
-                Messaging.send(hero.getPlayer(), Messaging.createManaBar(hero.getMana()));
+                Messaging.send(hero.getPlayer(), "Mana: " + Messaging.createManaBar(hero.getMana()));
             }
         }
     }
