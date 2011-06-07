@@ -49,7 +49,7 @@ public class SkillXMuteOre extends ActiveSkill {
             {
                 put("reagentdata", 4); // Corresponds to lapis
                 put("product", "DIAMOND");
-                put("count", 5);
+                put("count", 10);
             }
         };
         node.setProperty("COAL", coalMap);
