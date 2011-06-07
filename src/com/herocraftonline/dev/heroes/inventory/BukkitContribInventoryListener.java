@@ -10,6 +10,7 @@ import org.bukkitcontrib.event.inventory.InventorySlotType;
 
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
+import com.herocraftonline.dev.heroes.util.MaterialUtil;
 import com.herocraftonline.dev.heroes.util.Messaging;
 
 public class BukkitContribInventoryListener extends InventoryListener {
@@ -45,7 +46,7 @@ public class BukkitContribInventoryListener extends InventoryListener {
             // Perform Armor Check.
             String itemString = item.getType().toString();
             if (!(clazz.getAllowedArmor().contains(itemString))) {
-                Messaging.send(player, "You cannot equip that armor - $1", itemString);
+                Messaging.send(player, "You are not trained to use a $1.", MaterialUtil.getFriendlyName(itemString));
                 event.setCancelled(true);
                 return;
             }
@@ -71,7 +72,7 @@ public class BukkitContribInventoryListener extends InventoryListener {
             }
             // Check if the Players HeroClass allows this WEAPON to be equipped.
             if (!(clazz.getAllowedWeapons().contains(itemString))) {
-                Messaging.send(player, "You cannot equip that item - $1", itemString);
+                Messaging.send(player, "You are not trained to use a $1.", MaterialUtil.getFriendlyName(itemString));
                 event.setCancelled(true);
                 return;
             }
