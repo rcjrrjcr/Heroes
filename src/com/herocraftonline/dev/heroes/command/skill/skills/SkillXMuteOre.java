@@ -34,7 +34,7 @@ public class SkillXMuteOre extends ActiveSkill {
         ConfigurationNode node = super.getDefaultConfig();
         Map<String, Object> coalMap = new HashMap<String, Object>() {
             {
-                put("reagentdata", 0);
+                put("reagentdata", 0); // Corresponds to coal (not charcoal)
                 put("product", "IRON_ORE");
                 put("count", 5);
             }
@@ -47,7 +47,7 @@ public class SkillXMuteOre extends ActiveSkill {
         };
         Map<String, Object> lapisMap = new HashMap<String, Object>() {
             {
-                put("reagentdata", 4);
+                put("reagentdata", 4); // Corresponds to lapis
                 put("product", "DIAMOND");
                 put("count", 5);
             }
@@ -71,25 +71,25 @@ public class SkillXMuteOre extends ActiveSkill {
         int count = 1;
         byte data = -1;
 
-        data = (byte) getSetting(hero.getHeroClass(), mat.toString() + ".reagentdata", -1); // Narrowing
+        data = (byte) getSetting(hero.getHeroClass(), mat.toString() + ".reagentdata", -1); // Narrowing primitive conversion
         count = getSetting(hero.getHeroClass(), mat.toString() + ".count", 1);
         String productName = getSetting(hero.getHeroClass(), mat.toString() + ".product", null);
         nextMat = Material.getMaterial(productName);
 
         if (nextMat != null && count > 0) {
-            if (data != -1 && is.getData().getData() == data) {  //Prevent charcoal/inksacks from being used
-                int productCount = is.getAmount() / count;
-                int leftOver = is.getAmount() % count; // Can these two
-                                                       // operations be merged?
+            if (data != -1 && is.getData().getData() == data) { // Prevent charcoal/inksacks from being used
+
+                int productCount = is.getAmount() / count; // Can these two operations be merged?
 
                 if (productCount != 0) {
                     ItemStack product = new ItemStack(nextMat, productCount);
+
                     Map<Integer, ItemStack> leftover = p.getInventory().addItem(product);
-                    if(!leftover.isEmpty()) {
+                    if (!leftover.isEmpty()) {
                         p.sendMessage("Dropping unstorable products onto ground!");
                         World w = p.getWorld();
                         Location loc = p.getLocation();
-                        for(ItemStack excess : leftover.values()) {
+                        for (ItemStack excess : leftover.values()) {
                             w.dropItemNaturally(loc, excess);
                         }
                     }
