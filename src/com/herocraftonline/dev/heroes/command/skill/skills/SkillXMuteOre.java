@@ -42,7 +42,7 @@ public class SkillXMuteOre extends ActiveSkill {
         Map<String, Object> ironMap = new HashMap<String, Object>() {
             {
                 put("product", "GOLD_ORE");
-                put("count", 64);
+                put("count", 32);
             }
         };
         Map<String, Object> lapisMap = new HashMap<String, Object>() {
