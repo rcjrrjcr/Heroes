@@ -35,6 +35,7 @@ public class InventoryChecker {
         PlayerInventory inv = p.getInventory();
         Hero h = plugin.getHeroManager().getHero(p);
         HeroClass hc = h.getHeroClass();
+        int removedCount = 0;
         int count = 0;
         String item;
         if (inv.getHelmet() != null && inv.getHelmet().getTypeId() != 0) {
@@ -42,9 +43,10 @@ public class InventoryChecker {
             if (!hc.getAllowedArmor().contains(item)) {
                 h.addRecoveryItem(inv.getHelmet());
                 if (moveItem(p, -1, inv.getHelmet())) {
-                    count++;
+                    removedCount++;
                 }
                 inv.setHelmet(null);
+                count++;
             }
         }
         if (inv.getChestplate() != null && inv.getChestplate().getTypeId() != 0) {
@@ -52,9 +54,10 @@ public class InventoryChecker {
             if (!hc.getAllowedArmor().contains(item)) {
                 h.addRecoveryItem(inv.getChestplate());
                 if (moveItem(p, -1, inv.getChestplate())) {
-                    count++;
+                    removedCount++;
                 }
                 inv.setChestplate(null);
+                count++;
             }
         }
         if (inv.getLeggings() != null && inv.getLeggings().getTypeId() != 0) {
@@ -62,9 +65,10 @@ public class InventoryChecker {
             if (!hc.getAllowedArmor().contains(item)) {
                 h.addRecoveryItem(inv.getLeggings());
                 if (moveItem(p, -1, inv.getLeggings())) {
-                    count++;
+                    removedCount++;
                 }
                 inv.setLeggings(null);
+                count++;
             }
         }
         if (inv.getBoots() != null && inv.getBoots().getTypeId() != 0) {
@@ -72,9 +76,10 @@ public class InventoryChecker {
             if (!hc.getAllowedArmor().contains(item)) {
                 h.addRecoveryItem(inv.getBoots());
                 if (moveItem(p, -1, inv.getBoots())) {
-                    count++;
+                    removedCount++;
                 }
                 inv.setBoots(null);
+                count++;
             }
         }
         for (int i = 0; i < 9; i++) {
@@ -92,15 +97,20 @@ public class InventoryChecker {
 
             if (!hc.getAllowedWeapons().contains(itemType)) {
                 if (moveItem(p, i, itemStack)) {
-                    count++;
+                    removedCount++;
                 }
+                count++;
             }
         }
-        if (count > 0) {
-            Messaging.send(p, "$1 have been removed from your inventory.", count + " Items");
+        // If items were removed from the Players inventory then we need to alert them of such event.
+        if (removedCount > 0) {
+            Messaging.send(p, "$1 have been removed from your inventory due to class restrictions.", removedCount + " Items");
             Messaging.send(p, "Please make space in your inventory then type '$1'", "/heroes recoveritems");
         }
-        syncInventory(p);
+        // If any items were removed or moved in the inventory then we need to make sure the Client is in Sync.
+        if (count > 0) {
+            syncInventory(p);
+        }
     }
 
     /**
@@ -136,7 +146,6 @@ public class InventoryChecker {
             if (slot != -1) {
                 inv.setItem(slot, null);
             }
-            Messaging.send(p, "$1 has been removed from your inventory.", MaterialUtil.getFriendlyName(item.getType()));
             return true;
         } else {
             inv.setItem(empty, item);
