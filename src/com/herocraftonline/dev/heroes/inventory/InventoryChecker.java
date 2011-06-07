@@ -100,7 +100,23 @@ public class InventoryChecker {
             Messaging.send(p, "$1 have been removed from your inventory.", count + " Items");
             Messaging.send(p, "Please make space in your inventory then type '$1'", "/heroes recoveritems");
         }
-        //p.updateInventory();
+        syncInventory(p);
+    }
+
+    /**
+     * Synchronize the Clients Inventory with the Server. This is dealt during a scheduler so it happens after ANY changes are made.
+     * Synchronizing during changes often results in the client losing Sync.
+     *
+     * @param player
+     */
+    public void syncInventory(final Player player){
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+            @SuppressWarnings("deprecation")
+            @Override
+            public void run() {
+                player.updateInventory();
+            }
+        });
     }
 
     /**
