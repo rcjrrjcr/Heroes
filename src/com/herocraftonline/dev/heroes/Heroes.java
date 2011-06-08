@@ -49,9 +49,9 @@ import com.herocraftonline.dev.heroes.persistence.Hero;
 import com.herocraftonline.dev.heroes.persistence.HeroManager;
 import com.herocraftonline.dev.heroes.util.ConfigManager;
 import com.herocraftonline.dev.heroes.util.DebugLog;
-import com.nijiko.coelho.iConomy.iConomy;
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
+import com.nijikokun.register.payment.Method;
 
 /**
  * Heroes Plugin for Herocraft
@@ -83,7 +83,8 @@ public class Heroes extends JavaPlugin {
 
     // Variable for the Permissions plugin handler.
     public static PermissionHandler Permissions;
-    public static iConomy iConomy;
+    public Method Method = null;
+
 
     // Variable for BukkitContrib.
     public static boolean useBukkitContrib = false;
@@ -92,7 +93,8 @@ public class Heroes extends JavaPlugin {
     private final HeroesInventoryListener heroesInventoryListener = new HeroesInventoryListener(this);
     private BukkitContribInventoryListener bukkitContribInventoryListener;
 
-    // Inventory Checker Class -- This class has the methods to check a players inventory and restrictions.
+    // Inventory Checker Class -- This class has the methods to check a players inventory and
+    // restrictions.
     private final InventoryChecker inventoryChecker = new InventoryChecker(this);
 
     @Override
@@ -171,7 +173,8 @@ public class Heroes extends JavaPlugin {
     }
 
     /**
-     * Check to see if BukkitContrib is enabled on the server, if so inform Heroes to use BukkitContrib instead.
+     * Check to see if BukkitContrib is enabled on the server, if so inform Heroes to use
+     * BukkitContrib instead.
      */
     public void setupBukkitContrib() {
         Plugin test = this.getServer().getPluginManager().getPlugin("BukkitContrib");
@@ -213,8 +216,10 @@ public class Heroes extends JavaPlugin {
         pluginManager.registerEvent(Type.BLOCK_PLACE, blockListener, Priority.Monitor, this);
 
         pluginManager.registerEvent(Type.PLUGIN_ENABLE, pluginListener, Priority.Monitor, this);
+        pluginManager.registerEvent(Type.PLUGIN_DISABLE, pluginListener, Priority.Monitor, this);
 
         pluginManager.registerEvent(Type.CUSTOM_EVENT, new HLevelListener(this), Priority.Monitor, this);
+
         // Inventory Event Listeners
         pluginManager.registerEvent(Type.CUSTOM_EVENT, heroesInventoryListener, Priority.Monitor, this);
     }
@@ -250,21 +255,6 @@ public class Heroes extends JavaPlugin {
     }
 
     /**
-     * Setup the iConomy plugin.
-     * 
-     * @param plugin
-     * @return
-     */
-    public void setupiConomy() {
-        Plugin test = this.getServer().getPluginManager().getPlugin("iConomy");
-        if (Heroes.iConomy == null) {
-            if (test != null) {
-                Heroes.iConomy = (iConomy) test;
-            }
-        }
-    }
-
-    /**
      * What to do during the Disabling of Heroes -- Likely save data and close connections.
      */
     @Override
@@ -275,7 +265,7 @@ public class Heroes extends JavaPlugin {
             switchToBNSH(player);
         }
 
-        Heroes.iConomy = null; // When it Enables again it performs the checks anyways.
+        this.Method = null; // When it Enables again it performs the checks anyways.
         Heroes.Permissions = null; // When it Enables again it performs the checks anyways.
         log.info(getDescription().getName() + " version " + getDescription().getVersion() + " is disabled!");
         debugLog.close();
@@ -356,12 +346,12 @@ public class Heroes extends JavaPlugin {
         return partyManager;
     }
 
-    public InventoryChecker getInventoryChecker(){
+    public InventoryChecker getInventoryChecker() {
         return inventoryChecker;
     }
 
     public void switchToHNSH(Player player) {
-        if(!(Heroes.useBukkitContrib)){
+        if (!(Heroes.useBukkitContrib)) {
             // Swap NSH to Heroes NSH.
         }
         // CraftPlayer craftPlayer = (CraftPlayer) player;
@@ -374,7 +364,7 @@ public class Heroes extends JavaPlugin {
     }
 
     public void switchToBNSH(Player player) {
-        if(!(Heroes.useBukkitContrib)){
+        if (!(Heroes.useBukkitContrib)) {
             // Swap NSH to Bukkit NSH.
         }
         // CraftPlayer craftPlayer = (CraftPlayer) player;

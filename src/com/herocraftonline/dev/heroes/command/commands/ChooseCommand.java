@@ -10,7 +10,6 @@ import com.herocraftonline.dev.heroes.command.BaseCommand;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 import com.herocraftonline.dev.heroes.util.Messaging;
 import com.herocraftonline.dev.heroes.util.Properties;
-import com.nijiko.coelho.iConomy.iConomy;
 
 public class ChooseCommand extends BaseCommand {
 
@@ -63,9 +62,11 @@ public class ChooseCommand extends BaseCommand {
 
         int cost = currentClass == plugin.getClassManager().getDefaultClass() ? 0 : prop.swapCost;
 
-        if (prop.iConomy && Heroes.iConomy != null && cost > 0) {
-            if (!iConomy.getBank().getAccount(player.getName()).hasEnough(cost)) {
-                Messaging.send(hero.getPlayer(), "Not enough money (costs " + iConomy.getBank().format(cost) + ")! ");
+        if (prop.iConomy && this.plugin.Method != null && cost > 0) {
+            if (!this.plugin.Method.getAccount(player.getName()).hasEnough(cost)) {
+                // You have insufficient funds, you require $1 to change your class to the $2. -- Make the text customiseable.
+                Messaging.send(hero.getPlayer(), "You're unable to meet the offering of $1 to become $2.", this.plugin.Method.format(cost), newClass.getName());
+
                 return;
             }
         }
@@ -84,8 +85,10 @@ public class ChooseCommand extends BaseCommand {
             }
         }
 
-        if (prop.iConomy && Heroes.iConomy != null && cost > 0) {
-            iConomy.getBank().getAccount(player.getName()).subtract(cost);
+        if (prop.iConomy && this.plugin.Method != null && cost > 0) {
+            this.plugin.Method.getAccount(player.getName()).subtract(cost);
+            // You have been charged $1 to swap to the $2. -- Make the text customiseable.
+            Messaging.send(hero.getPlayer(), "The Gods are pleased with your offering of $1", this.plugin.Method.format(cost));
         }
 
         hero.getBinds().clear();
