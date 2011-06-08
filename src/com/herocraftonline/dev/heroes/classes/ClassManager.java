@@ -233,6 +233,8 @@ public class ClassManager {
         if(defaultClass==null) {
             plugin.log(Level.SEVERE, "You are missing a Default Class, this will cause ALOT of issues!");
         }
+        // Save the Configuration setup to file, we do this so that any defaults values loaded are saved to file.
+        config.save();
     }
 
     public void setDefaultClass(HeroClass defaultClass) {
