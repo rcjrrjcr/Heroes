@@ -69,6 +69,7 @@ public class HeroManager {
             loadExperience(playerHero, playerConfig);
             loadRecoveryItems(playerHero, playerConfig);
             loadBinds(playerHero, playerConfig);
+            playerHero.mana = playerConfig.getInt("mana",0);
 
             playerHero.setVerbose(playerConfig.getBoolean("verbose", true));
             playerHero.suppressedSkills = new HashSet<String>(playerConfig.getStringList("suppressed", null));
@@ -199,6 +200,7 @@ public class HeroManager {
         playerConfig.setProperty("class", hero.getHeroClass().toString());
         playerConfig.setProperty("verbose", hero.isVerbose());
         playerConfig.setProperty("suppressed", hero.getSuppressedSkills());
+        playerConfig.setProperty("mana", hero.getMana());
         playerConfig.removeProperty("itemrecovery"); // Just a precaution, we'll remove any values before resaving the list.
 
         saveExperience(hero, playerConfig);
