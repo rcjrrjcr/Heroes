@@ -79,6 +79,7 @@ public class SkillXMuteOre extends ActiveSkill {
         if (nextMat != null && count > 0) {
             if (data != -1 && is.getData().getData() == data) { // Prevent charcoal/inksacks from being used
 
+                int leftOver = is.getAmount() % count;
                 int productCount = is.getAmount() / count; // Can these two operations be merged?
 
                 if (productCount != 0) {
