@@ -10,7 +10,7 @@ import org.bukkit.util.config.ConfigurationNode;
 
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.api.ClassChangeEvent;
-import com.herocraftonline.dev.heroes.api.LevelEvent;
+import com.herocraftonline.dev.heroes.api.LeveledEvent;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 
@@ -30,7 +30,7 @@ public class OutsourcedSkill extends Skill {
     }
 
     public void tryLearningSkill(Hero hero) {
-        tryLearningSkill(hero,hero.getHeroClass());
+        tryLearningSkill(hero, hero.getHeroClass());
     }
 
     public void tryLearningSkill(Hero hero, HeroClass heroClass) {
@@ -46,22 +46,39 @@ public class OutsourcedSkill extends Skill {
             if (meetsLevelRequirement(hero, getSetting(heroClass, SETTING_LEVEL, 1))) {
                 for (String permission : permissions) {
                     if (!Heroes.Permissions.has(player, permission)) {
-                        Heroes.Permissions.addUserPermission(world, playerName, permission);
+                        addPermission(world, playerName, permission);
                     }
                 }
             } else {
                 for (String permission : permissions) {
                     if (Heroes.Permissions.has(player, permission)) {
-                        Heroes.Permissions.removeUserPermission(world, playerName, permission);
+                        removePermission(world, playerName, permission);
                     }
                 }
             }
         } else {
             for (String permission : permissions) {
                 if (Heroes.Permissions.has(player, permission)) {
-                    Heroes.Permissions.removeUserPermission(world, playerName, permission);
+                    removePermission(world, playerName, permission);
                 }
             }
+        }
+    }
+
+    private void removePermission(String world, String player, String permission) {
+        try {
+            Heroes.Permissions.removeUserPermission(world, player, permission);
+            Heroes.Permissions.safeGetUser(world, player).removeTransientPermission(permission);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void addPermission(String world, String player, String permission) {
+        try {
+            Heroes.Permissions.safeGetUser(world, player).addTransientPermission(permission);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -70,15 +87,16 @@ public class OutsourcedSkill extends Skill {
         public void onCustomEvent(Event event) {
             if (event instanceof ClassChangeEvent) {
                 ClassChangeEvent subEvent = (ClassChangeEvent) event;
-                tryLearningSkill(subEvent.getHero(),subEvent.getTo());
-            } else if (event instanceof LevelEvent) {
-                LevelEvent subEvent = (LevelEvent) event;
+                tryLearningSkill(subEvent.getHero(), subEvent.getTo());
+            } else if (event instanceof LeveledEvent) {
+                LeveledEvent subEvent = (LeveledEvent) event;
                 tryLearningSkill(subEvent.getHero());
             }
         }
     }
 
     @Override
-    public void execute(CommandSender sender, String[] args) {}
+    public void execute(CommandSender sender, String[] args) {
+    }
 
 }
