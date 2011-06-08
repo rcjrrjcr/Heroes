@@ -54,6 +54,7 @@ public class HeroClass {
     private Set<String> allowedArmor;
     private Set<String> allowedWeapons;
     private Set<ExperienceType> experienceSources;
+    private double expModifier;
     private Map<String, ConfigurationNode> skills;
     private Set<HeroClass> specializations;
 
@@ -63,6 +64,7 @@ public class HeroClass {
         allowedArmor = new LinkedHashSet<String>();
         allowedWeapons = new LinkedHashSet<String>();
         experienceSources = new LinkedHashSet<ExperienceType>();
+        expModifier = 1.0D;
         specializations = new LinkedHashSet<HeroClass>();
         skills = new LinkedHashMap<String, ConfigurationNode>();
     }
@@ -70,6 +72,14 @@ public class HeroClass {
     public HeroClass(String name) {
         this();
         this.name = name;
+    }
+
+    public void setExpModifier(double modifier) {
+        this.expModifier = modifier;
+    }
+
+    public double getExpModifier() {
+        return this.expModifier;
     }
 
     public boolean hasSkill(String name) {

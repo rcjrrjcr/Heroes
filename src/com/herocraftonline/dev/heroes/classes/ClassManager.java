@@ -63,6 +63,7 @@ public class ClassManager {
             HeroClass newClass = new HeroClass(className.substring(0, 1).toUpperCase() + className.substring(1).toLowerCase());
 
             newClass.setDescription(config.getString("classes." + className + ".description", ""));
+            newClass.setExpModifier(config.getDouble("classes." + className + ".expmodifier", 1.0D));
 
             List<String> defaultType = new ArrayList<String>();
             defaultType.add("DIAMOND");
