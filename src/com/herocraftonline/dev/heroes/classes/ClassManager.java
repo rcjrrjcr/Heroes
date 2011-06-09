@@ -63,6 +63,7 @@ public class ClassManager {
             HeroClass newClass = new HeroClass(className.substring(0, 1).toUpperCase() + className.substring(1).toLowerCase());
 
             newClass.setDescription(config.getString("classes." + className + ".description", ""));
+            newClass.setExpModifier(config.getDouble("classes." + className + ".expmodifier", 1.0D));
 
             List<String> defaultType = new ArrayList<String>();
             defaultType.add("DIAMOND");
@@ -152,7 +153,7 @@ public class ClassManager {
                             plugin.log(Level.WARNING, "Skill " + skillName + " defined for " + className + " not found.");
                             continue;
                         }
-                        
+
                         ConfigurationNode skillSettings = Configuration.getEmptyNode();
                         List<String> settings = config.getKeys("classes." + className + ".permitted-skills." + skillName);
                         if (settings != null) {
@@ -220,10 +221,20 @@ public class ClassManager {
             String parentName = config.getString("classes." + className + ".parent");
             if (parentName != null && (!parentName.isEmpty() || parentName.equals("null"))) {
                 HeroClass parent = getClass(parentName);
-                parent.getSpecializations().add(unlinkedClass);
-                unlinkedClass.setParent(parent);
+                if(parent!=null){
+                    parent.getSpecializations().add(unlinkedClass);
+                    unlinkedClass.setParent(parent);
+                } else {
+                    plugin.log(Level.WARNING, "Cannot assign '" + className + "' a Parent Class as '" + parentName + "' does not exist.");
+                }
             }
         }
+
+        if(defaultClass==null) {
+            plugin.log(Level.SEVERE, "You are missing a Default Class, this will cause ALOT of issues!");
+        }
+        // Save the Configuration setup to file, we do this so that any defaults values loaded are saved to file.
+        config.save();
     }
 
     public void setDefaultClass(HeroClass defaultClass) {

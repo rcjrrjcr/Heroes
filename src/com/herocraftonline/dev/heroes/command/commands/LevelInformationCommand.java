@@ -1,5 +1,6 @@
 package com.herocraftonline.dev.heroes.command.commands;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -33,34 +34,36 @@ public class LevelInformationCommand extends BaseCommand {
             int level = prop.getLevel(exp);
             int current = prop.getExperience(level);
 
-            sender.sendMessage("§c-----[ " + "§fYour Level Information§c ]-----");
-            sender.sendMessage("  §aClass : " + hero.getHeroClass().getName());
-            sender.sendMessage("  §aLevel : " + level);
-            sender.sendMessage("  §aTotal Exp : " + exp);
+            sender.sendMessage(ChatColor.RED + "-----[ " + ChatColor.WHITE + "Your Level Information" + ChatColor.RED + " ]-----");
+            sender.sendMessage(ChatColor.GREEN + "  Class : " + hero.getHeroClass().getName());
+            sender.sendMessage(ChatColor.GREEN + "  Level : " + level);
+            sender.sendMessage(ChatColor.GREEN + "  Total Exp : " + exp);
             if (level != prop.maxLevel) {
                 int next = prop.getExperience(level + 1);
-                sender.sendMessage("  §aNext Level : " + (level + 1));
-                sender.sendMessage("  §aExp this level: " + (exp - current) + "/" + (next - current));
-                sender.sendMessage(createExperienceBar(exp, current, next));
+                sender.sendMessage(ChatColor.GREEN + "  Next Level : " + (level + 1));
+                sender.sendMessage(ChatColor.GREEN + "  Exp this level: " + (exp - current) + "/" + (next - current));
+                sender.sendMessage(ChatColor.GREEN + "  Experience Bar:");
+                sender.sendMessage("  " + createExperienceBar(exp, current, next));
             } else {
-                sender.sendMessage("  §aMASTERED!");
+                sender.sendMessage(ChatColor.GREEN + "  MASTERED!");
             }
-            sender.sendMessage(Messaging.createManaBar(hero.getMana()));
+            sender.sendMessage(ChatColor.GREEN + "  Mana Bar:");
+            sender.sendMessage("  " + Messaging.createManaBar(hero.getMana()));
         }
     }
 
     private String createExperienceBar(int exp, int currentLevelExp, int nextLevelExp) {
-        String expBar = "§c[§2";
-        int progress = (int) ((double) (exp - currentLevelExp) / (nextLevelExp - currentLevelExp) * 92);
+        String expBar = ChatColor.RED + "[" + ChatColor.DARK_GREEN;
+        int progress = (int) ((double) (exp - currentLevelExp) / (nextLevelExp - currentLevelExp) * 50);
         for (int i = 0; i < progress; i++) {
             expBar += "|";
         }
-        expBar += "§4";
-        for (int i = 0; i < 92 - progress; i++) {
+        expBar += ChatColor.DARK_RED;
+        for (int i = 0; i < 50 - progress; i++) {
             expBar += "|";
         }
-        expBar += "§c]";
-        return expBar;
+        expBar += ChatColor.RED + "]";
+        return expBar + " - " + ChatColor.DARK_GREEN + progress*2 + "%";
     }
 
 }

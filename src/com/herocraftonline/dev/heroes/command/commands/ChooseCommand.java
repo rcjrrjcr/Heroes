@@ -10,8 +10,6 @@ import com.herocraftonline.dev.heroes.command.BaseCommand;
 import com.herocraftonline.dev.heroes.persistence.Hero;
 import com.herocraftonline.dev.heroes.util.Messaging;
 import com.herocraftonline.dev.heroes.util.Properties;
-import com.nijiko.coelho.iConomy.iConomy;
-import com.nijiko.coelho.iConomy.system.Account;
 
 public class ChooseCommand extends BaseCommand {
 
@@ -43,7 +41,7 @@ public class ChooseCommand extends BaseCommand {
         }
 
         if (newClass == currentClass) {
-            Messaging.send(player, "Y U DO? AMNESIA? NO GOOD!");
+            Messaging.send(player, "You are already set as this Class.");
             return;
         }
 
@@ -64,22 +62,22 @@ public class ChooseCommand extends BaseCommand {
 
         int cost = currentClass == plugin.getClassManager().getDefaultClass() ? 0 : prop.swapCost;
 
-        if (prop.iConomy && Heroes.iConomy != null && cost > 0) {
-            Account account = iConomy.getBank().getAccount(player.getName());
-            if (!account.hasEnough(cost)) {
-                Messaging.send(hero.getPlayer(), "Not enough money (costs " + iConomy.getBank().format(cost) + ")! ");
+        if (prop.iConomy && this.plugin.Method != null && cost > 0) {
+            if (!this.plugin.Method.getAccount(player.getName()).hasEnough(cost)) {
+                // You have insufficient funds, you require $1 to change your class to the $2. -- Make the text customiseable.
+                Messaging.send(hero.getPlayer(), "You're unable to meet the offering of $1 to become $2.", this.plugin.Method.format(cost), newClass.getName());
+
                 return;
             }
         }
 
-        hero.setHeroClass(newClass);
-
         ClassChangeEvent event = new ClassChangeEvent(hero, currentClass, newClass);
         plugin.getServer().getPluginManager().callEvent(event);
         if (event.isCancelled()) {
-            hero.setHeroClass(currentClass);
             return;
         }
+
+        hero.setHeroClass(newClass);
 
         if (prop.resetExpOnClassChange) {
             if (!hero.isMaster(currentClass)) {
@@ -87,9 +85,10 @@ public class ChooseCommand extends BaseCommand {
             }
         }
 
-        if (prop.iConomy && Heroes.iConomy != null && cost > 0) {
-            Account account = iConomy.getBank().getAccount(player.getName());
-            account.subtract(cost);
+        if (prop.iConomy && this.plugin.Method != null && cost > 0) {
+            this.plugin.Method.getAccount(player.getName()).subtract(cost);
+            // You have been charged $1 to swap to the $2. -- Make the text customiseable.
+            Messaging.send(hero.getPlayer(), "The Gods are pleased with your offering of $1", this.plugin.Method.format(cost));
         }
 
         hero.getBinds().clear();

@@ -50,7 +50,6 @@ public class ConfigManager {
             loadLevelConfig(primaryConfig);
             loadDefaultConfig(primaryConfig);
             loadProperties(primaryConfig);
-            loadPersistence(primaryConfig);
 
             Configuration expConfig = new Configuration(expConfigFile);
             expConfig.load();
@@ -116,16 +115,6 @@ public class ConfigManager {
         properties.cColor = ChatColor.valueOf(config.getString(root + "color", "WHITE"));
         properties.swapCost = config.getInt(root + "swapcost", 0);
         properties.debug = config.getBoolean(root + "debug", false);
-    }
-
-    private void loadPersistence(Configuration config) {
-        String root = "data.";
-        properties.host = config.getString(root + "host", "localhost");
-        properties.port = config.getString(root + "port", "3306");
-        properties.database = config.getString(root + "database", "heroes");
-        properties.username = config.getString(root + "username", "root");
-        properties.password = config.getString(root + "password", "");
-        properties.method = config.getString(root + "method", "sqlite");
     }
 
     private void loadExperience(Configuration config) {

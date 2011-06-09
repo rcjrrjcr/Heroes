@@ -16,6 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.api.ExperienceGainEvent;
 import com.herocraftonline.dev.heroes.api.LevelEvent;
+import com.herocraftonline.dev.heroes.api.LeveledEvent;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.classes.HeroClass.ExperienceType;
 import com.herocraftonline.dev.heroes.command.skill.Skill;
@@ -90,6 +91,10 @@ public class Hero {
         return getExperience(heroClass) >= maxExp;
     }
 
+    public int getLevel() {
+        return plugin.getConfigManager().getProperties().getLevel(getExperience(heroClass));
+    }
+
     public int getExperience() {
         return getExperience(heroClass);
     }
@@ -120,6 +125,8 @@ public class Hero {
 
     public void gainExp(int expGain, ExperienceType source) {
         int exp = getExperience();
+        // Work out the correct amount of Exp to award using the Classes Modifier.
+        expGain = (int) (expGain * this.getHeroClass().getExpModifier());
 
         Properties prop = plugin.getConfigManager().getProperties();
         int currentLevel = prop.getLevel(exp);
@@ -170,6 +177,10 @@ public class Hero {
         }
 
         setExperience(exp);
+
+        if (newLevel != currentLevel) {
+            plugin.getServer().getPluginManager().callEvent(new LeveledEvent(this, currentLevel, newLevel));
+        }
     }
 
     public void setMana(int mana) {

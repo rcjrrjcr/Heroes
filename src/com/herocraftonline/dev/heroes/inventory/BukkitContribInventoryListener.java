@@ -10,6 +10,7 @@ import org.bukkitcontrib.event.inventory.InventorySlotType;
 
 import com.herocraftonline.dev.heroes.Heroes;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
+import com.herocraftonline.dev.heroes.util.MaterialUtil;
 import com.herocraftonline.dev.heroes.util.Messaging;
 
 public class BukkitContribInventoryListener extends InventoryListener {
@@ -31,21 +32,21 @@ public class BukkitContribInventoryListener extends InventoryListener {
         ItemStack item = event.getCursor();
 
         // Skip the checks if the cursor has no REAL Item in hand.
-        if (item.getType() == Material.AIR) {
+        if (item == null || item.getType() == null || item.getType() == Material.AIR) {
             return;
         }
 
         // Grab the Player involved in the Event.
-        Player player = event.getPlayer();
+        final Player player = event.getPlayer();
         // Grab the Players HeroClass.
         HeroClass clazz = plugin.getHeroManager().getHero(player).getHeroClass();
 
         // Check if the Slot is an Armor Slot.
         if (event.getSlotType() == InventorySlotType.ARMOR) {
             // Perform Armor Check.
-            String itemString = item.toString();
+            String itemString = item.getType().toString();
             if (!(clazz.getAllowedArmor().contains(itemString))) {
-                Messaging.send(player, "You cannot equip that armor - $1", itemString);
+                Messaging.send(player, "You are not trained to use a $1.", MaterialUtil.getFriendlyName(itemString));
                 event.setCancelled(true);
                 return;
             }
@@ -54,7 +55,7 @@ public class BukkitContribInventoryListener extends InventoryListener {
         // Check if the Slot is a Weapon Slot.
         if (event.getSlotType() == InventorySlotType.QUICKBAR) {
             // Perform Weapon Check.
-            String itemString = item.toString();
+            String itemString = item.getType().toString();
             // If it doesn't contain a '_' and it isn't a Bow then it definitely isn't a Weapon.
             if (!(itemString.contains("_")) && !(itemString.equalsIgnoreCase("BOW"))) {
                 return;
@@ -71,7 +72,7 @@ public class BukkitContribInventoryListener extends InventoryListener {
             }
             // Check if the Players HeroClass allows this WEAPON to be equipped.
             if (!(clazz.getAllowedWeapons().contains(itemString))) {
-                Messaging.send(player, "You cannot equip that item - $1", itemString);
+                Messaging.send(player, "You are not trained to use a $1.", MaterialUtil.getFriendlyName(itemString));
                 event.setCancelled(true);
                 return;
             }

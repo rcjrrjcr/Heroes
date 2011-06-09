@@ -49,24 +49,13 @@ public class HBlockListener extends BlockListener {
         Block block = event.getBlock();
         Material material = block.getType();
 
-        switch (material) {
-            case COBBLESTONE:
-            case CLAY:
-            case DIRT:
-            case GOLD_ORE:
-            case GRASS:
-            case GRAVEL:
-            case IRON_ORE:
-            case NETHERRACK:
-            case SAND:
-            case SANDSTONE:
-            case OBSIDIAN:
-            case LOG:
-                Location loc = block.getLocation();
-                if (placedBlocks.containsKey(loc)) {
-                    placedBlocks.remove(loc);
-                }
-                placedBlocks.put(loc, System.currentTimeMillis());
+        Properties prop = plugin.getConfigManager().getProperties();
+        if (prop.miningExp.containsKey(material) || prop.loggingExp.containsKey(material)) {
+            Location loc = block.getLocation();
+            if (placedBlocks.containsKey(loc)) {
+                placedBlocks.remove(loc);
+            }
+            placedBlocks.put(loc, System.currentTimeMillis());
         }
     }
 
@@ -79,6 +68,7 @@ public class HBlockListener extends BlockListener {
             if (timePlaced + blockTrackingDuration > System.currentTimeMillis()) {
                 return true;
             } else {
+                placedBlocks.remove(block.getLocation());
                 return false;
             }
         }
@@ -121,14 +111,10 @@ public class HBlockListener extends BlockListener {
                 if (hero.isVerbose()) {
                     Messaging.send(player, "No experience gained - block placed too recently.");
                 }
-
                 placedBlocks.remove(block.getLocation());
                 return;
             }
         }
-
-        placedBlocks.remove(block.getLocation());
-        
         hero.gainExp(addedExp, block.getType() == Material.LOG ? ExperienceType.LOGGING : ExperienceType.MINING);
     }
 

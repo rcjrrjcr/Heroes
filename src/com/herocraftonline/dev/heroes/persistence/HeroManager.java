@@ -69,14 +69,15 @@ public class HeroManager {
             loadExperience(playerHero, playerConfig);
             loadRecoveryItems(playerHero, playerConfig);
             loadBinds(playerHero, playerConfig);
+            playerHero.mana = playerConfig.getInt("mana",0);
 
             playerHero.setVerbose(playerConfig.getBoolean("verbose", true));
             playerHero.suppressedSkills = new HashSet<String>(playerConfig.getStringList("suppressed", null));
 
             addHero(playerHero);
-            
+
             performSkillChecks(playerHero);
-            
+
             plugin.log(Level.INFO, "Loaded hero: " + player.getName());
         } else {
             // Create a New Hero with the Default Setup.
@@ -117,7 +118,7 @@ public class HeroManager {
                 }
             }
         }
-        
+
         if (hero.experience.get(hero.getHeroClass().getName()) == null) {
             hero.setExperience(0);
         }
@@ -199,6 +200,7 @@ public class HeroManager {
         playerConfig.setProperty("class", hero.getHeroClass().toString());
         playerConfig.setProperty("verbose", hero.isVerbose());
         playerConfig.setProperty("suppressed", hero.getSuppressedSkills());
+        playerConfig.setProperty("mana", hero.getMana());
         playerConfig.removeProperty("itemrecovery"); // Just a precaution, we'll remove any values before resaving the list.
 
         saveExperience(hero, playerConfig);
@@ -329,7 +331,7 @@ class ManaUpdater extends TimerTask {
             int mana = hero.getMana();
             hero.setMana(mana > 100 ? mana : mana > 95 ? 100 : mana + 5); // Hooray for the ternary operator!
             if (mana != 100 && hero.isVerbose()) {
-                Messaging.send(hero.getPlayer(), Messaging.createManaBar(hero.getMana()));
+                Messaging.send(hero.getPlayer(), "Mana: " + Messaging.createManaBar(hero.getMana()));
             }
         }
     }
