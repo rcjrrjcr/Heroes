@@ -1,5 +1,10 @@
 package com.herocraftonline.dev.heroes.command.skill;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.CustomEventListener;
@@ -13,10 +18,16 @@ import com.herocraftonline.dev.heroes.api.ClassChangeEvent;
 import com.herocraftonline.dev.heroes.api.LeveledEvent;
 import com.herocraftonline.dev.heroes.classes.HeroClass;
 import com.herocraftonline.dev.heroes.persistence.Hero;
+import com.nijiko.permissions.StorageReloadEvent;
+import com.nijiko.permissions.User;
+import com.nijiko.permissions.WorldConfigLoadEvent;
 
 public class OutsourcedSkill extends Skill {
 
     protected String[] permissions;
+
+    private final static Map<String, Map<String, Set<String>>> transientAdd = new HashMap<String, Map<String, Set<String>>>();
+    private final static Map<String, Map<String, Set<String>>> transientRemove = new HashMap<String, Map<String, Set<String>>>();
 
     public OutsourcedSkill(Heroes plugin, String name, String[] permissions, String usage) {
         super(plugin);
@@ -72,6 +83,19 @@ public class OutsourcedSkill extends Skill {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        if (transientRemove.get(world) == null)
+            transientRemove.put(world, new HashMap<String, Set<String>>());
+        if (transientRemove.get(world).get(player) == null)
+            transientRemove.get(world).put(player, new HashSet<String>());
+        transientRemove.get(world).get(player).add(permission);
+
+        Map<String, Set<String>> worldAdd = transientAdd.get(world);
+        if (worldAdd != null) {
+            Set<String> addPerms = worldAdd.get(player);
+            if (addPerms != null)
+                addPerms.remove(permission);
+        }
     }
 
     private void addPermission(String world, String player, String permission) {
@@ -79,6 +103,19 @@ public class OutsourcedSkill extends Skill {
             Heroes.Permissions.safeGetUser(world, player).addTransientPermission(permission);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+
+        if (transientAdd.get(world) == null)
+            transientAdd.put(world, new HashMap<String, Set<String>>());
+        if (transientAdd.get(world).get(player) == null)
+            transientAdd.get(world).put(player, new HashSet<String>());
+        transientAdd.get(world).get(player).add(permission);
+
+        Map<String, Set<String>> worldRem = transientRemove.get(world);
+        if (worldRem != null) {
+            Set<String> remPerms = worldRem.get(player);
+            if (remPerms != null)
+                remPerms.remove(permission);
         }
     }
 
@@ -91,12 +128,55 @@ public class OutsourcedSkill extends Skill {
             } else if (event instanceof LeveledEvent) {
                 LeveledEvent subEvent = (LeveledEvent) event;
                 tryLearningSkill(subEvent.getHero());
+            } else if (event instanceof WorldConfigLoadEvent) {
+                WorldConfigLoadEvent subEvent = (WorldConfigLoadEvent) event;
+                String world = subEvent.getWorld();
+                reloadTransientPerms(world);
+            } else if (event instanceof StorageReloadEvent) {
+                Set<String> worlds = new HashSet<String>(transientAdd.keySet());
+                worlds.addAll(transientRemove.keySet());
+                for (String world : worlds) {
+                    reloadTransientPerms(world);
+                }
             }
         }
     }
 
     @Override
     public void execute(CommandSender sender, String[] args) {
+    }
+
+    private void reloadTransientPerms(String world) {
+        Map<String, Set<String>> worldAdd = transientAdd.get(world);
+        Map<String, Set<String>> worldRemove = transientRemove.get(world);
+
+        if (worldAdd != null) {
+            for (Map.Entry<String, Set<String>> entry : worldAdd.entrySet()) {
+                try {
+                    User u = Heroes.Permissions.safeGetUser(world, entry.getKey());
+                    for (String node : entry.getValue()) {
+                        u.addTransientPermission(node);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    continue;
+                }
+            }
+        }
+
+        if (worldRemove != null) {
+            for (Map.Entry<String, Set<String>> entry : worldRemove.entrySet()) {
+                try {
+                    User u = Heroes.Permissions.safeGetUser(world, entry.getKey());
+                    for (String node : entry.getValue()) {
+                        u.removeTransientPermission(node);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    continue;
+                }
+            }
+        }
     }
 
 }
